@@ -32,7 +32,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 
 ## PREFACE
 
-  The best way to enjoy this mod to its fullest extent is to install every mod you can find that increases difficulty in The Witcher 3. 
+  The best way to enjoy this mod to its fullest extent is to install every mod you can find that increases difficulty in The Witcher 3. This mod does some things that helps with this, like the taunt system. 
   
   [Aeltoth's Random Encounters Reworked](https://github.com/Aelto/tw3-random-encounters-reworked) is a good place to start. 
   
