@@ -30,8 +30,19 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 - Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
 - Or do, if you enjoy watching Geralt fly off screen every time he jumps. Who am I to tell you how to play this game?
 
+## PREFACE
+  All extra skills and abilities included within this mod are able to cancel each other out. 
+  
+  This is by design, since some NPC animations are way too long to be properly used in combat.
+  
+  It is highly encouraged to use this feature as much as you can. 
+  
+  It is also highly encouraged to alternate between light and heavy attacks, as well as switch signs often, since there are systems built around this way of playing. 
+  
+  Of course, once again, you are more than welcome to disregard whatever I just said and play the game however you want. 
+  
 <div align="center">
-
+  
 # INDEX
 
 ### [1. FISTS](#1-fists-1)
@@ -75,24 +86,39 @@ Default weapons included within ACS are split between silver and steel versions,
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special attack``, replacing ``Whirl``. ```Requires Whirl to use```.
-- Rend remains unchanged.
 - ```Holding down W key```, while attacking with ``light attacks``, ``heavy attacks``, or ``special attacks`` will alter attack moveset. 
 - ```Range of opponent```, will also alter attack moveset (ie. holding down W while attacking with Axii heavy attacks at close range will slap your target)
 #### Igni 
-- Light Attacks = **Default Geralt light attacks**
-  - Heavy Attacks = **Default Geralt heavy attacks**
+- ```Light Attack``` = **Default Geralt light attacks**
+- ```Heavy Attack``` = **Default Geralt heavy attacks**
 #### Quen
-- Light Attacks = **Olgierd/1-hand-sword**
-  - Heavy Attacks = **Spear/Staff**
+- ```Light Attack``` = **Olgierd/1-Hand-Sword Single Strikes**
+   - ```W key + Light Attack``` = **Olgierd Pirouette Spinning Strikes**
+- ```Heavy Attacks``` = **Spear/Staff/Halberd Single Strikes**
+   - ```W key + Heavy Attack``` = **Spear AOE Whirling Attack**
+-``` Special Attack (Whirl)``` = **Olgierd Combo Strikes**
+  - ```W key + Special Attack (Whirl)``` = **Olgierd Shadow Dash**
 #### Axii
-- Light Attacks = **Eredin/2-hand-sword**
-  - Heavy Attacks = **Gregoire de Gorgon**
+- ```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
+   - ```W key + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
+- ```Heavy Attacks``` = **Gregoire de Gorgon Single Strikes**
+   - ```W key + Heavy Attack``` = **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
+-``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes*
+  - ```W key + Special Attack (Whirl)``` = **Caretaker Charge Attack (Releases a shockwave at the end)**
 #### Yrden
-- Light Attacks = **Imlerith/Caranthir**
-  - Heavy Attacks = **Hammer**
+- ```Light Attack``` = **Imlerith/Caranthir Single Strikes**
+   - ```W key + Light Attack``` = **Imlerith/Caretaker Sweeping Strikes**
+- ```Heavy Attacks``` = **1-Hand-Hammer Single Strikes**
+   - ```W key + Heavy Attack``` = **2-Hand-Hammer Strikes**
+-``` Special Attack (Whirl)``` = **Imlerith Berserk Sweeping Strikes**
+  - ```W key + Special Attack (Whirl)``` = **Imlerith Berserk Single Strike**
 #### Aard
-- Light Attacks = **Dettlaff/Bruxa**
-  - Heavy Attacks = **Axe**
+- ```Light Attack``` = **Dettlaff/Bruxae Vampire Single Strikes**
+   - ```W key + Light Attack``` = **Dettlaff Vampire Combo Attacks**
+- ```Heavy Attacks``` = **1-Hand-Axe/1-Hand-Mace Single Strikes**
+   - ```W key + Heavy Attack``` = **2-Hand-Axe Strikes**
+-``` Special Attack (Whirl)``` = **Dettlaff Vampire Spinning Attack**
+  - ```W key + Special Attack (Whirl)``` = **Dettlaff Vampire Dash Strike**
  
  ##### [Return to Index](#index)
 ## 3. ELEMENTAL COMBO SYSTEM
@@ -319,5 +345,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 ##### [Return to Index](#index)
 ## 12. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
+
+# Please do not upload this mod anywhere else without my expicit permission.
 
 ##### [Return to Index](#index)
