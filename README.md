@@ -6,8 +6,10 @@ Video showcasing a previous version of the mod.
 [![Video Link](https://img.youtube.com/vi/Puc5b5c0lWc/0.jpg)](https://www.youtube.com/watch?v=Puc5b5c0lWc)
 
 ## INSTALLATION
-### Place dlcACS in dlc folder, mod_ACS and mod_ACS_Effects in mods folder. 
-Run script merger.
+- Download zip from releases.
+- Place ***dlcACS*** in dlc folder
+- Place ***mod_ACS*** and ***mod_ACS_Effects*** in mods folder. 
+- Run script merger.
 
 ### mod_ACS_Effects is OPTIONAL. Mod works without it, but some attacks/abilities won't have effects to them.
 It replaces player.w2ent, and this version does not come with compatibility edits for stuff like E3 Quen.
