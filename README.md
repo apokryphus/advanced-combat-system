@@ -308,12 +308,12 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - ***Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.***
 ### Caretaker Shades
 ```S + Double tap Guard``` will summon Caretaker shades around the player in a wide radius. 
-- Shades will distract enemies, as other enemies will attempt to kill them, while also provide a source of life-steal for claws. 
+- Shades will distract enemies, as other enemies will attempt to kill them, while also provide a source of ``life-steal`` for claws. 
 - Shades do not attack, and will die in one hit. 
 - Shades will automatically move towards the player if player is nearby, or move towards the closest enemy.
- - Shades summoning can only be used once per combat, being replaced by a push/shove attack after being used.
-- The player will summon more shades when at less than 50% health. 
-- The higher the level the player is, the more shades will be summoned. 
+ - Shades summoning can only be used ```once per combat```, being replaced by a push/shove attack after used.
+- The player will summon more shades when at less than ```50% health```. 
+- The ```higher``` the level the player is, the more shades will be summoned. 
 #### Lvl 10 or less 
 - 1 shade normal, 2 shades at 50% or less health.
 #### Lvl 11 to 15
