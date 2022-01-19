@@ -34,7 +34,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 
 # INDEX
 
-### [1. FISTS](1-fists)
+### [1. FISTS](1-fists-1)
 ### [2. ARMED](2-armed)
 ### [3. ELEMENTAL COMBO SYSTEM](3-elemental-combo-system)
 ### [4. ELEMENTAL REND SYSTEM](4-elemental-rend-system)
