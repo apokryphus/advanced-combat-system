@@ -324,8 +324,6 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - 5 shades normal, 10 shades at 50% or less health.
 #### - Player level 26 or more 
 - 7 shades normal, 15 shades at 50% or less health.
-#### - Player level 26 or more: 
-- 7 shades normal, 15 shades at 50% or less health.
 
 ##### [Return to Index](#index)
 ## 9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
