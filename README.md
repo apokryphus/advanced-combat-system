@@ -17,9 +17,12 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 " target="_blank"><img src="http://img.youtube.com/vi/ULYKfVfKf-k/0.jpg" 
 alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
   </p>
- <p align="center">
- My personal version, with Shades of Iron and Magic Spells assets integrated into it.
- </p>
+<div align="center">
+  
+ My personal version of the mod, with [Shades of Iron](https://github.com/Amasiuncula/Shades-of-Iron) and [Magic Spells](https://www.nexusmods.com/witcher3/mods/5007) assets integrated directly into it.
+  
+ (Spoilers for the ending of Blood & Wine DLC)
+</div>
 
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
