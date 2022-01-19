@@ -61,7 +61,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 ### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](#9-using-custom-weapons-from-vanilla-game-or-other-mods-1)
 ### [10. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
 ### [11. COMPATIBILITY](#11-compatibility-1)
-### [12. Q&A](#12-q&a-1)
+### [12. Q&A](#12-qa-1)
 ### [13. CONTACT ME](#13-contact-me-1)
 </div>
 
