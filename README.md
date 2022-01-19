@@ -18,7 +18,9 @@ It replaces player.w2ent, and this version does not come with compatibility edit
 
 If you do use it, remember to set priority for it over other mods. 
 
-Ask me for the compatibility version for E3 Quen if you want it. 
+***Compatibility edits will not be publicly released.***
+
+Ask me for the compatibility version for E3 Quen if you want it.
 
 ### mod_ACS_JumpExtend is also optional. It increases the player's jump height by about 15 meters. 
 Jumping while sprinting will jump further and higher than jumping while idle. 
