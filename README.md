@@ -401,9 +401,8 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 
 # Please do not upload this mod anywhere else without my expicit permission.
 
- <div align="right">
+ <div align="center">
   
 ##### [Return to Index](#index)
   
   </div>
-  
