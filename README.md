@@ -399,9 +399,9 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 ## 12. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
-# Please do not upload this mod anywhere else without my expicit permission.
-
  <div align="center">
+
+# Please do not upload this mod anywhere else without my explicit permission.
   
 ##### [Return to Index](#index)
   
