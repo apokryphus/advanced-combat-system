@@ -38,7 +38,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
   
   All extra NPC animations and abilities included within this mod are able to cancel each other out. 
   
-  This is by design, since some NPC animations are way too long to be properly used in combat.
+  This is by design, since some NPC animations are way too long to be properly used in combat without this feature.
   
   It is highly encouraged to use this feature as much as you can. 
   
