@@ -29,45 +29,25 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 - Jumping while sliding will jump the furthest. 
 - Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
 - Or do, if you enjoy watching Geralt fly off screen every time he jumps. Who am I to tell you how to play this game?
- 
- ## INDEX
- <p align="center">
- 1. FISTS
-</p>
-<p align="center">
- 2. ARMED
-</p>
-<p align="center">
- 3. ELEMENTAL COMBO SYSTEM
-</p>
-<p align="center">
- 4. ELEMENTAL REND SYSTEM
-</p>
-<p align="center">
- 5. GUARD SKILLS
-</p>
-<p align="center">
- 6. TAUNT SYSTEM
-</p>
-<p align="center">
- 7. MOVEMENT SYSTEM
-</p>
-<p align="center">
- 8. SPECIAL ABILITIES
-</p>
-<p align="center">
- 9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
-</p>
-<p align="center">
- 10. COOLDOWN ADJUSTMENT
-</p>
-<p align="center">
- 11. COMPATIBILITY
-</p>
-<p align="center">
- 11. CONTACT ME
-</p>
-  
+
+<div align="center">
+
+# INDEX
+
+### [1. FISTS](1-fists)
+### [2. ARMED](2-armed)
+### [3. ELEMENTAL COMBO SYSTEM](3-elemental-combo-system)
+### [4. ELEMENTAL REND SYSTEM](4-elemental-rend-system)
+### [5. GUARD SKILLS](5-guard-skills)
+### [6. TAUNT SYSTEM](6-taunt-system)
+### [7. MOVEMENT SYSTEM](7-movement-system)
+### [8. SPECIAL ABILITIES](8-special-abilities)
+### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](9-using-custom-weapons-from-vanilla-game-or-other-mods)
+### [10. COOLDOWN ADJUSTMENT](10-cooldown-adjustment)
+### [11. COMPATIBILITY](11-compatibility)
+### [12. CONTACT ME](12-contact-me)
+</div>
+
 ## 1. FISTS
 - Completely replaced by vampire claw attacks, regardless of sign.
 ## 2. ARMED
@@ -311,5 +291,5 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Disclaimer: I don't use this version personally.
 - Ghost mode merges fine.
 - Not sure about EE.
-## 11. CONTACT ME
+## 12. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
