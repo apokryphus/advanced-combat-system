@@ -6,8 +6,9 @@ Video showcasing a previous version of the mod.
 [![Video Link](https://img.youtube.com/vi/Puc5b5c0lWc/0.jpg)](https://www.youtube.com/watch?v=Puc5b5c0lWc)
 
 ## INSTALLATION
-- Download zip from releases.
-- Place ***dlcACS*** in dlc folder
+- Latest version can be found in releases https://github.com/apokryphus/advanced-combat-system/releases
+- Download zip from latest version.
+- Place ***dlcACS*** in dlc folder.
 - Place ***mod_ACS*** and ***mod_ACS_Effects*** in mods folder. 
 - Run script merger.
 
