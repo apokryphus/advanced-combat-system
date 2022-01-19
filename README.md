@@ -33,6 +33,7 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 Light attacks switch to [primary weapons], heavy attacks switch to [secondary weapons].
 
 // Default Weapons //
+
 Default weapons included within ACS are split between silver and steel versions, based on whether equipped weapon is silver or steel. 
 
 Weapons evolve according to equipped weapon's level and rarity.
@@ -79,6 +80,7 @@ This works both ways for all signs except for Igni, meaning that attacks while h
 Enemies need to be primed again after detonating an effect.
 
 // Igni //
+
 Light attack/Any attack action after attacking with light attack:
 - Passive: None.
 - Primes enemy.
@@ -90,6 +92,7 @@ Heavy attack/Any attack action after attack with heavy attack:
 - Detonation: Detonates an explosion in a small radius, blasting enemies back and burning them. 
 
 // Axii //
+
 Primary weapon: 
 - Passive: Attacks have a chance to apply slowdown frost. 
 - Primes enemy.
@@ -101,6 +104,7 @@ Secondary weapon:
 - Detonation: Freezes enemies in a small radius around the player.
 
 // Aard //
+
 Primary weapon: 
 - Passive: Attacks grant life-steal equal to 5% of damage dealt.
 - Primes enemy.
@@ -112,6 +116,7 @@ Secondary weapon:
 - Detonation: Explosion that causes confusion to enemies in a small radius.
 
 // Quen //
+
 Primary weapon: 
 - Passive: Attacks cause bleeding and have a chance to apply blindness.
 - Primes enemy.
@@ -123,6 +128,7 @@ Secondary weapon:
 - Detonation: Summons a sand pillar that applies paralysis to enemies in a small radius.
 
 // Yrden //
+
 Primary weapon: 
 - Passive: Attacks stagger enemies.
 - Primes enemy.
@@ -135,6 +141,7 @@ Secondary weapon:
 
 
 /// REND SYSTEM ///
+
 Releasing rend while holding secondary weapons have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 Requires the rend skill to use. 
 
@@ -176,6 +183,7 @@ S key + Doubletap Guard (After using shades summon) = Push
 S key + Guard = Punch
 
 /// TAUNT ///
+
 Releasing guard or switching weapons (signs) while standing still with no movement keys held (WASD) will perform a taunt. 
 Taunts change based on what weapon is held. 
 
@@ -192,10 +200,12 @@ Subsequent taunts on a taunted enemy will only replenish their morale, focus, an
 /// MOVEMENT ///
 
 // Exploration //
+
 Doubletap Sprint = Bruxa dash
 Witcher sense + Sprint = Wraith mode
 
 // Combat //
+
 W key + Doubletap Sprint = Bruxa leap attack  
 S key + Dodge = Bruxa dodge slide 
 S key + Roll = Wild Hunt Blink 
@@ -214,6 +224,7 @@ During certain rainy weather conditions, the leap attack will addtionally call d
 Wild Hunt Blink will occasionally freeze enemies based on timing and chance.
 
 // Dodges //
+
 Player's regular dodges have special effects and apply negative buffs on enemies:
 
 Igni Dodge: Small chance to applying burning.
@@ -227,6 +238,7 @@ Negative buffs do not stack on themselves, but will stack on each other.
 /// SPECIAL ABILITIES ///
 
 // Bruxa bite //
+
 Double tap W while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 Bruxa bite deals 200 flat damage and returns this value to the player as health.
 Doubletap sprint to release victim.
@@ -274,13 +286,16 @@ Lvl 26 or more: 7 shades normal, 15 shades at 50% or less health.
 Lvl 26 or more: 7 shades normal, 15 shades at 50% or less health.
 
 /// USING CUSTOM WEAPONS ///
+
 Open ACS_Primary_Weapon_Switch.ws or ACS_Secondary_Weapon_Switch.ws in the main local folder of mod_ACS.
 Do your best.
 
 /// COOLDOWN ADJUSTMENT ///
+
 Open mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws and follow instructions to further customize cooldowns to your liking. 
 
 /// COMPATIBILITY ///
+
 Disclaimer: I don't use this version personally.
 Okay so I finally decided to try merging this thing with Ghost mode, and surprisingly it works fine. 
 Not sure about EE.
