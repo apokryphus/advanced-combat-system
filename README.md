@@ -31,7 +31,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 - Or do, if you enjoy watching Geralt fly off screen every time he jumps. Who am I to tell you how to play this game?
 
 ## PREFACE
-  All extra skills and abilities included within this mod are able to cancel each other out. 
+  All extra NPC animations and abilities included within this mod are able to cancel each other out. 
   
   This is by design, since some NPC animations are way too long to be properly used in combat.
   
