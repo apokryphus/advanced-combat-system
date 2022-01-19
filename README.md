@@ -31,6 +31,11 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 - Or do, if you enjoy watching Geralt fly off screen every time he jumps. Who am I to tell you how to play this game?
 
 ## PREFACE
+
+  The best way to enjoy this mod to its fullest extent is to install every mod you can find that increases difficulty in The Witcher 3. 
+  
+  [Aeltoth's Random Encounters Reworked](https://github.com/Aelto/tw3-random-encounters-reworked) is a good place to start. 
+  
   All extra NPC animations and abilities included within this mod are able to cancel each other out. 
   
   This is by design, since some NPC animations are way too long to be properly used in combat.
