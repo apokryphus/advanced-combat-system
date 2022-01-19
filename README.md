@@ -96,28 +96,28 @@ Default weapons included within ACS are split between silver and steel versions,
    - ```W key + Light Attack``` = **Olgierd Pirouette Spinning Strikes**
 - ```Heavy Attacks``` = **Spear/Staff/Halberd Single Strikes**
    - ```W key + Heavy Attack``` = **Spear AOE Whirling Attack**
--``` Special Attack (Whirl)``` = **Olgierd Combo Strikes**
+- ``` Special Attack (Whirl)``` = **Olgierd Combo Strikes**
   - ```W key + Special Attack (Whirl)``` = **Olgierd Shadow Dash**
 #### Axii
 - ```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
    - ```W key + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
 - ```Heavy Attacks``` = **Gregoire de Gorgon Single Strikes**
    - ```W key + Heavy Attack``` = **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
--``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes*
+- ``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes*
   - ```W key + Special Attack (Whirl)``` = **Caretaker Charge Attack (Releases a shockwave at the end)**
 #### Yrden
 - ```Light Attack``` = **Imlerith/Caranthir Single Strikes**
    - ```W key + Light Attack``` = **Imlerith/Caretaker Sweeping Strikes**
 - ```Heavy Attacks``` = **1-Hand-Hammer Single Strikes**
    - ```W key + Heavy Attack``` = **2-Hand-Hammer Strikes**
--``` Special Attack (Whirl)``` = **Imlerith Berserk Sweeping Strikes**
+- ``` Special Attack (Whirl)``` = **Imlerith Berserk Sweeping Strikes**
   - ```W key + Special Attack (Whirl)``` = **Imlerith Berserk Single Strike**
 #### Aard
 - ```Light Attack``` = **Dettlaff/Bruxae Vampire Single Strikes**
    - ```W key + Light Attack``` = **Dettlaff Vampire Combo Attacks**
 - ```Heavy Attacks``` = **1-Hand-Axe/1-Hand-Mace Single Strikes**
    - ```W key + Heavy Attack``` = **2-Hand-Axe Strikes**
--``` Special Attack (Whirl)``` = **Dettlaff Vampire Spinning Attack**
+- ``` Special Attack (Whirl)``` = **Dettlaff Vampire Spinning Attack**
   - ```W key + Special Attack (Whirl)``` = **Dettlaff Vampire Dash Strike**
  
  ##### [Return to Index](#index)
