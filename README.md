@@ -395,6 +395,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Disclaimer: I don't use this version personally.
 - Ghost mode merges fine.
 - Not sure about EE.
+- Magic Spells has a few incompatibilities, like weapon buffs. This requires adding code to scripts within Magic Spells to fix this. 
 
  <div align="right">
   
