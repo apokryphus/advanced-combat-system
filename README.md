@@ -11,7 +11,11 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
  <p align="center">
   Video showcasing a previous version of the mod.
  </p>
- 
+
+## REQUIREMENTS
+- Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
+- A PC not made out of wood. 
+
 ## INSTALLATION
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
