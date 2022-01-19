@@ -61,7 +61,8 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 ### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](#9-using-custom-weapons-from-vanilla-game-or-other-mods-1)
 ### [10. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
 ### [11. COMPATIBILITY](#11-compatibility-1)
-### [12. CONTACT ME](#12-contact-me-1)
+### [12. Q&A](#12-q&a-1)
+### [13. CONTACT ME](#13-contact-me-1)
 </div>
 
 ## 1. FISTS
@@ -401,7 +402,29 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
   
   </div>
   
-## 12. CONTACT ME
+## 12. Q&A
+### Is this mod considered lore friendly and immersive?
+- Very.
+
+### Are you lying?
+- Yes.
+
+ ### Can I install or uninstall this mod mid game?
+- Yes.
+
+### How easy is this to merge with other mods?
+- In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
+
+### Can you make a version with the magic stuff?
+- Maybe.
+  
+ <div align="right">
+  
+ ##### [Return to Index](#index)
+  
+  </div>
+  
+## 13. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
