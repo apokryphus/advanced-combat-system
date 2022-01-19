@@ -415,8 +415,8 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 ### How easy is this to merge with other mods?
 - In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
 
-### Can you make a version with the magic stuff?
-- Maybe.
+### Can you make a version withot the magic stuff?
+- Maybe. Depends on my mood.
   
  <div align="right">
   
