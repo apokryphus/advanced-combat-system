@@ -6,10 +6,19 @@ Enables the player to use a wide variety of NPC animations and abilities, both i
 <p align="center">
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Puc5b5c0lWc
 " target="_blank"><img src="http://img.youtube.com/vi/Puc5b5c0lWc/0.jpg" 
-alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
+alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
   </p>
  <p align="center">
   Video showcasing a previous version of the mod.
+ </p>
+
+<p align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=ULYKfVfKf-k
+" target="_blank"><img src="http://img.youtube.com/vi/ULYKfVfKf-k/0.jpg" 
+alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
+  </p>
+ <p align="center">
+ My personal version, with Shades of Iron and Magic Spells assets integrated into it.
  </p>
 
 ## REQUIREMENTS
