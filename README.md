@@ -1,2 +1,286 @@
 # advanced-combat-system
 Witcher 3 combat overhaul mod
+
+/// INSTALLATION ///
+
+This is a test version. It is incomplete in many areas and subject to change in many more. 
+
+Place dlcACS in dlc folder, mod_ACS and mod_ACS_Effects in mods folder. 
+Run script merger. 
+
+mod_ACS_Effects is OPTIONAL. Mod works without it, but some attacks won't have effects to them. 
+It replaces player.w2ent, and this version does not come with compatibility edits for stuff like E3 Quen.
+If you do use it, remember to set priority for it over other mods. 
+
+Ask me for the compatibility version for E3 Quen if you want it. 
+
+mod_ACS_JumpExtend is also optional. It increases the player's jump height by about 15 meters. 
+Jumping while sprinting will jump further and higher than jumping while idle. 
+Jumping while sliding will jump the furthest. 
+Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
+Or do, if you enjoy watching Geralt fly off screen every time he jumps. 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// FISTS ///
+
+Completely replaced by vampire claw attacks, regardless of sign.
+
+/// ARMED ///
+
+Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons. 
+
+Light attacks switch to [primary weapons], heavy attacks switch to [secondary weapons].
+
+// Default Weapons //
+Default weapons included within ACS are split between silver and steel versions, based on whether equipped weapon is silver or steel. 
+
+Weapons evolve according to equipped weapon's level and rarity.
+
+Weapon level 1-10 OR Common type weapons = Lvl 1 arsenal
+Weapon level 11-20 AND rarity above Common = Lvl 2 arsenal
+Weapon level 21+ AND rarity equal to or above Relic = Lvl 3 arsenal
+
+Igni sign shows actual/real weapon equipped.
+
+// Movesets //
+
+Igni = Default Geralt Attacks
+
+Quen Light Attacks = Olgierd/1-hand-sword
+Quen Heavy Attacks = Spear/Staff
+
+Axii Light Attacks = Eredin/2-hand-sword
+Axii Heavy Attacks = Gregoire de Gorgon
+
+Yrden Light Attacks = Imlerith/Caranthir
+Yrden Heavy Attacks = Hammer
+
+Aard Light Attacks = Dettlaff/Bruxa
+Aard Heavy Attacks = Axe
+
+All weapon damage is based on currently equipped weapon in inventory. 
+
+Select weapons have increased range. 
+
+Quen, Axii, Yrden, Aard each have a special attack, replacing Whirl. Requires Whirl to use.
+
+Rend remains unchanged. I like it. This might change in the future.
+
+Holding down W key while attacking with light attacks, heavy attacks, or special attacks will alter attack moveset. 
+
+Range of opponent will also alter attack moveset (ie. holding down W while attacking with Axii heavy attacks at close range will slap your target)
+
+/// COMBO SYSTEM /// 
+
+Successfully damaging an enemy while holding a primary weapon in a specific stance will prime the enemy for a detonation effect, which will be activated upon successfully damaging the enemy with a subsequent attack while holding the secondary weapon.
+This works both ways for all signs except for Igni, meaning that attacks while holding the secondary weapon will also prime the enemy for a detonation effect, which will be detonated upon attacking while holding the primary weapon.
+
+Enemies need to be primed again after detonating an effect.
+
+// Igni //
+Light attack/Any attack action after attacking with light attack:
+- Passive: None.
+- Primes enemy.
+- Detonation effect: None.
+
+Heavy attack/Any attack action after attack with heavy attack: 
+- Passive: None.
+- Does not prime enemy.
+- Detonation: Detonates an explosion in a small radius, blasting enemies back and burning them. 
+
+// Axii //
+Primary weapon: 
+- Passive: Attacks have a chance to apply slowdown frost. 
+- Primes enemy.
+- Detonation: Calls down frost orbs from the sky that target enemies in a small radius, dealing damage and applying a slowdown frost debuff to enemies.
+
+Secondary weapon: 
+- Passive: Attacks have a chance to apply slowdown frost. 
+- Primes enemy.
+- Detonation: Freezes enemies in a small radius around the player.
+
+// Aard //
+Primary weapon: 
+- Passive: Attacks grant life-steal equal to 5% of damage dealt.
+- Primes enemy.
+- Detonation: Attack grants life-steal equal to 50% of damage dealt, and infects enemies with poison in a small radius.
+
+Secondary weapon: 
+- Passive: Attacks have a chance to apply slowdown frost. 
+- Primes enemy.
+- Detonation: Explosion that causes confusion to enemies in a small radius.
+
+// Quen //
+Primary weapon: 
+- Passive: Attacks cause bleeding and have a chance to apply blindness.
+- Primes enemy.
+- Detonation: Summons a sand storm that applies blindness to enemies in a small radius.
+
+Secondary weapon: 
+- Passive: Attacks have a chance to slow enemies.
+- Primes enemy.
+- Detonation: Summons a sand pillar that applies paralysis to enemies in a small radius.
+
+// Yrden //
+Primary weapon: 
+- Passive: Attacks stagger enemies.
+- Primes enemy.
+- Detonation: Calls down magic missiles from the sky that target enemies in a small radius, dealing damage and applying a health drain debuff (I don't really know what this debuff does tbh).
+
+Secondary weapon: 
+- Passive: Attacks apply knockdown.
+- Primes enemy.
+- Detonation: Calls down lightning and blasts enemies away in a small radius.
+
+
+/// REND SYSTEM ///
+Releasing rend while holding secondary weapons have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
+Requires the rend skill to use. 
+
+Igni:
+Releases a single Ifrit golem's fire line in front of the player on first cast, burning and dealing minor damage to all enemies it comes into contact. 
+Subsequent rends increase the number of fire lines, the second increasing to three, and the third increasing to five. 
+Resets back to one after the third rend. 
+
+Axii:
+Releasss a single Eredin's ice line in front of the player on first cast, slowing and dealing minor damage to all enemies it comes into contact with, with a chance of freezing the enemy. 
+Subsequent rends increase the number of ice lines, the second increasing to three, and the third increasing to five. The chance of freezing increases with the increase of ice lines. 
+Resets back to one after the third rend. 
+
+Aard:
+Releasss a single stone golem's rock line in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
+Subsequent rends increase the number of rock lines, the second increasing to three, and the third increasing to five.
+Resets back to one after the third rend. 
+
+Quen:
+Causes giant Leshen roots to erupt in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
+Subsequent rends increase the number of roots, the second increasing to three, and the third increasing to five.
+Resets back to one after the third rend. 
+
+Yrden:
+Releasss a single cloud giant's shockwave in front of the player on first cast, knocking down and dealing minor damage to all enemies it comes into contact with. 
+Subsequent rends increase the number of shockwaves, the second increasing to three, and the third increasing to five.
+Resets back to one after the third rend. 
+
+/// GUARD ///
+
+Igni + W key + Guard = Counter-swing
+Aard + W key + Guard = Ethereal/Bruxa Shout
+Quen + W key + Guard = Pocket sand
+Yrden + W key + Guard = Single target lightning
+Axii + W key + Guard = Stab/Kick-swing
+
+W key + Doubletap Guard = Kick
+S key + Doubletap Guard (After using shades summon) = Push
+S key + Guard = Punch
+
+/// TAUNT ///
+Releasing guard or switching weapons (signs) while standing still with no movement keys held (WASD) will perform a taunt. 
+Taunts change based on what weapon is held. 
+
+Enemies in a 10 meter radius around the player will be taunted.
+
+After 0.5 seconds, enemies will be taunted one by one in 0.5 second intervals, increasing their moral, stamina, and focus. 
+Enemies will increase their speed anywhere from 25% to 75%. 
+This is marked when they stagger and play the demonic possession effect (black swirling effect around their heads). 
+They will also receive a small health regen amongst other things. 
+
+Only the first taunt will stagger enemies.
+Subsequent taunts on a taunted enemy will only replenish their morale, focus, and stamina.
+
+/// MOVEMENT ///
+
+// Exploration //
+Doubletap Sprint = Bruxa dash
+Witcher sense + Sprint = Wraith mode
+
+// Combat //
+W key + Doubletap Sprint = Bruxa leap attack  
+S key + Dodge = Bruxa dodge slide 
+S key + Roll = Wild Hunt Blink 
+Doubletap S key = Bruxa dodge back center 
+Doubletap A key = Bruxa dodge back left 
+Doubletap D key = Bruxa dodge back right 
+
+Bruxa dash to dash out of wraith mode.
+
+Bruxa dash while in exploration will dash further. 
+
+Bruxa leap attack is capable of targeting airborn enemies.
+Using the leap attack while in the air and targeting an enemy on the ground will send out a shock wave, erupting stone pillars around the target and blasting enemies back in a 6 meter radius. 
+During certain rainy weather conditions, the leap attack will addtionally call down lightning strikes on enemies within a 6 meter radius, while leaving behind an electrical field that burns enemies.
+
+Wild Hunt Blink will occasionally freeze enemies based on timing and chance.
+
+// Dodges //
+Player's regular dodges have special effects and apply negative buffs on enemies:
+
+Igni Dodge: Small chance to applying burning.
+Axii Dodge: Small chance to apply slowdown freeze.
+Quen Dodge: Small chance to cause confusion.
+Aard Dodge: Small chance to cause bleeding.
+Yrden Dodge: Small chance to cause paralysis.
+
+Negative buffs do not stack on themselves, but will stack on each other.
+
+/// SPECIAL ABILITIES ///
+
+// Bruxa bite //
+Double tap W while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
+Bruxa bite deals 200 flat damage and returns this value to the player as health.
+Doubletap sprint to release victim.
+
+Hijack:
+Bruxa bite is capable of hijacking certain enemy movements.
+
+Current enemy list:
+Harpies
+Siren
+Wyvern
+Dracolizard
+Gryphon
+Basilisk
+Garkain
+Shaelmaar
+
+Controls:
+Holding down W while pressing A or D will nudge the creature to go either left or right. 
+Release W to nudge it forward. 
+
+Be aware, the creature will attempt to fight you for control. 
+
+Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.
+
+// Caretaker shades //
+
+S + Double tap Guard will summon Caretaker shades around the player in a wide radius. Shades will distract enemies, as other enemies will attempt to kill them, while also provide an extra source of life-steal for claws. 
+
+Shades do not attack, and will die in one hit. 
+
+Shades will automatically move towards the player if player is nearby, or move towards the closest enemy.
+ 
+Shades summoning can only be used once per combat, being replaced by a push/shove attack after being used.
+
+The player will summon more shades when at less than 50% health. 
+
+The higher the level the player is, the more shades will be summoned. 
+
+Lvl 10 or less : 1 shade normal, 2 shades at 50% or less health.
+Lvl 11 to 15: 2 shades normal, 5 shades at 50% or less health.
+Lvl 16 to 20: 3 shades normal, 7 shades at 50% or less health.
+Lvl 21 to 25: 5 shades normal, 10 shades at 50% or less health.
+Lvl 26 or more: 7 shades normal, 15 shades at 50% or less health.
+Lvl 26 or more: 7 shades normal, 15 shades at 50% or less health.
+
+/// USING CUSTOM WEAPONS ///
+Open ACS_Primary_Weapon_Switch.ws or ACS_Secondary_Weapon_Switch.ws in the main local folder of mod_ACS.
+Do your best.
+
+/// COOLDOWN ADJUSTMENT ///
+Open mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws and follow instructions to further customize cooldowns to your liking. 
+
+/// COMPATIBILITY ///
+Disclaimer: I don't use this version personally.
+Okay so I finally decided to try merging this thing with Ghost mode, and surprisingly it works fine. 
+Not sure about EE.
