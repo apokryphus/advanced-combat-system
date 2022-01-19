@@ -34,18 +34,18 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 
 # INDEX
 
-### [1. FISTS](##1-fists)
-### [2. ARMED](##2-armed)
-### [3. ELEMENTAL COMBO SYSTEM](##3-elemental-combo-system)
-### [4. ELEMENTAL REND SYSTEM](##4-elemental-rend-system)
-### [5. GUARD SKILLS](##5-guard-skills)
-### [6. TAUNT SYSTEM](##6-taunt-system)
-### [7. MOVEMENT SYSTEM](##7-movement-system)
-### [8. SPECIAL ABILITIES](##8-special-abilities)
-### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](##9-using-custom-weapons-from-vanilla-game-or-other-mods)
-### [10. COOLDOWN ADJUSTMENT](##10-cooldown-adjustment)
-### [11. COMPATIBILITY](##11-compatibility)
-### [12. CONTACT ME](##12-contact-me)
+### [1. FISTS](##1-fists-1)
+### [2. ARMED](##2-armed-1)
+### [3. ELEMENTAL COMBO SYSTEM](##3-elemental-combo-system-1)
+### [4. ELEMENTAL REND SYSTEM](##4-elemental-rend-system-1)
+### [5. GUARD SKILLS](##5-guard-skills-1)
+### [6. TAUNT SYSTEM](##6-taunt-system-1)
+### [7. MOVEMENT SYSTEM](##7-movement-system-1)
+### [8. SPECIAL ABILITIES](##8-special-abilities-1)
+### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](##9-using-custom-weapons-from-vanilla-game-or-other-mods-1)
+### [10. COOLDOWN ADJUSTMENT](##10-cooldown-adjustment-1)
+### [11. COMPATIBILITY](##11-compatibility-1)
+### [12. CONTACT ME](##12-contact-me-1)
 </div>
 
 ## 1. FISTS
