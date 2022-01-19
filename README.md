@@ -1,11 +1,20 @@
 # advanced-combat-system
-Witcher 3 combat overhaul mod. 
- Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
-
-Video showcasing a previous version of the mod.
-
-[![Video Link](https://img.youtube.com/vi/Puc5b5c0lWc/0.jpg)](https://www.youtube.com/watch?v=Puc5b5c0lWc)
-
+<p align="center">
+ Witcher 3 combat overhaul mod. 
+   </p>
+<p align="center">
+Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
+  </p>
+  
+<p align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Puc5b5c0lWc
+" target="_blank"><img src="http://img.youtube.com/vi/Puc5b5c0lWc/0.jpg" 
+alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
+  </p>
+ <p align="center">
+  Video showcasing a previous version of the mod.
+ </p>
+ 
 ## INSTALLATION
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
