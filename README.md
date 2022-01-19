@@ -21,7 +21,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 
 ### mod_ACS_Effects is OPTIONAL. Mod works without it, but some attacks/abilities won't have effects to them.
 - It replaces player.w2ent, and this version does not come with compatibility edits for stuff like ```E3 Quen```.
-- If you do use it, remember to set priority for it over other mods. 
+- If you do use it, remember to set priority for it over other mods either manually or through script merger.
 ### Compatibility edits will not be publicly released.
 - Ask me for the compatibility version for E3 Quen if you want it.
 ### mod_ACS_JumpExtend is also optional. It increases the player's jump height by about 15 meters. 
