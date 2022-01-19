@@ -49,7 +49,11 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 </div>
 
 ## 1. FISTS
-- Completely replaced by vampire claw attacks, regardless of sign.
+Completely replaced by vampire claw attacks, regardless of sign.
+- ```Light attacks``` are single vampire strikes. 
+- ```Heavy attacks``` are heavy vampire strikes.
+- ```W + light attack``` are vampire claw combos.
+- ```W + heavy attack``` are vampire dash attacks.
 ## 2. ARMED
 Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
