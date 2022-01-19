@@ -103,7 +103,7 @@ Default weapons included within ACS are split between silver and steel versions,
    - ```W key + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
 - ```Heavy Attacks``` = **Gregoire de Gorgon Single Strikes**
    - ```W key + Heavy Attack``` = **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
-- ``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes*
+- ``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes**
   - ```W key + Special Attack (Whirl)``` = **Caretaker Charge Attack (Releases a shockwave at the end)**
 #### Yrden
 - ```Light Attack``` = **Imlerith/Caranthir Single Strikes**
