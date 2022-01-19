@@ -64,6 +64,9 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="360" border="10" /></a>
 <p align="center">
  11. COMPATIBILITY
 </p>
+<p align="center">
+ 11. CONTACT ME
+</p>
   
 ## 1. FISTS
 - Completely replaced by vampire claw attacks, regardless of sign.
@@ -308,3 +311,5 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Disclaimer: I don't use this version personally.
 - Ghost mode merges fine.
 - Not sure about EE.
+## 11. CONTACT ME
+- Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
