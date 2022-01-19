@@ -54,6 +54,8 @@ Completely replaced by vampire claw attacks, regardless of sign.
 - ```Heavy attacks``` are heavy vampire strikes.
 - ```W + light attack``` are vampire claw combos.
 - ```W + heavy attack``` are vampire dash attacks.
+ 
+##### [Return to Index](#index)
 ## 2. ARMED
 Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
@@ -91,6 +93,8 @@ Default weapons included within ACS are split between silver and steel versions,
 #### Aard
 - Light Attacks = **Dettlaff/Bruxa**
   - Heavy Attacks = **Axe**
+ 
+ ##### [Return to Index](#index)
 ## 3. ELEMENTAL COMBO SYSTEM
 ``Successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
 
@@ -142,6 +146,8 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Passive: Attacks apply knockdown.
   - Primes enemy.
   - Detonation: Calls down ``lightning`` and blasts enemies away in a small radius.
+ 
+##### [Return to Index](#index)
 ## 4. ELEMENTAL REND SYSTEM
 Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 Requires the rend skill to use. 
@@ -166,6 +172,8 @@ Requires the rend skill to use.
 - Releasss a single ``cloud giant's shockwave`` in front of the player on first cast, knocking down and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of shockwaves, the second increasing to ``three``, and the third increasing to ``five``.
   - Resets back to one after the third rend. 
+
+##### [Return to Index](#index)
 ## 5. GUARD SKILLS
 ### Igni
 ```W key + Guard``` = Counter-swing
@@ -183,6 +191,8 @@ Requires the rend skill to use.
 ```S key + Doubletap Guard (After using shades summon) ```= Push
 
 ``` S key + Guard``` = Punch
+
+##### [Return to Index](#index)
 ## 6. TAUNT SYSTEM
 ```Releasing guard``` or ```switching weapons (signs)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 - Taunts change based on what weapon is held. 
@@ -193,6 +203,8 @@ Requires the rend skill to use.
 - They will also receive a small ```health regen``` amongst other things. 
 - Only the first taunt will ```stagger``` enemies.
 - Subsequent taunts on a taunted enemy will only replenish their ```morale, focus, and stamina```.
+
+##### [Return to Index](#index)
 ## 7. MOVEMENT SYSTEM
 ### Bruxa Dash
 ```Doubletap Sprint```
@@ -245,6 +257,8 @@ The player's regular dodges have special effects and apply negative buffs on ene
 - Small chance to cause bleeding.
 #### Yrden
 - Small chance to cause paralysis.
+
+##### [Return to Index](#index)
 ## 8. SPECIAL ABILITIES
 ### Bruxa bite
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
@@ -286,14 +300,24 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - 7 shades normal, 15 shades at 50% or less health.
 #### Lvl 26 or more: 
 - 7 shades normal, 15 shades at 50% or less health.
+
+##### [Return to Index](#index)
 ## 9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
 - Open ```mod_ACS/content/scripts/local/ACS_Primary_Weapon_Switch.ws``` or ```mod_ACS/content/scripts/local/ACS_Secondary_Weapon_Switch.ws```.
 - Do your best.
+
+##### [Return to Index](#index)
 ## 10. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
+
+##### [Return to Index](#index)
 ## 11. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
 - Ghost mode merges fine.
 - Not sure about EE.
+
+##### [Return to Index](#index)
 ## 12. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
+
+##### [Return to Index](#index)
