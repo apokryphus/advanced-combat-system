@@ -113,8 +113,8 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special attack``, replacing ``Whirl``. ```Requires Whirl to use```.
-- ```Holding down W key```, while attacking with ``light attacks``, ``heavy attacks``, or ``special attacks`` will alter attack moveset. 
-- ```Range of opponent```, will also alter attack moveset (ie. holding down W while attacking with Axii heavy attacks at close range will slap your target).
+- ```Holding down W key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special attacks`` will alter attack moveset. 
+- ```Range of opponent``` will also alter attack moveset (ie. holding down W while attacking with Axii heavy attacks at close range will slap your target).
 #### - Igni
 - ```Light Attack``` = **Default Geralt light attacks**
 - ```Heavy Attack``` = **Default Geralt heavy attacks**
