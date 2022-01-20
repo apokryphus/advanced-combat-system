@@ -1,7 +1,12 @@
+<div align="center">
+
 # advanced-combat-system
-Combat overhaul mod for The Witcher 3. 
+  
+  Combat overhaul mod for The Witcher 3. 
 
 Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
+  
+  </div>
 
 <p align="center">
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Puc5b5c0lWc
