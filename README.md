@@ -32,15 +32,10 @@ alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Place ```dlcACS``` in dlc folder.
-- Place ```mod_ACS``` and ```mod_ACS_Effects``` in mods folder. 
+- Place ```mod_ACS``` in mods folder. 
 - ***Run script merger.***
 
-### mod_ACS_Effects is OPTIONAL. Mod works without it, but some attacks/abilities won't have effects to them.
-- It replaces player.w2ent, and this version does not come with compatibility edits for stuff like ```E3 Quen```.
-- If you do use it, remember to set priority for it over other mods either manually or through script merger.
-### Compatibility edits will not be publicly released.
-- Ask me for the compatibility version for E3 Quen if you want it.
-### mod_ACS_JumpExtend is also optional. It increases the player's jump height by about 15 meters. 
+### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
 - Jumping while sliding will jump the furthest. 
 - Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
