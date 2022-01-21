@@ -422,20 +422,32 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
   </div>
   
 ## 12. Q&A
-### Is this mod considered lore friendly and immersive?
+### 1. Is this mod considered lore friendly and immersive?
 - Very.
 
-### Are you lying?
+### 2. Are you lying?
 - Yes.
 
- ### Can I install or uninstall this mod mid game?
+ ### 3. Can I install or uninstall this mod mid game?
 - Yes.
 
-### How easy is this to merge with other mods?
+### 4. How easy is this to merge with other mods?
 - In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
 
-### Can you make a version without the magic stuff?
+### 5. I heard/experienced some animation mods cause long loading screens. Does this mod do that?
+- No. The reason that some animation mods cause long loading screens is because they edit a filed called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
+
+### 6. Does this mod cause that weird twitching behavior for guards holding polearm weapons common to some animation mods?
+- No. The reason for that is because of the method those animation mods edit the way the player holds their weapon. This mod does not do that. 
+
+### 7. Will this mod affect Ciri's animations?
+- No. The extra animations are mounted onto Geralt only. Ciri's animations are untouched. I'd consider adding more animations to her, but the player doesn't get to play as her very often anyways, so what's the point?
+
+### 8. Can you make a version without the magic stuff?
 - Maybe. Depends on my mood.
+
+### 9. Can you make The Witcher 3 E3/VGX 2013 animations?
+- I will kill you.
   
  <div align="right">
   
