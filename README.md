@@ -109,8 +109,7 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
    - Weapon level 11-20 ***AND*** weapon rarity above ``Common``.
 - **Tier III Weapons**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
- 
- [Imgur album of the weapons at Tier III](https://imgur.com/a/zWgAgd4)
+ <blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="//imgur.com/a/zWgAgd4">Advanced Combat System - Tier III Weapons</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
  
 ### - Movesets -
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
