@@ -435,7 +435,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
 
 ### || I heard/experienced some animation mods cause long loading screens. Does this mod do that?
-- No. The reason that some animation mods cause long loading screens is because they edit a filed called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
+- No. The reason that some animation mods cause long loading screens is because they edit a file called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
 
 ### || Does this mod cause that weird twitching behavior for guards holding polearm weapons common to some animation mods?
 - No. The reason for that is because of the method those animation mods edit the way the player holds their weapon. This mod does not do that. 
