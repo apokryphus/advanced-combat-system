@@ -98,7 +98,7 @@ Completely replaced by vampire claw attacks, regardless of sign.
 Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
-### - Default Weapons -
+### || Default Weapons ||
 - Default weapons included within ACS are split between silver and steel versions, based on whether equipped weapon is silver or steel. 
 - Weapons ```evolve``` according to equipped weapon's level and rarity.
 - Igni sign shows actual/real weapon equipped.
@@ -111,7 +111,7 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
  <blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="//imgur.com/a/zWgAgd4">Advanced Combat System - Tier III Weapons</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
  
-### - Movesets -
+### || Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special attack``, replacing ``Whirl``. ```Requires Whirl to use```.
@@ -161,7 +161,7 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 This works both ways for all signs except for Igni, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
 
 Enemies need to be ``primed`` again after detonating an effect.
-### - Igni -
+### || Igni ||
 - Light attack/Any attack action after attacking with light attack:
   - Passive: None.
   - Primes enemy.
@@ -170,7 +170,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Passive: None.
   - Does not prime enemy.
   - Detonation: Detonates an ``explosion`` in a small radius, blasting enemies back and ``burning`` them. 
-### - Axii -
+### || Axii ||
 - Primary weapon:
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
@@ -179,7 +179,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
   - Detonation: ``Freezes`` enemies in a small radius around the player.
-### - Aard -
+### || Aard ||
 - Primary weapon:
   - Passive: Attacks grant ``life-steal`` equal to 5% of damage dealt.
   - Primes enemy.
@@ -188,7 +188,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
   - Detonation: Detonates an ``explosion`` that causes ``confusion`` to enemies in a small radius.
-### - Quen -
+### || Quen ||
 - Primary weapon:
   - Passive: Attacks cause ``bleeding`` and have a chance to apply ``blindness``.
   - Primes enemy.
@@ -197,7 +197,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Passive: Attacks have a chance to ``slow`` enemies.
   - Primes enemy.
   - Detonation: Summons a ``sand pillar`` that applies ``paralysis`` to enemies in a small radius.
-### - Yrden -
+### || Yrden ||
 - Primary weapon:
   - Passive: Attacks ``stagger`` enemies.
   - Primes enemy.
@@ -216,24 +216,24 @@ Enemies need to be ``primed`` again after detonating an effect.
 ## 4. ELEMENTAL REND SYSTEM
 Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 Requires the rend skill to use. 
-### - Igni -
+### || Igni ||
 - Releases a single ``Ifrit golem's fire line`` in front of the player on first cast, burning and dealing minor damage to all enemies it comes into contact. 
   - Subsequent rends increase the number of fire lines, the second increasing to ``three``, and the third increasing to ``five``. 
   - Resets back to one after the third rend. 
-### - Axii -
+### || Axii ||
 - Releasss a single ``Eredin's ice line`` in front of the player on first cast, slowing and dealing minor damage to all enemies it comes into contact with, with a chance of freezing the enemy. 
   - Subsequent rends increase the number of ice lines, the second increasing to ``three``, and the third increasing to ``five``. 
   - The chance of freezing increases with the increase of ice lines. 
   - Resets back to one after the third rend. 
-### - Aard -
+### || Aard ||
 - Releasss a single ``stone golem's rock line`` in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of rock lines, the second increasing to ``three``, and the third increasing to ``five``.
   - Resets back to one after the third rend. 
-### - Quen -
+### || Quen ||
 - Causes giant ``Leshen roots`` to erupt in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of roots, the second increasing to three, and the third increasing to five.
   - Resets back to one after the third rend. 
-### - Yrden -
+### || Yrden ||
 - Releasss a single ``cloud giant's shockwave`` in front of the player on first cast, knocking down and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of shockwaves, the second increasing to ``three``, and the third increasing to ``five``.
   - Resets back to one after the third rend. 
@@ -245,17 +245,17 @@ Requires the rend skill to use.
   </div>
   
 ## 5. GUARD SKILLS
-### - Igni -
+### || Igni ||
 ```W key + Guard``` = Counter-swing
-### - Aard -
+### || Aard ||
 ```W key + Guard``` = Ethereal/Bruxa Shout
-### - Quen -
+### || Quen ||
 ```W key + Guard``` = Olgierd's pocket sand
-### - Yrden -
+### || Yrden ||
 ```W key + Guard``` = Single target lightning
-### - Axii -
+### || Axii ||
 ```W key + Guard``` = Stab/Kick-swing
-### - Any Sign -
+### || Any Sign ||
 ``` W key + Doubletap Guard``` = Kick
 
 ```S key + Doubletap Guard (After using shades summon) ```= Push
@@ -286,37 +286,37 @@ Requires the rend skill to use.
   </div>
   
 ## 7. MOVEMENT SYSTEM
-### - Bruxa Dash -
+### || Bruxa Dash ||
 ```Doubletap Sprint```
 - Dashes a fixed distance forward, alternating a little bit left or right.
 - Bruxa dash serves as a ``reset button`` to many things. Use it to dash out of ``wraith mode``, ``bruxa bite``, or generally anything you might encounter. 
 - Bruxa dash while in exploration will dash further than dashing in combat. 
 - Bruxa dash distance is reduced while the player is interior.
-### - Wraith Mode -
+### || Wraith Mode ||
 ```Witcher sense + Sprint```
 - Can only be used out of combat.
 - Enables the player to ignore collision and fly through the air.
 - Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game. 
-### - Bruxa Leap Attack -
+### || Bruxa Leap Attack ||
 ```W key + Doubletap Sprint```
 - Can only be used in combat.
 - Leaps at your targeted enemy, dealing damage.
 - Bruxa leap attack is capable of targeting airborn enemies.
 - Leaping from the air onto enemies will send out a ``shockwave around the enemy``, erupting ``stone pillars`` and blasting enemies back in a 6-meter radius around the player.
 - Leaping from the air onto enemies during certain ``rainy weather conditions`` will additionally call down ``lighting strikes`` upon enemies, and leave an ``electrical field`` that burns enemies in a 6-meter radius around the player.
-### - Bruxa Dodge Slide -
+### || Bruxa Dodge Slide ||
 ```S key + Dodge```
 - Can only be used in combat.
 - Slides the player back a fixed distance away from the targeted enemy.
 - Replaced with a different type of dodge when on cooldown.
-### - Wild Hunt Blink -
+### || Wild Hunt Blink ||
 ```S key + Roll```
 - Eredin's short range teleport.
 - Can only be used in combat.
 - Teleports the player behind your targeted enemy. 
 - Wild Hunt Blink will occasionally freeze enemies based on timing and chance.
 - Don't use this while near the edge of a terrain. Might teleport you somewhere you don't want to be.
-### - Bruxa Dodges -
+### || Bruxa Dodges ||
 ```Doubletap S key``` = Bruxa dodge back center
 
 ```Doubletap A key``` = Bruxa dodge back left
@@ -324,7 +324,7 @@ Requires the rend skill to use.
 ```Doubletap D key``` = Bruxa dodge back right
 
 - Nothing really to say about these. Dodge like a vampire.
-### - Regular Dodges -
+### || Regular Dodges ||
 The player's regular dodges have special effects and apply negative buffs on enemies.
 - Negative buffs do not stack on themselves, but will stack on each other.
 #### - Igni
@@ -345,11 +345,11 @@ The player's regular dodges have special effects and apply negative buffs on ene
   </div>
   
 ## 8. SPECIAL ABILITIES
-### - Bruxa bite -
+### || Bruxa bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 - Bruxa bite deals ```200 flat damage``` and returns this value to the player as ```health```.
 - ```Doubletap sprint``` to release victim.
-### - Hijack -
+### || Hijack ||
 Bruxa bite is capable of ```hijacking``` certain enemy movements.
 #### - Current enemy list:
 - Harpies
@@ -365,7 +365,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - ```Release W``` to nudge it forward. 
 - Be aware, the creature will attempt to fight you for control. 
 - ***Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.***
-### - Caretaker Shades -
+### || Caretaker Shades ||
 ```S + Double tap Guard``` will summon Caretaker shades around the player in a wide radius. 
 - Shades will distract enemies, as other enemies will attempt to kill them, while also provide a source of ``life-steal`` for claws. 
 - Shades do not attack, and will die in one hit. 
@@ -422,31 +422,31 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
   </div>
   
 ## 12. Q&A
-### 1. Is this mod considered lore friendly and immersive?
+### || Is this mod considered lore friendly and immersive?
 - Very.
 
-### 2. Are you lying?
+### || Are you lying?
 - Yes.
 
- ### 3. Can I install or uninstall this mod mid game?
+ ### || Can I install or uninstall this mod mid game?
 - Yes.
 
-### 4. How easy is this to merge with other mods?
+### || How easy is this to merge with other mods?
 - In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
 
-### 5. I heard/experienced some animation mods cause long loading screens. Does this mod do that?
+### || I heard/experienced some animation mods cause long loading screens. Does this mod do that?
 - No. The reason that some animation mods cause long loading screens is because they edit a filed called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
 
-### 6. Does this mod cause that weird twitching behavior for guards holding polearm weapons common to some animation mods?
+### || Does this mod cause that weird twitching behavior for guards holding polearm weapons common to some animation mods?
 - No. The reason for that is because of the method those animation mods edit the way the player holds their weapon. This mod does not do that. 
 
-### 7. Will this mod affect Ciri's animations?
+### || Will this mod affect Ciri's animations?
 - No. The extra animations are mounted onto Geralt only. Ciri's animations are untouched. I'd consider adding more animations to her, but the player doesn't get to play as her very often anyways, so what's the point?
 
-### 8. Can you make a version without the magic stuff?
+### || Can you make a version without the magic stuff?
 - Maybe. Depends on my mood.
 
-### 9. Can you make The Witcher 3 E3/VGX 2013 animations?
+### || Can you make The Witcher 3 E3/VGX 2013 animations?
 - I will kill you.
   
  <div align="right">
