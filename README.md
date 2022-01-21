@@ -135,7 +135,7 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 - ``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes**
   - ```W key + Special Attack (Whirl)``` = **Caretaker Charge Attack (Releases a shockwave at the end)**
 #### - Yrden
-- ```Light Attack``` = **Imlerith/Caranthir Single Strikes**
+- ```Light Attack``` = **Imlerith/Caranthir/1-Hand-Mace Single Strikes**
    - ```W key + Light Attack``` = **Imlerith/Caretaker Sweeping Strikes**
 - ```Heavy Attacks``` = **1-Hand-Hammer Single Strikes**
    - ```W key + Heavy Attack``` = **2-Hand-Hammer Strikes**
