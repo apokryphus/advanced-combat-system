@@ -103,12 +103,15 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 - Weapons ```evolve``` according to equipped weapon's level and rarity.
 - Igni sign shows actual/real weapon equipped.
 #### - Weapon Tier System
-- **Level 1 Weapons**
+- **Tier I Weapons**
    - Weapon level 1-10 ***OR*** ``Common`` type weapons.
-- **Level 2 Weapons**
+- **Tier II Weapons**
    - Weapon level 11-20 ***AND*** weapon rarity above ``Common``.
-- **Level 3 Weapons**
+- **Tier III Weapons**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
+ 
+ [Imgur album of the weapons at Tier III](https://imgur.com/a/zWgAgd4)
+ 
 ### - Movesets -
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
