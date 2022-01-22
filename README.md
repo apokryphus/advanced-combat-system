@@ -385,6 +385,27 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 #### - Player level 26 or more 
 - 7 shades normal, 15 shades at 50% or less health.
 
+### || Aspect of the Toad ||
+```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```close range``` will cause the player to channel a fraction of the power of the Toad, vomiting on all enemies in a small area in front of the player.
+- Can only be used while the player is on the ```ground```.
+- Toad vomit deals current health percentage damage as ```poison damage```, but ```executes``` the enemy at a certain health threshold.
+- Damage is capable of generating critical hits, based on player's critical hit chance.
+
+### || Aspect of the Djinn (Single Target) ||
+```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel a fraction of the power of a djinn and shoot a beam of lightning at the target.
+- Can only be used while the player is on the``` ground```.
+- Extra targets at close range and close to the beam of lightning will be hit.
+- Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
+- Targets have a small chance to burn.
+- Damage is capable of generating critical hits, based on player's critical hit chance.
+
+### || Aspect of the Djinn (Multi Target) ||
+```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
+- Can only be used while the player is in the ```air```.
+- Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
+- Targets have a small chance to burn.
+- Damage is capable of generating critical hits, based on player's critical hit chance.
+
  <div align="right">
   
 ##### [Return to Index](#index)
