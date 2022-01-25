@@ -270,7 +270,7 @@ Requires the rend skill to use.
   </div>
   
 ## 6. TAUNT SYSTEM
-```Releasing guard``` or ```switching weapons (signs)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
+```Switching weapons (signs, default is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 - Taunts change based on what weapon is held. 
 - Enemies in a ```10 meter radius``` around the player will be taunted.
 - After 0.5 seconds, enemies will be taunted one by one in 0.5 second intervals, increasing their ```moral, stamina, and focus```. 
