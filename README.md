@@ -40,6 +40,23 @@ alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
 - Place ```mod_ACS``` in mods folder. 
 - ***Run script merger.***
 
+### Weapons
+ACS currently has two files for primary weapons right now. The default primary weapon file, 
+
+- ```ACS_Primary_Weapon_Switch_ASCENDED_MODE```
+
+is as what the readme describes. 
+
+The second file, 
+
+- ```ACS_Primary_Weapon_Switch_BASIC_MODE```
+
+contains static vanilla weapons. 
+
+Drag and replace them in ```mod_ACS/content/scripts/local``` as you see fit.
+
+I'll make an in-game menu for this somewhere down the line. 
+
 ### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
 - Jumping while sliding will jump the furthest. 
