@@ -346,6 +346,12 @@ The player's regular dodges have special effects and apply negative buffs on ene
   </div>
   
 ## 8. SPECIAL ABILITIES
+### || Axii Shield ||
+
+Holding down the ```guard button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Primary_Weapon_Switch and following instructions. 
+
+Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
+
 ### || Bruxa bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 - Bruxa bite deals ```200 flat damage``` and returns this value to the player as ```health```.
