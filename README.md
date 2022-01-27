@@ -199,9 +199,9 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Detonation: ``Freezes`` enemies in a small radius around the player.
 ### || Aard ||
 - Primary weapon:
-  - Passive: Attacks grant ``life-steal`` equal to 5% of damage dealt.
+  - Passive: Attacks grant ``healing`` equal to 2.5% of the player's maximum health.
   - Primes enemy.
-  - Detonation: Attack grants ``life-steal`` equal to 50% of damage dealt, and infects enemies with ``poison`` in a small radius.
+  - Detonation: Attack grants ``healing`` equal to 25% of the player's maximum health, and infects enemies with ``poison`` in a small radius.
 - Secondary weapon:
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
@@ -313,7 +313,8 @@ Requires the rend skill to use.
 ### || Wraith Mode ||
 ```Witcher sense + Sprint```
 - Can only be used out of combat.
-- Enables the player to ignore collision and fly through the air.
+- Enables the player to ignore collision, phase through walls, and fly through the air.
+- Hold the jump button to fly directly upwards.
 - Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game. 
 ### || Bruxa Leap Attack ||
 ```W key + Doubletap Sprint```
@@ -364,10 +365,15 @@ The player's regular dodges have special effects and apply negative buffs on ene
   
 ## 8. SPECIAL ABILITIES
 ### || Axii Shield ||
+Holding down the ```guard button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
+- Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
+- Attack animations change into 1-hand style while Axii shield is held. 
 
-Holding down the ```guard button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Primary_Weapon_Switch and following instructions. 
-
-Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
+### || Aspect of the Hym ||
+Holding down ```guard``` while holding the Axii primary weapon will summon a hym around the player. Release guard to dismiss the hym. 
+- The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
+- An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
+- While the hym is active, all of the player's attacks gain ```extra range```. 
 
 ### || Bruxa bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
