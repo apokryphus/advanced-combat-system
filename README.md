@@ -36,7 +36,7 @@ alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
 ## INSTALLATION
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
-- Place ```dlcACS``` in dlc folder.
+- Place ```dlc_ACS``` in dlc folder.
 - Place ```mod_ACS``` in mods folder. 
 - ***Run script merger.***
 
