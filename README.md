@@ -14,20 +14,8 @@ Enables the player to use a wide variety of NPC animations and abilities, both i
 alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
   </p>
  <p align="center">
-  Video showcasing a previous version of the mod.
+  Video showcasing a previous version of the mod. Bear in mind, the mod has changed quite a bit since the video was released. 
  </p>
-
-<p align="center">
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=ULYKfVfKf-k
-" target="_blank"><img src="http://img.youtube.com/vi/ULYKfVfKf-k/0.jpg" 
-alt="ADVANCED COMBAT SYSTEM PLUS" width="640" height="480" border="10" /></a>
-  </p>
-<div align="center">
-  
- My personal version of the mod, with [Shades of Iron](https://github.com/Amasiuncula/Shades-of-Iron) and [Magic Spells](https://www.nexusmods.com/witcher3/mods/5007) assets integrated directly into it.
-  
- (Spoilers for the ending of Blood & Wine DLC)
-</div>
 
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
