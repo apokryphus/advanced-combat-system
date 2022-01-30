@@ -31,15 +31,15 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ### Weapons
 ACS currently has two files for primary weapons right now. The default primary weapon file, 
 
-- ```ACS_Primary_Weapon_Switch_ASCENDED_MODE```
+- ```ACS_Primary_Weapon_Switch_STATIC_WEAPONS.```
 
-is as what the readme describes. 
+contains static weapons for primary weapons.
 
 The second file, 
 
-- ```ACS_Primary_Weapon_Switch_BASIC_MODE```
+- ```ACS_Primary_Weapon_Switch_EVOLVING_WEAPONS ```
 
-contains static vanilla weapons. 
+contains the weapons taht are described below. 
 
 Drag and replace them in ```mod_ACS/content/scripts/local``` as you see fit.
 
