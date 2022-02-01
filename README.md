@@ -25,25 +25,9 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Place ```dlc_ACS``` in dlc folder.
-- Place ```mod_ACS``` in mods folder. 
+- Place EITHER ```mod_ACS_EVOLVING_WEAPONS```  OR  ```mod_ACS_STATIC_WEAPONS ``` in mods folder. 
+- **DO NOT put both of them in.**
 - ***Run script merger.***
-
-### Weapons
-ACS currently has two files for primary weapons right now. The default primary weapon file, 
-
-- ```ACS_Primary_Weapon_Switch_STATIC_WEAPONS.```
-
-contains static weapons for primary weapons.
-
-The second file, 
-
-- ```ACS_Primary_Weapon_Switch_EVOLVING_WEAPONS ```
-
-contains the weapons taht are described below. 
-
-Drag and replace them in ```mod_ACS/content/scripts/local``` as you see fit.
-
-I'll make an in-game menu for this somewhere down the line. 
 
 ### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
@@ -88,7 +72,9 @@ I'll make an in-game menu for this somewhere down the line.
 
 ## 1. FISTS
 Completely replaced by vampire claw attacks, regardless of sign.
-- ```Light attacks``` are single vampire strikes. 
+- Vampire claws deal 2.5% to 5% maximum health damage to humans, and 3.5% to 7% maximum health damage to monsters.
+- Attacks apply bleeding and heals for 2.5% of the player's maximum health.
+- ```Light attacks``` are light vampire strikes. 
 - ```Heavy attacks``` are heavy vampire strikes.
 - ```W + light attack``` are vampire claw combos.
 - ```W + heavy attack``` are vampire dash attacks.
@@ -422,6 +408,12 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
 - Targets have a small chance to burn.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
+
+### || Summoned Wolves ||
+Holding down ```guard``` while holding the Quen primary weapon will summon three wolves around the enemy. Release guard to dismiss the wolves. 
+
+### || Summoned Shadow Centipedes ||
+Holding down ```guard``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release guard to dismiss the centipedes. 
 
  <div align="right">
   
