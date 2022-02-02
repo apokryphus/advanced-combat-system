@@ -344,7 +344,7 @@ Holding down the ```guard button``` while holding the Axii primary weapon will g
 - Attack animations change into 1-hand style while Axii shield is held. 
 
 ### || Aspect of the Hym ||
-Holding down ```guard``` while holding the Axii primary weapon will summon a hym around the player. Release guard to dismiss the hym. 
+Double-tapping and holding down ```guard``` while holding the Axii primary weapon will summon a hym around the player. Release guard to dismiss the hym. 
 - The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
 - While the hym is active, all of the player's attacks gain ```extra range```. 
