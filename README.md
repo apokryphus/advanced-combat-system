@@ -410,10 +410,10 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
 ### || Summoned Wolves ||
-Holding down ```guard``` while holding the Quen primary weapon will summon three wolves around the enemy. Release guard to dismiss the wolves. 
+Double-tapping and holding down ```guard``` while holding the Quen primary weapon will summon three wolves around the enemy. Release guard to dismiss the wolves. 
 
 ### || Summoned Shadow Centipedes ||
-Holding down ```guard``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release guard to dismiss the centipedes. 
+Double-tapping and holding down ```guard``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release guard to dismiss the centipedes. 
 
  <div align="right">
   
