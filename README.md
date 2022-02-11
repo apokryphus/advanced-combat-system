@@ -252,7 +252,7 @@ Requires the rend skill to use.
 
 ```A key + Guard ``` = Push
 
-``` W key + Guard``` = Punch
+``` D key + Guard``` = Punch
 
  <div align="right">
   
@@ -416,7 +416,7 @@ Double-tapping and holding down ```guard``` while holding the Quen primary weapo
 Double-tapping and holding down ```guard``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release guard to dismiss the centipedes. 
 
 ### || Phantom Swords ||
-```W + Guard``` while in combat and not hard locked to enemy summons five phantom swords. 
+```S + Guard``` while in combat and not hard locked to enemy summons five phantom swords. 
 - First cast summons the swords, second cast fires the swords. 
 - Swords cost 25% current health to summon.
 - Sword damage is literally the player's light attacks. This means landing all five swords on the enemy = five light attacks at once. 
