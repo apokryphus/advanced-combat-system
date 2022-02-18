@@ -486,7 +486,7 @@ Double-tapping and holding down ```guard``` while holding the Quen primary weapo
 ### || Can you make a version without the magic stuff?
 - Maybe. Depends on my mood.
 
-### || Can you make The Witcher 3 E3/VGX 2013 animations?
+### || Can you make The Witcher 3 E3/VGX 2013 Lore-Friendly Immersive Reworked Animations Redux?
 - I will kill you.
   
  <div align="right">
