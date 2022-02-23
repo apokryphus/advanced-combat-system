@@ -177,7 +177,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Primes enemy.
   - Detonation: Attack grants ``healing`` equal to 25% of the player's maximum health, and infects enemies with ``poison`` in a small radius.
 - Secondary weapon:
-  - Passive: Attacks have a chance to apply ``slowdown frost``. 
+  - Passive: Attacks have a chance to apply ``stagger``. 
   - Primes enemy.
   - Detonation: Detonates an ``explosion`` that causes ``confusion`` to enemies in a small radius.
 ### || Quen ||
