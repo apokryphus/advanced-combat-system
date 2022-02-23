@@ -240,7 +240,7 @@ Requires the rend skill to use.
 ### || Igni ||
 ```W key + Guard``` = Counter-swing
 ### || Aard ||
-```W key + Guard``` = Ethereal/Bruxa Shout
+```W key + Guard``` = Bruxa biting attack
 ### || Quen ||
 ```W key + Guard``` = Olgierd's pocket sand
 ### || Yrden ||
