@@ -28,6 +28,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 - Place EITHER ```mod_ACS_EVOLVING_WEAPONS```  OR  ```mod_ACS_STATIC_WEAPONS ``` in mods folder. 
 - **DO NOT put both of them in.**
 - ***Run script merger.***
+- If you run into conflicts during the merging process, try to make sure that all the code between `// ACS ++` and `// ACS  - -` are selected in the final output. 
 
 ### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
@@ -59,7 +60,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ### [2. ARMED](#2-armed-1)
 ### [3. ELEMENTAL COMBO SYSTEM](#3-elemental-combo-system-1)
 ### [4. ELEMENTAL REND SYSTEM](#4-elemental-rend-system-1)
-### [5. GUARD SKILLS](#5-guard-skills-1)
+### [5. PARRY/COUNTERATTACK SKILLS](#5-parry/counterattack-skills-1)
 ### [6. TAUNT SYSTEM](#6-taunt-system-1)
 ### [7. MOVEMENT SYSTEM](#7-movement-system-1)
 ### [8. SPECIAL ABILITIES](#8-special-abilities-1)
@@ -236,23 +237,23 @@ Requires the rend skill to use.
   
   </div>
   
-## 5. GUARD SKILLS
+## 5. PARRY/COUNTERATTACK SKILLS
 ### || Igni ||
-```W key + Guard``` = Counter-swing
+```W key + Parry/Counterattack``` = Counter-swing
 ### || Aard ||
-```W key + Guard``` = Bruxa biting attack
+```W key + Parry/Counterattack``` = Bruxa biting attack
 ### || Quen ||
-```W key + Guard``` = Olgierd's pocket sand
+```W key + Parry/Counterattack``` = Olgierd's pocket sand
 ### || Yrden ||
-```W key + Guard``` = Single target lightning
+```W key + Parry/Counterattack``` = Single target lightning
 ### || Axii ||
-```W key + Guard``` = Stab/Kick-swing
+```W key + Parry/Counterattack``` = Stab/Kick-swing
 ### || Any Sign ||
-``` W key + Doubletap Guard``` = Kick
+``` W key + Doubletap Parry/Counterattack``` = Kick
 
-```A key + Guard ``` = Push
+```A key + Parry/Counterattack ``` = Push
 
-``` D key + Guard``` = Punch
+``` D key + Parry/Counterattack``` = Punch
 
  <div align="right">
   
@@ -339,18 +340,18 @@ The player's regular dodges have special effects and apply negative buffs on ene
   
 ## 8. SPECIAL ABILITIES
 ### || Axii Shield ||
-Holding down the ```guard button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
+Holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
 - Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
 - Attack animations change into 1-hand style while Axii shield is held. 
 
 ### || Aspect of the Hym ||
-Double-tapping and holding down ```guard``` while holding the Axii primary weapon will summon a hym around the player. Release guard to dismiss the hym. 
+Double-tapping and holding down ```Parry/Counterattack``` while holding the Axii primary weapon will summon a hym around the player. Release `Parry/Counterattack` to dismiss the hym. 
 - The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
 - While the hym is active, all of the player's attacks gain ```extra range```. 
 
 ### || Bruxa camouflage ||
-   - ```Double-tapping and holding down guard``` while vampire claws are equipped triggers Bruxa camouflage.
+ ```Double-tapping and holding down Parry/Counterattack``` while vampire claws are equipped triggers Bruxa camouflage.
    - 5% current health is continuously drained while camouflage is active. 
    - Enemies close to the player will notice the player, while enemies farther away will not. 
    - The lower the enemy's health is, the greater their fear, which will be reflected in their reaction towards the camouflaged player. 
@@ -377,7 +378,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Be aware, the creature will attempt to fight you for control. 
 - ***Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.***
 ### || Caretaker Shades ||
-```S + Double tap Guard``` will summon Caretaker shades around the player in a wide radius. 
+```S + Double tap Parry/Counterattack``` will summon Caretaker shades around the player in a wide radius. 
 - Shades will distract enemies, as other enemies will attempt to kill them, while also provide a source of ``life-steal`` for claws. 
 - Shades do not attack, and will die in one hit. 
 - Shades will automatically move towards the player if player is nearby, or move towards the closest enemy.
@@ -396,13 +397,13 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - 7 shades normal, 15 shades at 50% or less health.
 
 ### || Aspect of the Toad ||
-```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```close range``` will cause the player to channel a fraction of the power of the Toad, vomiting on all enemies in a small area in front of the player.
+```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```close range``` will cause the player to channel a fraction of the power of the Toad, vomiting on all enemies in a small area in front of the player.
 - Can only be used while the player is on the ```ground```.
 - Toad vomit deals current health percentage damage as ```poison damage```, but ```executes``` the enemy at a certain health threshold.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
 ### || Aspect of the Djinn (Single Target) ||
-```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel a fraction of the power of a djinn and shoot a beam of lightning at the target.
+```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel a fraction of the power of a djinn and shoot a beam of lightning at the target.
 - Can only be used while the player is on the``` ground```.
 - Extra targets at close range and close to the beam of lightning will be hit.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
@@ -410,20 +411,20 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
 ### || Aspect of the Djinn (Multi Target) ||
-```S Key + Guard``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
+```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
 - Can only be used while the player is in the ```air```.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
 - Targets have a small chance to burn.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
 ### || Summoned Wolves ||
-Double-tapping and holding down ```guard``` while holding the Quen primary weapon will summon three wolves around the enemy. Release guard to dismiss the wolves. 
+Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen primary weapon will summon three wolves around the enemy. Release ```Parry/Counterattack``` to dismiss the wolves. 
 
 ### || Summoned Shadow Centipedes ||
-Double-tapping and holding down ```guard``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release guard to dismiss the centipedes. 
+Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release ```Parry/Counterattack``` to dismiss the centipedes. 
 
 ### || Phantom Swords ||
-```S + Guard``` while in combat and not hard locked to enemy summons five phantom swords. 
+```S + Parry/Counterattack``` while in combat and not hard locked to enemy summons five phantom swords. 
 - First cast summons the swords, second cast fires the swords. 
 - Swords cost 25% current health to summon.
 - Sword damage is literally the player's light attacks. This means landing all five swords on the enemy = five light attacks at once. 
