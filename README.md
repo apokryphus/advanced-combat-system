@@ -60,7 +60,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ### [2. ARMED](#2-armed-1)
 ### [3. ELEMENTAL COMBO SYSTEM](#3-elemental-combo-system-1)
 ### [4. ELEMENTAL REND SYSTEM](#4-elemental-rend-system-1)
-### [5. PARRY/COUNTERATTACK SKILLS](#5-parry/counterattack-skills-1)
+### [5. PARRY SKILLS](#5-parry-skills-1)
 ### [6. TAUNT SYSTEM](#6-taunt-system-1)
 ### [7. MOVEMENT SYSTEM](#7-movement-system-1)
 ### [8. SPECIAL ABILITIES](#8-special-abilities-1)
@@ -237,7 +237,7 @@ Requires the rend skill to use.
   
   </div>
   
-## 5. PARRY/COUNTERATTACK SKILLS
+## 5. PARRY SKILLS
 ### || Igni ||
 ```W key + Parry/Counterattack``` = Counter-swing
 ### || Aard ||
@@ -254,6 +254,9 @@ Requires the rend skill to use.
 ```A key + Parry/Counterattack ``` = Push
 
 ``` D key + Parry/Counterattack``` = Punch
+
+### || Vampire Claws ||
+```W key + Parry/Counterattack``` = Bruxa biting attack
 
  <div align="right">
   
