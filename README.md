@@ -25,10 +25,12 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Place ```dlc_ACS``` in dlc folder.
-- Place EITHER ```mod_ACS_EVOLVING_WEAPONS```  OR  ```mod_ACS_STATIC_WEAPONS ``` in mods folder. 
-- **DO NOT put both of them in.**
+- Place *EITHER* ```mod_ACS_EVOLVING_WEAPONS```  *OR* ```mod_ACS_STATIC_WEAPONS``` in mods folder. 
+- **Place only ***one*** version in the mods folder. DO NOT put both versions in at the same time.**
+- The differences between the two versions are explained [here](#2-armed-1).
 - ***Run script merger.***
 - If you run into conflicts during the merging process, try to make sure that all the code between `// ACS ++` and `// ACS  - -` are selected in the final output. 
+- Both versions of the mod can be swapped around with each other after merging without remerging any of the scripts again. 
 
 ### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
@@ -90,16 +92,28 @@ Completely replaced by vampire claw attacks, regardless of sign.
 Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
-### || Default Weapons ||
-- Default weapons included within ACS are split between silver and steel versions, based on whether equipped weapon is silver or steel. 
-- Weapons ```evolve``` according to equipped weapon's level and rarity.
-- Igni sign shows actual/real weapon equipped.
-#### - Weapon Tier System
-- **Tier I Weapons**
+
+### || Weapons ||
+Depending on which version of the mod you install, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
+- Igni sign will always show the actual/real weapon equipped by the player.
+
+- For `mod_ACS_STATIC_WEAPONS`: 
+   - Quen is Olgierd's sabre, Axii is Eredin's sword, Yrden is Imlerith's hammer.
+   -  Both silver and steel versions are the same weapon. 
+   -  Weapons do not change how they look based upon weapon level and/or rarity.
+
+- For `mod_ACS_EVOLVING_WEAPONS`: 
+   - Weapon level and/or rarity will change how each of the weapons look. 
+   - There are different silver and steel versions of each weapon, dependent upon if Geralt is holding a silver or steel weapon. 
+
+- Aard weapon remains the same for both versions, and will always change how they look depending on equipped weapon level/rarity. 
+
+#### - Weapon Tier Appearance System For Evolving Weapons
+- **Tier I Weapon Appearance**
    - Weapon level 1-10 ***OR*** ``Common`` type weapons.
-- **Tier II Weapons**
+- **Tier II Weapon Appearance**
    - Weapon level 11-20 ***AND*** weapon rarity above ``Common``.
-- **Tier III Weapons**
+- **Tier III Weapon Appearance**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="//imgur.com/a/zWgAgd4">Advanced Combat System - Tier III Weapons</a></blockquote>
