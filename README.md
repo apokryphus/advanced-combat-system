@@ -28,7 +28,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 - Place *EITHER* ```mod_ACS_EVOLVING_WEAPONS```  *OR* ```mod_ACS_STATIC_WEAPONS``` in mods folder. 
 - **Place only ***one*** version in the mods folder. DO NOT put both versions in at the same time.**
 - The differences between the two versions are explained [here](#2-armed-1).
-- ***Run script merger.***
+- ***Run script merger. Always run script merger after updating as well.***
 - If you run into conflicts during the merging process, try to make sure that all the code between `// ACS ++` and `// ACS  - -` are selected in the final output. 
 - Both versions of the mod can be swapped around with each other after merging without remerging any of the scripts again. 
 
