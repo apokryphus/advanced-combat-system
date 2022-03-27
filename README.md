@@ -428,8 +428,8 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
 ### || Aspect of the Djinn (Multi Target) ||
-```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
-- Can only be used while the player is in the ```air```.
+```Parry/Counterattack``` while at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
+- Can only be used while the player is in ```wraith mode```.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
 - Targets have a small chance to burn.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
