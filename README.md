@@ -118,6 +118,10 @@ Depending on which version of the mod you install, the player will have slightly
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="//imgur.com/a/zWgAgd4">Advanced Combat System - Tier III Weapons</a></blockquote>
  
+### || Finishers ||
+- The primary weapons for Quen and Axii, as well as the secondary weapon for Axii, posseses the ability to perform automatic finishers on enemies below 15% health.
+- All other weapons do not have automatic finishers, and will instead dismember the enemy, unless triggering a manual dismember.
+ 
 ### || Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
