@@ -480,9 +480,8 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen
   
 ## 11. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
-- Ghost mode merges fine.
-- Not sure about EE.
-- Magic Spells has a few incompatibilities, like weapon buffs. This requires adding code to scripts within Magic Spells to fix this. 
+- Overhauls such as `Ghost mode` and `W3EE` both require manual script merging.
+- Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
 
  <div align="right">
   
