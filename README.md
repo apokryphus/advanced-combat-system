@@ -480,7 +480,8 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen
   
 ## 11. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
-- Overhauls such as `Ghost mode` and `W3EE` both require manual script merging.
+- Overhauls such as `Ghost mode` and `W3EE` both require manual script merging, but are for the most part compatible.
+- Compatible with other animation changing mods, such as SCAAR. Attack once with light attack while the igni sign is selected to switch to it. 
 - Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
 
  <div align="right">
