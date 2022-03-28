@@ -171,7 +171,14 @@ Depending on which version of the mod you install, the player will have slightly
 
 This works both ways for all signs except for Igni, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
 
-Enemies need to be ``primed`` again after detonating an effect.
+- Enemies `primed` for detonation display a `marker` above them.
+- Detonation consumes all markers.
+- Markers disappear after combat if not consumed.
+- Detonation requires at least 1/3 of the adrenaline bar.
+- Every detonation consumes 1/3 of the adrenaline bar, meaning the player can hold 3 detonation charges at max adrenaline.
+- Detonation effects at max adrenaline have longer effects duration on enemies and wider range. 
+- Weapons passive effect activation chance scales with adrenaline in intervals of 1/3, 2/3, and max, with the chances of activation being 12%, 25%, and 50% respectively.
+
 ### || Igni ||
 - Light attack/Any attack action after attacking with light attack:
   - Passive: None.
@@ -201,7 +208,7 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Detonation: Detonates an ``explosion`` that causes ``confusion`` to enemies in a small radius.
 ### || Quen ||
 - Primary weapon:
-  - Passive: Attacks cause ``bleeding`` and have a chance to apply ``blindness``.
+  - Passive: Attacks have a chance to apply ``blindness``.
   - Primes enemy.
   - Detonation: Summons a ``sand storm`` that applies ``blindness`` to enemies in a small radius.
 - Secondary weapon:
@@ -210,11 +217,11 @@ Enemies need to be ``primed`` again after detonating an effect.
   - Detonation: Summons a ``sand pillar`` that applies ``paralysis`` to enemies in a small radius.
 ### || Yrden ||
 - Primary weapon:
-  - Passive: Attacks ``stagger`` enemies.
+  - Passive: Attacks have a chance to``stagger`` enemies.
   - Primes enemy.
   - Detonation: Calls down ``magic missiles`` from the sky that target enemies in a small radius, dealing damage and applying a ``health drain debuff``.
 - Secondary weapon:
-  - Passive: Attacks apply knockdown.
+  - Passive: Attacks have a chance to apply `knockdown`.
   - Primes enemy.
   - Detonation: Calls down ``lightning`` and blasts enemies away in a small radius.
  
@@ -226,7 +233,8 @@ Enemies need to be ``primed`` again after detonating an effect.
   
 ## 4. ELEMENTAL REND SYSTEM
 Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
-Requires the rend skill to use. 
+- Requires the rend skill to use.
+- Elemental rend can only be activated at max adrenaline.  
 ### || Igni ||
 - Releases a single ``Ifrit golem's fire line`` in front of the player on first cast, burning and dealing minor damage to all enemies it comes into contact. 
   - Subsequent rends increase the number of fire lines, the second increasing to ``three``, and the third increasing to ``five``. 
