@@ -489,9 +489,20 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen
 ## 11. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
 - Overhauls such as `Ghost mode` and `W3EE` both require manual script merging, but are for the most part compatible.
-- <blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="/imgur.com/a/DT7YVE7">Steps to fix W3EE error.</a></blockquote>
 - Compatible with other animation changing mods, such as SCAAR. Attack once with light attack while the igni sign is selected to switch to it. 
 - Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
+
+### Merging with W3EE
+After merging W3EE and ACS correctly, you should run into these errors:
+![alt text](https://i.imgur.com/G4C1PuF.jpg)
+
+Find this chunk of code below in playerinput.ws:
+
+![alt text](https://i.imgur.com/9P9hUb7.jpg)
+
+Remove the /* and the */
+
+Save and start the game.
 
  <div align="right">
   
