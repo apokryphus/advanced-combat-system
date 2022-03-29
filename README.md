@@ -202,7 +202,7 @@ https://user-images.githubusercontent.com/98017171/160685054-93d2ed63-646a-458b-
  
 https://user-images.githubusercontent.com/98017171/160685411-8ac56299-e0c6-46ee-b478-e8656ecc21d5.mp4
  
-#### - Yrden
+# Yrden
 
 ## - Light Attack 
 **Imlerith/Caranthir/1-Hand-Mace Single Strikes**
@@ -234,7 +234,7 @@ https://user-images.githubusercontent.com/98017171/160688598-beb200ff-815f-4bf8-
 
 https://user-images.githubusercontent.com/98017171/160689106-f12a2adf-12b0-4b70-8813-6e161a18753d.mp4
 
-#### - Aard
+# Aard
 
 ## - Light Attack 
 **Dettlaff/Bruxae Vampire Single Strikes**
