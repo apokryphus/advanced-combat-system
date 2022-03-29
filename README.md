@@ -368,6 +368,8 @@ The player's regular dodges have special effects and apply negative buffs on ene
   </div>
   
 ## 8. SPECIAL ABILITIES
+### [Axii Shield](#axii-shield-1)
+
 ### || Axii Shield ||
 Holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
 - Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
