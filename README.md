@@ -76,6 +76,8 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 
 ## 1. FISTS
 Completely replaced by vampire claw attacks, regardless of sign.
+- Vampire claws are automatically equipped when attacking unarmed in `combat`.
+- Vampire claws retract once the player is `out of combat`.
 - Vampire claws deal 5% to 10% maximum health damage to red health enemies, and 10% to 20% maximum health damage to monsters.
 - Attacks apply bleeding and heals for 2.5% of the player's maximum health.
 - ```Light attacks``` are light vampire strikes. 
