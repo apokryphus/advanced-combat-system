@@ -73,6 +73,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ### [13. CONTACT ME](#13-contact-me-1)
 </div>
 
+
 ## 1. FISTS
 Completely replaced by vampire claw attacks, regardless of sign.
 - Vampire claws deal 5% to 10% maximum health damage to red health enemies, and 10% to 20% maximum health damage to monsters.
@@ -368,17 +369,21 @@ The player's regular dodges have special effects and apply negative buffs on ene
   </div>
   
 ## 8. SPECIAL ABILITIES
-### [Axii Shield](#-axii-shield-)
-### [Aspect of the Hym](#-aspect-of-the-hym-)
-### [Bruxa Camouflage](#-bruxa-camouflage-)
-### [Bruxa Bite](#-bruxa-bite-)
-### [Caretaker Shades](#-caretaker-shades-)
-### [Aspect of the Toad](#-aspect-of-the-toad-)
-### [Aspect of the Djinn (Single Target)](#-aspect-of-the-djinn-single-target-)
-### [Aspect of the Djinn (Multi Target)](#-aspect-of-the-djinn-multi-target-)
-### [Summoned Wolves](#-summoned-wolves-)
-### [Summoned Shadow Centipedes](#-summoned-shadow-centipedes-)
-### [Phantom Swords](#-phantom-swords-)
+  <div align="center">
+  
+### Special Abilities Index
+#### [Axii Shield](#-axii-shield-)
+#### [Aspect of the Hym](#-aspect-of-the-hym-)
+#### [Bruxa Camouflage](#-bruxa-camouflage-)
+#### [Bruxa Bite](#-bruxa-bite-)
+#### [Caretaker Shades](#-caretaker-shades-)
+#### [Aspect of the Toad](#-aspect-of-the-toad-)
+#### [Aspect of the Djinn (Single Target)](#-aspect-of-the-djinn-single-target-)
+#### [Aspect of the Djinn (Multi Target)](#-aspect-of-the-djinn-multi-target-)
+#### [Summoned Wolves](#-summoned-wolves-)
+#### [Summoned Shadow Centipedes](#-summoned-shadow-centipedes-)
+#### [Phantom Swords](#-phantom-swords-)
+  </div>
 
 ### || Axii Shield ||
 Holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
