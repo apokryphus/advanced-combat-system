@@ -99,6 +99,9 @@ Selecting different signs while holding a weapon will change Geralt's moveset an
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
 
+https://user-images.githubusercontent.com/98017171/160705235-08055326-9589-482b-8c41-ae696015702b.mp4
+
+
 ### || Weapons ||
 Depending on which version of the mod you install, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
 - Igni sign will always show the actual/real weapon equipped by the player.
@@ -122,156 +125,146 @@ Depending on which version of the mod you install, the player will have slightly
 - **Tier III Weapon Appearance**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/zWgAgd4"  ><a href="//imgur.com/a/zWgAgd4">Advanced Combat System - Tier III Weapons</a></blockquote>
- 
+# Tier III Weapons
+
+https://user-images.githubusercontent.com/98017171/160706074-0d3d35a2-52bf-4f3a-a148-d083d54dc7d7.mp4
+
 ### || Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
 - ```Holding down W (Forward) key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
 - ```Range of opponent``` will also alter attack moveset.
+- The`` primary weapons`` for ``Quen and Axii``, as well as the ``secondary weapon`` for ``Axii``, possess the ability to perform automatic finishers on enemies below 15% health.
+- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual dismember.
 
- ### || Finishers ||
-- The primary weapons for Quen and Axii, as well as the secondary weapon for Axii, possess the ability to perform automatic finishers on enemies below 15% health.
-- All other weapons do not have automatic finishers, and will instead attempt to dismember the enemy, unless triggering a manual dismember.
-
-# Igni
-
-## - Light Attack 
-**Default Geralt Light Attacks**
+### || Igni ||
+```Light Attack```  = **Default Geralt Light Attacks**
 
 https://user-images.githubusercontent.com/98017171/160694022-4f094408-1a5f-4239-b2c6-d29dbc66931d.mp4
 
-## - Heavy Attack
-**Default Geralt Heavy Attacks**
+### || Igni ||
+```Heavy Attack``` = **Default Geralt Heavy Attacks**
 
 https://user-images.githubusercontent.com/98017171/160694043-320e0c63-d1a1-446d-bf13-564992341adb.mp4
 
-# Quen
-
-## - Light Attack
-**Olgierd/1-Hand-Sword Single Strikes**
+### || Quen ||
+```Light Attack``` = **Olgierd/1-Hand-Sword Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160676910-294ac31c-556f-4beb-842f-a6685c82913a.mp4
 
-## - W Key (Forward) + Light Attack
-**Olgierd Pirouette Spinning Strikes**
+### || Quen ||
+```W Key (Forward) + Light Attack``` =  **Olgierd Pirouette Spinning Strikes**
 
 https://user-images.githubusercontent.com/98017171/160677368-b6b7c6a6-35f7-480d-8ab3-28f92dea93b0.mp4
 
-## - Heavy Attack
-**Spear/Staff/Halberd Single Strikes**
+### || Quen ||
+``` Heavy Attack``` = **Spear/Staff/Halberd Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160677687-e602ec1d-aa84-49e4-a2bf-8d2bacb3d2c1.mp4
 
-## -W Key (Forward) + Heavy Attack
-**Spear/Staff Whirling Attacks**
+### || Quen ||
+```W Key (Forward) + Heavy Attack``` = **Spear/Staff Whirling Attacks**
 
 https://user-images.githubusercontent.com/98017171/160678147-45d19fc2-1981-440d-a133-2066e07d0e4e.mp4
 
-## - Special Light Attack 
-**Olgierd Combo Strikes**
+### || Quen ||
+```Special Light Attack``` = **Olgierd Combo Strikes**
 
 https://user-images.githubusercontent.com/98017171/160678621-ab99bf65-ffc4-42b8-bf21-fd8b827eb8c0.mp4
 
-## - W key (Forward) + Special Light Attack
-**Olgierd Shadow Dash**
+### || Quen ||
+```W key (Forward) + Special Light Attack``` = **Olgierd Shadow Dash**
 
 https://user-images.githubusercontent.com/98017171/160678864-53fe2588-92c8-4ca2-a593-3bb256c47ad3.mp4
 
-# Axii
-
-## - Light Attack 
-**Eredin/2-Hand-Sword Single Strikes**
+### || Axii ||
+```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160680639-ff9b7022-b90e-48e2-8c02-9a08085447ef.mp4
 
-## - W Key (Forward) + Light Attack
-**Short Eredin/Caretaker Combo Strikes**
+### || Axii ||
+```W Key (Forward) + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
 
 https://user-images.githubusercontent.com/98017171/160683127-07a6d741-7bec-4a1c-a95a-cf9ec596f175.mp4
 
-## - Heavy Attack 
-**Gregoire de Gorgon Single Strikes**
+### || Axii ||
+``` Heavy Attack``` = **Gregoire de Gorgon Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160684397-be431ec7-2fdb-4012-aa6e-d3a0de9c18ac.mp4
 
-## -W Key (Forward) + Heavy Attack
- **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
+### || Axii ||
+``` W Key (Forward) + Heavy Attack``` =  **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
  
 https://user-images.githubusercontent.com/98017171/160684822-937c4289-56bc-4432-9f84-52239e5ae88e.mp4
 
-## - Special Light Attack 
-**Long Eredin Combo Strikes**
+### || Axii ||
+```Special Light Attack``` = **Long Eredin Combo Strikes**
 
 https://user-images.githubusercontent.com/98017171/160685054-93d2ed63-646a-458b-a614-f47480218c07.mp4
 
- ## - W key (Forward) + Special Light Attack
- **Caretaker Charge Attack (Releases a shockwave at the end)**
+### || Axii ||
+```W key (Forward) + Special Light Attack``` = **Caretaker Charge Attack (Releases shockwave at the end)**
  
 https://user-images.githubusercontent.com/98017171/160685411-8ac56299-e0c6-46ee-b478-e8656ecc21d5.mp4
  
-# Yrden
-
-## - Light Attack 
-**Imlerith/Caranthir/1-Hand-Mace Single Strikes**
+### || Yrden ||
+```Light Attack``` = **Imlerith/Caranthir/1-Hand-Mace Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160686653-618c58c0-89bf-4cc2-924b-2613da5d16d6.mp4
 
-## - W Key (Forward) + Light Attack
-**Imlerith/Caretaker Sweeping Strikes**
+### || Yrden ||
+```W Key (Forward) + Light Attack``` = **Imlerith/Caretaker Sweeping Strikes**
 
 https://user-images.githubusercontent.com/98017171/160687119-3ce03d42-4080-4724-b2eb-a94edac6316d.mp4
 
-## - Heavy Attack 
-**1-Hand-Hammer Single Strikes**
+### || Yrden ||
+``` Heavy Attack``` = **1-Hand-Hammer Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160687643-f545102c-b5c1-4213-bbbe-5fd71f25470b.mp4
 
-## -W Key (Forward) + Heavy Attack
- **2-Hand-Hammer Strikes**
+### || Yrden ||
+``` W Key (Forward) + Heavy Attack``` =  **2-Hand-Hammer Strikes**
  
 https://user-images.githubusercontent.com/98017171/160688181-edcf0db7-1b22-4a66-b88a-2689f7a0de13.mp4
 
-## - Special Light Attack 
-**Imlerith Berserk Sweeping Strikes**
+### || Yrden ||
+```Special Light Attack``` = **Imlerith Berserk Sweeping Strikes**
 
 https://user-images.githubusercontent.com/98017171/160688598-beb200ff-815f-4bf8-bd9f-14cc58b43db6.mp4
 
-## - W key (Forward) + Special Light Attack
-**Imlerith Berserk Single Strike**
+### || Yrden ||
+```W key (Forward) + Special Light Attack``` = **Imlerith Berserk Single Strike**
 
 https://user-images.githubusercontent.com/98017171/160689106-f12a2adf-12b0-4b70-8813-6e161a18753d.mp4
 
-# Aard
-
-## - Light Attack 
-**Dettlaff/Bruxae Vampire Single Strikes**
+### || Aard ||
+```Light Attack``` = **Dettlaff/Bruxae Vampire Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160690590-aa30332b-c7a5-4fb8-bd8a-5b9d124e0a60.mp4
 
-## - W Key (Forward) + Light Attack
-**Dettlaff Vampire Combo Attacks**
+### || Aard ||
+```W Key (Forward) + Light Attack``` = **Dettlaff Vampire Combo Attacks**
   
 https://user-images.githubusercontent.com/98017171/160690649-cfdcd4b5-c965-42e9-b6ae-d7cd113795d9.mp4
 
-## - Heavy Attack
-**1-Hand-Axe/1-Hand-Mace Single Strikes**
+### || Aard ||
+``` Heavy Attack``` = **1-Hand-Axe/1-Hand-Mace Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160690680-f9dbce99-b8aa-462c-8633-423fb2706a43.mp4
 
-## -W Key (Forward) + Heavy Attack
- **2-Hand-Axe Strikes**
+### || Aard ||
+``` W Key (Forward) + Heavy Attack``` = **2-Hand-Axe Strikes**
  
 https://user-images.githubusercontent.com/98017171/160690713-311c39d5-6c3a-43f6-ad1e-69b32c937cb3.mp4
 
-## - Special Light Attack 
-**Dettlaff Vampire Spinning Attack**
+### || Aard ||
+```Special Light Attack``` = **Dettlaff Vampire Spinning Attack**
 
 https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-ba91-0d7f069c8ff3.mp4
 
-## - W key (Forward) + Special Light Attack
-**Dettlaff Vampire Dash Strike**
+### || Aard ||
+```W key (Forward) + Special Light Attack``` = **Dettlaff Vampire Dash Strike**
  
 https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
 
@@ -299,47 +292,78 @@ This works both ways for all signs except for Igni, meaning that attacks while h
   - Passive: None.
   - Primes enemy.
   - Detonation effect: None.
+
 - Heavy attack/Any attack action after attack with heavy attack:
   - Passive: None.
   - Does not prime enemy.
   - Detonation: Detonates an ``explosion`` in a small radius, blasting enemies back and ``burning`` them. 
+
+https://user-images.githubusercontent.com/98017171/160706837-26190f5c-1fe9-4346-aea1-40bfb0130e4b.mp4
+
 ### || Axii ||
 - Primary weapon:
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
   - Detonation: Calls down ``frost orbs`` from the sky that target enemies in a small radius, dealing damage and applying a ``slowdown frost`` debuff to enemies.
+
+https://user-images.githubusercontent.com/98017171/160708267-ab0a1ce6-735b-491f-af6a-f1181160044a.mp4
+
+### || Axii ||
 - Secondary weapon:
   - Passive: Attacks have a chance to apply ``slowdown frost``. 
   - Primes enemy.
   - Detonation: ``Freezes`` enemies in a small radius around the player.
+ 
+https://user-images.githubusercontent.com/98017171/160707580-ba7d2bb4-1672-40f1-9b36-c2671f395ab7.mp4
+
 ### || Aard ||
 - Primary weapon:
   - Passive: Attacks grant ``healing`` equal to 2.5% of the player's maximum health.
   - Primes enemy.
   - Detonation: Attack grants ``healing`` equal to 25% of the player's maximum health, and infects enemies with ``poison`` in a small radius.
+
+https://user-images.githubusercontent.com/98017171/160708552-a7752127-050a-4533-acbf-d207ebee5f28.mp4
+
+### || Aard ||
 - Secondary weapon:
   - Passive: Attacks have a chance to apply ``stagger``. 
   - Primes enemy.
   - Detonation: Detonates an ``explosion`` that causes ``confusion`` to enemies in a small radius.
+
+https://user-images.githubusercontent.com/98017171/160708513-12761859-e46b-4634-b5ba-8359f2034d38.mp4
+
 ### || Quen ||
 - Primary weapon:
   - Passive: Attacks have a chance to apply ``blindness``.
   - Primes enemy.
   - Detonation: Summons a ``sand storm`` that applies ``blindness`` to enemies in a small radius.
+
+https://user-images.githubusercontent.com/98017171/160707139-88343713-90b9-4add-adfc-f8c4672919e1.mp4
+
+### || Quen ||
 - Secondary weapon:
   - Passive: Attacks have a chance to ``slow`` enemies.
   - Primes enemy.
   - Detonation: Summons a ``sand pillar`` that applies ``paralysis`` to enemies in a small radius.
+
+https://user-images.githubusercontent.com/98017171/160707039-e92e0259-97dd-4114-ae04-d6c6e88b904a.mp4
+
 ### || Yrden ||
 - Primary weapon:
   - Passive: Attacks have a chance to``stagger`` enemies.
   - Primes enemy.
   - Detonation: Calls down ``magic missiles`` from the sky that target enemies in a small radius, dealing damage and applying a ``health drain debuff``.
+
+https://user-images.githubusercontent.com/98017171/160708407-74163f58-dbc2-43c2-8788-6acf14c8753a.mp4
+
+### || Yrden ||
 - Secondary weapon:
   - Passive: Attacks have a chance to apply `knockdown`.
   - Primes enemy.
   - Detonation: Calls down ``lightning`` and blasts enemies away in a small radius.
- 
+
+https://user-images.githubusercontent.com/98017171/160708354-9f5c8761-4b3c-4fcf-8ea9-b15c5aa8957f.mp4
+
  <div align="right">
   
 ##### [Return to Index](#index)
@@ -350,28 +374,43 @@ This works both ways for all signs except for Igni, meaning that attacks while h
 Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 - Requires the rend skill to use.
 - Elemental rend can only be activated at max adrenaline.  
+
 ### || Igni ||
 - Releases a single ``Ifrit golem's fire line`` in front of the player on first cast, burning and dealing minor damage to all enemies it comes into contact. 
   - Subsequent rends increase the number of fire lines, the second increasing to ``three``, and the third increasing to ``five``. 
   - Resets back to one after the third rend. 
+
+https://user-images.githubusercontent.com/98017171/160715053-2a699ea6-1843-4011-9610-775eb6aee11b.mp4
+
 ### || Axii ||
 - Releasss a single ``Eredin's ice line`` in front of the player on first cast, slowing and dealing minor damage to all enemies it comes into contact with, with a chance of freezing the enemy. 
   - Subsequent rends increase the number of ice lines, the second increasing to ``three``, and the third increasing to ``five``. 
   - The chance of freezing increases with the increase of ice lines. 
   - Resets back to one after the third rend. 
+
+https://user-images.githubusercontent.com/98017171/160715026-4f6e7aa9-2291-4819-9d6c-b2e668ea669f.mp4
+
 ### || Aard ||
 - Releasss a single ``stone golem's rock line`` in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of rock lines, the second increasing to ``three``, and the third increasing to ``five``.
   - Resets back to one after the third rend. 
+
+https://user-images.githubusercontent.com/98017171/160715147-b14f5e73-b657-4f09-a1fe-262303a480c8.mp4
+
 ### || Quen ||
 - Causes giant ``Leshen roots`` to erupt in front of the player on first cast, staggering and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of roots, the second increasing to three, and the third increasing to five.
   - Resets back to one after the third rend. 
+
+https://user-images.githubusercontent.com/98017171/160715091-450a77cb-094e-4646-a14b-fb8e0c00a8ae.mp4
+
 ### || Yrden ||
 - Releasss a single ``cloud giant's shockwave`` in front of the player on first cast, knocking down and dealing minor damage to all enemies it comes into contact with. 
   - Subsequent rends increase the number of shockwaves, the second increasing to ``three``, and the third increasing to ``five``.
   - Resets back to one after the third rend. 
- 
+
+https://user-images.githubusercontent.com/98017171/160715122-cbd65c80-de43-4ddd-8d1c-48f88af98175.mp4
+
  <div align="right">
   
 ##### [Return to Index](#index)
@@ -381,23 +420,48 @@ Releasing rend while holding ``secondary weapons`` have addtional effects. In Ig
 ## 5. PARRY SKILLS
 ### || Igni ||
 ```W key + Parry/Counterattack``` = Counter-swing
+
+https://user-images.githubusercontent.com/98017171/160709655-d6d671b6-61b5-418a-a52a-ead5a15bc377.mp4
+
 ### || Aard ||
 ```W key + Parry/Counterattack``` = Bruxa biting attack
+
+https://user-images.githubusercontent.com/98017171/160709940-07ae01f1-a989-4483-baac-2f3bacee41f2.mp4
+
 ### || Quen ||
-```W key + Parry/Counterattack``` = Olgierd's pocket sand
+```W key + Parry/Counterattack``` = Olgierd's pocket sand + Elbow strike
+
+https://user-images.githubusercontent.com/98017171/160709715-7aff3242-81fb-4878-9c75-b09d6ef29877.mp4
+
 ### || Yrden ||
-```W key + Parry/Counterattack``` = Single target lightning
+```W key + Parry/Counterattack``` = Single target lightning + AOE blast
+
+https://user-images.githubusercontent.com/98017171/160710107-8ec619ab-cab3-41c5-a0ce-c0148a438c88.mp4
+
 ### || Axii ||
-```W key + Parry/Counterattack``` = Stab/Kick-swing
+```W key + Parry/Counterattack``` = Stab/Kick-swing + AOE blast
+
+https://user-images.githubusercontent.com/98017171/160709796-92ff55bf-17a4-4e1f-9052-712d3e3fa267.mp4
+
 ### || Any Sign ||
 ``` W key + Doubletap Parry/Counterattack``` = Kick
 
-```A key + Parry/Counterattack ``` = Push
+https://user-images.githubusercontent.com/98017171/160710004-34d677b9-b2b5-460e-9c2d-aa48ca54fad2.mp4
 
-``` D key + Parry/Counterattack``` = Punch
+### || Any Sign ||
+```A key + Parry/Counterattack ``` = Backhand slap
+
+https://user-images.githubusercontent.com/98017171/160710253-32adf12e-17f2-45b2-ac87-da9eba4a40b2.mp4
+
+### || Any Sign ||
+``` D key + Parry/Counterattack``` = Push
+
+https://user-images.githubusercontent.com/98017171/160710326-7fd55ee7-26e0-4b21-b3be-4193b6f239a5.mp4
 
 ### || Vampire Claws ||
 ```W key + Parry/Counterattack``` = Bruxa biting attack
+
+https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-b218-f0c1a90e755c.mp4
 
  <div align="right">
   
@@ -416,6 +480,8 @@ Releasing rend while holding ``secondary weapons`` have addtional effects. In Ig
 - Only the first taunt will ```stagger``` enemies.
 - Subsequent taunts on a taunted enemy will only replenish their ```morale, focus, and stamina```.
 
+https://user-images.githubusercontent.com/98017171/160712728-f129bf58-9fd3-49c8-9a24-bc56b23a01a3.mp4
+
  <div align="right">
   
 ##### [Return to Index](#index)
@@ -429,31 +495,51 @@ Releasing rend while holding ``secondary weapons`` have addtional effects. In Ig
 - Bruxa dash serves as a ``reset button`` to many things. Use it to dash out of ``wraith mode``, ``bruxa bite``, or generally anything you might encounter. 
 - Bruxa dash while in exploration will dash further than dashing in combat. 
 - Bruxa dash distance is reduced while the player is interior.
+
+https://user-images.githubusercontent.com/98017171/160713938-ec49b801-a8d8-42ce-ba20-865e4ec08a61.mp4
+
 ### || Wraith Mode ||
 ```Witcher sense + Sprint```
 - Can only be used out of combat.
 - Enables the player to ignore collision, phase through walls, and fly through the air.
 - Hold the jump button to fly directly upwards.
 - Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game. 
+
+https://user-images.githubusercontent.com/98017171/160714014-cfb75b10-6d9d-48cd-9234-8482649a7ca7.mp4
+
 ### || Bruxa Leap Attack ||
 ```W key + Doubletap Sprint```
 - Can only be used in combat.
 - Leaps at your targeted enemy, dealing damage.
 - Bruxa leap attack is capable of targeting airborn enemies.
+
+https://user-images.githubusercontent.com/98017171/160714180-15b2173a-3a95-4d3c-8846-c6b6e4a2edd3.mp4
+
+### || Bruxa Leap Attack (Air) ||
 - Leaping from the air onto enemies will send out a ``shockwave around the enemy``, erupting ``stone pillars`` and blasting enemies back in a 6-meter radius around the player.
-- Leaping from the air onto enemies during certain ``rainy weather conditions`` will additionally call down ``lighting strikes`` upon enemies, and leave an ``electrical field`` that burns enemies in a 6-meter radius around the player.
+- Leaping from the air onto enemies during certain ``weather conditions`` will additionally call down ``lighting strikes`` upon enemies, and leave an ``electrical field`` that burns enemies in a 6-meter radius around the player.
+
+https://user-images.githubusercontent.com/98017171/160714212-851e7001-ba58-4d2b-b2d3-3379fbc52874.mp4
+
 ### || Bruxa Dodge Slide ||
 ```S key + Dodge```
 - Can only be used in combat.
 - Slides the player back a fixed distance away from the targeted enemy.
 - Replaced with a different type of dodge when on cooldown.
+
+https://user-images.githubusercontent.com/98017171/160714317-82842f82-181f-4d8e-b6ea-259711af1b23.mp4
+
 ### || Wild Hunt Blink ||
 ```S key + Roll```
 - Eredin's short range teleport.
 - Can only be used in combat.
 - Teleports the player behind your targeted enemy. 
-- Wild Hunt Blink will occasionally freeze enemies based on timing and chance.
+- Will occasionally freeze enemies based on timing and chance.
+- Slowly covers up the screen in frost. Disappears after combat is finished.
 - Don't use this while near the edge of a terrain. Might teleport you somewhere you don't want to be.
+
+https://user-images.githubusercontent.com/98017171/160714398-64ea6a4e-bd67-45af-a628-218202df3263.mp4
+
 ### || Bruxa Dodges ||
 ```Doubletap S key``` = Bruxa dodge back center
 
@@ -462,20 +548,38 @@ Releasing rend while holding ``secondary weapons`` have addtional effects. In Ig
 ```Doubletap D key``` = Bruxa dodge back right
 
 - Nothing really to say about these. Dodge like a vampire.
+
+https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-a643-c3b2e76daa05.mp4
+
 ### || Regular Dodges ||
 The player's regular dodges have special effects and apply negative buffs on enemies.
 - Negative buffs do not stack on themselves, but will stack on each other.
+
 #### - Igni
 - Small chance to applying burning.
+
+https://user-images.githubusercontent.com/98017171/160715480-d6ce5b1e-833b-4160-a029-8499cd159dfa.mp4
+
 #### - Axii
 - Small chance to apply slowdown freeze.
+
+https://user-images.githubusercontent.com/98017171/160715346-51ddd55d-c509-4015-8229-f2cc7c152a8c.mp4
+
 #### - Quen
 - Small chance to cause confusion.
+
+https://user-images.githubusercontent.com/98017171/160715620-c6825a68-ce49-469d-a45a-568cf0af8a7e.mp4
+
 #### - Aard
 - Small chance to cause bleeding.
+
+https://user-images.githubusercontent.com/98017171/160715877-24baa814-5b1c-4ba1-a7c1-84ae22d99c00.mp4
+
 #### - Yrden
 - Small chance to cause paralysis.
- 
+
+https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-97d3-9ee564aa77a6.mp4
+
  <div align="right">
   
 ##### [Return to Index](#index)
@@ -504,11 +608,15 @@ Holding down the ```Parry/Counterattack button``` while holding the Axii primary
 - Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
 - Attack animations change into 1-hand style while Axii shield is held. 
 
+https://user-images.githubusercontent.com/98017171/160716954-8f446bf6-8557-4c2f-9388-26daf4674b34.mp4
+
 ### || Aspect of the Hym ||
 Double-tapping and holding down ```Parry/Counterattack``` while holding the Axii primary weapon will summon a hym around the player. Release `Parry/Counterattack` to dismiss the hym. 
 - The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
 - While the hym is active, all of the player's attacks gain ```extra range```. 
+
+https://user-images.githubusercontent.com/98017171/160717021-c0664cbb-ae76-46cd-97a7-e53ae91d3a51.mp4
 
 ### || Bruxa Camouflage ||
  ```Double-tapping and holding down Parry/Counterattack``` while vampire claws are equipped triggers Bruxa camouflage.
@@ -517,10 +625,14 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Axii
    - The lower the enemy's health is, the greater their fear, which will be reflected in their reaction towards the camouflaged player. 
    - Only works on humans. Monsters behave normally. 
 
+https://user-images.githubusercontent.com/98017171/160717113-1faadd81-1fe4-4cfe-83d2-30fd1a840235.mp4
+
 ### || Bruxa Bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 - Bruxa bite deals ```200 flat damage``` and returns this value to the player as ```health```.
 - ```Doubletap sprint``` to release victim.
+
+https://user-images.githubusercontent.com/98017171/160717152-306eca70-803e-4426-b8a0-7bbe6aa5ee74.mp4
 
 ### || Hijack ||
 Bruxa bite is capable of ```hijacking``` certain enemy movements.
@@ -538,6 +650,8 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - ```Release W``` to nudge it forward. 
 - Be aware, the creature will attempt to fight you for control. 
 - ***Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.***
+
+https://user-images.githubusercontent.com/98017171/160717219-21fd73d6-e570-4f41-be5d-bd7f2255ea57.mp4
 
 ### || Caretaker Shades ||
 ```S + Double tap Parry/Counterattack``` will summon Caretaker shades around the player in a wide radius. 
@@ -558,11 +672,15 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 #### - Player level 26 or more 
 - 7 shades normal, 15 shades at 50% or less health.
 
+https://user-images.githubusercontent.com/98017171/160717269-4160cc55-9ede-48b7-859e-ef46ac50c730.mp4
+
 ### || Aspect of the Toad ||
 ```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```close range``` will cause the player to channel a fraction of the power of the Toad, vomiting on all enemies in a small area in front of the player.
 - Can only be used while the player is on the ```ground```.
 - Toad vomit deals current health percentage damage as ```poison damage```, but ```executes``` the enemy at a certain health threshold.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
+
+https://user-images.githubusercontent.com/98017171/160717341-c70abdd8-bb7e-4100-b765-0356c44a737c.mp4
 
 ### || Aspect of the Djinn (Single Target) ||
 ```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel a fraction of the power of a djinn and shoot a beam of lightning at the target.
@@ -572,6 +690,8 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Targets have a small chance to burn.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
+https://user-images.githubusercontent.com/98017171/160717385-c14ca798-d499-4a2e-ba01-cf170fdc227f.mp4
+
 ### || Aspect of the Djinn (Multi Target) ||
 ```Parry/Counterattack``` while at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
 - Can only be used while the player is in ```wraith mode```.
@@ -579,11 +699,17 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - Targets have a small chance to burn.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
 
+https://user-images.githubusercontent.com/98017171/160717440-e181962d-78c4-4351-9472-2d737db72973.mp4
+
 ### || Summoned Wolves ||
 Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen primary weapon will summon three wolves around the enemy. Release ```Parry/Counterattack``` to dismiss the wolves. 
 
+https://user-images.githubusercontent.com/98017171/160717477-a79bbed0-0d6e-4f78-9cd1-9acc0a24d06e.mp4
+
 ### || Summoned Shadow Centipedes ||
 Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen primary weapon while the player is below ```50%``` health will summon three shadow centipedes around the enemy. Release ```Parry/Counterattack``` to dismiss the centipedes. 
+
+https://user-images.githubusercontent.com/98017171/160717525-9793dfac-53d6-49da-a28b-a6e8078f8347.mp4
 
 ### || Phantom Swords ||
 ```S + Parry/Counterattack``` while in combat and not hard locked to enemy summons five phantom swords. 
@@ -593,6 +719,8 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen
 - This also means that it can be comboed with other attacks through the elemental combo system. 
 - Swords destroy shields.
 - Swords will disarm an opponent if they happen to hit their weapon hand. 
+
+https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-9654-199e4350caf1.mp4
 
  <div align="right">
   
