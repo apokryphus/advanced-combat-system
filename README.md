@@ -131,12 +131,21 @@ Depending on which version of the mod you install, the player will have slightly
 - ```Holding down W (Forward) key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
 - ```Range of opponent``` will also alter attack moveset.
 
+ ### || Finishers ||
+- The primary weapons for Quen and Axii, as well as the secondary weapon for Axii, possess the ability to perform automatic finishers on enemies below 15% health.
+- All other weapons do not have automatic finishers, and will instead attempt to dismember the enemy, unless triggering a manual dismember.
+
 # Igni
+
 ## - Light Attack 
 **Default Geralt Light Attacks**
 
+https://user-images.githubusercontent.com/98017171/160694022-4f094408-1a5f-4239-b2c6-d29dbc66931d.mp4
+
 ## - Heavy Attack
 **Default Geralt Heavy Attacks**
+
+https://user-images.githubusercontent.com/98017171/160694043-320e0c63-d1a1-446d-bf13-564992341adb.mp4
 
 # Quen
 
@@ -265,10 +274,6 @@ https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-
 **Dettlaff Vampire Dash Strike**
  
 https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
-
- ### || Finishers ||
-- The primary weapons for Quen and Axii, as well as the secondary weapon for Axii, possess the ability to perform automatic finishers on enemies below 15% health.
-- All other weapons do not have automatic finishers, and will instead attempt to dismember the enemy, unless triggering a manual dismember.
 
 <div align="right">
   
