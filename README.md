@@ -368,7 +368,17 @@ The player's regular dodges have special effects and apply negative buffs on ene
   </div>
   
 ## 8. SPECIAL ABILITIES
-### [Axii Shield](#axii-shield-1)
+### [Axii Shield](#-axii-shield-)
+### [Aspect of the Hym](#-aspect-of-the-hym-)
+### [Bruxa Camouflage](#-bruxa-camouflage-)
+### [Bruxa Bite](#-bruxa-bite-)
+### [Caretaker Shades](#-caretaker-shades-)
+### [Aspect of the Toad](#-aspect-of-the-toad-)
+### [Aspect of the Djinn (Single Target)](#-aspect-of-the-djinn-single-target-)
+### [Aspect of the Djinn (Multi Target)](#-aspect-of-the-djinn-multi-target-)
+### [Summoned Wolves](#-summoned-wolves-)
+### [Summoned Shadow Centipedes](#-summoned-shadow-centipedes-)
+### [Phantom Swords](#-phantom-swords-)
 
 ### || Axii Shield ||
 Holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
@@ -381,17 +391,18 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Axii
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
 - While the hym is active, all of the player's attacks gain ```extra range```. 
 
-### || Bruxa camouflage ||
+### || Bruxa Camouflage ||
  ```Double-tapping and holding down Parry/Counterattack``` while vampire claws are equipped triggers Bruxa camouflage.
    - 5% current health is continuously drained while camouflage is active. 
    - Enemies close to the player will notice the player, while enemies farther away will not. 
    - The lower the enemy's health is, the greater their fear, which will be reflected in their reaction towards the camouflaged player. 
    - Only works on humans. Monsters behave normally. 
 
-### || Bruxa bite ||
+### || Bruxa Bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 - Bruxa bite deals ```200 flat damage``` and returns this value to the player as ```health```.
 - ```Doubletap sprint``` to release victim.
+
 ### || Hijack ||
 Bruxa bite is capable of ```hijacking``` certain enemy movements.
 #### - Current enemy list:
@@ -408,6 +419,7 @@ Bruxa bite is capable of ```hijacking``` certain enemy movements.
 - ```Release W``` to nudge it forward. 
 - Be aware, the creature will attempt to fight you for control. 
 - ***Best if paired with a camera mod that centers Geralt during combat. I didn't write one for this yet.***
+
 ### || Caretaker Shades ||
 ```S + Double tap Parry/Counterattack``` will summon Caretaker shades around the player in a wide radius. 
 - Shades will distract enemies, as other enemies will attempt to kill them, while also provide a source of ``life-steal`` for claws. 
