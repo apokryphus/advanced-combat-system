@@ -77,9 +77,7 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ## 1. FISTS
 Completely replaced by vampire claw attacks, regardless of sign.
 
-
 https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-aa8a-70df9c829bb5.mp4
-
 
 - Vampire claws are automatically equipped when attacking unarmed in `combat`.
 - Vampire claws retract once the player is `out of combat`.
@@ -129,19 +127,39 @@ Depending on which version of the mod you install, the player will have slightly
 ### || Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
-- Quen, Axii, Yrden, Aard each have a ``special attack``, replacing ``Whirl``. ```Requires Whirl to use```.
-- ```Holding down W key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special attacks`` will alter attack moveset. 
-- ```Range of opponent``` will also alter attack moveset (ie. holding down W while attacking with Axii heavy attacks at close range will slap your target).
+- Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
+- ```Holding down W key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
+- ```Range of opponent``` will also alter attack moveset.
+
 #### - Igni
 - ```Light Attack``` = **Default Geralt light attacks**
 - ```Heavy Attack``` = **Default Geralt heavy attacks**
+
 #### - Quen
 - ```Light Attack``` = **Olgierd/1-Hand-Sword Single Strikes**
-   - ```W key + Light Attack``` = **Olgierd Pirouette Spinning Strikes**
+
+https://user-images.githubusercontent.com/98017171/160676910-294ac31c-556f-4beb-842f-a6685c82913a.mp4
+
+- ```W key + Light Attack``` = **Olgierd Pirouette Spinning Strikes**
+
+https://user-images.githubusercontent.com/98017171/160677368-b6b7c6a6-35f7-480d-8ab3-28f92dea93b0.mp4
+
 - ```Heavy Attacks``` = **Spear/Staff/Halberd Single Strikes**
-   - ```W key + Heavy Attack``` = **Spear AOE Whirling Attacks**
-- ``` Special Attack (Whirl)``` = **Olgierd Combo Strikes**
-  - ```W key + Special Attack (Whirl)``` = **Olgierd Shadow Dash**
+
+https://user-images.githubusercontent.com/98017171/160677687-e602ec1d-aa84-49e4-a2bf-8d2bacb3d2c1.mp4
+
+- ```W key + Heavy Attack``` = **Spear/Staff Whirling Attacks**
+
+https://user-images.githubusercontent.com/98017171/160678147-45d19fc2-1981-440d-a133-2066e07d0e4e.mp4
+
+- ``` Special Light Attack (Whirl)``` = **Olgierd Combo Strikes**
+
+https://user-images.githubusercontent.com/98017171/160678621-ab99bf65-ffc4-42b8-bf21-fd8b827eb8c0.mp4
+
+- ```W key + Special Attack (Whirl)``` = **Olgierd Shadow Dash**
+
+https://user-images.githubusercontent.com/98017171/160678864-53fe2588-92c8-4ca2-a593-3bb256c47ad3.mp4
+
 #### - Axii
 - ```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
    - ```W key + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
