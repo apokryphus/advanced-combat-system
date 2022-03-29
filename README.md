@@ -128,60 +128,144 @@ Depending on which version of the mod you install, the player will have slightly
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
-- ```Holding down W key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
+- ```Holding down W (Forward) key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
 - ```Range of opponent``` will also alter attack moveset.
 
-#### - Igni
-- ```Light Attack``` = **Default Geralt light attacks**
-- ```Heavy Attack``` = **Default Geralt heavy attacks**
+# Igni
+## - Light Attack 
+**Default Geralt Light Attacks**
 
-#### - Quen
-- ```Light Attack``` = **Olgierd/1-Hand-Sword Single Strikes**
+## - Heavy Attack
+**Default Geralt Heavy Attacks**
+
+# Quen
+
+## - Light Attack
+**Olgierd/1-Hand-Sword Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160676910-294ac31c-556f-4beb-842f-a6685c82913a.mp4
 
-- ```W key + Light Attack``` = **Olgierd Pirouette Spinning Strikes**
+## - W Key (Forward) + Light Attack
+**Olgierd Pirouette Spinning Strikes**
 
 https://user-images.githubusercontent.com/98017171/160677368-b6b7c6a6-35f7-480d-8ab3-28f92dea93b0.mp4
 
-- ```Heavy Attacks``` = **Spear/Staff/Halberd Single Strikes**
+## - Heavy Attack
+**Spear/Staff/Halberd Single Strikes**
 
 https://user-images.githubusercontent.com/98017171/160677687-e602ec1d-aa84-49e4-a2bf-8d2bacb3d2c1.mp4
 
-- ```W key + Heavy Attack``` = **Spear/Staff Whirling Attacks**
+## -W Key (Forward) + Heavy Attack
+**Spear/Staff Whirling Attacks**
 
 https://user-images.githubusercontent.com/98017171/160678147-45d19fc2-1981-440d-a133-2066e07d0e4e.mp4
 
-- ``` Special Light Attack (Whirl)``` = **Olgierd Combo Strikes**
+## - Special Light Attack 
+**Olgierd Combo Strikes**
 
 https://user-images.githubusercontent.com/98017171/160678621-ab99bf65-ffc4-42b8-bf21-fd8b827eb8c0.mp4
 
-- ```W key + Special Attack (Whirl)``` = **Olgierd Shadow Dash**
+## - W key (Forward) + Special Light Attack
+**Olgierd Shadow Dash**
 
 https://user-images.githubusercontent.com/98017171/160678864-53fe2588-92c8-4ca2-a593-3bb256c47ad3.mp4
 
-#### - Axii
-- ```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
-   - ```W key + Light Attack``` = **Short Eredin/Caretaker Combo Strikes**
-- ```Heavy Attacks``` = **Gregoire de Gorgon Single Strikes**
-   - ```W key + Heavy Attack``` = **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
-- ``` Special Attack (Whirl)``` = **Long Eredin Combo Strikes**
-  - ```W key + Special Attack (Whirl)``` = **Caretaker Charge Attack (Releases a shockwave at the end)**
-#### - Yrden
-- ```Light Attack``` = **Imlerith/Caranthir/1-Hand-Mace Single Strikes**
-   - ```W key + Light Attack``` = **Imlerith/Caretaker Sweeping Strikes**
-- ```Heavy Attacks``` = **1-Hand-Hammer Single Strikes**
-   - ```W key + Heavy Attack``` = **2-Hand-Hammer Strikes**
-- ``` Special Attack (Whirl)``` = **Imlerith Berserk Sweeping Strikes**
-  - ```W key + Special Attack (Whirl)``` = **Imlerith Berserk Single Strike**
-#### - Aard
-- ```Light Attack``` = **Dettlaff/Bruxae Vampire Single Strikes**
-   - ```W key + Light Attack``` = **Dettlaff Vampire Combo Attacks**
-- ```Heavy Attacks``` = **1-Hand-Axe/1-Hand-Mace Single Strikes**
-   - ```W key + Heavy Attack``` = **2-Hand-Axe Strikes**
-- ``` Special Attack (Whirl)``` = **Dettlaff Vampire Spinning Attack**
-  - ```W key + Special Attack (Whirl)``` = **Dettlaff Vampire Dash Strike**
+# Axii
+
+## - Light Attack 
+**Eredin/2-Hand-Sword Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160680639-ff9b7022-b90e-48e2-8c02-9a08085447ef.mp4
+
+## - W Key (Forward) + Light Attack
+**Short Eredin/Caretaker Combo Strikes**
+
+https://user-images.githubusercontent.com/98017171/160683127-07a6d741-7bec-4a1c-a95a-cf9ec596f175.mp4
+
+## - Heavy Attack 
+**Gregoire de Gorgon Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160684397-be431ec7-2fdb-4012-aa6e-d3a0de9c18ac.mp4
+
+## -W Key (Forward) + Heavy Attack
+ **Gregoire de Gorgon/1-Hand Sword Combo Strikes**
  
+https://user-images.githubusercontent.com/98017171/160684822-937c4289-56bc-4432-9f84-52239e5ae88e.mp4
+
+## - Special Light Attack 
+**Long Eredin Combo Strikes**
+
+https://user-images.githubusercontent.com/98017171/160685054-93d2ed63-646a-458b-a614-f47480218c07.mp4
+
+ ## - W key (Forward) + Special Light Attack
+ **Caretaker Charge Attack (Releases a shockwave at the end)**
+ 
+https://user-images.githubusercontent.com/98017171/160685411-8ac56299-e0c6-46ee-b478-e8656ecc21d5.mp4
+ 
+#### - Yrden
+
+## - Light Attack 
+**Imlerith/Caranthir/1-Hand-Mace Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160686653-618c58c0-89bf-4cc2-924b-2613da5d16d6.mp4
+
+## - W Key (Forward) + Light Attack
+**Imlerith/Caretaker Sweeping Strikes**
+
+https://user-images.githubusercontent.com/98017171/160687119-3ce03d42-4080-4724-b2eb-a94edac6316d.mp4
+
+## - Heavy Attack 
+**1-Hand-Hammer Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160687643-f545102c-b5c1-4213-bbbe-5fd71f25470b.mp4
+
+## -W Key (Forward) + Heavy Attack
+ **2-Hand-Hammer Strikes**
+ 
+https://user-images.githubusercontent.com/98017171/160688181-edcf0db7-1b22-4a66-b88a-2689f7a0de13.mp4
+
+## - Special Light Attack 
+**Imlerith Berserk Sweeping Strikes**
+
+https://user-images.githubusercontent.com/98017171/160688598-beb200ff-815f-4bf8-bd9f-14cc58b43db6.mp4
+
+## - W key (Forward) + Special Light Attack
+**Imlerith Berserk Single Strike**
+
+https://user-images.githubusercontent.com/98017171/160689106-f12a2adf-12b0-4b70-8813-6e161a18753d.mp4
+
+#### - Aard
+
+## - Light Attack 
+**Dettlaff/Bruxae Vampire Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160690590-aa30332b-c7a5-4fb8-bd8a-5b9d124e0a60.mp4
+
+## - W Key (Forward) + Light Attack
+**Dettlaff Vampire Combo Attacks**
+  
+https://user-images.githubusercontent.com/98017171/160690649-cfdcd4b5-c965-42e9-b6ae-d7cd113795d9.mp4
+
+## - Heavy Attack
+**1-Hand-Axe/1-Hand-Mace Single Strikes**
+
+https://user-images.githubusercontent.com/98017171/160690680-f9dbce99-b8aa-462c-8633-423fb2706a43.mp4
+
+## -W Key (Forward) + Heavy Attack
+ **2-Hand-Axe Strikes**
+ 
+https://user-images.githubusercontent.com/98017171/160690713-311c39d5-6c3a-43f6-ad1e-69b32c937cb3.mp4
+
+## - Special Light Attack 
+**Dettlaff Vampire Spinning Attack**
+
+https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-ba91-0d7f069c8ff3.mp4
+
+## - W key (Forward) + Special Light Attack
+**Dettlaff Vampire Dash Strike**
+ 
+https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
+
  ### || Finishers ||
 - The primary weapons for Quen and Axii, as well as the secondary weapon for Axii, possess the ability to perform automatic finishers on enemies below 15% health.
 - All other weapons do not have automatic finishers, and will instead attempt to dismember the enemy, unless triggering a manual dismember.
