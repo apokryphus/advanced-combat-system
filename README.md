@@ -2,7 +2,7 @@
 
 # advanced-combat-system
   
-  Combat overhaul mod for The Witcher 3. 
+Combat overhaul mod for The Witcher 3. 
 
 Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
   
@@ -40,6 +40,8 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 
 ## PREFACE
 
+  A lot of videos on this page. Give them a moment to load, or else right click the video and open in new tab to load it faster. 
+  
   The best way to enjoy this mod to its fullest extent is to install every mod you can find that increases difficulty in The Witcher 3. This mod does some things that help with this, like the taunt system. 
   
   [Aeltoth's Random Encounters Reworked](https://github.com/Aelto/tw3-random-encounters-reworked) is a good place to start. 
