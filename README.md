@@ -756,10 +756,13 @@ https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-
 - Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
 
 ### Merging with W3EE
+
+During conflicts, pick code from ACS. 
+
 After merging W3EE and ACS correctly, you should run into these errors:
 ![alt text](https://i.imgur.com/G4C1PuF.jpg)
 
-Find this chunk of code below in playerinput.ws:
+Find this chunk of code below in `mods/mod0000_mergedfiles/content/scripts/game/player/playerinput.ws` :
 
 ![alt text](https://i.imgur.com/9P9hUb7.jpg)
 
