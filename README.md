@@ -22,12 +22,13 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 - A PC not made out of wood. 
 
 ## INSTALLATION
-- Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
+Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
-- ***Run script merger. Always run script merger after updating as well.***
+- ```***Run script merger. Always run script merger after updating from a previous version as well.***```
 
-### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
+Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
+- mod_ACS_JumpExtend is, like the folder containing it describes, optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
 - Jumping while sliding will jump the furthest. 
 - Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
