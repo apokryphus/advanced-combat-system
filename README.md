@@ -24,13 +24,8 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 ## INSTALLATION
 - Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
-- Place ```dlc_ACS``` in dlc folder.
-- Place *EITHER* ```mod_ACS_EVOLVING_WEAPONS```  *OR* ```mod_ACS_STATIC_WEAPONS``` in mods folder. 
-- **Place only ***one*** version in the mods folder. DO NOT put both versions in at the same time.**
-- The differences between the two versions are explained [here](#2-armed-1).
+- Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
 - ***Run script merger. Always run script merger after updating as well.***
-- If you run into conflicts during the merging process, try to make sure that all the code between `// ACS ++` and `// ACS  - -` are selected in the final output. 
-- Both versions of the mod can be swapped around with each other after merging without remerging any of the scripts again. 
 
 ### mod_ACS_JumpExtend is optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
@@ -60,24 +55,78 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
   
 # INDEX
 
-### [1. FISTS](#1-fists-1)
-### [2. ARMED](#2-armed-1)
-### [3. ELEMENTAL COMBO SYSTEM](#3-elemental-combo-system-1)
-### [4. ELEMENTAL REND SYSTEM](#4-elemental-rend-system-1)
-### [5. PARRY SKILLS](#5-parry-skills-1)
-### [6. TAUNT SYSTEM](#6-taunt-system-1)
-### [7. MOVEMENT SYSTEM](#7-movement-system-1)
-### [8. SPECIAL ABILITIES](#8-special-abilities-1)
-### [9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](#9-using-custom-weapons-from-vanilla-game-or-other-mods-1)
-### [10. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
-### [11. COMPATIBILITY](#11-compatibility-1)
-### [12. Q&A](#12-qa-1)
-### [13. CONTACT ME](#13-contact-me-1)
+### [1. MENU](#1-menu-1)
+### [2. FISTS](#1-fists-1)
+### [3. ARMED](#2-armed-1)
+### [4. ELEMENTAL COMBO SYSTEM](#3-elemental-combo-system-1)
+### [5. ELEMENTAL REND SYSTEM](#4-elemental-rend-system-1)
+### [6. PARRY SKILLS](#5-parry-skills-1)
+### [7. TAUNT SYSTEM](#6-taunt-system-1)
+### [8. MOVEMENT SYSTEM](#7-movement-system-1)
+### [9. SPECIAL ABILITIES](#8-special-abilities-1)
+### [10. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](#9-using-custom-weapons-from-vanilla-game-or-other-mods-1)
+### [11. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
+### [12. STAMINA](#10-cooldown-adjustment-1)
+### [13. COMPATIBILITY](#11-compatibility-1)
+### [14. Q&A](#12-qa-1)
+### [15. CONTACT ME](#13-contact-me-1)
 </div>
 
 
-## 1. FISTS
-Completely replaced by vampire claw attacks, regardless of sign.
+## 1. MENU
+ACS has two primary modes, Armiger Mode and Focus Mode. 
+- Modes are selected in the Main Settings menu.
+
+### Armiger Mode: 
+
+How the mod functions as detailed beyond the rest of this section, where selecting different signs and attacking with light attack or heavy attack changes Gerry's weapons/attack moveset. 
+
+When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want static weapons or evolving weapons.
+
+### Focus Mode: 
+
+When Focus Mode is selected in the Main Settings menu, navigate to the Focus Mode menu. 
+
+There, you can select the weapon of your choice out of the nine available weapons that you want to use for silver weapon and steel weapon.
+
+You can have different weapons for silver and steel.
+
+You can also select in the Focus Mode menu whether you want static weapons or evolving weapons in this mode.
+
+The weapons are:
+- Default Geralt sword
+- Olgierd sabre / Vlodimir ghost sabre
+- Eredin longsword / Shield (Holding down parry will bring out a shield. Attacks while shield is active have their own set of animations.)
+- Imlerith hammer / Caretaker shovel (Scythe for evolving weapons option)
+- Claws
+- Spear / Guisarme
+- Colossal sword
+- Cyclop's weapon / Cloud giant's weapon
+- Greataxe / Warhammer
+
+Each weapon has its own unique combat animations for
+- light attacks 
+- w + light attacks 
+- heavy attacks 
+- w + heavy attacks
+- special light attacks (whirl)
+- w + light special attacks (whirl)
+- counter-attacks
+- and w + counter-attacks
+ 
+ <div align="right">
+  
+##### [Return to Index](#index)
+  
+  </div>
+  
+## 2. FISTS
+There are tree options for fists, available for selection in the Main Menu:
+- Normal fists
+- Vampire claws
+- Shockwave fists
+
+### Vampire Claws
 
 https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-aa8a-70df9c829bb5.mp4
 
@@ -90,13 +139,16 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
 - ```W + light attack``` are vampire claw combos.
 - ```W + heavy attack``` are vampire dash attacks.
  
+ ### Shockwave Fists
+ - Every punch releases a shock wave in front of the player.
+ 
  <div align="right">
   
 ##### [Return to Index](#index)
   
   </div>
   
-## 2. ARMED
+## 3. ARMED
 Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
@@ -276,7 +328,7 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
   
   </div>
   
-## 3. ELEMENTAL COMBO SYSTEM
+## 4. ELEMENTAL COMBO SYSTEM
 ``Successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
 
 This works both ways for all signs except for Igni, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
@@ -372,7 +424,7 @@ https://user-images.githubusercontent.com/98017171/160708354-9f5c8761-4b3c-4fcf-
   
   </div>
   
-## 4. ELEMENTAL REND SYSTEM
+## 5. ELEMENTAL REND SYSTEM
 Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 - Requires the rend skill to use.
 - Elemental rend can only be activated at max adrenaline.  
@@ -419,7 +471,7 @@ https://user-images.githubusercontent.com/98017171/160715122-cbd65c80-de43-4ddd-
   
   </div>
   
-## 5. PARRY SKILLS
+## 6. PARRY SKILLS
 ### || Igni ||
 ```W key + Parry/Counterattack``` = Counter-swing
 
@@ -471,7 +523,7 @@ https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-
   
   </div>
   
-## 6. TAUNT SYSTEM
+## 7. TAUNT SYSTEM
 ```Switching weapons (signs, default is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 - Taunts change based on what weapon is held. 
 - Enemies in a ```10 meter radius``` around the player will be taunted.
@@ -490,7 +542,7 @@ https://user-images.githubusercontent.com/98017171/160712728-f129bf58-9fd3-49c8-
   
   </div>
   
-## 7. MOVEMENT SYSTEM
+## 8. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
 ```Doubletap Sprint```
 - Dashes a fixed distance forward, alternating a little bit left or right.
@@ -588,7 +640,7 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
   
   </div>
   
-## 8. SPECIAL ABILITIES
+## 9. SPECIAL ABILITIES
   <div align="center">
   
 ### Special Abilities Index
@@ -730,7 +782,7 @@ https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-
   
   </div>
   
-## 9. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
+## 10. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
 - Open ```mod_ACS/content/scripts/local/ACS_Primary_Weapon_Switch.ws``` or ```mod_ACS/content/scripts/local/ACS_Secondary_Weapon_Switch.ws```.
 - Do your best.
 
@@ -740,7 +792,7 @@ https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-
   
   </div>
   
-## 10. COOLDOWN ADJUSTMENT
+## 11. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -749,26 +801,11 @@ https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-
   
   </div>
   
-## 11. COMPATIBILITY
-- Disclaimer: I don't use this version personally.
-- Overhauls such as `Ghost mode` and `W3EE` both require manual script merging, but are for the most part compatible.
-- Compatible with other animation changing mods, such as SCAAR. Attack once with light attack while the igni sign is selected to switch to it. 
-- Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
-
-### Merging with W3EE
-
-During conflicts, pick code from ACS. 
-
-After merging W3EE and ACS correctly, you should run into these errors:
-![alt text](https://i.imgur.com/G4C1PuF.jpg)
-
-Find this chunk of code below in `mods/mod0000_mergedfiles/content/scripts/game/player/playerinput.ws` :
-
-![alt text](https://i.imgur.com/9P9hUb7.jpg)
-
-Remove the /* and the */
-
-Save and start the game.
+## 12. STAMINA
+- Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
+- This feature can be toggled off in the Main Settings menu. 
+- In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
+- You can tweak how much stamina is used for attacks and dodges by using the stamina settings from the overhauls. My mod takes their settings. 
 
  <div align="right">
   
@@ -776,7 +813,19 @@ Save and start the game.
   
   </div>
   
-## 12. Q&A
+## 13. COMPATIBILITY
+- Disclaimer: I don't use this version personally.
+- Overhauls such as `Ghost mode` and `W3EE` are both compatible. `W3EE` requires manual script merging. Pick ACS code over W3EE.
+- Compatible with other animation changing mods, such as SCAAR. Attack once with light attack while the igni sign is selected to switch to it. 
+- Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
+
+ <div align="right">
+  
+##### [Return to Index](#index)
+  
+  </div>
+  
+## 14. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -810,7 +859,7 @@ Save and start the game.
   
   </div>
   
-## 13. CONTACT ME
+## 15. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
