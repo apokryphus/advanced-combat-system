@@ -26,6 +26,7 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 - Download zip from latest version.
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
 - ```***Run script merger. Always run script merger after updating from a previous version as well.***```
+- After installation, open up the in game menu (Mods ---> Advanced Combat System) and enable the mod. 
 
 Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 - mod_ACS_JumpExtend is, like the folder containing it describes, optional. It increases the player's jump height by about 15 meters. 
