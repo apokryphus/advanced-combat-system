@@ -123,7 +123,7 @@ Each weapon has its own unique combat animations for
   </div>
   
 ## 2. FISTS
-There are three options for fists, available for selection in the Main Menu:
+There are three options for fists, available for selection in the Main Settings menu:
 - Normal fists
 - Vampire claws
 - Shockwave fists
