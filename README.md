@@ -151,7 +151,7 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
   </div>
   
 ## 3. ARMED
-Selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
+While in Armiger Mode, selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
 
