@@ -76,7 +76,7 @@ Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 
 
 ## 1. MENU
-ACS has two primary modes, Armiger Mode and Focus Mode. 
+ACS has three primary weapon modes, Armiger Mode, Focus Mode, and Equipment Mode. 
 - Modes are selected in the Main Settings menu.
 
 ### Armiger Mode: 
@@ -115,6 +115,261 @@ Each weapon has its own unique combat animations for
 - w + light special attacks (whirl)
 - counter-attacks
 - and w + counter-attacks
+ 
+ ### Equipment Mode: 
+ 
+ Upon selection of Equipment Mode in the Main Settings menu, equipping certain items will change the player's moveset. 
+
+Current supported weapons include the majority of the weapons from:
+
+- Shades of Iron
+https://discord.com/channels/728022548796801064/728023281558618214/964947835986509854
+
+- Exotic Arsenal
+https://www.nexusmods.com/witcher3/mods/4074
+
+- NPC Weapons Mod V1.01
+https://www.nexusmods.com/witcher3/mods/930
+
+- Lethal Baguettes
+https://www.nexusmods.com/witcher3/mods/5937
+
+- COMICALLY LARGE SPOON
+https://www.nexusmods.com/witcher3/mods/4924
+
+Item list and their respective animations:
+
+### -----Vampire Claws (Unarmed/Fists)-----
+
+Vanilla:
+- Hen Gadith Gloves
+- Tesha Mutna Gloves
+
+Shades of Iron:
+- Kara Gloves
+
+### ------Eredin/1-Hand Sword/Shield-----
+
+Vanilla:
+- Winter's Blade
+
+Shades of Iron:
+- Kingslayer
+- Frostmourne
+- Sinner
+- Voidblade
+- Bloodshot
+- Gorgonslayer
+
+Exotic Arsenal:
+- spirit
+- soul
+- chakram
+- luani
+- bajinn roh
+- silver roh
+
+NPC Weapons Mod V1.01:
+- NPC Eredin Swordx
+- S_NPC Eredin Swordx
+- q402_item__epic_swordx
+- S_q402_item__epic_swordx
+- sq304_powerful_sword
+- S_sq304_powerful_sword
+
+### -----Olgierd/1-Hand Sword-----
+
+Vanilla:
+- Iris
+
+Shades of Iron:
+- Rakuyo
+- Vulcan
+- Flameborn
+- Bloodletter
+- Eagle Sword
+- Lion Sword
+- Cursed Khopesh
+
+Exotic Arsenal:
+- stiletto
+- stiletto_silver
+- sickle
+- sickle_silver
+- claw sabre
+- talon sabre
+- jaggat
+- serrator
+- crescent
+- crescent_silver
+- rapier
+- rapier_silver
+- venasolak
+- hjaven
+- wrisp
+- skinner
+
+### -----Imlerith/Caranthir/Caretaker-----
+
+Vanilla:
+- Caretaker Shovel
+- Knight Mace 1
+- Knight Mace 2
+- Knight Mace 3
+
+NPC Weapons Mod V1.01:
+- Imlerith Macex
+- S_Imlerith Macex
+
+-----Sword Claws-----
+
+Shades of Iron:
+- Knife 
+- Kukri
+
+Exotic Arsenal:
+- dagger1
+- dagger1_silver
+- dagger2
+- dagger2_silver
+- dagger3
+- dagger3_silver
+
+-----Spear/Staff/Halberd-----
+
+Shades of Iron:
+- Heavenspire
+- Guandao
+- Hellspire
+	
+Exotic Arsenal:
+- naginata
+- naginata_silver
+- glaive
+- glaive_silver
+
+NPC Weapons Mod V1.01:
+- Spear 1
+- S_Spear 1
+- Spear 2
+- S_Spear 2
+- Halberd 1
+- S_Halberd 1
+- Halberd 2
+- S_Halberd 2
+- Guisarme 1
+- S_Guisarme 1
+- Guisarme 2
+- S_Guisarme 2
+- Staff
+- S_Staff
+- Oar
+- S_Oar
+- Pitchfork
+- S_Pitchfork
+- Rake
+- S_Rake
+- Caranthil Staff
+- S_Caranthil
+
+-----Gregoire de Gorgon-----
+
+Shades of Iron:
+- Realmdrifter Blade
+- Realmdrifter Divider
+- Claymore
+- Icarus Tears
+- Hades Grasp
+- Graveripper
+- Oblivion
+- Dragonbane
+- Crownbreaker
+- Beastcutter
+- Blackdawn
+- Pridefall
+
+Exotic Arsenal:
+- greatsword1
+- greatsword1_silver
+- greatsword2
+- greatsword2_silver
+- greatsword3
+- greatsword3_silver
+- orkur
+- maltonge
+
+-----Hammer (1-Hand/2-Hand)-----
+
+NPC Weapons Mod V1.01:
+- Twohanded Hammer 1
+- S_Twohanded Hammer 1
+- Twohanded Hammer 2
+- S_Twohanded Hammer 2
+- Great Axe 1
+- S_Great Axe 1
+- Great Axe 2
+- S_Great Axe 2
+- Lucerne Hammer
+- S_Lucerne Hammer
+- Wild Hunt Hammer
+- S_Wild Hunt Hammer
+
+Lethal Baguettes:
+- great baguette
+
+COMICALLY LARGE SPOON
+- Spoon
+- NGP Spoon
+
+-----Axe (1-Hand/2-Hand)-----
+
+Vanilla:
+- W_Axe01
+- W_Axe02
+- W_Axe03
+- W_Axe04
+- W_Axe05
+- W_Axe06
+- W_Mace01
+- W_Mace02
+
+Shades of Iron:
+- Ares
+- Haoma
+- Doomblade
+
+Exotic Arsenal:
+- kama
+- kama_silver
+
+NPC Weapons Mod V1.01:
+- Mace 1
+- S_Mace 1
+- Mace 2
+- S_Mace 2
+- Axe 1
+- S_Axe 1
+- Axe 2
+- S_Axe 2
+- Dwarven Axe
+- S_Dwarven Axe
+- Dwarven Hammer
+- S_Dwarven Hammer
+- Pickaxe
+- S_Pickaxe
+- Shovel
+- S_Shovel
+- Scythe
+- S_Scythe
+- Fishingrodx
+- S_Fishingrodx
+- Wild Hunt Axe
+- S_Wild Hunt Axe
+- Q1_ZoltanAxe2hx
+- S_Q1_ZoltanAxe2hx
+
+Lethal Baguettes:
+- smol baguette
  
  <div align="right">
   
