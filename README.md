@@ -137,7 +137,7 @@ https://www.nexusmods.com/witcher3/mods/5937
 - COMICALLY LARGE SPOON
 https://www.nexusmods.com/witcher3/mods/4924
 
-Item list and their respective animations:
+### Item list and their respective animations:
 
 ### -----Vampire Claws (Unarmed/Fists)-----
 
