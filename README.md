@@ -235,7 +235,7 @@ Exotic Arsenal:
 - dagger3
 - dagger3_silver
 
------Spear/Staff/Halberd-----
+### -----Spear/Staff/Halberd-----
 
 Shades of Iron:
 - Heavenspire
@@ -272,7 +272,7 @@ NPC Weapons Mod V1.01:
 - Caranthil Staff
 - S_Caranthil
 
------Gregoire de Gorgon-----
+### -----Gregoire de Gorgon-----
 
 Shades of Iron:
 - Realmdrifter Blade
@@ -298,7 +298,7 @@ Exotic Arsenal:
 - orkur
 - maltonge
 
------Hammer (1-Hand/2-Hand)-----
+### -----Hammer (1-Hand/2-Hand)-----
 
 NPC Weapons Mod V1.01:
 - Twohanded Hammer 1
@@ -321,7 +321,7 @@ COMICALLY LARGE SPOON
 - Spoon
 - NGP Spoon
 
------Axe (1-Hand/2-Hand)-----
+### -----Axe (1-Hand/2-Hand)-----
 
 Vanilla:
 - W_Axe01
