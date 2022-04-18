@@ -466,7 +466,7 @@ Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the 
 
 https://user-images.githubusercontent.com/98017171/160706074-0d3d35a2-52bf-4f3a-a148-d083d54dc7d7.mp4
 
-### || Movesets ||
+### || Armiger Mode Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
@@ -604,6 +604,22 @@ https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-
 ```W key (Forward) + Special Light Attack``` = **Dettlaff Vampire Dash Strike**
  
 https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
+
+### || Focus Mode / Equipment Mode Movesets ||
+- All moveset damage is based on ``currently equipped weapon in inventory``. 
+- Select weapons have ``increased range``.
+- Each weapon has its own unique 
+- `Light Attack` 
+- `W + Light Attack`
+- `Heavy Attack`
+- `W + Heavy Attack`
+- `Special Attack (Whirl)`
+- `W + Special Attack (Whirl)`
+- `Counterattack`
+- `W + Counterattack`
+- ```Range of opponent``` will also alter attack moveset.
+- Eredin, Olgierd, and Gregoire de Gorgon's moveset possess the ability to perform automatic finishers on enemies below 15% health.
+- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual dismember.
 
 <div align="right">
   
