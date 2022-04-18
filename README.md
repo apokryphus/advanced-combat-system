@@ -28,6 +28,8 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 - ```***Run script merger. Always run script merger after updating from a previous version as well.***```
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and enable the mod. 
 
+![1](https://user-images.githubusercontent.com/98017171/163811810-0e4a97b5-b9dc-4719-9641-b1ebb1a03a80.PNG)
+
 Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 - mod_ACS_JumpExtend is, like the folder containing it describes, optional. It increases the player's jump height by about 15 meters. 
 - Jumping while sprinting will jump further and higher than jumping while idle. 
@@ -78,6 +80,10 @@ Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 ## 1. MENU
 ACS has three primary weapon modes, Armiger Mode, Focus Mode, and Equipment Mode. 
 - Modes are selected in the Main Settings menu.
+
+![2](https://user-images.githubusercontent.com/98017171/163811871-4c4b019b-1b36-406c-a90b-a723fbfab34d.PNG)
+![3](https://user-images.githubusercontent.com/98017171/163811875-050422e5-7b23-4927-a221-efb9ff1613a1.PNG)
+![4](https://user-images.githubusercontent.com/98017171/163811878-8a2e7d9b-d061-4562-825b-3afbd9f7226e.PNG)
 
 ### Armiger Mode: 
 
