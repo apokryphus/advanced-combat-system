@@ -402,7 +402,7 @@ Lethal Baguettes:
   </div>
   
 ## 2. FISTS
-There are three options for fists, available for selection in the Main Settings menu:
+When Armiger Mode or Focus Mode is selected, there are three options for fists, available for selection in the Main Settings menu:
 - Normal fists
 - Vampire claws
 - Shockwave fists
@@ -422,6 +422,8 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
  
  ### Shockwave Fists
  - Every punch releases a shock wave in front of the player.
+
+Equipment Mode disables this setting. 
  
  <div align="right">
   
@@ -438,15 +440,15 @@ https://user-images.githubusercontent.com/98017171/160705235-08055326-9589-482b-
 
 
 ### || Weapons ||
-Depending on which version of the mod you install, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
+Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the `Armiger Mode Menu` or the `Focus Mode Menu`, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
+
 - Igni sign will always show the actual/real weapon equipped by the player.
 
-- For `mod_ACS_STATIC_WEAPONS`: 
+- For `STATIC WEAPONS`: 
    - Quen is Olgierd's sabre, Axii is Eredin's sword, Yrden is Imlerith's hammer.
-   -  Both silver and steel versions are the same weapon. 
    -  Weapons do not change how they look based upon weapon level and/or rarity.
 
-- For `mod_ACS_EVOLVING_WEAPONS`: 
+- For `EVOLVING WEAPONS`: 
    - Weapon level and/or rarity will change how each of the weapons look. 
    - There are different silver and steel versions of each weapon, dependent upon if Geralt is holding a silver or steel weapon. 
 
