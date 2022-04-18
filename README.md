@@ -137,6 +137,12 @@ https://www.nexusmods.com/witcher3/mods/5937
 - COMICALLY LARGE SPOON
 https://www.nexusmods.com/witcher3/mods/4924
 
+- Warglaives
+https://discord.com/channels/728022548796801064/776240617335816263/927252884196827208
+
+- Scythe
+https://discord.com/channels/728022548796801064/776240617335816263/909033164020785152
+
 ### Item list and their respective animations:
 
 ### -----Vampire Claws (Unarmed/Fists)-----
@@ -221,6 +227,10 @@ NPC Weapons Mod V1.01:
 - Imlerith Macex
 - S_Imlerith Macex
 
+Scythe:
+- scythe steel
+- scythe silver
+
 -----Sword Claws-----
 
 Shades of Iron:
@@ -234,6 +244,14 @@ Exotic Arsenal:
 - dagger2_silver
 - dagger3
 - dagger3_silver
+
+Warglavies:
+- gla_1
+- gla_2
+- gla_3
+- gla_a
+- gla_b
+- gla_c
 
 ### -----Spear/Staff/Halberd-----
 
