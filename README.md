@@ -471,9 +471,9 @@ https://user-images.githubusercontent.com/98017171/160706074-0d3d35a2-52bf-4f3a-
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
 - ```Holding down W (Forward) key``` while attacking with ``light attacks``, ``heavy attacks``, or ``special light attacks`` will alter attack moveset. 
-- ```Range of opponent``` will also alter attack moveset.
+- The ```range/distance of opponent``` from the player will also alter attack moveset.
 - The`` primary weapons`` for ``Quen and Axii``, as well as the ``secondary weapon`` for ``Axii``, possess the ability to perform automatic finishers on enemies below 15% health.
-- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual dismember.
+- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual finisher.
 
 ### || Igni ||
 ```Light Attack```  = **Default Geralt Light Attacks**
@@ -605,10 +605,11 @@ https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-
  
 https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
 
-### || Focus Mode / Equipment Mode Movesets ||
+## || Focus Mode / Equipment Mode Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``.
-- Each weapon has its own unique 
+
+- Each weapon has its own unique:
 - `Light Attack` 
 - `W + Light Attack`
 - `Heavy Attack`
@@ -617,9 +618,10 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
 - `W + Special Attack (Whirl)`
 - `Counterattack`
 - `W + Counterattack`
-- ```Range of opponent``` will also alter attack moveset.
+
+- The ```range/distance of opponent``` from the player will also alter attack moveset.
 - Eredin, Olgierd, and Gregoire de Gorgon's moveset possess the ability to perform automatic finishers on enemies below 15% health.
-- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual dismember.
+- All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual finisher.
 
 <div align="right">
   
@@ -628,7 +630,7 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
   </div>
   
 ## 4. ELEMENTAL COMBO SYSTEM
-``Successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
+When this option is enabled in the Main Settings menu, ``successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
 
 This works both ways for all signs except for Igni, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
 
@@ -724,7 +726,7 @@ https://user-images.githubusercontent.com/98017171/160708354-9f5c8761-4b3c-4fcf-
   </div>
   
 ## 5. ELEMENTAL REND SYSTEM
-Releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
+When this option is enabled in the Main Settings menu, releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 - Requires the rend skill to use.
 - Elemental rend can only be activated at max adrenaline.  
 
