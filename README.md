@@ -25,7 +25,8 @@ alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
 Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
-- ```***Run script merger. Always run script merger after updating from a previous version as well.***```
+- ```***Run script merger. Always run script merger after updating from a previous version as well.***``` 
+- Most of the time after updating there will be nothing to re-merge, in which case you can safely launch the game without any problems, but it never hurts to check. I am still human, and thus prone to mistakes. 
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and enable the mod. 
 
 ![1](https://user-images.githubusercontent.com/98017171/163811810-0e4a97b5-b9dc-4719-9641-b1ebb1a03a80.PNG)
