@@ -8,14 +8,7 @@ Enables the player to use a wide variety of NPC animations and abilities, both i
   
   </div>
 
-<p align="center">
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Puc5b5c0lWc
-" target="_blank"><img src="http://img.youtube.com/vi/Puc5b5c0lWc/0.jpg" 
-alt="ADVANCED COMBAT SYSTEM" width="640" height="480" border="10" /></a>
-  </p>
- <p align="center">
-  Video showcasing a previous version of the mod. Bear in mind, the mod has changed quite a bit since the video was released. 
- </p>
+![repository_thing](https://user-images.githubusercontent.com/98017171/164876096-e23c4508-4f1d-40f8-b6a1-7c3acd130946.png)
 
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
