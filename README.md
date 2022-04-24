@@ -142,7 +142,7 @@ https://discord.com/channels/728022548796801064/776240617335816263/9272528841968
 https://discord.com/channels/728022548796801064/776240617335816263/909033164020785152
 
 ### Item list and their respective animations:
-
+	
 ### -----Vampire Claws (Unarmed/Fists)-----
 
 Vanilla:
