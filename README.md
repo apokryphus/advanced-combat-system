@@ -1,15 +1,13 @@
+![repository_thing](https://user-images.githubusercontent.com/98017171/164876096-e23c4508-4f1d-40f8-b6a1-7c3acd130946.png)
+
 <div align="center">
 
-# advanced-combat-system
-  
 Combat overhaul mod for The Witcher 3. 
 
 Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
   
   </div>
-
-![repository_thing](https://user-images.githubusercontent.com/98017171/164876096-e23c4508-4f1d-40f8-b6a1-7c3acd130946.png)
-
+  
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
 - A PC not made out of wood. 
