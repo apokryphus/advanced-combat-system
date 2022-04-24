@@ -77,13 +77,13 @@ ACS has three primary weapon modes, Armiger Mode, Focus Mode, and Equipment Mode
 ![3](https://user-images.githubusercontent.com/98017171/163811875-050422e5-7b23-4927-a221-efb9ff1613a1.PNG)
 ![4](https://user-images.githubusercontent.com/98017171/163811878-8a2e7d9b-d061-4562-825b-3afbd9f7226e.PNG)
 
-### Armiger Mode: 
+## Armiger Mode: 
 
 How the mod functions as detailed beyond the rest of this section, where selecting different signs and attacking with light attack or heavy attack changes Gerry's weapons/attack moveset. 
 
 When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want static weapons or evolving weapons.
 
-### Focus Mode: 
+## Focus Mode: 
 
 When Focus Mode is selected in the Main Settings menu, navigate to the Focus Mode menu. 
 
@@ -114,7 +114,7 @@ Each weapon has its own unique combat animations for
 - counter-attacks
 - and w + counter-attacks
  
- ### Equipment Mode: 
+ ## Equipment Mode: 
  
  Upon selection of Equipment Mode in the Main Settings menu, equipping certain items will change the player's moveset. 
 
