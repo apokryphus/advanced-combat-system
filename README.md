@@ -633,6 +633,8 @@ This works both ways for all signs except for Igni, meaning that attacks while h
 - Detonation effects at max adrenaline have longer effects duration on enemies and wider range. 
 - Weapons passive effect activation chance scales with adrenaline in intervals of 1/3, 2/3, and max, with the chances of activation being 12%, 25%, and 50% respectively.
 
+Best used while in Armiger Mode, since this enables the player to quickly switch between weapons. 
+
 ### || Igni ||
 - Light attack/Any attack action after attacking with light attack:
   - Passive: None.
