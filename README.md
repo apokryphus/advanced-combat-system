@@ -4,7 +4,7 @@
 
 Combat overhaul mod for The Witcher 3. 
 
-Enables the player to use a wide variety of NPC enemy animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, etc, both in and out of combat.
+Enables the player to use a wide variety of NPC enemy animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, etc, either by transforming the player's weapon, or through equipping certain items. 
 
  </div>
   
