@@ -951,9 +951,11 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
   </div>
 
 ### || Axii Shield ||
-Holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
+When in Armiger Mode, holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
 - Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
 - Attack animations change into 1-hand style while Axii shield is held. 
+
+When in Focus Mode or Equipment Mode, the shield is bound to Eredin's moveset, and will activate when holding block. 
 
 https://user-images.githubusercontent.com/98017171/160716954-8f446bf6-8557-4c2f-9388-26daf4674b34.mp4
 
