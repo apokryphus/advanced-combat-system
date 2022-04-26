@@ -4,9 +4,9 @@
 
 Combat overhaul mod for The Witcher 3. 
 
-Enables the player to use a wide variety of NPC animations and abilities, both in and out of combat.
-  
-  </div>
+Enables the player to use a wide variety of NPC enemy animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, etc, both in and out of combat.
+
+ </div>
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
