@@ -86,11 +86,9 @@ When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger
 
 When Focus Mode is selected in the Main Settings menu, navigate to the Focus Mode menu. 
 
-There, you can select the weapon of your choice out of the nine available weapons that you want to use for silver weapon and steel weapon.
+There, you can select the weapon of your choice out of the nine available weapons that you want to use for silver weapon and steel weapon. The weapon's stats are taken from whatever weapon you have equipped in your inventory.
 
-You can have different weapons for silver and steel.
-
-You can also select in the Focus Mode menu whether you want static weapons or evolving weapons in this mode.
+There are different weapons for silver and steel.
 
 The weapons are:
 - Default Geralt sword
