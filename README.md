@@ -451,10 +451,6 @@ Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the 
 - **Tier III Weapon Appearance**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
 
-# Tier III Weapons
-
-https://user-images.githubusercontent.com/98017171/160706074-0d3d35a2-52bf-4f3a-a148-d083d54dc7d7.mp4
-
 ### || Armiger Mode Movesets ||
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
