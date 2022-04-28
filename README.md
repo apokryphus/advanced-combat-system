@@ -451,7 +451,7 @@ Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the 
 - **Tier III Weapon Appearance**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
 
-### || Armiger Mode Movesets ||
+# Armiger Mode Movesets
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``. 
 - Quen, Axii, Yrden, Aard each have a ``special light attack``, replacing ``Whirl``. ```Requires Whirl to use```.
@@ -590,7 +590,7 @@ https://user-images.githubusercontent.com/98017171/160690934-5866f450-e439-454e-
  
 https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-8776-338828df5170.mp4
 
-## || Focus Mode / Equipment Mode Movesets ||
+# Focus Mode / Equipment Mode Movesets
 - All moveset damage is based on ``currently equipped weapon in inventory``. 
 - Select weapons have ``increased range``.
 
