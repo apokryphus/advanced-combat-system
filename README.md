@@ -396,7 +396,7 @@ When Armiger Mode or Focus Mode is selected, there are three options for fists, 
 - Vampire claws
 - Shockwave fists
 
-Equipment Mode disables this setting. 
+Equipment Mode disables this setting, and the animations are applied only when specific items are equipped. 
 
 ### Vampire Claws
 
