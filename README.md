@@ -5,7 +5,7 @@
 Combat overhaul mod for The Witcher 3. 
  </div>
  
-Enables the player to use a wide variety of enemy NPC animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, etc, either by transforming the player's weapon, or through equipping certain items. 
+Enables the player to use all humanoid NPC animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, spear, hammer, etc, either by transforming the player's weapon, or through equipping certain items. 
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
