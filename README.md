@@ -2,7 +2,7 @@
 
 <div align="center">
 
-Combat animation overhaul mod for The Witcher 3
+Combat animation overhaul mod for The Witcher 3.
  </div>
  
 Enables the player to use all humanoid NPC combat animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, spear, hammer, etc, either by transforming the player's weapon, or through equipping certain items. 
