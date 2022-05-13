@@ -943,6 +943,7 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
 #### [Summoned Wolves](#-summoned-wolves-)
 #### [Summoned Shadow Centipedes](#-summoned-shadow-centipedes-)
 #### [Phantom Swords](#-phantom-swords-)
+#### [Necromancy](#-necromancy-)
   </div>
 
 ### || Axii Shield ||
@@ -1065,6 +1066,32 @@ https://user-images.githubusercontent.com/98017171/160717525-9793dfac-53d6-49da-
 - Swords will disarm an opponent if they happen to hit their weapon hand. 
 
 https://user-images.githubusercontent.com/98017171/160717565-dd950a02-ad4b-4d23-9654-199e4350caf1.mp4
+
+### || Necromancy ||
+If enabled in the Special Abilities menu, double-tapping ```Parry/Counterattack``` while holding the ```Yrden primary weapon``` in Armiger mode, the ```Imlerith/Caretaker/Scythe``` weapon in Focus mode, or the ```Imlerith animation weapon``` in equipment mode will allow the player to raise the dead.
+
+When the player is above 50% health:
+
+https://user-images.githubusercontent.com/98017171/168326595-89aa7b64-8421-4ec4-9ebd-ce856954df78.mp4
+
+A maximum of 10 corpses can be revived as revenants, in a 10 meter radius around the player.
+Humans cost 5% current health each to be revived.
+Small to regular sized monsters cost 7.5% current health each, while bigger monsters cost 20% current health each.
+Revenants have reduced health, but are very aggressive.
+Recasting the summoning WILL NOT destroy all active revenants.
+Revenants can be revived indefinitely.
+
+When the player is below 50% health:
+
+https://user-images.githubusercontent.com/98017171/168327611-e899c7fe-4e69-485a-91ce-49e28e871988.mp4
+
+The player will create skeleton soldiers from corpses instead.
+A maximum of 15 skeleton soldiers can be created in a 20 meter radius around the player.
+Each soldier costs 10% current health to summon.
+Soldiers are aggressive, fast, and vary in size.
+Recasting the summoning WILL destroy all active skeleton soldiers.
+
+All revenants and skeleton soldiers are destroyed if the player leaves combat.
 
  <div align="right">
   
