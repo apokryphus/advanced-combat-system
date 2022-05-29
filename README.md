@@ -412,7 +412,7 @@ Lethal Baguettes:
   </div>
   
 ## 2. FISTS
-When Armiger Mode or Focus Mode is selected, there are three options for fists, available for selection in the Main Settings menu:
+When Armiger Mode, Focus Mode, or Hybrid Mode is selected, there are three options for fists, available for selection in the Main Settings menu:
 - Normal fists
 - Vampire claws
 - Shockwave fists
