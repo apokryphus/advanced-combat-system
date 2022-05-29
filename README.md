@@ -9,7 +9,7 @@ Enables the player to use all humanoid NPC combat animations and abilities, such
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
-- A PC not made out of wood. 
+- A PC not made out of wood. Seriously.
 
 ## INSTALLATION
 Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
@@ -636,9 +636,11 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
   </div>
   
 ## 4. ELEMENTAL COMBO SYSTEM
-When this option is enabled in the Main Settings menu, ``successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
+When this option is enabled in the Main Settings menu, it allows the player's weapon to produce additional effects.
 
-This works both ways for all signs except for Igni, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
+When ``successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance, the player will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
+
+This works both ways for all signs except for Geralt's default weapon, meaning that attacks while holding the ``secondary weapon`` will also ``prime`` the enemy for a ``detonation effect``, which will be detonated upon attacking while holding the ``primary weapon``.
 
 - Enemies `primed` for detonation display a `marker` above them.
 - Detonation consumes all markers.
@@ -648,7 +650,7 @@ This works both ways for all signs except for Igni, meaning that attacks while h
 - Detonation effects at max adrenaline have longer effects duration on enemies and wider range. 
 - Weapons passive effect activation chance scales with adrenaline in intervals of 1/3, 2/3, and max, with the chances of activation being 12%, 25%, and 50% respectively.
 
-Best used while in Armiger Mode, since this enables the player to quickly switch between weapons. 
+The above only applies to Armiger Mode. In other modes, the only part of the system active is the ```weapons passive effects``` part, which produces the player's selected sign's effect instead. 
 
 ### || Igni ||
 - Light attack/Any attack action after attacking with light attack:
