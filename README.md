@@ -114,6 +114,8 @@ Each weapon has its own unique combat animations for:
 - Counterattack/Parry Skill
 - W (Forward) + Counterattack/Parry Skill
  
+ ![FocusModeMenu](https://user-images.githubusercontent.com/98017171/170869806-1c212df8-2281-4292-ad56-1e17e19e011e.PNG)
+
  ## Hybrid Mode: 
  
 Upon selection of Hybrid Mode in the Main Settings menu, navigate to the Hybrid Mode Settings panel. 
