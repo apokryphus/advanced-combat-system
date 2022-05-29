@@ -79,7 +79,7 @@ ACS has four primary weapon modes, Armiger Mode, Focus Mode, Hybrid Mode, and Eq
 
 ## Armiger Mode: 
 
-How the mod functions as detailed beyond the rest of this section, where selecting different signs and attacking with light attack or heavy attack changes Gerry's weapons/attack moveset. 
+How the mod functions as showcased in the weapon demo videos below, where selecting different signs and attacking with light attack or heavy attack changes Gerry's weapons/attack moveset. 
 
 When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want static weapons or evolving weapons, and to optionally select the animations/weapons for each sign. 
 
