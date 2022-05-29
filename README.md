@@ -19,7 +19,7 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 - Most of the time after updating there will be nothing to re-merge, in which case you can safely launch the game without any problems, but it never hurts to check. I am still human, and thus prone to mistakes. 
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and make sure the mod is enabled.
 
-![1](https://user-images.githubusercontent.com/98017171/163811810-0e4a97b5-b9dc-4719-9641-b1ebb1a03a80.PNG)
+![MainSettings](https://user-images.githubusercontent.com/98017171/170869633-9e239f22-41e7-49f3-be86-597294cd00fb.PNG)
 
 Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 - mod_ACS_JumpExtend is, like the folder containing it describes, optional. It increases the player's jump height by about 15 meters. 
@@ -72,10 +72,10 @@ Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 ACS has four primary weapon modes, Armiger Mode, Focus Mode, Hybrid Mode, and Equipment Mode. 
 - Modes are selected in the Main Settings menu.
 
-![2](https://user-images.githubusercontent.com/98017171/163811871-4c4b019b-1b36-406c-a90b-a723fbfab34d.PNG)
-![3](https://user-images.githubusercontent.com/98017171/163811875-050422e5-7b23-4927-a221-efb9ff1613a1.PNG)
-![5](https://user-images.githubusercontent.com/98017171/170868317-aa6cb3db-6162-44b3-a4f9-7516912d5f27.PNG)
-![4](https://user-images.githubusercontent.com/98017171/163811878-8a2e7d9b-d061-4562-825b-3afbd9f7226e.PNG)
+![ArmigerModeSwitch](https://user-images.githubusercontent.com/98017171/170869647-aa5088ed-ce5a-41ae-8ac5-9111e4996b0d.PNG)
+![FocusModeSwitch](https://user-images.githubusercontent.com/98017171/170869651-effeed07-264f-4e6f-b4fe-4e51510a888a.PNG)
+![HybridModeSwitch](https://user-images.githubusercontent.com/98017171/170869653-2f390681-0a8d-43de-8262-607742b4ecf7.PNG)
+![EquipmentModeSwitch](https://user-images.githubusercontent.com/98017171/170869650-7b41321a-7530-4e4e-959f-12329e0a7c52.PNG)
 
 ## Armiger Mode: 
 
