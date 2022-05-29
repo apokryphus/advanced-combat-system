@@ -1152,7 +1152,7 @@ All revenants and skeleton soldiers are destroyed if the player leaves combat.
 ## 13. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
 - Overhauls such as `Ghost mode` and `W3EE` are both compatible. `W3EE` requires manual script merging. Pick ACS code over W3EE.
-- Compatible with other animation changing mods, such as SCAAR. Attack once with light attack while the igni sign is selected to switch to it. 
+- Compatible with other animation changing mods, such as SCAAR or E3 Improved Combat Animations. Default Geralt attacks in all modes automatically use these mods if they are installed. 
 - Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
 
  <div align="right">
