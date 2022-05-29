@@ -69,18 +69,21 @@ Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
 
 
 ## 1. MENU
-ACS has three primary weapon modes, Armiger Mode, Focus Mode, and Equipment Mode. 
+ACS has four primary weapon modes, Armiger Mode, Focus Mode, Hybrid Mode, and Equipment Mode. 
 - Modes are selected in the Main Settings menu.
 
 ![2](https://user-images.githubusercontent.com/98017171/163811871-4c4b019b-1b36-406c-a90b-a723fbfab34d.PNG)
 ![3](https://user-images.githubusercontent.com/98017171/163811875-050422e5-7b23-4927-a221-efb9ff1613a1.PNG)
+![5](https://user-images.githubusercontent.com/98017171/170868317-aa6cb3db-6162-44b3-a4f9-7516912d5f27.PNG)
 ![4](https://user-images.githubusercontent.com/98017171/163811878-8a2e7d9b-d061-4562-825b-3afbd9f7226e.PNG)
 
 ## Armiger Mode: 
 
 How the mod functions as detailed beyond the rest of this section, where selecting different signs and attacking with light attack or heavy attack changes Gerry's weapons/attack moveset. 
 
-When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want static weapons or evolving weapons.
+When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want static weapons or evolving weapons, and to optionally select the animations/weapons for each sign. 
+
+![3](https://user-images.githubusercontent.com/98017171/170868519-7c6f5125-b008-4b8c-a59f-112cfce6004a.PNG)
 
 ## Focus Mode: 
 
@@ -101,15 +104,31 @@ The weapons are:
 - Cyclop's weapon / Cloud giant's weapon
 - Greataxe / Warhammer
 
-Each weapon has its own unique combat animations for
-- light attacks 
-- w + light attacks 
-- heavy attacks 
-- w + heavy attacks
-- special light attacks (whirl)
-- w + light special attacks (whirl)
-- counter-attacks
-- and w + counter-attacks
+Each weapon has its own unique combat animations for: 
+- Light Attack
+- W (Forward) + Light Attack
+- Heavy Attack
+- W (Forward) + Heavy Attack
+- Special Attack (Whirl)
+- W (Forward) + Special Attack (Whirl)
+- Counterattack/Parry Skill
+- W (Forward) + Counterattack/Parry Skill
+ 
+ ## Hybrid Mode: 
+ 
+Upon selection of Hybrid Mode in the Main Settings menu, navigate to the Hybrid Mode Settings panel. 
+
+There, you can customize your own array of attacks for:
+
+- Light Attack
+- W (Forward) + Light Attack
+- Heavy Attack
+- W (Forward) + Heavy Attack
+- Special Attack (Whirl)
+- W (Forward) + Special Attack (Whirl)
+- Counterattack/Parry Skill
+
+![1](https://user-images.githubusercontent.com/98017171/170868475-b9cbd75b-cefc-4db5-a250-06b619e10c4c.PNG)
  
  ## Equipment Mode: 
  
