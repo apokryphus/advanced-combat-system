@@ -835,17 +835,23 @@ https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-
   </div>
   
 ## 7. TAUNT SYSTEM
-```Switching weapons (signs, default is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
-- Taunts change based on what weapon is held. 
-- Enemies in a ```10 meter radius``` around the player will be taunted.
-- After 0.5 seconds, enemies will be taunted one by one in 0.5 second intervals, increasing their ```moral, stamina, and focus```. 
-- Enemies will increase their speed anywhere from ```25% to 75%```. 
-- This is marked when they stagger and play the ```demonic possession effect``` (black swirling effect around their heads). 
-- They will also receive a small ```health regen``` amongst other things. 
-- Only the first taunt will ```stagger``` enemies.
-- Subsequent taunts on a taunted enemy will only replenish their ```morale, focus, and stamina```.
+```Switching weapons (signs, default button is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 
-https://user-images.githubusercontent.com/98017171/160712728-f129bf58-9fd3-49c8-9a24-bc56b23a01a3.mp4
+Out of combat:
+- If the taunt system is enabled in the menu options, and the option ```I WANNA PLAY GWENT``` is enabled, Geralt will go around asking people to play gwent with him when the taunt button is pressed. 
+
+In combat:
+- If the taunt system is enabled in the menu options, and the option ```Combat Taunt``` is enabled, enemies will be taunted in combat. 
+- Taunts change based on what weapon is held. 
+- ```5 enemies``` in a ```5 meter radius``` around the player will be taunted.
+- After 0.75 seconds, enemies will be taunted one by one in 0.25 second intervals, have their levels ```reduced by around 1/2```, increasing their ```moral, stamina, and focus```. 
+- Enemies will increase their speed anywhere from ```5% to 25%```. 
+- They will also receive a small ```health regen``` amongst other things. 
+- When they reach ```25% health through player damage```, taunted enemies have a ```75% chance``` to man up, leveling up to ```twice the player's level```, as well as gain ```max stamina and morale``` again. 
+- Or the enemy will have a ```25% chance``` of accepting their failure and ```lose all stamina and morale```, as well as become ```paralyzed with fear```. 
+- In other mods that remove enemy levels, they'll just gain stamina, morale, and speed boost. 
+- In W3EE, they'll have increased damage instead when at 25% health. 
+- Subsequent taunts on a taunted enemy will only replenish their ```morale, focus, and stamina```, and make them play a taunt animation.
 
  <div align="right">
   
