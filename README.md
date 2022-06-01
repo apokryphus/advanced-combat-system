@@ -21,13 +21,6 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 
 ![MainSettings](https://user-images.githubusercontent.com/98017171/170869633-9e239f22-41e7-49f3-be86-597294cd00fb.PNG)
 
-Inside the `OPTIONAL` folder you will find mod_ACS_JumpExtend.
-- mod_ACS_JumpExtend is, like the folder containing it describes, optional. It increases the player's jump height by about 15 meters. 
-- Jumping while sprinting will jump further and higher than jumping while idle. 
-- Jumping while sliding will jump the furthest. 
-- Don't put this in your mods folder if you don't have a custom camera mod like immersive cam since I didn't write one for this yet. 
-- Or do, if you enjoy watching Geralt fly off screen every time he jumps. Who am I to tell you how to play this game?
-
 ## PREFACE
 
   A lot of videos on this page. Give them a moment to load, or else right click the video and open in new tab to load it faster. 
