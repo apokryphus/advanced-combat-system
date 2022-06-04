@@ -966,6 +966,7 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
 #### [Summoned Shadow Centipedes](#-summoned-shadow-centipedes-)
 #### [Phantom Swords](#-phantom-swords-)
 #### [Necromancy](#-necromancy-)
+#### [Bat Swarm](#-bat-swarm-)
   </div>
 
 ### || Axii Shield ||
@@ -1114,6 +1115,16 @@ https://user-images.githubusercontent.com/98017171/168327611-e899c7fe-4e69-485a-
 - Recasting the summoning WILL destroy all active skeleton soldiers.
 
 All revenants and skeleton soldiers are destroyed if the player leaves combat.
+
+### || Bat Swarm ||
+`Double-tap + hold parry + sword claws`
+
+- The player summons a horde of bats. When active, the player's stamina will rapidly drain, but successful damaging attacks on enemies will regain a small percentage of the player's max stamina. 
+- The swarm dissipates when the player has no stamina left. 
+- Surrounding enemies will be `pulled` towards the player, be continuously damaged for a tiny percentage of their health, have a large chance to be affected by `bleeding`, and a very small chance to be affected by `blindness`. 
+- Swarm executes when the enemy health drops below 5%. 
+
+https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-b8a6-ec2601be3c3e.mp4
 
  <div align="right">
   
