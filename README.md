@@ -840,6 +840,7 @@ In combat:
 - After 0.75 seconds, enemies will be taunted one by one in 0.25 second intervals, have their levels ```reduced by around 1/2```, increasing their ```moral, stamina, and focus```. 
 - Enemies will increase their speed anywhere from ```5% to 25%```. 
 - They will also receive a small ```health regen``` amongst other things. 
+- Taunted enemies will now apply knockdown and bleeding if they manage to hit the player.
 - When they reach ```25% health through player damage```, taunted enemies have a ```75% chance``` to man up, leveling up to ```twice the player's level```, as well as gain ```max stamina and morale``` again. 
 - Or the enemy will have a ```25% chance``` of accepting their failure and ```lose all stamina and morale```, as well as become ```paralyzed with fear```. 
 - In other mods that remove enemy levels, they'll just gain stamina, morale, and speed boost. 
@@ -989,6 +990,7 @@ https://user-images.githubusercontent.com/98017171/160717021-c0664cbb-ae76-46cd-
 ### || Bruxa Camouflage ||
  ```Double-tapping and holding down Parry/Counterattack``` while vampire claws are equipped triggers Bruxa camouflage.
    - 5% current health is continuously drained while camouflage is active. 
+   - The player can dash, attack, and do special abilities when in Bruxa Stealth mode. Doing a vampire dash attack or attacking while not having vampire claws equipped reveals the player.
    - Enemies close to the player will notice the player, while enemies farther away will not. 
    - The lower the enemy's health is, the greater their fear, which will be reflected in their reaction towards the camouflaged player. 
    - Only works on humans. Monsters behave normally. 
@@ -997,8 +999,8 @@ https://user-images.githubusercontent.com/98017171/160717113-1faadd81-1fe4-4cfe-
 
 ### || Bruxa Bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
-- Bruxa bite deals ```200 flat damage``` and returns this value to the player as ```health```.
-- ```Doubletap sprint``` to release victim.
+- Bruxa bite deals ```10% - 20%``` percentage health damage and heals for `10%` the player's max health.
+- ```Doubletap sprint (Bruxa Dash)``` to release victim.
 
 https://user-images.githubusercontent.com/98017171/160717152-306eca70-803e-4426-b8a0-7bbe6aa5ee74.mp4
 
