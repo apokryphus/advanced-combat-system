@@ -240,7 +240,7 @@ Scythe:
 - scythe steel
 - scythe silver
 
------Sword Claws-----
+### -----Sword Claws-----
 
 Shades of Iron:
 - Knife 
