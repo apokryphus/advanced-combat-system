@@ -1082,9 +1082,9 @@ Double-tapping and holding down ```Parry/Counterattack``` while holding the Quen
 https://user-images.githubusercontent.com/98017171/160717525-9793dfac-53d6-49da-a28b-a6e8078f8347.mp4
 
 ### || Phantom Swords ||
-```S + Parry/Counterattack``` while in combat and not hard locked to enemy summons five phantom swords. 
+```W + Parry/Counterattack``` while in combat and not hard locked to enemy summons five phantom swords. 
 - First cast summons the swords, second cast fires the swords. 
-- Swords cost 25% current health to summon.
+- Swords cost 2/3 current adrenaline/focus to fire.
 - Sword damage is literally the player's light attacks. This means landing all five swords on the enemy = five light attacks at once. 
 - This also means that it can be comboed with other attacks through the elemental combo system. 
 - Swords destroy shields.
