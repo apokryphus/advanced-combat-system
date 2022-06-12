@@ -971,8 +971,8 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
 #### [Bat Swarm](#-bat-swarm-)
   </div>
 
-### || Axii Shield ||
-When in Armiger Mode, holding down the ```Parry/Counterattack button``` while holding the Axii primary weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
+### || Shield ||
+When in Armiger Mode, holding down the ```Parry/Counterattack button``` while holding the Eredin moveset weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
 - Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
 - Attack animations change into 1-hand style while Axii shield is held. 
 
@@ -981,7 +981,7 @@ When in Focus Mode or Equipment Mode, the shield is bound to Eredin's moveset, a
 https://user-images.githubusercontent.com/98017171/160716954-8f446bf6-8557-4c2f-9388-26daf4674b34.mp4
 
 ### || Aspect of the Hym ||
-Double-tapping and holding down ```Parry/Counterattack``` while holding the Axii primary weapon will summon a hym around the player. Release `Parry/Counterattack` to dismiss the hym. 
+Double-tapping and holding down ```Parry/Counterattack``` while holding the Eredin primary weapon will summon a hym around the player. Release `Parry/Counterattack` to dismiss the hym. 
 - The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
 - While the hym is active, all of the player's attacks gain ```extra range```. 
