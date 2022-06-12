@@ -15,7 +15,7 @@ Enables the player to use all humanoid NPC combat animations and abilities, such
 Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from latest version.
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
-- Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484). ```Always run script merger after updating from a previous version as well.``` 
+- Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts. ```Always run script merger to check if any scripts need re-merging after updating from a previous version as well.``` 
 - Most of the time after updating there will be nothing to re-merge, in which case you can safely launch the game without any problems, but it never hurts to check. I am still human, and thus prone to mistakes. 
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and make sure the mod is enabled.
 
