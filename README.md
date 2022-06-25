@@ -38,7 +38,7 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
   
   It is also highly encouraged to alternate between light and heavy attacks, as well as switch signs often, since there are systems built around this way of playing. 
   
-  Of course, once again, you are more than welcome to disregard whatever I just said and play the game however you want. 
+  Of course, you are more than welcome to disregard whatever I just said and play the game however you want. 
   
 <div align="center">
   
