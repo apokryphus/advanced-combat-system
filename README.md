@@ -22,6 +22,8 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 
 ![MainSettings](https://user-images.githubusercontent.com/98017171/170869633-9e239f22-41e7-49f3-be86-597294cd00fb.PNG)
 
+- Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
+
 ## PREFACE
 
   A lot of videos on this page. Give them a moment to load, or else right click the video and open in new tab to load it faster. 
