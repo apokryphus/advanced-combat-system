@@ -1170,7 +1170,7 @@ https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-
   
 ## 13. COMPATIBILITY
 - Disclaimer: I don't use this version personally.
-- Overhauls such as `Ghost mode` and `W3EE` are both compatible. `W3EE` requires manual script merging. Pick ACS code over W3EE.
+- Overhauls such as `Ghost mode` and `W3EE` are both compatible. `W3EE` has conflicts because it comments out vanilla code. Pick ACS code over W3EE.
 - Compatible with other animation changing mods, such as SCAAR or E3 Improved Combat Animations. Default Geralt attacks in all modes automatically use these mods if they are installed. 
 - Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
 
