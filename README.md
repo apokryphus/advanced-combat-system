@@ -23,6 +23,7 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 ![MainSettings](https://user-images.githubusercontent.com/98017171/170869633-9e239f22-41e7-49f3-be86-597294cd00fb.PNG)
 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
+- To update the mod, you can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click. 
 
 ## PREFACE
 
@@ -1002,8 +1003,10 @@ https://user-images.githubusercontent.com/98017171/160717113-1faadd81-1fe4-4cfe-
 
 ### || Bruxa Bite ||
 ```Double tap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
-- Bruxa bite deals ```10% - 20%``` percentage health damage and heals for `10%` the player's max health.
+- Bruxa bite deals ```10% - 20%``` percentage health damage and heals for `10%` the player's max health. 
+- Executes the enemy if they are below 10% health. 
 - ```Doubletap sprint (Bruxa Dash)``` to release victim.
+- Requires full stamina and full adrenaline. Resets adrenaline to 0 after use. 
 
 https://user-images.githubusercontent.com/98017171/160717152-306eca70-803e-4426-b8a0-7bbe6aa5ee74.mp4
 
@@ -1049,6 +1052,7 @@ https://user-images.githubusercontent.com/98017171/160717269-4160cc55-9ede-48b7-
 
 ### || Aspect of the Toad ||
 ```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```close range``` will cause the player to channel a fraction of the power of the Toad, vomiting on all enemies in a small area in front of the player.
+- Requires full stamina and full adrenaline. Resets adrenaline to 0 after use. 
 - Can only be used while the player is on the ```ground```.
 - Toad vomit deals current health percentage damage as ```poison damage```, but ```executes``` the enemy at a certain health threshold.
 - Damage is capable of generating critical hits, based on player's critical hit chance.
@@ -1057,6 +1061,7 @@ https://user-images.githubusercontent.com/98017171/160717341-c70abdd8-bb7e-4100-
 
 ### || Aspect of the Djinn (Single Target) ||
 ```S Key + Parry/Counterattack``` while ```hard locked``` on a target (default key Z) at ```medium to long range``` will cause the player to channel a fraction of the power of a djinn and shoot a beam of lightning at the target.
+- Requires full stamina and full adrenaline. Resets adrenaline to 0 after use. 
 - Can only be used while the player is on the``` ground```.
 - Extra targets at close range and close to the beam of lightning will be hit.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
@@ -1067,6 +1072,7 @@ https://user-images.githubusercontent.com/98017171/160717385-c14ca798-d499-4a2e-
 
 ### || Aspect of the Djinn (Multi Target) ||
 ```Parry/Counterattack``` while at ```medium to long range``` will cause the player to channel more of the power of a djinn and shoot beams of lightning at the ```five``` closest targets to the player.
+- Requires full stamina and full adrenaline. Resets adrenaline to 0 after use. 
 - Can only be used while the player is in ```wraith mode```.
 - Djinn lightning deals current health percentage damage as ```direct damage```, but ```executes``` the enemy at a certain health threshold. 
 - Targets have a small chance to burn.
