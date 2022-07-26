@@ -23,7 +23,7 @@ Latest version can be found in [releases](https://github.com/apokryphus/advanced
 ![MainSettings](https://user-images.githubusercontent.com/98017171/170869633-9e239f22-41e7-49f3-be86-597294cd00fb.PNG)
 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
-- To update the mod, you can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click. 
+- You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click. 
 
 ## PREFACE
 
