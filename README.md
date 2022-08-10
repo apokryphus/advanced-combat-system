@@ -860,7 +860,7 @@ In combat:
   
 ## 8. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
-```Doubletap Sprint```
+```Hold Sprint + Forward (W)```
 - Dashes a fixed distance forward, alternating a little bit left or right.
 - Bruxa dash serves as a ``reset button`` to many things. Use it to dash out of ``wraith mode``, ``bruxa bite``, or generally anything you might encounter. 
 - Bruxa dash while in exploration will dash further than dashing in combat. 
@@ -869,7 +869,7 @@ In combat:
 https://user-images.githubusercontent.com/98017171/160713938-ec49b801-a8d8-42ce-ba20-865e4ec08a61.mp4
 
 ### || Wraith Mode ||
-```Witcher sense + Sprint```
+```Witcher Sense + Hold Sprint + Forward (W)```
 - Can only be used out of combat.
 - Enables the player to ignore collision, phase through walls, and fly through the air.
 - Hold the jump button to fly directly upwards.
@@ -878,7 +878,7 @@ https://user-images.githubusercontent.com/98017171/160713938-ec49b801-a8d8-42ce-
 https://user-images.githubusercontent.com/98017171/160714014-cfb75b10-6d9d-48cd-9234-8482649a7ca7.mp4
 
 ### || Bruxa Leap Attack ||
-```W key + Doubletap Sprint```
+```Doubletap Forward (W) in combat while not holding sprint key```
 - Can only be used in combat.
 - Leaps at your targeted enemy, dealing damage.
 - Bruxa leap attack is capable of targeting airborn enemies.
