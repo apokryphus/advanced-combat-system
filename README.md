@@ -423,7 +423,7 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
 
 - Vampire claws are automatically equipped when attacking while unarmed in `combat`.
 - Vampire claws retract once the player is `out of combat`.
-- Vampire claws deal `5% - 10%` maximum health damage to `red health enemies`, and `10% - 20%` maximum health damage to `monsters`.
+- Vampire claws deal `5% - 10%` maximum health damage to `red health enemies`, and `10% - 20%` maximum health damage to `monsters`. This damage can be modified in the Damage Settings menu.
 - Attacks apply `bleeding` and `heals for 2.5%` of the player's maximum health.
 - ```Light attacks``` are light vampire strikes. 
 - ```Heavy attacks``` are heavy vampire strikes.
