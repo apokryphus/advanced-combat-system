@@ -519,6 +519,10 @@ https://user-images.githubusercontent.com/98017171/160678621-ab99bf65-ffc4-42b8-
 
 https://user-images.githubusercontent.com/98017171/160678864-53fe2588-92c8-4ca2-a593-3bb256c47ad3.mp4
 
+If the player has full adrenaline and full stamina, Umbral Slash End is available for use for Olgierd weapon's special attack ( Forward (W) + Special Light Attack (Whirl) ). Consumes all of the player's adrenaline and stamina on use.
+
+https://user-images.githubusercontent.com/98017171/185812044-85b1c060-3fbb-4e5f-8826-41a2f445a05f.mp4
+
 ### || Axii ||
 ```Light Attack``` = **Eredin/2-Hand-Sword Single Strikes**
 
@@ -973,6 +977,7 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
 #### [Phantom Swords](#-phantom-swords-)
 #### [Necromancy](#-necromancy-)
 #### [Bat Swarm](#-bat-swarm-)
+#### [Weapon Arts](#-weapon-arts-)
   </div>
 
 ### || Shield ||
@@ -1137,6 +1142,27 @@ All revenants and skeleton soldiers are destroyed if the player leaves combat.
 - Swarm executes when the enemy health drops below 5%. 
 
 https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-b8a6-ec2601be3c3e.mp4
+
+### || Weapon Arts ||
+`Back (S key) + light attack`
+
+- Certain weapons have weapon arts attached to them. Weapon arts can only be activated if the player has at least 1/3 of the adrenaline bar. Consumes 1/3 of the adrenlaine bar on each use:
+ - Vampire claws and sword claws: Back (S key) + light attack = Bruxa sonic scream
+
+https://user-images.githubusercontent.com/98017171/185811967-d19efc2b-4e6c-4720-b21c-792f730a50f3.mp4
+
+ - Olgierd weapon: Back (S key) + light attack = Umbral Slash 
+
+https://user-images.githubusercontent.com/98017171/185811978-be29a57b-4db4-4607-8356-6dae26b6d067.mp4
+
+ - Eredin weapon: Back (S key) + light attack = Sparagmos
+ 
+https://user-images.githubusercontent.com/98017171/185811985-e5b55bca-5646-45dc-a656-aaf792e5bc56.mp4
+
+ - Imlerith weapon: Back (S key) + light attack = Crescent Caress 
+ 
+https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-8884-af1717607a5e.mp4
+
 
  <div align="right">
   
