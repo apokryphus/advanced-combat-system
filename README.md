@@ -12,7 +12,7 @@ Enables the player to use all humanoid NPC combat animations and abilities, such
 - A PC not made out of wood. Seriously.
 
 ## INSTALLATION
-### **Latest version can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).**
+### **Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).**
 - IF UPDATING FROM v1.8.3e OR LOWER, DELETE `mod_ACS` and `dlc_ACS` FIRST, THEN INSTALL MANUALLY AGAIN.
 - Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest).
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
