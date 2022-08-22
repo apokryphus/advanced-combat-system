@@ -935,40 +935,6 @@ https://user-images.githubusercontent.com/98017171/160714398-64ea6a4e-bd67-45af-
 
 https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-a643-c3b2e76daa05.mp4
 
-### || Regular Dodges ||
-The player's regular dodges have special effects and apply negative buffs on enemies.
-- Negative buffs do not stack on themselves, but will stack on each other.
-
-#### - Igni
-- Small chance to applying burning.
-
-https://user-images.githubusercontent.com/98017171/160715480-d6ce5b1e-833b-4160-a029-8499cd159dfa.mp4
-
-#### - Axii
-- Small chance to apply slowdown freeze.
-
-https://user-images.githubusercontent.com/98017171/160715346-51ddd55d-c509-4015-8229-f2cc7c152a8c.mp4
-
-#### - Quen
-- Small chance to cause confusion.
-
-https://user-images.githubusercontent.com/98017171/160715620-c6825a68-ce49-469d-a45a-568cf0af8a7e.mp4
-
-#### - Aard
-- Small chance to cause bleeding.
-
-https://user-images.githubusercontent.com/98017171/160715877-24baa814-5b1c-4ba1-a7c1-84ae22d99c00.mp4
-
-#### - Yrden
-- Small chance to cause paralysis.
-
-https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-97d3-9ee564aa77a6.mp4
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
   
 ## 9. SPECIAL ABILITIES
   <div align="center">
@@ -988,6 +954,7 @@ https://user-images.githubusercontent.com/98017171/160715735-5c31ee62-8796-405b-
 #### [Necromancy](#-necromancy-)
 #### [Bat Swarm](#-bat-swarm-)
 #### [Weapon Arts](#-weapon-arts-)
+#### [Bow](#-bow-)
   </div>
 
 ### || Shield ||
@@ -1173,9 +1140,24 @@ https://user-images.githubusercontent.com/98017171/185811985-e5b55bca-5646-45dc-
  
 https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-8884-af1717607a5e.mp4
 
+### || Bow ||
+- Bows are attached to heavy attack weapons in Armiger Mode. While in armiger mode and in combat with the heavy attack weapon equipped, double tap and hold down parry, then perform heavy attacks to use bow. 
+	
+- Firing arrows while stationary takes longer to wind-up, but will deal the full damage of your equipped weapon. Additionally, if the player is outdoors, it will unleash a rain of arrows at the enemy location if the arrow hits an enemy. Drains 3x the amount of stamina for a heavy attack for each arrow.
 
- <div align="right">
-  
+https://user-images.githubusercontent.com/98017171/185868442-1f3cdaae-f00c-4c22-99c4-65d14f9870f6.mp4
+
+- Firing arrows while any movement key is held down will quick fire arrows that deal only a small percentage of the enemy's max health. Every third arrow fired this way is twice the speed of the first two arrows, deals true damage, and applies a debuff for 1 second specific to the sign the player currently has selected. Drains the amount of stamina for a light attack for each arrow.
+- Igni: Burns
+- Axii: Freezes
+- Aard: Knockdown
+- Quen: Paralyze
+- Yrden: Slowdown
+
+https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-bea1-a7b6ac684e58.mp4
+
+<div align="right">
+ 
 ##### [Return to Index](#index)
   
   </div>
