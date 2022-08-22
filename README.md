@@ -67,12 +67,11 @@ For those that prefer to install manually.
 ### [7. TAUNT SYSTEM](#7-taunt-system-1)
 ### [8. MOVEMENT SYSTEM](#8-movement-system-1)
 ### [9. SPECIAL ABILITIES](#9-special-abilities-1)
-### [10. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS](#10-using-custom-weapons-from-vanilla-game-or-other-mods-1)
-### [11. COOLDOWN ADJUSTMENT](#11-cooldown-adjustment-1)
-### [12. STAMINA](#12-stamina-1)
-### [13. COMPATIBILITY](#13-compatibility-1)
-### [14. Q&A](#14-qa-1)
-### [15. CONTACT ME](#15-contact-me-1)
+### [10. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
+### [11. STAMINA](#11-stamina-1)
+### [12. COMPATIBILITY](#12-compatibility-1)
+### [13. Q&A](#13-qa-1)
+### [14. CONTACT ME](#14-contact-me-1)
 </div>
 
 
@@ -1162,17 +1161,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 10. USING CUSTOM WEAPONS FROM VANILLA GAME OR OTHER MODS
-- Open ```mod_ACS/content/scripts/local/ACS_Primary_Weapon_Switch.ws``` or ```mod_ACS/content/scripts/local/ACS_Secondary_Weapon_Switch.ws```.
-- Do your best.
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-## 11. COOLDOWN ADJUSTMENT
+## 10. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1181,7 +1170,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 12. STAMINA
+## 11. STAMINA
 - Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
 - This feature can be toggled off in the Main Settings menu. 
 - In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
@@ -1193,11 +1182,8 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 13. COMPATIBILITY
-- Disclaimer: I don't use this version personally.
-- Overhauls such as `Ghost mode` and `W3EE` are both compatible. `W3EE` has conflicts because it comments out vanilla code. Pick ACS code over W3EE.
-- Compatible with other animation changing mods, such as SCAAR or E3 Improved Combat Animations. Default Geralt attacks in all modes automatically use these mods if they are installed. 
-- Magic Spells has a few incompatibilities, like weapon buffs showing up when they are not supposed to. This requires adding code to scripts within Magic Spells to fix this. 
+## 12. COMPATIBILITY
+- Most likely completely conflict free in terms of scripts.
 
  <div align="right">
   
@@ -1205,7 +1191,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 14. Q&A
+## 13. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1239,7 +1225,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 15. CONTACT ME
+## 14. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
