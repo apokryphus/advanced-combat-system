@@ -15,19 +15,19 @@ Enables the player to use all humanoid NPC combat animations and abilities, such
 ### Automatic Installation: 
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your ```The Witcher 3 installation folder```, alongside the `bin`, `content`, and `dlc` folders. 
 - Right click and run with Powershell.
-- Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
-- You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click. 
 
 ### Manual Installation: 
 - Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - IF UPDATING FROM v1.8.3e OR LOWER, DELETE `mod_ACS` and `dlc_ACS` FIRST, THEN INSTALL MANUALLY AGAIN.
 - Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under `Assets`.
 - Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
+
+### Post Installation:
 - Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. 
 - ```Always run script merger to check if any scripts need re-merging after updating from a previous version as well.``` 
 - Most of the time after updating there will be nothing to re-merge, in which case you can safely launch the game without any problems, but it never hurts to check. I am still human, and thus prone to mistakes. 
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and make sure the mod is enabled.
-- Once again, use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
+- Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
 - You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click. 
 
 ## PREFACE
