@@ -15,7 +15,7 @@ The animations are organized into 8 unique movesets:
 - Gregoire de Gorgon/2-Hand Sword
 - Imlerith/Caranthir/Caretaker
 - 1-Hand/2-Hand Hammer
-- Dettlaff/Bruxa/Vampire
+- Dettlaff/Bruxa/Alp
 - 1-Hand/2-Hand Axe
 
 Also adds bow/arrow combat, though is limited by weapon mode.
