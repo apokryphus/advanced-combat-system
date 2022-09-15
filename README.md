@@ -5,30 +5,53 @@
 Combat animation overhaul mod for The Witcher 3.
  </div>
  
-Enables the player to use all humanoid NPC combat animations and abilities, such as Eredin's, Olgierd's, Dettlaff's, spear, hammer, etc, either by transforming the player's weapon, or through equipping certain items. 
+ ## OVERVIEW
+The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations.
+
+The animations are organized into 8 unique movesets:
+- Olgierd/1-Hand Sword
+- Spear/Staff/Halberd
+- Eredin/Shield/1-Hand Sword
+- Gregoire de Gorgon/2-Hand Sword
+- Imlerith/Caranthir/Caretaker
+- 1-Hand/2-Hand Hammer
+- Dettlaff/Bruxa/Vampire
+- 1-Hand/2-Hand Axe
+
+Also adds bow/arrow combat, though is limited by weapon mode.
+
+Depending on which weapon mode is selected through the mod menu, the player can choose to:
+- Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) by performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
+- Set a desired moveset for either the player's steel weapon or silver weapon, in which the player's weapon will transform to match the moveset.
+- Mix and match different combat animations to create your own unique moveset, in which the player's weapon will transform accordingly.
+- Allow the player to only use these special movesets when certain weapons/items are equipped. 
+
+Addtionally, the mod:
+- Comes with a whole host of different special abilities, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
+- Interfaces with other potential weapon dlcs that you may have installed, and applies the animations to them when they are equipped.
+- Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
+- Adds custom enemies into the game world.
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
-- A PC not made out of wood. Seriously.
 
 ## INSTALLATION
 IF UPDATING FROM v1.8.3e OR LOWER, DELETE `mod_ACS` and `dlc_ACS` FIRST, THEN INSTALL MANUALLY AGAIN.
 
 ### Automatic Installation: 
 Easy installer script that downloads and installs the mod automatically.
-- Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your ```The Witcher 3 installation folder```, alongside the `bin`, `content`, and `dlc` folders. 
-- Right click and run with Powershell.
+- Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
+- If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
+- Right click the script and run with Powershell.
 
 ### Manual Installation: 
 For those that prefer to install manually.
 - Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
-- Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under `Assets`.
-- Drag and drop all 3 folders, ```dlc```, ```mods```, and ```bin``` into your Witcher 3 installation folder.
+- Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under **Assets**. Do not download the source code.
+- Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 
 ### After Installation:
 - Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. 
-- ```Always run script merger to check if any scripts need re-merging after updating from a previous version as well.``` 
-- Most of the time after updating there will be nothing to re-merge, in which case you can safely launch the game without any problems, but it never hurts to check. I am still human, and thus prone to mistakes. 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start. 
 - After installation, open up the in game menu ( Mods ---> Advanced Combat System ---> Main Settings ) and make sure the mod is enabled.
 
