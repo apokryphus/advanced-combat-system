@@ -33,7 +33,7 @@ Depending on which weapon mode is selected through the mod menu, the player can 
 - Allow the player to only use these special movesets when certain weapons/items are equipped. 
 
 Addtionally, the mod:
-- Comes with a whole host of different special abilities and combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
+- Comes with a whole host of different offensive, defensive, and movement abilities / combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
 - Interfaces with other potential weapon dlcs that you may have installed, and applies the animations to them when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world.
@@ -1152,7 +1152,7 @@ https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-
 `Back (S key) + light attack`
 
 - Certain weapons have weapon arts attached to them. Weapon arts can only be activated if the player has at least 1/3 of the adrenaline bar. Consumes 1/3 of the adrenlaine bar on each use:
- - Vampire claws and sword claws: Back (S key) + light attack = Bruxa sonic scream
+ - Vampire claws: Back (S key) + light attack = Bruxa sonic scream
 
 https://user-images.githubusercontent.com/98017171/185811967-d19efc2b-4e6c-4720-b21c-792f730a50f3.mp4
 
@@ -1160,13 +1160,33 @@ https://user-images.githubusercontent.com/98017171/185811967-d19efc2b-4e6c-4720-
 
 https://user-images.githubusercontent.com/98017171/185811978-be29a57b-4db4-4607-8356-6dae26b6d067.mp4
 
+ - Spear weapon: Back (S key) + light attack = Stormspear
+
+https://user-images.githubusercontent.com/98017171/190557814-2b8df83d-bfef-48aa-b007-6a980d00bb9b.mp4
+
  - Eredin weapon: Back (S key) + light attack = Sparagmos
  
 https://user-images.githubusercontent.com/98017171/185811985-e5b55bca-5646-45dc-a656-aaf792e5bc56.mp4
 
+ - Gregoire weapon: Back (S key) + light attack = Judgement
+ 
+https://user-images.githubusercontent.com/98017171/190557909-351a5141-65ea-4e91-a995-ad6f7cf35dbf.mp4
+
  - Imlerith weapon: Back (S key) + light attack = Crescent Caress 
  
 https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-8884-af1717607a5e.mp4
+
+ - Giant weapon: Back (S key) + light attack = Stomp
+
+https://user-images.githubusercontent.com/98017171/190557982-9509906b-fe52-40a8-b732-f3c620bb312e.mp4
+
+ - Sword Claw weapon: Back (S key) + light attack = Bats Summon
+
+https://user-images.githubusercontent.com/98017171/190557713-88edbb03-fb76-41a1-be3e-f90fdaa0ac79.mp4
+
+ - Axe weapon: Back (S key) + light attack = Waterpulse
+
+https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-b072-75cacb056f5e.mp4
 
 ### || Bow ||
 - Bows are attached to heavy attack weapons in Armiger Mode. While in armiger mode and in combat with the heavy attack weapon equipped, double tap and hold down parry, then perform heavy attacks to use bow. 
