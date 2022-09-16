@@ -1151,40 +1151,68 @@ https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-
 ### || Weapon Arts ||
 `Back (S key) + light attack`
 
-- Certain weapons have weapon arts attached to them. Weapon arts can only be activated if the player has at least 1/3 of the adrenaline bar. Consumes 1/3 of the adrenlaine bar on each use:
- - Vampire claws: Back (S key) + light attack = Bruxa sonic scream
+Vampire claws: Sonic Scream
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Deals missing health damage.
 
 https://user-images.githubusercontent.com/98017171/185811967-d19efc2b-4e6c-4720-b21c-792f730a50f3.mp4
 
- - Olgierd weapon: Back (S key) + light attack = Umbral Slash 
+Olgierd weapon: Umbral Slash
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Deals weapon damage + small amount of enemy max health damage. 
 
 https://user-images.githubusercontent.com/98017171/185811978-be29a57b-4db4-4607-8356-6dae26b6d067.mp4
 
- - Spear weapon: Back (S key) + light attack = Stormspear
+Spear weapon: Stormspear
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Deals weapon damage + small amount of enemy max health damage. 
+ - Immobilizes enemies.
 
 https://user-images.githubusercontent.com/98017171/190557814-2b8df83d-bfef-48aa-b007-6a980d00bb9b.mp4
 
- - Eredin weapon: Back (S key) + light attack = Sparagmos
+Eredin weapon: Sparagmos
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Deals weapon damage + small amount of enemy max health damage. 
+ - Causes burning.
  
 https://user-images.githubusercontent.com/98017171/185811985-e5b55bca-5646-45dc-a656-aaf792e5bc56.mp4
 
- - Gregoire weapon: Back (S key) + light attack = Judgement
+Gregoire weapon: Judgement
+ - Can only be activated if the player has a full adrenaline bar. 
+ - Consumes all adrenaline on use.
+ - Deals enemy missing health damage. 
  
 https://user-images.githubusercontent.com/98017171/190557909-351a5141-65ea-4e91-a995-ad6f7cf35dbf.mp4
 
- - Imlerith weapon: Back (S key) + light attack = Crescent Caress 
+Imlerith weapon: Crescent Caress
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Pulls enemy towards player location. 
  
 https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-8884-af1717607a5e.mp4
 
- - Giant weapon: Back (S key) + light attack = Stomp
+Giant weapon: Earthshaker
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - First and second stomp staggers enemies. Third stomp knocks enemies down.
 
 https://user-images.githubusercontent.com/98017171/190557982-9509906b-fe52-40a8-b732-f3c620bb312e.mp4
 
- - Sword Claw weapon: Back (S key) + light attack = Bats Summon
+Sword Claw weapon: Flying Rabies
+ - Can only be activated if the player has a full adrenaline bar. 
+ - Consumes all adrenaline on use.
+ - Deals enemy missing health damage. 
 
 https://user-images.githubusercontent.com/98017171/190557713-88edbb03-fb76-41a1-be3e-f90fdaa0ac79.mp4
 
- - Axe weapon: Back (S key) + light attack = Waterpulse
+Axe weapon: Waterpulse
+ - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
+ - Consumes 1/3 of the adrenlaine bar on each use.
+ - Landing all three waves will knock enemies down.
 
 https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-b072-75cacb056f5e.mp4
 
