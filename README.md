@@ -22,7 +22,7 @@ Additionally allows for vampire combat animations while the player is unarmed.
 
 Also adds bow/arrow combat, though is limited by weapon mode.
 
-Each moveset also includes its own set of dodges and weapon-holding animations.
+Each moveset also includes its own set of dodges/rolls and weapon-holding animations.
 
 Depending on which weapon mode is selected through the mod menu, the player can choose to:
 - Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) by performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
