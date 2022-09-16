@@ -18,9 +18,11 @@ The animations are organized into 8 unique movesets:
 - Dettlaff/Bruxa/Alp
 - 1-Hand/2-Hand Axe
 
-Additionally allows for vampire combat animations while the player is unarmed.
+Each moveset comes with its own unique abilities and weapon arts. 
 
-Also adds bow/arrow combat, though is limited by weapon mode.
+Dependent upon the mod settings, the mod allows for vampire combat animations while the player is unarmed.
+
+Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
 Each moveset also includes its own set of dodges/rolls and weapon-holding animations.
 
@@ -31,7 +33,7 @@ Depending on which weapon mode is selected through the mod menu, the player can 
 - Allow the player to only use these special movesets when certain weapons/items are equipped. 
 
 Addtionally, the mod:
-- Comes with a whole host of different special abilities, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
+- Comes with a whole host of different special abilities and combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
 - Interfaces with other potential weapon dlcs that you may have installed, and applies the animations to them when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world.
