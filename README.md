@@ -18,13 +18,13 @@ The animations are organized into 8 unique movesets:
 - Dettlaff/Bruxa/Alp
 - 1-Hand/2-Hand Axe
 
-Each moveset comes with its own unique abilities and weapon arts. 
+- Each moveset comes with its own unique combos, abilities, and weapon arts. 
 
-Additionally allows for vampire combat animations and abilities while the player is unarmed.
+- Each moveset has its own set of dodges/rolls and weapon-holding animations.
 
-Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
+- Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed.
 
-Each moveset also includes its own set of dodges/rolls and weapon-holding animations.
+- Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
 Depending on which weapon mode is selected through the mod menu, the player can choose to:
 - Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) by performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
