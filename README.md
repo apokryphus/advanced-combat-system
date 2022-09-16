@@ -20,7 +20,7 @@ The animations are organized into 8 unique movesets:
 
 Each moveset comes with its own unique abilities and weapon arts. 
 
-Dependent upon the mod settings, the mod allows for vampire combat animations while the player is unarmed.
+Additionally allows for vampire combat animations and abilities while the player is unarmed.
 
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
