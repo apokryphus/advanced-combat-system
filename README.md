@@ -28,7 +28,7 @@ Each moveset also includes its own set of dodges/rolls and weapon-holding animat
 
 Depending on which weapon mode is selected through the mod menu, the player can choose to:
 - Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) by performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
-- Set a desired moveset for either the player's steel weapon or silver weapon, in which the player's weapon will transform to match the moveset.
+- Set a desired moveset for the player's steel weapon and silver weapon, in which the player's weapon will transform to match the moveset.
 - Mix and match different combat animations to create your own unique moveset, in which the player's weapon will transform accordingly.
 - Allow the player to only use these special movesets when certain weapons/items are equipped. 
 
