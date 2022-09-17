@@ -725,17 +725,17 @@ https://user-images.githubusercontent.com/98017171/160707580-ba7d2bb4-1672-40f1-
 - Primary weapon:
   - Passive: Attacks grant ``healing`` equal to 2.5% of the player's maximum health.
   - Primes enemy.
-  - Detonation: Attack grants ``healing`` equal to 25% of the player's maximum health, and infects enemies with ``poison`` in a small radius.
-
-https://user-images.githubusercontent.com/98017171/160708552-a7752127-050a-4533-acbf-d207ebee5f28.mp4
+  - Detonation: Causes blood to spill out from nearby enemies, inducing bleeding and staggers for 0.5 seconds. Range and bleed duration increases depending upon what the player's adrenaline levels are.
+  
+https://user-images.githubusercontent.com/98017171/190864773-24551dd1-c550-491e-ba7b-d6dad790d31a.mp4
 
 ### || Aard ||
 - Secondary weapon:
   - Passive: Attacks have a chance to apply ``stagger``. 
   - Primes enemy.
-  - Detonation: Detonates an ``explosion`` that causes ``confusion`` to enemies in a small radius.
+  - Detonation: Summons water pillars from under nearby enemies, causing confusion. Range and confusion duration increases depending upon what the player's adrenaline levels are.
 
-https://user-images.githubusercontent.com/98017171/160708513-12761859-e46b-4634-b5ba-8359f2034d38.mp4
+https://user-images.githubusercontent.com/98017171/190864803-6e69c231-6bd3-434b-a87e-d478ba827d7e.mp4
 
 ### || Quen ||
 - Primary weapon:
