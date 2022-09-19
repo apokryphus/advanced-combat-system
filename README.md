@@ -9,14 +9,14 @@ Combat animation overhaul mod for The Witcher 3.
 The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations.
 
 The NPC animations are organized into 8 unique extra movesets:
-- Olgierd/1-Hand Sword
-- Spear/Staff/Halberd
-- Eredin/Shield/1-Hand Sword
-- Gregoire de Gorgon/2-Hand Sword
-- Imlerith/Caranthir/Caretaker
-- 1-Hand/2-Hand Hammer
-- Dettlaff/Bruxa/Alp
-- 1-Hand/2-Hand Axe
+- Olgierd + 1-Hand Sword
+- Spear + Staff + Halberd
+- Eredin + Shield + 1-Hand Sword
+- Gregoire de Gorgon + 2-Hand Sword
+- Imlerith + Caranthir + Caretaker
+- 1-Hand Hammer + 2-Hand Hammer
+- Dettlaff + Bruxa + Alp
+- 1-Hand Axe + 2-Hand Axe
 
 Geralt's default moveset is available for use at any time. ACS allows compatibility with other mods that alter it. 
   - Recommended options are [SCAAR](https://www.nexusmods.com/witcher3/mods/5800) and [E3 Improved Combat Animations](https://www.nexusmods.com/witcher3/mods/3474).
