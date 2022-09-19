@@ -37,6 +37,8 @@ Addtionally, the mod:
 - Interfaces with other potential weapon dlcs that you may have installed, and applies the animations to them when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world.
+
+The mod itself is highly configurable, and just about every aspect can be modified to suit the player's needs.
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
