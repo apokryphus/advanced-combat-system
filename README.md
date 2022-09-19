@@ -8,7 +8,7 @@ Combat animation overhaul mod for The Witcher 3.
  ## OVERVIEW
 The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations.
 
-The animations are organized into 8 unique movesets:
+The NPC animations are organized into 8 unique extra movesets:
 - Olgierd/1-Hand Sword
 - Spear/Staff/Halberd
 - Eredin/Shield/1-Hand Sword
@@ -17,6 +17,8 @@ The animations are organized into 8 unique movesets:
 - 1-Hand/2-Hand Hammer
 - Dettlaff/Bruxa/Alp
 - 1-Hand/2-Hand Axe
+
+Geralt's default moveset is available for use at any time. ACS allows compatibility with other mods that alter it.
 
 Each moveset comes with its own unique combos, abilities, and weapon arts. 
 
