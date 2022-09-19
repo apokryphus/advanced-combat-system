@@ -63,6 +63,7 @@ For those that prefer to install manually.
 
 ![1](https://user-images.githubusercontent.com/98017171/185864454-4fd7d6ea-46b0-4dee-b32f-aac0a311a9e3.jpg)
 
+### Updating the mod:
 - You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click, or run the automatic installer again if you installed the mod that way. 
 
 ## PREFACE
