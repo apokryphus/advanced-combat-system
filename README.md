@@ -487,19 +487,19 @@ https://user-images.githubusercontent.com/98017171/160705235-08055326-9589-482b-
 
 
 ### || Weapons ||
-Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the `Armiger Mode Menu` or the `Focus Mode Menu`, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
-
-- Igni sign will always show the actual/real weapon equipped by the player.
+Depending on whether `Static Weapons` or `Evolving Weapons` are selected in the `Armiger Mode Menu` , the `Focus Mode Menu`, or the `Hybrid Mode Menu`, the player will have slightly different weapons. These are purely cosmetic changes, and do not have any impact on gameplay.
 
 - For `STATIC WEAPONS`: 
-   - Quen is Olgierd's sabre, Axii is Eredin's sword, Yrden is Imlerith's hammer.
+   - Default Settings: 
+    - Steel: Quen is Olgierd's sabre, Axii is Eredin's sword, Yrden is Caretaker's spade.
+    - Silver: Quen is Vlodimir's sabre, Axii is Eredin's sword, Yrden is Imlerith's hammer.
    -  Weapons do not change how they look based upon weapon level and/or rarity.
 
 - For `EVOLVING WEAPONS`: 
    - Weapon level and/or rarity will change how each of the weapons look. 
    - There are different silver and steel versions of each weapon, dependent upon if Geralt is holding a silver or steel weapon. 
 
-- Aard weapon remains the same for both versions, and will always change how they look depending on equipped weapon level/rarity. 
+- Claw weapon remains the same for both versions, and will always change how they look depending on equipped weapon level/rarity. 
 
 #### - Weapon Tier Appearance System For Evolving Weapons
 - **Tier I Weapon Appearance**
