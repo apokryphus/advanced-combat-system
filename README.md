@@ -43,6 +43,8 @@ Addtionally, the mod:
 - Adds custom enemies into the game world with their own mechanics and systems in place.
 
 ACS is highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
+
+ACS is relatively easy to merge in terms of scripts, and does not cause blurry dialogue loading screen from prolonged usage.
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
