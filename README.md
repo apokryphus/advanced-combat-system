@@ -6,7 +6,7 @@ Combat animation overhaul mod for The Witcher 3.
  </div>
  
  ## OVERVIEW
-The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations.
+The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations available in the game.
 
 The NPC animations are organized into 8 unique extra movesets:
 - Olgierd + 1-Hand Sword
