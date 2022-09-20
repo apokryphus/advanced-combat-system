@@ -37,7 +37,7 @@ Depending on which weapon mode is selected through the mod menu, the player can 
 
 Addtionally, the mod:
 - Comes with a whole host of different offensive and defensive abilities / combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
-- Comes with special movement systems available in combat and out of combat.
+- Allows the player to use special movement systems available both in combat and out of combat.
 - Interfaces with other potential weapon DLCs that you may have installed, and applies the animations to them when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world with their own mechanics and systems in place.
