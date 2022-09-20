@@ -25,7 +25,7 @@ Each ACS moveset comes with its own unique combos, abilities, and weapon arts.
 
 Each ACS moveset has its own set of dodges/rolls and weapon-holding animations.
 
-Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed.
+Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed. Can be toggled on or off.
 
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
