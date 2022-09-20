@@ -21,9 +21,9 @@ The NPC animations are organized into 8 unique extra movesets:
 Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
   - Recommended options are [SCAAR](https://www.nexusmods.com/witcher3/mods/5800) and [E3 Improved Combat Animations](https://www.nexusmods.com/witcher3/mods/3474).
 
-Each moveset comes with its own unique combos, abilities, and weapon arts. 
+Each ACS moveset comes with its own unique combos, abilities, and weapon arts. 
 
-Each moveset has its own set of dodges/rolls and weapon-holding animations.
+Each ACS moveset has its own set of dodges/rolls and weapon-holding animations.
 
 Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed.
 
