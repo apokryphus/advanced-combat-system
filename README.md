@@ -21,9 +21,9 @@ The NPC animations are organized into 8 unique extra movesets:
 Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
   - Recommended options are [SCAAR](https://www.nexusmods.com/witcher3/mods/5800) and [E3 Improved Combat Animations](https://www.nexusmods.com/witcher3/mods/3474).
 
-Each ACS moveset comes with its own unique combos, abilities, and weapon arts. 
-
-Each ACS moveset has its own set of dodges/rolls and weapon-holding animations.
+Each ACS moveset comes with:
+- Its own unique combos, abilities, and weapon arts. 
+- Its own set of dodges/rolls and weapon-holding animations.
 
 Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed. Can be toggled on or off.
 
@@ -42,9 +42,11 @@ Addtionally, the mod:
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world with their own mechanics and systems in place.
 
-ACS is highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
-
-ACS is relatively easy to merge in terms of scripts, and does not cause blurry dialogue loading screen from prolonged usage.
+ACS is:
+- Highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
+- Relatively easy to merge in terms of scripts.
+- Does not cause blurry dialogue loading screen from prolonged usage.
+- Just about compatible with almost anything you can imagine.
   
 ## REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
