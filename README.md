@@ -19,7 +19,6 @@ The NPC animations are organized into 8 unique extra movesets:
 - 1-Hand Axe + 2-Hand Axe
 
 Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
-  - Recommended options are [SCAAR](https://www.nexusmods.com/witcher3/mods/5800) and [E3 Improved Combat Animations](https://www.nexusmods.com/witcher3/mods/3474).
 
 Each ACS moveset comes with:
 - Its own unique combos, abilities, and weapon arts. 
