@@ -24,7 +24,7 @@ state Engage in cEquipTaunt
 	private var movementAdjustor											: CMovementAdjustor;
 	private var ticket 														: SMovementAdjustmentRequestTicket;
 	private var actor 														: CActor;
-	private var watcher																: W3ACSWatcher;
+	private var watcher														: W3ACSWatcher;
 	
 	event OnEnterState(prevStateName : name)
 	{

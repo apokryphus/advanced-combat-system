@@ -34,7 +34,7 @@ struct ACS_Cooldown_Manager
 	
 	default heavy_attack_cooldown = 0.5;
 	
-	default guard_attack_cooldown = 1;
+	default guard_attack_cooldown = 0.5;
 	
 	default guard_doubletap_attack_cooldown = 0.5;
 	

@@ -2272,7 +2272,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 			
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_slide_ACS', 'PLAYER_SLOT', settings);	
 				
-				movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );		
+				movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2.25 ) + theCamera.GetCameraDirection() * -2.25 );		
 			}
 
 			//movementAdjustor.RotateTowards( ticket, actor );
@@ -2300,7 +2300,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 				
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_slide_ACS', 'PLAYER_SLOT', settings);	
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.75 );
+			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2.25 ) + theCamera.GetCameraDirection() * -2.25 );
 		}
 
 		//Sleep(1);
@@ -2349,9 +2349,15 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 					thePlayer.StopEffect( 'bruxa_dash_trails' );
 				}
 
+				thePlayer.ClearAnimationSpeedMultipliers();
+			
+				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
+					
+				GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.5 , false);
+
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'full_hit_reaction_with_taunt_001_ACS', 'PLAYER_SLOT', settings);
 				
-				//movementAdjustor.SlideTo( ticket, (thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1) + theCamera.GetCameraDirection() * -1.1 );
+				movementAdjustor.SlideTo( ticket, (thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.5) + theCamera.GetCameraDirection() * -1.5 );
 			}
 			else
 			{
@@ -2374,7 +2380,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 			
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'full_hit_reaction_igni_taunt_001_ACS', 'PLAYER_SLOT', settings);
 				
-				movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() * -2 );		
+				movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -3 ) + theCamera.GetCameraDirection() * -3 );		
 			}
 
 			//movementAdjustor.RotateTowards( ticket, actor );
@@ -2402,7 +2408,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 				
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'full_hit_reaction_igni_taunt_001_ACS', 'PLAYER_SLOT', settings);
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() * -2 );
+			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -3 ) + theCamera.GetCameraDirection() * -3 );
 		}
 
 		//Sleep(1);
@@ -2454,7 +2460,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 		
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'full_hit_reaction_with_taunt_001_ACS', 'PLAYER_SLOT', settings);
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() * -2 );		
+			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -3 ) + theCamera.GetCameraDirection() * -3 );		
 		}
 		else
 		{
@@ -2476,7 +2482,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 				
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'full_hit_reaction_with_taunt_001_ACS', 'PLAYER_SLOT', settings);
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() * -2 );
+			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -3 ) + theCamera.GetCameraDirection() * -3 );
 		}
 
 		//Sleep(1);

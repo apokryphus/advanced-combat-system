@@ -1604,8 +1604,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.OnRangedForceHolster( true, true );
 			
 			thePlayer.AddCounterTimeStamp(theGame.GetEngineTime());	
+
+			action_interrupt(); //ACS
+
 			thePlayer.SetGuarded(true);				
 			thePlayer.OnPerformGuard();
+
 			if ( ACS_Enabled() ) { GuardAttack(); } //ACS
 		}	
 	}
@@ -2059,11 +2063,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
 
-		thePlayer.RaiseEvent( 'AttackInterrupt' );
+		//thePlayer.RaiseEvent( 'AttackInterrupt' );
 
 		if (thePlayer.IsInCombat())
 		{
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			thePlayer.RaiseEvent( 'CombatTaunt' );
 		}
 	}
 
