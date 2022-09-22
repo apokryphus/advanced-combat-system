@@ -479,7 +479,13 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
 - ```Heavy attacks``` are heavy vampire strikes.
 - ```W + light attack``` are vampire claw combos.
 - ```W + heavy attack``` are vampire dash attacks.
- 
+
+Vampire Claw Parries:
+- Vampire claw parries blocks 75% of the damage dealt to the player.
+- Will block as long as the player has stamina.
+- Drains 5% of the player's stamina on each block.
+- Drains 50% of the player's stamina if the player takes lethal damage. Will block full damage.
+
  ### Shockwave Fists
  - Every punch releases a shock wave in front of the player.
  
@@ -998,11 +1004,11 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
   </div>
 
 ### || Shield ||
-When in Armiger Mode, holding down the ```Parry/Counterattack button``` while holding the Eredin moveset weapon will grant the player a shield. Default shield is Imlerith's shield. The shield can be changed by going into ACS_Shield.ws and following instructions. 
-- Axii shield blocks most enemy attacks, but blows from big monsters, such as fiends, will still go through, though the damage is reduced, and will also not knock the player down. 
-- Attack animations change into 1-hand style while Axii shield is held. 
-
-When in Focus Mode or Equipment Mode, the shield is bound to Eredin's moveset, and will activate when holding block. 
+Holding down the ```Parry/Counterattack button``` while holding the Eredin moveset weapon will grant the player a shield. Default shield is Imlerith's shield. 
+- Shield blocks all damage to the player as long as the player has stamina.
+- Drains 10% of the player's stamina on each block.
+- The player cannot dodge or roll while the shield is active.
+ - Drains 50% of the player's stamina if the player takes lethal damage. Will block full damage.
 
 https://user-images.githubusercontent.com/98017171/160716954-8f446bf6-8557-4c2f-9388-26daf4674b34.mp4
 
