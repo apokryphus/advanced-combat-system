@@ -181,8 +181,10 @@ There, you can customize your own array of attacks for:
  ## Equipment Mode: 
  
  Upon selection of Equipment Mode in the Main Settings menu, equipping certain items will change the player's moveset. 
+ 
+ Enemies will drop special ACS weapons as loot, which grants access to the movesets.
 
-Current supported weapons include the majority of the weapons from:
+ACS also supports weapon DLCs made by other mod authors, which include the majority of the weapons from:
 
 - Shades of Iron
 https://discord.com/channels/728022548796801064/728023281558618214/964947835986509854
