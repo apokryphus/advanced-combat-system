@@ -21,8 +21,8 @@ The NPC animations are organized into 8 unique extra movesets:
 Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
 
 Each ACS moveset comes with:
-- Its own unique combos, abilities, and weapon arts. 
-- Its own set of dodges/rolls and weapon-holding animations.
+- Its own unique combos, abilities, counter-attacks, and weapon arts. 
+- Its own set of dodges, rolls, and weapon-holding/passive behavior animations.
 
 Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed. Can be toggled on or off.
 
