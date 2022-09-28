@@ -2119,6 +2119,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if (thePlayer.IsInCombat())
 		{
+			movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+			movementAdjustor.CancelAll();
+			
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			thePlayer.RaiseEvent( 'CombatTaunt' );
 		}
@@ -2142,6 +2146,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
+
+		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+		movementAdjustor.CancelAll();
+
+		thePlayer.ActionCancelAll();
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 		thePlayer.RaiseEvent( 'CombatTaunt' );
