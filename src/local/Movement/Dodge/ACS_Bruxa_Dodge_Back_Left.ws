@@ -141,7 +141,12 @@ state BruxaRegularDodgeLeft_Engage in cBruxaDodgeBackLeft
 	}
 
 	latent function bruxa_regular_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+		
 		ticket = movementAdjustor.GetRequest( 'bruxa_left_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_left_dodge' );
@@ -471,6 +476,11 @@ state BruxaDodgeBackLeft_Engage in cBruxaDodgeBackLeft
 	
 	latent function dodge_back_left ()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		settings.blendIn = 0.3f;
 		settings.blendOut = 0.3f;
 				

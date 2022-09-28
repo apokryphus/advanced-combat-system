@@ -1797,6 +1797,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	
 	latent function wild_hunt_blink ()
 	{	
+		GetACSWatcher().Shrink_Geralt(0.25);
+
 		theGame.SetTimeScale( 0.75, theGame.GetTimescaleSource( ETS_InstantKill ), theGame.GetTimescalePriority( ETS_InstantKill ), false, true );
 
 		thePlayer.AddTimer( 'RemoveInstantKillSloMo', 0.3 );
@@ -4195,6 +4197,7 @@ state BlinkHitReaction_Engage in cACS_BlinkHitReaction
 		&& !thePlayer.HasTag('blood_sucking')
 		)
 		{
+			GetACSWatcher().Shrink_Geralt(0.25);
 			BlinkHitReaction_Latent();
 		}
 	}

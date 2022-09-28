@@ -814,6 +814,11 @@ state Axii_Persistent_Shield in cACS_Shield_Summon
 
 	latent function Persistent_SummonAxiiShield()
 	{	
+		if (thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.RemoveTag('ACS_Special_Dodge');
+		}
+
 		shield_temp = (CEntityTemplate)LoadResource( 
 		
 		// SHIELDS

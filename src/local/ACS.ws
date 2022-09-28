@@ -1617,7 +1617,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			action_interrupt(); //ACS
 
-			thePlayer.SetGuarded(true);				
+			thePlayer.SetGuarded(true);
 			thePlayer.OnPerformGuard();
 
 			if ( ACS_Enabled() ) { GuardAttack(); } //ACS
@@ -2119,12 +2119,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if (thePlayer.IsInCombat())
 		{
+			thePlayer.ClearAnimationSpeedMultipliers();
+
 			movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
 			movementAdjustor.CancelAll();
-			
+
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
-			thePlayer.RaiseEvent( 'CombatTaunt' );
+			
+			if( !thePlayer.HasTag('axii_sword_equipped') && !thePlayer.IsGuarded() )
+			{
+				thePlayer.RaiseEvent( 'CombatTaunt' );
+			}
 		}
 	}
 
@@ -2147,6 +2153,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
 
+		thePlayer.ClearAnimationSpeedMultipliers();
+
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
 		movementAdjustor.CancelAll();
@@ -2154,7 +2162,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		thePlayer.ActionCancelAll();
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
-		thePlayer.RaiseEvent( 'CombatTaunt' );
+
+		if( !thePlayer.HasTag('axii_sword_equipped') && !thePlayer.IsGuarded() )
+		{
+			thePlayer.RaiseEvent( 'CombatTaunt' );
+		}
 	}
 
 	function ACS_Finisher_PreAction()
