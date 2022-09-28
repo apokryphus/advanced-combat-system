@@ -1980,7 +1980,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function bruxa_front_dodge()
-	{		
+	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_front_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_front_dodge' );
@@ -2031,6 +2036,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function bruxa_right_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_right_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_right_dodge' );
@@ -2072,7 +2082,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function bruxa_left_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_left_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_left_dodge' );
@@ -2122,7 +2137,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function bruxa_regular_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_regular_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_regular_dodge' );
@@ -2174,7 +2194,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function two_hand_back_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_back_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_back_dodge' );
@@ -2239,7 +2264,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_front_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_front_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_front_dodge' );
@@ -2316,7 +2346,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_right_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_right_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_right_dodge' );
@@ -2386,7 +2421,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_left_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_left_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_left_dodge' );
@@ -2458,7 +2498,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_right_dodge_alt()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_right_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_right_dodge' );
@@ -2549,7 +2594,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_left_dodge_alt()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_left_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_left_dodge' );
@@ -2644,7 +2694,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function two_hand_sword_back_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_back_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_back_dodge' );
@@ -2718,6 +2773,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function two_hand_sword_front_dodge()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_front_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_front_dodge' );
@@ -2779,7 +2839,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_sword_left_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_left_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_left_dodge' );
@@ -2816,7 +2881,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function two_hand_sword_right_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_right_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_right_dodge' );
@@ -2855,7 +2925,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function one_hand_sword_back_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge' );
@@ -2929,7 +3004,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_front_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge' );
@@ -3002,7 +3082,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_left_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge' );
@@ -3076,7 +3161,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_right_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge' );
@@ -3152,7 +3242,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function one_hand_sword_back_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_1' );
@@ -3198,7 +3293,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_front_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_1' );
@@ -3254,7 +3354,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_left_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_1' );
@@ -3328,7 +3433,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	}
 
 	latent function one_hand_sword_right_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_1' );
@@ -3405,6 +3515,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_back_dodge_alt_2()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_2' );
@@ -3451,6 +3566,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_front_dodge_alt_2()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_2' );
@@ -3512,6 +3632,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_left_dodge_alt_2()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_2' );
@@ -3553,6 +3678,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_right_dodge_alt_2()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_2' );
@@ -3596,6 +3726,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_back_dodge_alt_3()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_3' );
@@ -3642,6 +3777,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_front_dodge_alt_3()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_3' );
@@ -3703,6 +3843,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_left_dodge_alt_3()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_3' );
@@ -3742,6 +3887,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function one_hand_sword_right_dodge_alt_3()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_3' );
@@ -3783,6 +3933,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function front_dodge_skate()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_2' );
@@ -3862,6 +4017,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function left_dodge_skate()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_2' );
@@ -3921,6 +4081,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function right_dodge_skate()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+		
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_2' );

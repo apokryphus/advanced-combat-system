@@ -65,6 +65,7 @@ state Engage in cEquipTaunt
 			&& !thePlayer.IsSwimming()
 			&& !thePlayer.IsUsingHorse()
 			&& !thePlayer.IsUsingVehicle()
+			&& !thePlayer.IsInAir()
 			&& theInput.GetActionValue('GI_AxisLeftY') == 0 && theInput.GetActionValue('GI_AxisLeftX') == 0
 		)
 		{	

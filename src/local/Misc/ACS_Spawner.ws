@@ -47,7 +47,8 @@ state Giant_Lightning_Strike_Single_Engage in cACS_Giant_Lightning_Strike_Single
 		
 		actor = (CActor)( thePlayer.GetTarget() );
 		
-		if (!actor.HasBuff(EET_HeavyKnockdown))
+		if (!actor.HasBuff(EET_HeavyKnockdown)
+		&& !actor.HasBuff(EET_Burning) )
 		{
 			vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), actor.GetWorldPosition(), targetRotationNPC );
 			vfxEnt.CreateAttachment( actor, , Vector( 0, 0, 1.5 ) );	
@@ -60,18 +61,15 @@ state Giant_Lightning_Strike_Single_Engage in cACS_Giant_Lightning_Strike_Single
 			lightning.DestroyAfter(1.5);
 		
 			actor.AddEffectDefault( EET_HeavyKnockdown, actor, 'ACS_Lightning_Strike' );
-		}
-							
-		if (!actor.HasBuff(EET_Burning))
-		{
+
+			actor.AddEffectDefault( EET_Burning, actor, 'ACS_Lightning_Strike' );
+
 			if (actor.IsOnGround())
 			{
 				markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\quest\q403\meteorite\q403_marker.w2ent", true ), TraceFloor( actor.GetWorldPosition() ), EulerAngles(0,0,0) );
 				markerNPC.StopAllEffectsAfter(3);
 				markerNPC.DestroyAfter(3);
 			}
-		
-			actor.AddEffectDefault( EET_Burning, actor, 'ACS_Lightning_Strike' );
 		}
 	}
 	

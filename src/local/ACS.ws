@@ -998,6 +998,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	public timer function ACS_BARADDUR ( dt : float, id : int){ ACS_BARRADUR(); } 
 
+	public timer function ACS_Embers_Timer ( dt : float, id : int){ EmbersIndicator(); } 
+
 	public timer function ACS_ResetAnimation ( dt: float, id : int){ thePlayer.ClearAnimationSpeedMultipliers(); } 
 	
 	public timer function ACS_dodge_timer ( dt : float, id : int) { dodge_timer_actual(); } 
@@ -1099,6 +1101,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			AddTimer('ACS_BARADDUR', 0.000000000000000001f, true); 
 
+			AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+
 			AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
 		}
 	}
@@ -1124,6 +1128,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		theInput.RegisterListener( this, 'OnMovementDoubleTapD', 'MovementDoubleTapD' ); 
 
 		theInput.RegisterListener( this, 'OnMoveForward', 'GI_AxisLeftY' );
+
+		//theInput.RegisterListener( this, 'OnMoveBackward', 'GI_AxisRightY' );
+
+		theInput.RegisterListener( this, 'OnMoveSide', 'GI_AxisLeftX' );
+
+		//theInput.RegisterListener( this, 'OnMoveSideLeft', 'GI_AxisRightX' );
 
 		theInput.RegisterListener( this, 'OnCbtDodge', 'Dodge' );
 
@@ -1715,8 +1725,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	event OnMoveForward ( action : SInputAction )
 	{
-		if ( IsPressed( action ) && ACS_Enabled() )
-		{	
+		if ( IsPressed( action ) 
+		&& ACS_Enabled() 
+		)
+		{
+			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			{
+				action_interrupt_on_movement(); //ACS
+				
+				thePlayer.RemoveTag('ACS_Special_Dodge');
+			}
+
 			if (
 				(theInput.GetActionValue('Sprint') > 0.85 
 			&& theInput.GetActionValue('Jump') == 0 
@@ -1733,9 +1752,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			ACS_Hijack_YAxis_Up_Forward();
 		}
+		else if ( action.value < -0.7f && ACS_Enabled() )
+		{
+			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			{
+				action_interrupt_on_movement(); //ACS
+				
+				thePlayer.RemoveTag('ACS_Special_Dodge');
+			}
+		}
 		else if ( IsReleased( action ) && ACS_Enabled() )
-		{			
+		{	
 			RemoveTimer('ACS_HijackMoveForward');
+		}
+	}
+
+	event OnMoveSide ( action : SInputAction )
+	{
+		if ( action.value > 0.7f
+		&& ACS_Enabled() 
+		)
+		{
+			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			{
+				action_interrupt_on_movement(); //ACS
+
+				thePlayer.RemoveTag('ACS_Special_Dodge');
+			}	
+		}
+		else if ( action.value < -0.7f && ACS_Enabled() )
+		{			
+			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			{
+				action_interrupt_on_movement(); //ACS
+				
+				thePlayer.RemoveTag('ACS_Special_Dodge');
+			}
 		}
 	}
 
@@ -1849,7 +1901,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
 
-		theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'AttackAction', -1, 10.0f, -1.f, -1, true );
+		thePlayer.SendAttackReactionEvent();
 
 		if (ACS_Player_Scale() > 1)
 		{
@@ -1896,10 +1948,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.StopAllEffects();
 		}
 		
-		if (thePlayer.HasTag('ember_particles_active'))
+		if (thePlayer.HasTag('ACS_ember_particles_active'))
 		{
-			thePlayer.StopEffect('embers_particles');
-			thePlayer.PlayEffectSingle('embers_particles');
+			thePlayer.StopEffect('embers_particles_test');
+			thePlayer.PlayEffectSingle('embers_particles_test');
 		}
 	}
 	
@@ -1912,10 +1964,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.StopAllEffects();
 		}
 		
-		if (thePlayer.HasTag('ember_particles_active'))
+		if (thePlayer.HasTag('ACS_ember_particles_active'))
 		{
-			thePlayer.StopEffect('embers_particles');
-			thePlayer.PlayEffectSingle('embers_particles');
+			thePlayer.StopEffect('embers_particles_test');
+			thePlayer.PlayEffectSingle('embers_particles_test');
 		}
 	
 		movementAdjustor.AdjustLocationVertically( ticket, true );
@@ -2072,6 +2124,29 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 
+	function action_interrupt_on_movement()
+	{
+		if ( thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+		//&& !thePlayer.HasTag('blood_sucking')
+		)
+		{
+			if (!thePlayer.HasTag('aard_sword_equipped'))
+			{
+				ACS_Weapon_Respawn();
+			}
+			
+			thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+			thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+		}
+
+		settings_interrupt.blendIn = 0;
+		settings_interrupt.blendOut = 0;
+
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+		thePlayer.RaiseEvent( 'CombatTaunt' );
+	}
+
 	function ACS_Finisher_PreAction()
 	{
 		//actor = (CActor)( thePlayer.GetTarget() );	
@@ -2202,8 +2277,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			npc.StopAllEffects();
 
+			npc.PlayEffectSingle('pee');	
 			npc.StopEffect('pee');
-			npc.PlayEffectSingle('pee');
 						
 			npc.StopEffect('puke');
 			npc.PlayEffectSingle('puke');
@@ -2496,6 +2571,44 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				//npc.Kill('ACS_Dismember', false, thePlayer);
 			}
 		}	
+	}
+
+	function EmbersIndicator()
+	{
+		if ( 
+		ACS_GetWeaponMode() == 0
+		|| ACS_GetWeaponMode() == 1
+		|| ACS_GetWeaponMode() == 2
+		)
+		{
+			if ( 
+			( thePlayer.GetStat(BCS_Focus) == thePlayer.GetStatMax(BCS_Focus) )
+			&& ( thePlayer.GetStat(BCS_Stamina) == thePlayer.GetStatMax(BCS_Stamina) )
+			&& thePlayer.IsAnyWeaponHeld()
+			&& !thePlayer.HasTag('in_wraith') 
+			&& !thePlayer.HasTag('ACS_Camo_Active') 
+			&& !thePlayer.HasTag('vampire_claws_equipped') 
+			)
+			{
+				thePlayer.PlayEffectSingle('embers_indicator');
+				thePlayer.StopEffect('embers_indicator');
+				
+				//if (!thePlayer.HasTag('ACS_ember_particles_active'))
+				//{
+					//thePlayer.StopEffect('embers_particles_test');
+					//thePlayer.PlayEffectSingle('embers_particles_test');
+					
+					//thePlayer.AddTag('ACS_ember_particles_active');
+				//}
+			}
+			else
+			{
+				//thePlayer.RemoveTag('ACS_ember_particles_active');
+				
+				thePlayer.StopEffect('embers_indicator');
+				//thePlayer.StopEffect('embers_particles_test');
+			}
+		}
 	}
 	
 	function ACS_BARRADUR()
@@ -3400,7 +3513,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 		}
 
-		npc_notice_player();
+		//npc_notice_player();
 	}
 
 	function npc_notice_player()
@@ -3928,34 +4041,50 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (thePlayer.HasTag('quen_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				quen_sword_summon();
 			}
 			else if (thePlayer.HasTag('axii_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				axii_sword_summon();
 			}
 			else if (thePlayer.HasTag('aard_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				aard_sword_summon();
 			}
 			else if (thePlayer.HasTag('yrden_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				yrden_sword_summon();
 			}
 			else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				quen_secondary_sword_summon();
 			}
 			else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				axii_secondary_sword_summon();
 			}
 			else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				aard_secondary_sword_summon();
 			}
 			else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				yrden_secondary_sword_summon();
 			}
 			else if (
@@ -3964,6 +4093,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				if (!thePlayer.HasTag('igni_sword_effect_played'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					igni_sword_summon();
 				}
 			}
@@ -3972,6 +4103,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (thePlayer.HasTag('aard_sword_equipped'))
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				aard_sword_summon();
 			}
 		}
@@ -4027,6 +4160,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
 				{
+					RemoveTimer('ACS_Embers_Timer');
+
+					thePlayer.StopAllEffects();
+
 					thePlayer.PlayEffectSingle('ethereal_appear');
 					thePlayer.StopEffect('ethereal_appear');
 
@@ -4041,26 +4178,37 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
-			if (ACS_Player_Scale() != 1)
+			if (thePlayer.HasTag('in_wraith'))
 			{
-				if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
-				{
-					thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
-				}
-
-				if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
-				{
-					thePlayer.PlayEffectSingle('ethereal_appear');
-					thePlayer.StopEffect('ethereal_appear');
-
-					thePlayer.PlayEffectSingle('special_attack_only_black_fx');
-					thePlayer.StopEffect('special_attack_only_black_fx');
-
-					thePlayer.AddTag('ACS_Player_Scale_Revert');
-				}
+				playerAnimcomp.SetScale(Vector(1,1,1,0));
 			}
+			else
+			{
+				if (ACS_Player_Scale() != 1)
+				{
+					if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
+					{
+						thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
+					}
 
-			playerAnimcomp.SetScale(Vector(ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale()));
+					if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
+					{
+						thePlayer.StopAllEffects();
+						
+						thePlayer.PlayEffectSingle('ethereal_appear');
+						thePlayer.StopEffect('ethereal_appear');
+
+						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+						thePlayer.StopEffect('special_attack_only_black_fx');
+
+						thePlayer.AddTag('ACS_Player_Scale_Revert');
+
+						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+					}
+				}
+
+				playerAnimcomp.SetScale(Vector(ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale()));
+			}
 		}
 	}
 
@@ -4072,13 +4220,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			thePlayer.AddTag('ACS_Size_Adjusted');
 		}
-		
-		RemoveTimer('ACS_Set_Player_Scale');
+
 		RemoveTimer('Grow_Geralt_Delay');
-		RemoveTimer('Grow_Geralt_Immediate_Repeat');
 		RemoveTimer('Shrink_Geralt_Repeat');
-		RemoveTimer('Grow_Geralt_Repeat');
+		RemoveTimer('ACS_Set_Player_Scale');
 		RemoveTimer('Remove_Player_Grow_Immediate');
+		RemoveTimer('Grow_Geralt_Immediate_Repeat');
+		RemoveTimer('Grow_Geralt_Repeat');
 
 		AddTimer('Shrink_Geralt_Repeat', 0.01, true);
 
@@ -4088,11 +4236,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	timer function Shrink_Geralt_Repeat( time : float , id : int )
 	{
 		Shrink_Geralt_Actual();
-
-		if (size == (ACS_Player_Scale() - (ACS_Player_Scale()*0.1)))
-		{
-			RemoveTimer('Shrink_Geralt_Repeat');
-		}
 	}
 
 	function Shrink_Geralt_Actual()
@@ -4100,11 +4243,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
 		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
 
-		if (size > (ACS_Player_Scale() - (ACS_Player_Scale()*0.1)))
+		if (size > (ACS_Player_Scale() - (ACS_Player_Scale()*0.11)))
 		{
 			size -= ACS_Player_Scale()*0.01;
 
 			playerAnimcomp.SetScale(Vector(size,size,size,size));
+		}
+		else if (size == (ACS_Player_Scale() - (ACS_Player_Scale()*0.11)))
+		{
+			RemoveTimer('Shrink_Geralt_Repeat');
 		}
 	}
 
@@ -4120,7 +4267,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function Grow_Geralt()
 	{
 		RemoveTimer('Shrink_Geralt_Repeat');
-		RemoveTimer('Grow_Geralt_Delay');
 		RemoveTimer('Grow_Geralt_Immediate_Repeat');
 		RemoveTimer('Grow_Geralt_Repeat');
 		RemoveTimer('Remove_Player_Grow_Immediate');
@@ -4166,6 +4312,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		RemoveTimer('Shrink_Geralt_Repeat');
 		RemoveTimer('Grow_Geralt_Immediate_Repeat');
 		RemoveTimer('Remove_Player_Grow_Immediate');
+		RemoveTimer('ACS_Set_Player_Scale');
 
 		if (size == ACS_Player_Scale())
 		{
@@ -5178,6 +5325,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			ACS_Finisher_Internal();
 		}
 		*/
+
+		if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+		{
+			thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+		}
 
 		if (playerAttacker && npc && thePlayer.HasTag('aard_sword_equipped') ) 
 		{ 
@@ -6790,6 +6942,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			//thePlayer.StopEffect('blood_effect_claws_test');
 			//thePlayer.PlayEffectSingle('blood_effect_claws_test');
 
+			if ( npc.GetCurrentHealth() <= 0.01 ) 
+			{
+				thePlayer.StopEffect('blood_effect_claws_test');
+				thePlayer.PlayEffect('blood_effect_claws_test');
+			}
+
 			ACS_Passive_Weapon_Effects_Switch();
 
 			if (((CActor)npc).HasAbility('DisableDismemberment'))
@@ -7473,7 +7631,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if 
 									( 
-										(thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9)
+										(thePlayer.GetStat(BCS_Focus) == thePlayer.GetStatMax(BCS_Focus) )
 										&& ACS_can_perform_guard_doubletap_attack()
 										&& ACS_SwordArray_Enabled() 
 									)
@@ -7779,7 +7937,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if 
 									( 
-										(thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9)
+										( thePlayer.GetStat(BCS_Focus) == thePlayer.GetStatMax(BCS_Focus) )
 										&& ACS_can_perform_guard_doubletap_attack()
 										&& ACS_SwordArray_Enabled() 
 									)
@@ -8048,7 +8206,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if 
 									( 
-										(thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9)
+										(thePlayer.GetStat(BCS_Focus) == thePlayer.GetStatMax(BCS_Focus))
 										&& ACS_can_perform_guard_doubletap_attack()
 										&& ACS_SwordArray_Enabled() 
 									)
@@ -8294,7 +8452,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if 
 									( 
-										(thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9)
+										(thePlayer.GetStat(BCS_Focus) == thePlayer.GetStatMax(BCS_Focus))
 										&& ACS_can_perform_guard_doubletap_attack()
 										&& ACS_SwordArray_Enabled() 
 									)
@@ -8911,7 +9069,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									{	
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -8935,7 +9093,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -8943,7 +9101,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else if (thePlayer.HasTag('aard_sword_equipped'))
 							{
-								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+								if ( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 								{
 									Bruxa_Scream();
 
@@ -8967,7 +9125,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									{	
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -8989,7 +9147,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									{	
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -8997,7 +9155,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 							{
-								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+								if ( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 								{
 									Giant_Sword();
 
@@ -9020,7 +9178,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									{	
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -9042,7 +9200,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									{	
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 									}
-									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
 										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 									}
@@ -10893,7 +11051,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{	
 						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 					}
-					else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+					else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 					{
 						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 					}
@@ -11096,7 +11254,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -11171,7 +11329,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						}		
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+					&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 					{
 						Bruxa_Scream();
 
@@ -11271,7 +11429,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 							}
-							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 							}
@@ -11362,7 +11520,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -11606,7 +11764,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{	
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 							}
-							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 							}
@@ -11766,7 +11924,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{	
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 							}
-							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 							}
@@ -11910,7 +12068,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							geraltRandomGregAttackAlt();
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+						&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 						{
 							Giant_Sword();
 
@@ -12073,7 +12231,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{	
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 							}
-							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 							}
@@ -12159,7 +12317,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -12350,7 +12508,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						}
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+					&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 					{
 						Bruxa_Scream();
 
@@ -12559,7 +12717,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{	
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 							}
-							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
 								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 							}
@@ -12779,7 +12937,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -12976,7 +13134,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -13165,7 +13323,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						AddTimer('ACS_ResetAnimation', 0.5  , false);
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 )
+					&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) )
 					{
 						Giant_Sword();
 
@@ -13365,7 +13523,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -13603,7 +13761,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
 						}
-						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9 ) 
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
 							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
 						}
@@ -15368,8 +15526,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
-						if (thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9
-						&& thePlayer.GetStat( BCS_Stamina ) >= thePlayer.GetStatMax( BCS_Stamina ) * 0.9 )
+						if (thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax( BCS_Focus ) 
+						&& thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ) )
 						{
 							Umbral_Slash_End();
 
@@ -15805,8 +15963,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
-						if (thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.9
-						&& thePlayer.GetStat( BCS_Stamina ) >= thePlayer.GetStatMax( BCS_Stamina ) * 0.9 )
+						if (thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax( BCS_Focus )
+						&& thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ) )
 						{
 							Umbral_Slash_End();
 
@@ -17218,7 +17376,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	// Bruxa bite stuff
 	
-	function bruxa_bite () 
+	function bruxa_bite() 
 	{ 
 		if ( ACS_BruxaBite_Enabled() 
 		&& ACS_Enabled() )
@@ -17305,8 +17463,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.EnableCharacterCollisions(false);
 
 			((CNewNPC)actor).EnableCharacterCollisions(false);
-
-			//thePlayer.EnableCollisions(false);
 
 			if ( ((CNewNPC)actor).IsFlying() && actor.GetDistanceFromGround( 3 ) > 2 )
 			{
@@ -17944,11 +18100,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					movementAdjustor.RotateTowards( ticket, actor );
 
-					//thePlayer.EnableCollisions(false);
-
 					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
@@ -17956,19 +18108,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
 
-						//thePlayer.EnableCollisions(false);
-
 						movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
 
 						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 					}
@@ -18324,10 +18468,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			if ( ACS_GetTargetMode() == 0 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );
-
-				//thePlayer.EnableCollisions(false);
 				movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-				//AddTimer('ACS_collision_delay', 0.4, false);
 			}
 			else if ( ACS_GetTargetMode() == 1 )
 			{
@@ -18335,17 +18476,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
-					//thePlayer.EnableCollisions(false);
 					movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else
 				{
 					movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-					//thePlayer.EnableCollisions(false);
-
-					//AddTimer('ACS_collision_delay', 0.4, false);
 
 					movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 				}
@@ -18490,7 +18625,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
 			
-			AddTimer('ACS_collision_delay', 0.1  , false);
+			//AddTimer('ACS_collision_delay', 0.1  , false);
 			
 			if (thePlayer.HasTag('vampire_claws_equipped'))
 			{
@@ -18526,7 +18661,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', settings);
 			}
 			
-			AddTimer('ACS_collision_delay', 0.1  , false);
+			//AddTimer('ACS_collision_delay', 0.1  , false);
 		}
 	}
 	
@@ -18578,7 +18713,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		thePlayer.SetCanPlayHitAnim(true); 
 		
-		AddTimer('ACS_collision_delay', 0.1 , false);
+		//AddTimer('ACS_collision_delay', 0.1 , false);
 		thePlayer.EnableCharacterCollisions(true); 
 		thePlayer.SetIsCurrentlyDodging(false);
 		thePlayer.EnableCollisions(true);
@@ -18970,16 +19105,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									thePlayer.StopEffect('suck_out');
 									thePlayer.PlayEffectSingle('suck_out');
 								}
-										
+
 								thePlayer.StopAllEffects();
+
+								RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
 
+								thePlayer.StopEffect('mist_fly_regis');
+								thePlayer.PlayEffectSingle('mist_fly_regis');
+
+								thePlayer.PlayEffectSingle( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
-								AddTimer('ACS_wraith', 0.00000001, true);
+								AddTimer('ACS_wraith', 0.000000000000000001f, true);
 							}
 						}
 					}
@@ -19006,13 +19148,19 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 						if (thePlayer.HasTag('in_wraith'))
 						{
+							thePlayer.EnableCollisions(true);
+
 							thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 
 							RemoveTimer('ACS_wraith');
-		
-							AddTimer('ACS_collision_delay', 0.3, false);
 
 							thePlayer.StopEffect('special_attack_short_fx');
+
+							thePlayer.StopEffect('wraith_fx');
+
+							thePlayer.StopEffect('mist_fly_regis');
+
+							thePlayer.PlayEffectSingle( 'mist_regis' );
 
 							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19036,6 +19184,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							DeactivateEnvironment(envID, 1);
 
 							thePlayer.RemoveTag('in_wraith');
+
+							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
 						}
 						
 						if( thePlayer.IsInCombat())
@@ -19248,14 +19398,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								}
 										
 								thePlayer.StopAllEffects();
+
+								RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
 
+								thePlayer.StopEffect('mist_fly_regis');
+								thePlayer.PlayEffectSingle('mist_fly_regis');
+
+								thePlayer.PlayEffectSingle( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
-								AddTimer('ACS_wraith', 0.00000001, true);
+								AddTimer('ACS_wraith', 0.000000000000000001f, true);
 							}
 						}
 					}
@@ -19274,15 +19431,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (thePlayer.HasTag('in_wraith'))
 			{
+				thePlayer.EnableCollisions(true);
+
 				thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 
 				RemoveTimer('ACS_wraith');
 
 				DeactivateEnvironment(envID, 1);
 
-				AddTimer('ACS_collision_delay', 0.3, false);
-
 				thePlayer.StopEffect('special_attack_short_fx');
+
+				thePlayer.StopEffect('mist_fly_regis');
+
+				thePlayer.StopEffect('wraith_fx');
+
+				thePlayer.PlayEffectSingle( 'mist_regis' );
 
 				thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 				thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19304,6 +19467,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.UnblockAction( EIAB_RadialMenu,			'ACS_Wraith');
 
 				thePlayer.RemoveTag('in_wraith');
+
+				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
 			}
 
 			if (ACS_Enabled())
@@ -19428,14 +19593,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Wraith');
 										
 								thePlayer.StopAllEffects();
+
+								RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
 
+								thePlayer.StopEffect('mist_fly_regis');
+								thePlayer.PlayEffectSingle('mist_fly_regis');
+
+								thePlayer.PlayEffectSingle( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
-								AddTimer('ACS_wraith', 0.00000001, true);
+								AddTimer('ACS_wraith', 0.000000000000000001f, true);
 							}
 						}
 					}
@@ -19463,15 +19635,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 						if (thePlayer.HasTag('in_wraith'))
 						{
+							thePlayer.EnableCollisions(true);
+
 							thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 
 							DeactivateEnvironment(envID, 1);
 
 							RemoveTimer('ACS_wraith');
-		
-							AddTimer('ACS_collision_delay', 0.3, false);
 
 							thePlayer.StopEffect('special_attack_short_fx');
+
+							thePlayer.StopEffect('wraith_fx');
+
+							thePlayer.StopEffect('mist_fly_regis');
+
+							thePlayer.PlayEffectSingle( 'mist_regis' );
 
 							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19493,6 +19671,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							thePlayer.UnblockAction( EIAB_RadialMenu,			'ACS_Wraith');
 
 							thePlayer.RemoveTag('in_wraith');
+
+							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
 						}
 
 						if (!thePlayer.HasTag('ACS_Camo_Active')
@@ -19589,14 +19769,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Wraith');
 										
 								thePlayer.StopAllEffects();
+
+								RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
 
+								thePlayer.StopEffect('mist_fly_regis');
+								thePlayer.PlayEffectSingle('mist_fly_regis');
+
+								thePlayer.PlayEffectSingle( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
-								AddTimer('ACS_wraith', 0.00000001, true);
+								AddTimer('ACS_wraith', 0.000000000000000001f, true);
 							}
 						}
 					}
@@ -19624,15 +19811,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 						if (thePlayer.HasTag('in_wraith'))
 						{
+							thePlayer.EnableCollisions(true);
+
 							thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 
 							DeactivateEnvironment(envID, 1);
 
 							RemoveTimer('ACS_wraith');
-		
-							AddTimer('ACS_collision_delay', 0.3, false);
 
 							thePlayer.StopEffect('special_attack_short_fx');
+
+							thePlayer.StopEffect('wraith_fx');
+
+							thePlayer.StopEffect('mist_fly_regis');
+
+							thePlayer.PlayEffectSingle( 'mist_regis' );
 
 							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19654,6 +19847,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							thePlayer.UnblockAction( EIAB_RadialMenu,			'ACS_Wraith');
 
 							thePlayer.RemoveTag('in_wraith');
+
+							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
 						}
 
 						if (!thePlayer.HasTag('ACS_Camo_Active')
@@ -23539,26 +23734,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-					thePlayer.EnableCollisions(false);
 					movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
-					//thePlayer.EnableCollisions(true);
-					AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-						thePlayer.EnableCollisions(false);
 						movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
-						//thePlayer.EnableCollisions(true);
-						AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-						thePlayer.EnableCollisions(false);
-						AddTimer('ACS_collision_delay', 0.4, false);
 						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 					}
 				}
@@ -23568,26 +23755,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-					thePlayer.EnableCollisions(false);
 					movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
-					//thePlayer.EnableCollisions(true);
-					AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-						thePlayer.EnableCollisions(false);
 						movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
-						//thePlayer.EnableCollisions(true);
-						AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-						thePlayer.EnableCollisions(false);
-						AddTimer('ACS_collision_delay', 0.4, false);
 						movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 					}
 				}
@@ -23611,10 +23790,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-			thePlayer.EnableCollisions(false);
-
-			AddTimer('ACS_collision_delay', 0.4, false);
 
 			movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 			
@@ -23662,11 +23837,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );  
-			
-			thePlayer.EnableCollisions(false);
+
 			movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
-			thePlayer.EnableCollisions(true);
-			//AddTimer('ACS_collision_delay', 0.4, false);
 			
 			if (thePlayer.HasTag('vampire_claws_equipped'))
 			{
@@ -23686,10 +23858,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-			thePlayer.EnableCollisions(false);
-
-			AddTimer('ACS_collision_delay', 0.4, false);
 
 			movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 			
@@ -23775,30 +23943,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 					}
 				}
 
@@ -23840,30 +23994,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 					}	
 				}
 
@@ -23978,30 +24118,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 					}
 				}
 
@@ -24045,30 +24171,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 					}	
 				}
 
@@ -24964,30 +25076,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
 					}
 				}
 
@@ -25027,30 +25125,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
-
-					//thePlayer.EnableCollisions(false);
-					//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-					//AddTimer('ACS_collision_delay', 0.4, false);
 				}
 				else if ( ACS_GetTargetMode() == 1 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
 						movementAdjustor.RotateTowards( ticket, actor );  
-
-						//thePlayer.EnableCollisions(false);
-						//movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
-						//AddTimer('ACS_collision_delay', 0.4, false);
 					}
 					else
 					{
 						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						//thePlayer.EnableCollisions(false);
-
-						//AddTimer('ACS_collision_delay', 0.4, false);
-
-						//movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
 					}	
 				}
 
@@ -25096,111 +25180,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			this.previous_attack_special_dash_index_1 = attack_special_dash_index_1;
 		}			
 	}
-	
-	/*
-	function geraltRandomClawSpecialAttack()
-	{
-		MovementAdjust();
-		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
-		{			
-			if( targetDistance <= 3.5 * 3.5 ) 
-			{
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-					}	
-				}
 
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_light_03_ACS', 'PLAYER_SLOT', settings);
-			}
-			else if( targetDistance > 3.5 * 3.5  && targetDistance <= 5*5 ) 
-			{
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
-					AddTimer('ACS_collision_delay', 0.3, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
-						AddTimer('ACS_collision_delay', 0.3, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
-					}
-				}
-
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_light_03_ACS', 'PLAYER_SLOT', settings);
-			}
-			else
-			{
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
-					AddTimer('ACS_collision_delay', 0.3, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
-						AddTimer('ACS_collision_delay', 0.3, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, theCamera.GetCameraPosition() + theCamera.GetCameraDirection() * 7.5 );
-					}
-				}
-
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_light_03_ACS', 'PLAYER_SLOT', settings);
-			}
-		}
-		else
-		{
-			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-			
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_light_03_ACS', 'PLAYER_SLOT', settings);
-		}
-	}
-	*/
 	function geraltRandomClawSpecialAttack() 
 	{
 		MovementAdjust();
@@ -26301,39 +26281,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				/*
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-					AddTimer('ACS_collision_delay', 0.4, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-						AddTimer('ACS_collision_delay', 0.4, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
-					}
-				}
-			
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shadowdash_002_ACS', 'PLAYER_SLOT', settings);
-				*/
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
@@ -26383,39 +26330,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
-				/*
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-					AddTimer('ACS_collision_delay', 0.4, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-						AddTimer('ACS_collision_delay', 0.4, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
-					}
-				}
-			
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shadowdash_002_ACS', 'PLAYER_SLOT', settings);
-				*/
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
@@ -28254,39 +28168,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				/*
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-					AddTimer('ACS_collision_delay', 0.4, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-						AddTimer('ACS_collision_delay', 0.4, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
-					}
-				}
-			
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shadowdash_002_ACS', 'PLAYER_SLOT', settings);
-				*/
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
@@ -28336,39 +28217,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
-				/*
-				if ( ACS_GetTargetMode() == 0 )
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-
-					thePlayer.EnableCollisions(false);
-					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-					AddTimer('ACS_collision_delay', 0.4, false);
-				}
-				else if ( ACS_GetTargetMode() == 1 )
-				{
-					if (thePlayer.IsHardLockEnabled())
-					{
-						movementAdjustor.RotateTowards( ticket, actor );  
-
-						thePlayer.EnableCollisions(false);
-						movementAdjustor.SlideTowards( ticket, actor, dist, dist );
-						AddTimer('ACS_collision_delay', 0.4, false);
-					}
-					else
-					{
-						movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
-
-						thePlayer.EnableCollisions(false);
-
-						AddTimer('ACS_collision_delay', 0.4, false);
-
-						movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + theCamera.GetCameraDirection() * 5 );
-					}
-				}
-			
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shadowdash_002_ACS', 'PLAYER_SLOT', settings);
-				*/
 				if ( ACS_GetTargetMode() == 0 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
@@ -29868,7 +29716,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_attack == 0)
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -29877,7 +29725,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 1)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -29886,7 +29734,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 2)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -29895,7 +29743,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 3)
 				{
-					Shrink_Geralt(1.319999736000053);
+					Shrink_Geralt(1.059999736000053);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -29905,7 +29753,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 4)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -29915,7 +29763,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 5)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswingturnswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -29925,7 +29773,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 6)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30029,32 +29877,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					switch (eredin_attack_index_2) 
 					{	
 						case 5:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.65);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 						break;
 
 						case 4:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.65);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 						break;			
 					
 						case 3:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 2:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.459999820000036);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 1:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswingturnswing_01_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						default:
-						Shrink_Geralt(1.319999736000053);
+						Shrink_Geralt(1.059999736000053);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswing_01_ACS', 'PLAYER_SLOT', settings);
 						break;
 					}
@@ -30063,7 +29911,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}		
 				else
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 				}		
 			}
@@ -30078,7 +29926,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_attack == 0)
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30087,7 +29935,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 1)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30096,7 +29944,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 2)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30105,7 +29953,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_attack == 3)
 				{
-					Shrink_Geralt(1.319999736000053);
+					Shrink_Geralt(1.059999736000053);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30115,7 +29963,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 4)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30125,7 +29973,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 5)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswingturnswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30135,7 +29983,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_attack == 6)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30221,42 +30069,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					case 7:
 
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					case 6:
 
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 					break;			
 				
 					case 5:
 
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
 
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
 
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswingturnswing_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 2:
 
-					Shrink_Geralt(1.319999736000053);
+					Shrink_Geralt(1.059999736000053);
 
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_swingswing_01_ACS', 'PLAYER_SLOT', settings);
 					break;
@@ -30303,7 +30151,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_combo_attack == 0)
 				{
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_combo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30321,7 +30169,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack == 2)
 				{
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_r_combo_01_caretaker_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30419,12 +30267,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					switch (eredin_combo_attack_index_2) 
 					{	
 						case 1:
-						Shrink_Geralt(3.5);
+						Shrink_Geralt(2.75);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_combo_01_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						default:
-						Shrink_Geralt(3.5);
+						Shrink_Geralt(2.75);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_r_combo_01_caretaker_ACS', 'PLAYER_SLOT', settings);
 						break;
 					}
@@ -30442,7 +30290,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_combo_attack == 0)
 				{
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_combo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30460,7 +30308,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack == 2)
 				{
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_r_combo_01_caretaker_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30514,7 +30362,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				switch (eredin_combo_attack_index_3) 
 				{		
 					case 6:
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_combo_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
@@ -30544,7 +30392,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					default:
-					Shrink_Geralt(3.5);
+					Shrink_Geralt(2.75);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_r_combo_01_caretaker_ACS', 'PLAYER_SLOT', settings);
 					break;
 				}
@@ -30576,7 +30424,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 
-			Shrink_Geralt(6);
+			Shrink_Geralt(5);
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_special_stab_caretaker_ACS', 'PLAYER_SLOT', settings);
 
 			thePlayer.AddTag('ACS_Eredin_Stab');
@@ -30587,7 +30435,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 
-			Shrink_Geralt(6);
+			Shrink_Geralt(5);
 			
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_special_stab_caretaker_ACS', 'PLAYER_SLOT', settings);
 		}
@@ -30621,7 +30469,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_combo_attack_alt == 0)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30630,7 +30478,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack_alt == 1)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30639,7 +30487,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack_alt == 2)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30651,18 +30499,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				if( targetDistance <= 3 * 3 ) 
 				{	
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 				}
 				else if( targetDistance > 3 * 3 
 				&& targetDistance <= 4 * 4 ) 
 				{	
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 				}
 				else
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 				}	
 			}
@@ -30677,7 +30525,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_combo_attack_alt == 0)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30686,7 +30534,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack_alt == 1)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30695,7 +30543,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_combo_attack_alt == 2)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30705,7 +30553,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_ComboMode() == 1)
 			{
-				Shrink_Geralt(3);
+				Shrink_Geralt(2.25);
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 			}
 		}
@@ -30909,7 +30757,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_heavy_attack == 0)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -30918,7 +30766,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_heavy_attack == 1)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30936,7 +30784,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_heavy_attack == 3)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -30955,7 +30803,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_heavy_attack == 5)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31008,22 +30856,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					switch (eredin_attack_index_1) 
 					{	
 						case 3:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 2:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.65);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 1:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.459999820000036);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						default:
-						Shrink_Geralt(0.75);
+						Shrink_Geralt(0.65);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 						break;
 					}
@@ -31075,7 +30923,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_heavy_attack == 0)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31084,7 +30932,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_heavy_attack == 1)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31102,7 +30950,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_heavy_attack == 3)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31121,7 +30969,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_eredin_heavy_attack == 5)
 				{
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31172,22 +31020,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				switch (eredin_combo_attack_index_3) 
 				{	
 					case 9:
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_lowswing_overhead_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					case 8:
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_left_45_READY_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					case 7:
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.459999820000036);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_right_45_READY_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					case 6:
-					Shrink_Geralt(0.75);
+					Shrink_Geralt(0.65);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_relaxed_forward_01_READY_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
@@ -31391,7 +31239,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_light_attack == 0)
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31497,7 +31345,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}		
 				else
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 				}
 			}
@@ -31512,7 +31360,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_light_attack == 0)
 				{
-					Shrink_Geralt(1.559999688000062);
+					Shrink_Geralt(1.509999688000062);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walkattack_ready_lf_01_TO_IDLE_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31630,7 +31478,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 
-			Shrink_Geralt(6);
+			Shrink_Geralt(5);
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_special_stab_caretaker_ACS', 'PLAYER_SLOT', settings);
 
 			thePlayer.AddTag('ACS_Eredin_Stab');
@@ -31641,7 +31489,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			Shrink_Geralt(6);
+			Shrink_Geralt(5);
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_special_stab_caretaker_ACS', 'PLAYER_SLOT', settings);
 		}
 	}
@@ -31674,7 +31522,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_special_attack_alt == 0)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31683,7 +31531,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_special_attack_alt == 1)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31692,7 +31540,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_special_attack_alt == 2)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31704,18 +31552,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				if( targetDistance <= 3 * 3 ) 
 				{	
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 				}
 				else if( targetDistance > 3 * 3 
 				&& targetDistance <= 4 * 4 ) 
 				{	
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 				}
 				else
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 				}
 			}
@@ -31730,7 +31578,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_eredin_special_attack_alt == 0)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31739,7 +31587,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_special_attack_alt == 1)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_light2heavy_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31748,7 +31596,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_eredin_special_attack_alt == 2)
 				{
-					Shrink_Geralt(3);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31758,7 +31606,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_ComboMode() == 1)
 			{
-				Shrink_Geralt(3);
+				Shrink_Geralt(2.25);
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_furycombo_02_ACS', 'PLAYER_SLOT', settings);
 			}
 		}
@@ -31796,7 +31644,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_attack == 0)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -31805,7 +31653,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 1)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31814,7 +31662,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 2)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31833,7 +31681,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 4)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						
 					combo_counter_damage += 1;
@@ -31843,7 +31691,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 5)
 				{
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31853,7 +31701,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 6)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -31893,7 +31741,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 10)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32096,7 +31944,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 
 						case 11:
-						Shrink_Geralt(1.299999940000012);
+						Shrink_Geralt(1.209999940000012);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
@@ -32106,7 +31954,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 9:
-						Shrink_Geralt(8);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
@@ -32116,22 +31964,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 7:
-						Shrink_Geralt(8);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
 						case 6:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
 						case 5:
-						Shrink_Geralt(1.199999760000048);
+						Shrink_Geralt(1.059999760000048);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
 						case 4:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
@@ -32146,7 +31994,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 1:
-						Shrink_Geralt(1.199999760000048);
+						Shrink_Geralt(1.059999760000048);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
@@ -32170,7 +32018,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_attack == 0)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -32179,7 +32027,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 1)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32188,7 +32036,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 2)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32207,7 +32055,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 4)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						
 					combo_counter_damage += 1;
@@ -32217,7 +32065,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 5)
 				{
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32227,7 +32075,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 6)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32267,7 +32115,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_attack == 10)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32424,7 +32272,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 20:
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
@@ -32434,7 +32282,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 18:
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
@@ -32444,7 +32292,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 16:
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
@@ -32454,17 +32302,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 
 					case 14:
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					case 13:
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					case 12:
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
@@ -32511,7 +32359,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 1:
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -32556,7 +32404,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_berserk_attack == 0)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -32565,7 +32413,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_berserk_attack == 1)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32623,7 +32471,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_berserk_attack == 7)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32680,7 +32528,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;			
 						
 						case 1:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
@@ -32704,12 +32552,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 1:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						default:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;	
 					}
@@ -32728,7 +32576,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_berserk_attack == 0)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -32737,7 +32585,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_berserk_attack == 1)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32795,7 +32643,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_berserk_attack == 7)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32850,7 +32698,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 4:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -32865,12 +32713,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 1:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					default:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;	
 				}
@@ -32910,7 +32758,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_walk_attack == 0)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -32928,7 +32776,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_walk_attack == 2)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -32948,12 +32796,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 1:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 			
 					default:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 				}
@@ -32971,7 +32819,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_walk_attack == 0)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -32989,7 +32837,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_walk_attack == 2)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33009,12 +32857,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 1:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 			
 					default:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 				}
@@ -33054,7 +32902,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_combo_attack == 0)
 				{
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -33063,7 +32911,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_combo_attack == 1)
 				{
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33073,7 +32921,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 2)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33083,7 +32931,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 3)
 				{
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33093,7 +32941,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 4)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33103,7 +32951,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 5)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33124,32 +32972,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 5:
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 2:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					default:
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -33173,7 +33021,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_combo_attack == 0)
 				{
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -33182,7 +33030,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_combo_attack == 1)
 				{
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33192,7 +33040,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 2)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33202,7 +33050,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 3)
 				{
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33212,7 +33060,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 4)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33222,7 +33070,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 5)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33243,32 +33091,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 5:
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings); // OK
 					break;
 					
 					case 2:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					default:
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -33316,7 +33164,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_heavy_attack_alt == 0)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -33335,7 +33183,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 2)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33365,7 +33213,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 5)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33375,7 +33223,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 6)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33385,7 +33233,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 7)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33405,7 +33253,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 9)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33422,22 +33270,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					switch (imlerith_attack_index_1) 
 					{					
 						case 4:
-						Shrink_Geralt(1.199999760000048);
+						Shrink_Geralt(1.059999760000048);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 							
 						case 3:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 2:
-						Shrink_Geralt(1.399999520000096);
+						Shrink_Geralt(1.309999520000096);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						case 1:
-						Shrink_Geralt(1.199999760000048);
+						Shrink_Geralt(1.059999760000048);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
@@ -33471,12 +33319,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 1:
-						Shrink_Geralt(4);
+						Shrink_Geralt(3.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 				
 						default:
-						Shrink_Geralt(4);
+						Shrink_Geralt(3.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 					}
@@ -33495,7 +33343,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_heavy_attack_alt == 0)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -33514,7 +33362,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 2)
 				{
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33544,7 +33392,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 5)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33554,7 +33402,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 6)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33564,7 +33412,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 7)
 				{
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33584,7 +33432,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_heavy_attack_alt == 9)
 				{
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33604,32 +33452,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 8:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 				
 					case 7:
-					Shrink_Geralt(4);
+					Shrink_Geralt(3.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'walk_attack_leftfoot_forward_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					case 6:
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_backhandturn_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 5:
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_idle_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
-					Shrink_Geralt(1.399999520000096);
+					Shrink_Geralt(1.309999520000096);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_guard_forward_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
-					Shrink_Geralt(1.199999760000048);
+					Shrink_Geralt(1.059999760000048);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_fast_03_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -33693,7 +33541,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_heavy_attack == 1)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33783,7 +33631,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						default:
-						Shrink_Geralt(8);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 					}
@@ -33811,7 +33659,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_heavy_attack == 1)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -33875,7 +33723,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 1:
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_swing_shield_swing_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
@@ -34201,7 +34049,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_light_attack == 1)
 				{
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34211,7 +34059,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_light_attack == 2)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34251,12 +34099,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 2:
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34288,7 +34136,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_light_attack == 1)
 				{
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34298,7 +34146,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_light_attack == 2)
 				{
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34338,12 +34186,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 2:
-					Shrink_Geralt(8);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(1.299999940000012);
+					Shrink_Geralt(1.209999940000012);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_shield_thrust_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34388,7 +34236,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_special_attack_alt == 0)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -34397,7 +34245,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack_alt == 1)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34455,7 +34303,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack_alt == 7)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34497,7 +34345,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;				
 						
 						case 1:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
@@ -34521,12 +34369,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 1:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 						
 						default:
-						Shrink_Geralt(66);
+						Shrink_Geralt(2.25);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;	
 					}
@@ -34545,7 +34393,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_special_attack_alt == 0)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -34554,7 +34402,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack_alt == 1)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34612,7 +34460,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack_alt == 7)
 				{
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34652,7 +34500,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 4:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_single_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34667,12 +34515,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 1:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 						
 					default:
-					Shrink_Geralt(66);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_whirlwind_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;	
 				}
@@ -34712,7 +34560,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_special_attack == 0)
 				{
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -34721,7 +34569,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 1)
 				{
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34730,7 +34578,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 2)
 				{
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34739,7 +34587,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 3)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -34749,7 +34597,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack == 4)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34759,7 +34607,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack == 5)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34780,32 +34628,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 5:
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 2:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					default:
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34829,7 +34677,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				if (combo_counter_imlerith_special_attack == 0)
 				{
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage -= combo_counter_damage;
@@ -34838,7 +34686,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 1)
 				{
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34847,7 +34695,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 2)
 				{
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34856,7 +34704,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 3)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -34866,7 +34714,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack == 4)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34876,7 +34724,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_special_attack == 5)
 				{
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34897,32 +34745,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 5:
-					Shrink_Geralt(1000);
+					Shrink_Geralt(3);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_combo_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 4:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_4_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 3:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 2:
-					Shrink_Geralt(500);
+					Shrink_Geralt(2.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
 					case 1:
-					Shrink_Geralt(2.5);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_01_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
 					default:
-					Shrink_Geralt(1.1);
+					Shrink_Geralt(0.25);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_2_attacks_03_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -41318,6 +41166,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function wraith_actual()
 	{
+		thePlayer.PlayEffectSingle('wraith_fx');
+
 		camera.StopAnimation('camera_shake_loop_lvl1_1');
 
 		theGame.GetGameCamera().StopAnimation( 'camera_shake_loop_lvl1_1' );
@@ -41409,9 +41259,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{			
 			if (thePlayer.HasTag('in_wraith'))
 			{
+				thePlayer.EnableCollisions(true);
+
 				thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 				
 				RemoveTimer('ACS_wraith');
+
+				thePlayer.StopEffect('wraith_fx');
 
 				for (i = 0; i < 10000; i+=1) 
 				{
@@ -41422,11 +41276,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				//AddTimer('ACS_collision_delay', 0.3, false);
 
-				thePlayer.EnableCollisions(true);
+				//thePlayer.EnableCollisions(true);
 
 				thePlayer.StopEffect('special_attack_short_fx');
+
+				thePlayer.StopEffect('mist_fly_regis');
+
+				thePlayer.PlayEffectSingle( 'mist_regis' );
 					
 				thePlayer.RemoveTag('in_wraith');
+
+				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true);
 
 				thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 				thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');

@@ -2204,6 +2204,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	
 	latent function bruxa_slide_back()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_slide_back');
 		
 		movementAdjustor.CancelByName( 'bruxa_slide_back' );
@@ -2310,6 +2315,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function olgierd_slide_back()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'olgierd_slide_back');
 		
 		movementAdjustor.CancelByName( 'olgierd_slide_back' );
@@ -2418,6 +2428,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function olgierd_slide_back_2()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'olgierd_slide_back_2');
 		
 		movementAdjustor.CancelByName( 'olgierd_slide_back_2' );
@@ -2492,6 +2507,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function bruxa_front_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_front_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_front_dodge' );
@@ -2539,7 +2559,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function bruxa_right_dodge()
-	{		
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_right_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_right_dodge' );
@@ -2582,6 +2607,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function bruxa_left_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_left_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_left_dodge' );
@@ -2632,6 +2662,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function bruxa_regular_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'bruxa_regular_dodge');
 		
 		movementAdjustor.CancelByName( 'bruxa_regular_dodge' );
@@ -2684,6 +2719,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_back_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_back_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_back_dodge' );
@@ -2749,6 +2789,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_front_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_front_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_front_dodge' );
@@ -2826,6 +2871,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_right_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_right_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_right_dodge' );
@@ -2895,6 +2945,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_left_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_left_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_left_dodge' );
@@ -2968,6 +3023,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_sword_back_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_back_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_back_dodge' );
@@ -3041,6 +3101,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_sword_front_dodge()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		/*	
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_front_dodge');
 		
@@ -3113,6 +3178,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_sword_left_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_left_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_left_dodge' );
@@ -3150,6 +3220,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function two_hand_sword_right_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'two_hand_sword_right_dodge');
 		
 		movementAdjustor.CancelByName( 'two_hand_sword_right_dodge' );
@@ -3189,6 +3264,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function one_hand_sword_back_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge' );
@@ -3263,6 +3343,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function one_hand_sword_front_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge' );
@@ -3335,7 +3420,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_left_dodge()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge' );
@@ -3410,6 +3500,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function one_hand_sword_right_dodge()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge' );
@@ -3486,6 +3581,11 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function one_hand_sword_back_dodge_alt_1()
 	{	
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_1' );
@@ -3531,7 +3631,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_front_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_1' );
@@ -3587,7 +3692,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_left_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_1' );
@@ -3661,7 +3771,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_right_dodge_alt_1()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_1');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_1' );
@@ -3737,7 +3852,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function one_hand_sword_back_dodge_alt_2()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_2' );
@@ -3783,7 +3903,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_front_dodge_alt_2()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_2' );
@@ -3839,7 +3964,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_left_dodge_alt_2()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_2' );
@@ -3880,7 +4010,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_right_dodge_alt_2()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_2');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_2' );
@@ -3923,7 +4058,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	latent function one_hand_sword_back_dodge_alt_3()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_back_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_back_dodge_alt_3' );
@@ -3969,7 +4109,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_front_dodge_alt_3()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_3' );
@@ -4039,7 +4184,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_left_dodge_alt_3()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_3' );
@@ -4078,7 +4228,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	}
 
 	latent function one_hand_sword_right_dodge_alt_3()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+		
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_3');
 		
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_3' );
@@ -4208,18 +4363,6 @@ state BruxaDodgeSlideBackInitForWeaponSwitching_Engage in cBruxaDodgeSlideBackIn
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );
-		}
-
-		if (!thePlayer.HasTag('ACS_Camo_Active'))
-		{
-			thePlayer.PlayEffectSingle( 'magic_step_l_new' );
-			thePlayer.StopEffect( 'magic_step_l_new' );	
-
-			thePlayer.PlayEffectSingle( 'magic_step_r_new' );
-			thePlayer.StopEffect( 'magic_step_r_new' );	
-
-			thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
-			thePlayer.StopEffect( 'bruxa_dash_trails' );
 		}
 		
 		if (thePlayer.HasTag('aard_sword_equipped'))

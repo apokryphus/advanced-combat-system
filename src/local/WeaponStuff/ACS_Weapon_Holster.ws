@@ -40,6 +40,8 @@ function ACS_WeaponHolsterInit()
 		{
 			if (ACS_CloakEquippedCheck() || ACS_HideSwordsheathes_Enabled())
 			{
+				thePlayer.PlayEffectSingle('embers_particles_test');
+				thePlayer.StopEffect('embers_particles_test');
 				igni_sword_summon();
 			}
 		}
@@ -56,41 +58,57 @@ function ACS_WeaponHolsterInit()
 			{
 				if (thePlayer.HasTag('quen_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//quen_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('axii_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//axii_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('aard_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//aard_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('yrden_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//yrden_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//quen_secondary_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//axii_secondary_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//aard_secondary_sword_summon();
 					igni_sword_summon();
 				}
 				else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
 				{
+					thePlayer.PlayEffectSingle('embers_particles_test');
+					thePlayer.StopEffect('embers_particles_test');
 					//yrden_secondary_sword_summon();
 					igni_sword_summon();
 				}

@@ -13,179 +13,198 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 	
 	targets.Clear();
 	
-	if ( thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('vampire_claws_equipped') )
+	if (!thePlayer.IsPerformingFinisher())
 	{
-		if ( thePlayer.HasBuff(EET_BlackBlood) )
+		if ( thePlayer.IsWeaponHeld( 'fist' ) )
 		{
-			dist = 2;
-			ang = 90;
-		}
-		else	
-		{
-			dist = 1.25;
-			ang = 60;
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('igni_sword_equipped_TAG') )
-	{
-		if (thePlayer.GetTarget() == ACS_Big_Boi() )
-		{
-			dist = 1.75;
-			ang =	30;
-		}
-		else
-		{
-			dist = 1.5;
-			ang =	30;
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
-	{
-		if (thePlayer.GetTarget() == ACS_Big_Boi() )
-		{
-			dist = 1.75;
-			ang =	30;
-		}
-		else
-		{
-			dist = 1.5;
-			ang =	30;
-		}	
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('axii_sword_equipped') )
-	{
-		if ( thePlayer.HasTag('ACS_Shielded_Entity') )
-		{
-			dist = 5;
-			ang =	135;
-		}
-		else if (thePlayer.HasTag('ACS_Sparagmos_Active'))
-		{
-			dist = 10;
-			ang =	60;
-		}
-		else
-		{
-			if (thePlayer.GetTarget() == ACS_Big_Boi() )
+			if ( thePlayer.HasTag('vampire_claws_equipped') )
 			{
-				dist = 1.75;
-				ang =	30;
-			}
-			else
-			{
-				dist = 1.5;
-				ang =	30;	
-			}
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('axii_secondary_sword_equipped') )
-	{
-		if ( 
-		ACS_GetWeaponMode() == 0
-		|| ACS_GetWeaponMode() == 1
-		|| ACS_GetWeaponMode() == 2
-		)
-		{
-			dist = 2.25;
-			ang =	30;
-		}
-		else if ( ACS_GetWeaponMode() == 3 )
-		{ 
-			dist = 2;
-			ang =	30;
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_sword_equipped') )
-	{
-		dist = 2;
-		ang =	75;	
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_secondary_sword_equipped') )
-	{
-		dist = 2;
-		ang = 30;
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('yrden_sword_equipped') )
-	{
-		if ( ACS_GetWeaponMode() == 0 )
-		{
-			if (ACS_GetArmigerModeWeaponType() == 0)
-			{
-				dist = 2.5;
-				ang = 60;
+				if ( thePlayer.HasBuff(EET_BlackBlood) )
+				{
+					dist = 2;
+					ang = 90;
+				}
+				else	
+				{
+					dist = 1.25;
+					ang = 60;
+				}
 			}
 			else 
+			{
+				dist = 1.25;
+				ang = 30;
+			}
+		}
+		else
+		{
+			if ( thePlayer.HasTag('igni_sword_equipped_TAG') )
+			{
+				if (thePlayer.GetTarget() == ACS_Big_Boi() )
+				{
+					dist = 1.75;
+					ang =	30;
+				}
+				else
+				{
+					dist = 1.5;
+					ang =	30;
+				}
+			}
+			else if ( thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
+			{
+				if (thePlayer.GetTarget() == ACS_Big_Boi() )
+				{
+					dist = 1.75;
+					ang =	30;
+				}
+				else
+				{
+					dist = 1.5;
+					ang =	30;
+				}	
+			}
+			else if ( thePlayer.HasTag('axii_sword_equipped') )
+			{
+				if ( thePlayer.HasTag('ACS_Shielded_Entity') )
+				{
+					dist = 5;
+					ang =	135;
+				}
+				else if (thePlayer.HasTag('ACS_Sparagmos_Active'))
+				{
+					dist = 10;
+					ang =	60;
+				}
+				else
+				{
+					if (thePlayer.GetTarget() == ACS_Big_Boi() )
+					{
+						dist = 1.75;
+						ang =	30;
+					}
+					else
+					{
+						dist = 1.5;
+						ang =	30;	
+					}
+				}
+			}
+			else if ( thePlayer.HasTag('axii_secondary_sword_equipped') )
+			{
+				if ( 
+				ACS_GetWeaponMode() == 0
+				|| ACS_GetWeaponMode() == 1
+				|| ACS_GetWeaponMode() == 2
+				)
+				{
+					dist = 2.25;
+					ang =	30;
+				}
+				else if ( ACS_GetWeaponMode() == 3 )
+				{ 
+					dist = 2;
+					ang =	30;
+				}
+			}
+			else if ( thePlayer.HasTag('aard_sword_equipped') )
+			{
+				dist = 2;
+				ang =	75;	
+			}
+			else if ( thePlayer.HasTag('aard_secondary_sword_equipped') )
 			{
 				dist = 2;
 				ang = 30;
 			}
-		}
-		else if ( ACS_GetWeaponMode() == 1 )
-		{
-			if (ACS_GetFocusModeWeaponType() == 0)
+			else if ( thePlayer.HasTag('yrden_sword_equipped') )
 			{
-				dist = 2.5;
-				ang = 60;
+				if ( ACS_GetWeaponMode() == 0 )
+				{
+					if (ACS_GetArmigerModeWeaponType() == 0)
+					{
+						dist = 2.5;
+						ang = 60;
+					}
+					else 
+					{
+						dist = 2;
+						ang = 30;
+					}
+				}
+				else if ( ACS_GetWeaponMode() == 1 )
+				{
+					if (ACS_GetFocusModeWeaponType() == 0)
+					{
+						dist = 2.5;
+						ang = 60;
+					}
+					else 
+					{
+						dist = 2;
+						ang = 30;
+					}
+				}
+				else if ( ACS_GetWeaponMode() == 2 )
+				{
+					if (ACS_GetHybridModeWeaponType() == 0)
+					{
+						dist = 2.5;
+						ang = 60;
+					}
+					else 
+					{
+						dist = 2;
+						ang = 30;
+					}
+				}
+				else if ( ACS_GetWeaponMode() == 3 )
+				{
+					dist = 2.5;
+					ang = 60;
+				}
+			}
+			else if ( thePlayer.HasTag('yrden_secondary_sword_equipped') )
+			{
+				dist = 3.5;
+				ang =	180;
+			}
+			else if ( thePlayer.HasTag('quen_sword_equipped') )
+			{
+				if (thePlayer.GetTarget() == ACS_Big_Boi() )
+				{
+					dist = 1.75;
+					ang =	30;
+				}
+				else
+				{
+					dist = 1.5;
+					ang =	30;
+				}
+			}
+			else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
+			{
+				if (thePlayer.HasTag('ACS_Storm_Spear_Active'))
+				{
+					dist = 10;
+					ang =	30;
+				}
+				else
+				{
+					dist = 2.25;
+					ang =	40;
+				}
 			}
 			else 
 			{
-				dist = 2;
+				dist = 1.25;
 				ang = 30;
 			}
-		}
-		else if ( ACS_GetWeaponMode() == 2 )
-		{
-			if (ACS_GetHybridModeWeaponType() == 0)
-			{
-				dist = 2.5;
-				ang = 60;
-			}
-			else 
-			{
-				dist = 2;
-				ang = 30;
-			}
-		}
-		else if ( ACS_GetWeaponMode() == 3 )
-		{
-			dist = 2.5;
-			ang = 60;
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('yrden_secondary_sword_equipped') )
-	{
-		dist = 3.5;
-		ang =	180;
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('quen_sword_equipped') )
-	{
-		if (thePlayer.GetTarget() == ACS_Big_Boi() )
-		{
-			dist = 1.75;
-			ang =	30;
-		}
-		else
-		{
-			dist = 1.5;
-			ang =	30;
-		}
-	}
-	else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('quen_secondary_sword_equipped') )
-	{
-		if (thePlayer.HasTag('ACS_Storm_Spear_Active'))
-		{
-			dist = 10;
-			ang =	30;
-		}
-		else
-		{
-			dist = 2.25;
-			ang =	40;
 		}
 	}
 	else 
 	{
-		dist = 1.25;
+		dist = 1;
 		ang = 30;
 	}
 
@@ -1951,12 +1970,14 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 
 	//GetACSWatcher().RemoveTimer('ACS_WeaponEquipDelay');
 
+	/*
 	if (thePlayer.HasTag('ACS_Size_Adjusted'))
 	{
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+	*/
 
 	ACS_RemoveStabbedEntities(); ACS_Theft_Prevention_9 ();
 
@@ -2143,8 +2164,8 @@ function ACS_PlayerHitEffects()
 			thePlayer.PlayEffectSingle('mutation_7_adrenaline_burst');
 			thePlayer.StopEffect('mutation_7_adrenaline_burst');
 
-			thePlayer.StopEffect('olgierd_energy_blast');
 			thePlayer.PlayEffectSingle('olgierd_energy_blast');
+			thePlayer.StopEffect('olgierd_energy_blast');
 		}
 		else if ( thePlayer.HasTag('vampire_claws_equipped') )
 		{
@@ -3133,8 +3154,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 						}
 						else
 						{
-							thePlayer.StopEffect('taunt_sparks');
-							thePlayer.PlayEffectSingle('taunt_sparks');
+							thePlayer.StopEffect('armor_sparks');
+							thePlayer.PlayEffectSingle('armor_sparks');
 
 							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
 
@@ -3355,8 +3376,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 						}
 						else
 						{
-							thePlayer.StopEffect('taunt_sparks');
-							thePlayer.PlayEffectSingle('taunt_sparks');
+							thePlayer.StopEffect('armor_sparks');
+							thePlayer.PlayEffectSingle('armor_sparks');
 
 							thePlayer.SoundEvent("grunt_vo_block");
 
@@ -3577,8 +3598,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 						}
 						else
 						{
-							thePlayer.StopEffect('taunt_sparks');
-							thePlayer.PlayEffectSingle('taunt_sparks');
+							thePlayer.StopEffect('armor_sparks');
+							thePlayer.PlayEffectSingle('armor_sparks');
 
 							thePlayer.SoundEvent("grunt_vo_block");
 
@@ -4122,22 +4143,6 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 
 			npc.ForceSetStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.5 );
 		}
-		
-		if ((npc.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.01 || npc.GetCurrentHealth() - action.processedDmg.essenceDamage <= 0.01) ) 
-		{
-			if (thePlayer.HasTag('vampire_claws_equipped'))
-			{
-				thePlayer.StopEffect('blood_effect_claws_test');
-				thePlayer.PlayEffectSingle('blood_effect_claws_test');
-			}
-
-			if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
-			{
-				thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
-			}
-
-			npc.StopAllEffects();
-		}
 
 		if( playerAttacker.HasAbility('Runeword 2 _Stats', true)
 		||  thePlayer.HasTag('ACS_Shielded_Entity') )
@@ -4271,9 +4276,9 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 				(npc.GetStat( BCS_Vitality ) <= npc.GetStatMax( BCS_Vitality ) * 0.25)
 				&& npc.HasTag('ACS_taunted')
 				)
-				{	
+				{
+					npc.PlayEffectSingle('pee');	
 					npc.StopEffect('pee');
-					npc.PlayEffectSingle('pee');
 						
 					npc.StopEffect('puke');
 					npc.PlayEffectSingle('puke');
@@ -4461,8 +4466,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 				&& npc.HasTag('ACS_taunted')
 				)
 				{	
+					npc.PlayEffectSingle('pee');	
 					npc.StopEffect('pee');
-					npc.PlayEffectSingle('pee');
 						
 					npc.StopEffect('puke');
 					npc.PlayEffectSingle('puke');
@@ -4614,8 +4619,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 				&& npc.HasTag('ACS_taunted')
 				)
 				{	
+					npc.PlayEffectSingle('pee');	
 					npc.StopEffect('pee');
-					npc.PlayEffectSingle('pee');
 						
 					npc.StopEffect('puke');
 					npc.PlayEffectSingle('puke');
@@ -4779,21 +4784,21 @@ function ACS_PlayerSettlementCheck (optional radius_check: float): bool
 {
 	var current_area: EAreaName;
 
-	if (radius_check<=0) 
+	if ( radius_check <= 0 ) 
 	{
       radius_check = 50;
     }
     
     current_area = theGame.GetCommonMapManager().GetCurrentArea();
 
-    if (ACS_NoticeboardCheck(radius_check)) 
+    if ( ACS_NoticeboardCheck( radius_check ) ) 
 	{
       return true;
     }
     
-    if (current_area == AN_Skellige_ArdSkellig) 
+    if ( current_area == AN_Skellige_ArdSkellig ) 
 	{
-      return ACS_GuardCheck(radius_check);
+      return ACS_GuardCheck( radius_check );
     }
     
     return thePlayer.IsInSettlement() || ACS_GuardCheck (radius_check);
