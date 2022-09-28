@@ -28,7 +28,7 @@ Additionally, the mod allows for vampire combat animations and abilities while t
 
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
-Depending on which weapon mode is selected through the mod menu, the player can choose to:
+Depending on which weapon mode option is selected through the mod's Main Settings menu, the player may choose to play the game using one of the following modes:
 - Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) and performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
 - Select in the mod menu a desired moveset for the player's steel weapon and silver weapon, in which the player's weapon will transform to match the moveset.
 - Mix and match in the mod menu different combat animations to create your own unique moveset, in which the player's weapon will transform accordingly.
