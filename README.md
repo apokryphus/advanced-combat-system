@@ -1016,7 +1016,7 @@ https://user-images.githubusercontent.com/98017171/160716954-8f446bf6-8557-4c2f-
 Double-tapping and holding down ```Parry/Counterattack``` while holding the Eredin primary weapon will summon a hym around the player. Release `Parry/Counterattack` to dismiss the hym. 
 - The hym can only be summoned in ```darkness``` (10PM to 2AM) or if the player is in a ```dark place``` (caves etc.)
 - An offering of ```30%``` of the player's current health must be given to the hym in order to summon it each time. If you ever hear whisperings in your ear, telling you that you can keep dismissing the hym and resummoning it to infinitely decrease your own health but not kill you, you may heed it. Only if you're into that sort of thing though. I don't judge. This pleases the hym, and you'd like that, wouldn't you?
-- While the hym is active, all of the player's attacks gain ```extra range```. 
+- The hym is a sadistic creature, and deals 50 flat damage + 14.5% to 20% missing health damage to its targets in a wide range around the player.
 
 https://user-images.githubusercontent.com/98017171/160717021-c0664cbb-ae76-46cd-97a7-e53ae91d3a51.mp4
 
