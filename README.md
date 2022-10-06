@@ -841,47 +841,73 @@ https://user-images.githubusercontent.com/98017171/160715122-cbd65c80-de43-4ddd-
   </div>
   
 ## 6. PARRY SKILLS
-### || Igni ||
+### General Use/Available at all times
+
+#### || Kick ||
+``` W key + Doubletap Parry/Counterattack``` 
+
+https://user-images.githubusercontent.com/98017171/160710004-34d677b9-b2b5-460e-9c2d-aa48ca54fad2.mp4
+
+#### || Dagger Strike ||
+```Hold down Light Attack + Parry/Counterattack``` 
+
+https://user-images.githubusercontent.com/98017171/194230815-c825dfca-2bbc-4f02-bbf0-d8db503f8701.mp4
+
+#### || Push ||
+``` A key or D key + Parry/Counterattack``` 
+
+https://user-images.githubusercontent.com/98017171/160710326-7fd55ee7-26e0-4b21-b3be-4193b6f239a5.mp4
+
+### Weapon Specific
+#### || Default Geralt Sword ||
 ```W key + Parry/Counterattack``` = Counter-swing
 
 https://user-images.githubusercontent.com/98017171/160709655-d6d671b6-61b5-418a-a52a-ead5a15bc377.mp4
 
-### || Aard ||
+#### || Sword Claws ||
 ```W key + Parry/Counterattack``` = Bruxa biting attack
 
-https://user-images.githubusercontent.com/98017171/160709940-07ae01f1-a989-4483-baac-2f3bacee41f2.mp4
+https://user-images.githubusercontent.com/98017171/194232665-5954a800-f0dc-4c8f-9042-bf3405a680e4.mp4
 
-### || Quen ||
+#### || Olgierd Weapon ||
 ```W key + Parry/Counterattack``` = Olgierd's pocket sand + Elbow strike
 
 https://user-images.githubusercontent.com/98017171/160709715-7aff3242-81fb-4878-9c75-b09d6ef29877.mp4
 
-### || Yrden ||
-```W key + Parry/Counterattack``` = Single target lightning + AOE blast
+#### || Imlerith/Caretaker/Scythe Weapon ||
+```W key + Parry/Counterattack``` = Two-hand parry
 
-https://user-images.githubusercontent.com/98017171/160710107-8ec619ab-cab3-41c5-a0ce-c0148a438c88.mp4
+https://user-images.githubusercontent.com/98017171/194232880-ed0fa762-b7a1-4642-96e8-5b88b6b83337.mp4
 
-### || Axii ||
-```W key + Parry/Counterattack``` = Stab/Kick-swing + AOE blast
+#### || Eredin Weapon ||
+```W key + Parry/Counterattack``` = Kick/Stab/Kick-swing
 
-https://user-images.githubusercontent.com/98017171/160709796-92ff55bf-17a4-4e1f-9052-712d3e3fa267.mp4
+https://user-images.githubusercontent.com/98017171/194233151-74c727a1-be35-40a3-bbef-e9ec27ad6541.mp4
 
-### || Any Sign ||
-``` W key + Doubletap Parry/Counterattack``` = Kick
+#### || Spear Weapon ||
+```W key + Parry/Counterattack``` = Spear Special
 
-https://user-images.githubusercontent.com/98017171/160710004-34d677b9-b2b5-460e-9c2d-aa48ca54fad2.mp4
+https://user-images.githubusercontent.com/98017171/194233600-262900f1-0647-41c2-8a27-c07a28912dab.mp4
 
-### || Any Sign ||
-```A key + Parry/Counterattack ``` = Backhand slap
+#### || Gregoire Weapon ||
+```W key + Parry/Counterattack``` = Hilt Bash
 
-https://user-images.githubusercontent.com/98017171/160710253-32adf12e-17f2-45b2-ac87-da9eba4a40b2.mp4
+https://user-images.githubusercontent.com/98017171/194233815-f599b193-e645-4262-8b68-836b0cd0bcb6.mp4
 
-### || Any Sign ||
-``` D key + Parry/Counterattack``` = Push
+#### || Gregoire Weapon ||
+```W key + Parry/Counterattack``` = Hilt Bash
 
-https://user-images.githubusercontent.com/98017171/160710326-7fd55ee7-26e0-4b21-b3be-4193b6f239a5.mp4
+#### || Giant Weapon ||
+```W key + Parry/Counterattack``` = AOE Strike + Lightning
 
-### || Vampire Claws ||
+https://user-images.githubusercontent.com/98017171/194234119-abae6703-783a-43ce-af66-2806302c90c8.mp4
+
+#### || Axe Weapon ||
+```W key + Parry/Counterattack``` = Axe Special
+
+https://user-images.githubusercontent.com/98017171/194234327-3ae84cdd-61d7-48ea-9540-5cb39dad355c.mp4
+
+#### || Vampire Claws ||
 ```W key + Parry/Counterattack``` = Bruxa biting attack
 
 https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-b218-f0c1a90e755c.mp4
