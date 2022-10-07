@@ -57,7 +57,7 @@ IF UPDATING FROM v1.8.3e OR LOWER, DELETE `mod_ACS` and `dlc_ACS` FIRST, THEN IN
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
-- Right click the script and run with Powershell.
+- Right click the script and run with PowerShell.
 
 ### Manual Installation: 
 For those that prefer to install manually.
