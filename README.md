@@ -22,7 +22,7 @@ Geralt's default moveset/animations are available for use at any time. ACS allow
 
 Each ACS moveset comes with:
 - Its own unique combos, abilities, counter-attacks, and weapon arts. 
-- Its own set of dodges, rolls, and weapon-holding/passive behavior animations.
+- Its own set of dodges, rolls, hit animations, death animations, and weapon-holding/passive behavior animations.
 
 Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed. Can be toggled on or off.
 
@@ -943,7 +943,9 @@ In combat:
   
 ## 8. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
-```Hold Sprint + Forward (W)```
+Out of Combat: ```Hold Sprint + Forward (W)```
+
+In Combat: ```Doubletap + Dodge```
 - Dashes a fixed distance forward, alternating a little bit left or right.
 - Bruxa dash serves as a ``reset button`` to many things. Use it to dash out of ``wraith mode``, ``bruxa bite``, or generally anything you might encounter. 
 - Bruxa dash while in exploration will dash further than dashing in combat. 
@@ -982,14 +984,15 @@ https://user-images.githubusercontent.com/98017171/160728891-9edba35f-b10d-424d-
 
 https://user-images.githubusercontent.com/98017171/160714317-82842f82-181f-4d8e-b6ea-259711af1b23.mp4
 
-### || Wild Hunt Blink ||
-```S key + Roll```
+### || Teleport Dodge ||
+```Doubletap + Roll```
 - Eredin's short range teleport.
 - Can only be used in combat.
 - Teleports the player behind your targeted enemy. 
 - Will occasionally freeze enemies based on timing and chance.
 - Slowly covers up the screen in frost. Disappears after combat is finished.
 - Don't use this while near the edge of a terrain. Might teleport you somewhere you don't want to be.
+- Vampire movesets have a different teleport dodge. 
 
 https://user-images.githubusercontent.com/98017171/160714398-64ea6a4e-bd67-45af-a628-218202df3263.mp4
 
