@@ -40,54 +40,25 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 		{
 			if ( thePlayer.HasTag('igni_sword_equipped_TAG') )
 			{
-				if (thePlayer.GetTarget() == ACS_Big_Boi() )
-				{
-					dist = 1.75;
-					ang =	30;
-				}
-				else
-				{
-					dist = 1.5;
-					ang =	30;
-				}
+				dist = 1.5;
+				ang =	30;
 			}
 			else if ( thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
 			{
-				if (thePlayer.GetTarget() == ACS_Big_Boi() )
-				{
-					dist = 1.75;
-					ang =	30;
-				}
-				else
-				{
-					dist = 1.5;
-					ang =	30;
-				}	
+				dist = 1.5;
+				ang =	30;
 			}
 			else if ( thePlayer.HasTag('axii_sword_equipped') )
 			{
-				if ( thePlayer.HasTag('ACS_Shielded_Entity') )
-				{
-					dist = 5;
-					ang =	135;
-				}
-				else if (thePlayer.HasTag('ACS_Sparagmos_Active'))
+				if (thePlayer.HasTag('ACS_Sparagmos_Active'))
 				{
 					dist = 10;
 					ang =	60;
 				}
 				else
 				{
-					if (thePlayer.GetTarget() == ACS_Big_Boi() )
-					{
-						dist = 1.75;
-						ang =	30;
-					}
-					else
-					{
-						dist = 1.5;
-						ang =	30;	
-					}
+					dist = 1.5;
+					ang =	30;	
 				}
 			}
 			else if ( thePlayer.HasTag('axii_secondary_sword_equipped') )
@@ -171,16 +142,8 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			}
 			else if ( thePlayer.HasTag('quen_sword_equipped') )
 			{
-				if (thePlayer.GetTarget() == ACS_Big_Boi() )
-				{
-					dist = 1.75;
-					ang =	30;
-				}
-				else
-				{
-					dist = 1.5;
-					ang =	30;
-				}
+				dist = 1.5;
+				ang =	30;
 			}
 			else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
 			{
@@ -206,6 +169,12 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 	{
 		dist = 1;
 		ang = 30;
+	}
+
+	if ( thePlayer.GetTarget() == ACS_Big_Boi() )
+	{
+		dist += 0.75;
+		ang += 15;
 	}
 
 	if (ACS_Player_Scale() > 1)
@@ -505,6 +474,11 @@ function ACS_ComboMode(): int
 function ACS_SwordWalk_Enabled(): bool 
 {
 	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodSwordWalkEnabled');
+}
+
+function ACS_PassiveTaunt_Enabled(): bool 
+{
+	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodPassiveTauntEnabled');
 }
 
 function ACS_Player_Scale(): float
@@ -1979,6 +1953,15 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 	}
 	*/
 
+	thePlayer.StopEffect('special_attack_fx');
+
+	thePlayer.StopEffect('ethereal_debuff');
+
+	if (!thePlayer.HasTag('ACS_Camo_Active'))
+	{
+		thePlayer.StopEffect( 'shadowdash' );
+	}
+
 	ACS_RemoveStabbedEntities(); ACS_Theft_Prevention_9 ();
 
 	GetACSWatcher().RemoveTimer('ACS_ShootBowMoving'); 
@@ -2011,7 +1994,7 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 
 	thePlayer.RemoveTag('ACS_Shadowstep_Long_Buff');
 
-	thePlayer.ClearAnimationSpeedMultipliers();
+	if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers(); GetACSWatcher().RemoveTimer('ACS_Death_Delay_Animation'); GetACSWatcher().RemoveTimer('ACS_ResetAnimation_On_Death');}
 
 	if( thePlayer.IsAlive() && thePlayer.IsInCombat() ){ thePlayer.SetVisibility( true ); }		 
 
@@ -2140,8 +2123,8 @@ function ACS_PlayerHitEffects()
 			thePlayer.PlayEffectSingle('mutation_7_adrenaline_burst');
 			thePlayer.StopEffect('mutation_7_adrenaline_burst');
 
-			thePlayer.StopEffect('weakened');
 			thePlayer.PlayEffectSingle('weakened');
+			thePlayer.StopEffect('weakened');
 		}
 		else if ( thePlayer.HasTag('aard_secondary_sword_equipped') )
 		{
@@ -2172,8 +2155,8 @@ function ACS_PlayerHitEffects()
 			thePlayer.PlayEffectSingle('mutation_7_adrenaline_burst');
 			thePlayer.StopEffect('mutation_7_adrenaline_burst');
 
-			thePlayer.StopEffect('weakened');
 			thePlayer.PlayEffectSingle('weakened');
+			thePlayer.StopEffect('weakened');
 		}
 	}
 	else
@@ -2191,8 +2174,8 @@ function ACS_PlayerHitEffects()
 			thePlayer.PlayEffectSingle('mutation_7_adrenaline_burst');
 			thePlayer.StopEffect('mutation_7_adrenaline_burst');
 
-			thePlayer.StopEffect('weakened');
 			thePlayer.PlayEffectSingle('weakened');
+			thePlayer.StopEffect('weakened');
 		}
 	}
 }
@@ -2219,2536 +2202,6 @@ function ACS_AttitudeCheck( actor : CActor ) : bool
 	else
 	{
 		return false;
-	}
-}
-
-function ACS_NoDamage (action: W3DamageAction): bool 
-{
-    if (action.victim == thePlayer) 
-	{
-        action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage;
-        //action.processedDmg.vitalityDamage -= 1.0;
-
-        return true;
-    }
-
-    return false;
-}
-
-function ACS_OnTakeDamage(action: W3DamageAction)
-{
-	var playerAttacker, playerVictim						: CPlayer;
-	var npc, npcAttacker 									: CActor;
-	var animatedComponentA 									: CAnimatedComponent;
-	var settingsA, settingsB, settings_interrupt			: SAnimatedComponentSlotAnimationSettings;
-	var movementAdjustor									: CMovementAdjustor;
-	var ticket 												: SMovementAdjustmentRequestTicket;
-	var item												: SItemUniqueId;
-	var dmg													: W3DamageAction;
-	var damageMax, damageMin								: float;
-	
-    npc = (CActor)action.victim;
-	
-	npcAttacker = (CActor)action.attacker;
-	
-	playerAttacker = (CPlayer)action.attacker;
-	
-	playerVictim = (CPlayer)action.victim;
-
-	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
-
-	settingsA.blendIn = 0.25f;
-	settingsA.blendOut = 0.75f;
-
-	settingsB.blendIn = 0.3f;
-	settingsB.blendOut = 0.3f;
-	
-	settings_interrupt.blendIn = 0;
-	settings_interrupt.blendOut = 0;
-
-	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
-
-	if 
-	(playerAttacker && npc &&
-	( 
-	thePlayer.HasTag('aard_sword_equipped') 
-	|| thePlayer.HasTag('aard_secondary_sword_equipped') 
-	|| thePlayer.HasTag('quen_secondary_sword_equipped') 
-	|| thePlayer.HasTag('yrden_sword_equipped') 
-	|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
-	|| thePlayer.HasTag('vampire_claws_equipped')
-	)
-	)
-	{
-		thePlayer.AddTimer( 'RemoveForceFinisher', 0.0, false );
-
-		npc.AddAbility( 'InstantKillImmune' );
-
-		if (!npc.HasAbility('DisableFinishers'))
-		{
-			npc.AddAbility( 'DisableFinishers', true);
-		}
-
-		if (npc.HasAbility('ForceFinisher'))
-		{
-			npc.RemoveAbility( 'ForceFinisher');
-		} 
-
-		npc.SignalGameplayEvent('DisableFinisher');
-	}
-
-	if ( playerVictim
-	//&& !playerAttacker
-	&& action.GetHitReactionType() != EHRT_Reflect
-	&& action.GetBuffSourceName() != "vampirism" 
-	&& !action.IsDoTDamage()
-	&& (thePlayer.IsGuarded() || thePlayer.IsInGuardedState())
-	&& !thePlayer.IsPerformingFinisher()
-	&& !thePlayer.HasTag('ACS_IsPerformingFinisher')
-	&& !thePlayer.IsCurrentlyDodging()
-	&& !GetWitcherPlayer().IsAnyQuenActive()
-	&& !action.WasDodged()
-	&& !thePlayer.IsInFistFightMiniGame() 
-	&& !thePlayer.HasTag('ACS_Camo_Active')
-	)
-	{
-		if ( thePlayer.HasTag('vampire_claws_equipped') && action.DealsAnyDamage() && thePlayer.GetStat( BCS_Stamina ) >= thePlayer.GetStatMax( BCS_Stamina ) * 0.05 )
-		{
-			//if (playerVictim.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.01) 
-
-			/*
-			if ( action.processedDmg.vitalityDamage >= playerVictim.GetCurrentHealth() )
-			{
-				if (((CNewNPC)npcAttacker).GetNPCType() == ENGT_Guard)
-				{
-					if(!thePlayer.IsAlive())
-					{
-						thePlayer.StopAllEffects();
-
-						thePlayer.ClearAnimationSpeedMultipliers();	
-																	
-						thePlayer.SetAnimationSpeedMultiplier(0.125 );
-																
-						GetACSWatcher().AddTimer('ACS_ResetAnimation', 3  , false);
-
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'death_01_caretaker_ACS', 'PLAYER_SLOT', settings_interrupt );
-					}
-				}
-				else 
-				{
-					if(!thePlayer.IsAlive())
-					{
-						
-
-						ACS_TauntInit();
-
-						if( RandF() < 0.5 ) 
-						{
-							if( RandF() < 0.5 ) 
-							{ 
-								thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-								thePlayer.SetAnimationSpeedMultiplier(0.25  );
-																		
-								GetACSWatcher().AddTimer('ACS_ResetAnimation', 2  , false);
-
-								if( RandF() < 0.5 ) 
-								{ 
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_right', 'PLAYER_SLOT', settings_interrupt );
-								}
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_left', 'PLAYER_SLOT', settings_interrupt );
-								}
-							}
-							else
-							{
-								if( RandF() < 0.5 ) 
-								{ 
-									thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-									thePlayer.SetAnimationSpeedMultiplier(0.25  );
-																			
-									GetACSWatcher().AddTimer('ACS_ResetAnimation', 5  , false);
-
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_focus_throat_cut_death_ACS', 'PLAYER_SLOT', settings_interrupt );
-								}
-								else
-								{
-									thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-									thePlayer.SetAnimationSpeedMultiplier(0.125   );
-																			
-									GetACSWatcher().AddTimer('ACS_ResetAnimation', 5  , false);
-
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_wounded_knockdown_ACS', 'PLAYER_SLOT', settings_interrupt );
-								}
-							}
-						}
-						else
-						{
-							if( RandF() < 0.5 ) 
-							{
-								thePlayer.StopAllEffects();
-
-								thePlayer.ClearAnimationSpeedMultipliers();	
-																			
-								thePlayer.SetAnimationSpeedMultiplier(2.5  );
-																		
-								GetACSWatcher().AddTimer('ACS_ResetAnimation', 2  , false);
-
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'death_01_caretaker_ACS', 'PLAYER_SLOT', settings_interrupt );
-							}
-							else
-							{
-								thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-								thePlayer.SetAnimationSpeedMultiplier(0.95 );
-																		
-								GetACSWatcher().AddTimer('ACS_ResetAnimation', 1  , false);
-
-								if( RandF() < 0.5 ) 
-								{ 
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_back_ACS', 'PLAYER_SLOT', settings_interrupt );
-								}
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_front_ACS', 'PLAYER_SLOT', settings_interrupt );
-								}
-							}
-						}
-					}
-				}
-			}
-			*/
-			//else
-			{
-				action.SetHitReactionType(0, false);
-				action.ClearDamage();
-				action.ClearEffects();
-				action.SuppressHitSounds();
-				action.SetWasDodged();
-				action.SetCannotReturnDamage(true);
-
-				ticket = movementAdjustor.GetRequest( 'ACS_Vamp_Claws_Parry_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Vamp_Claws_Parry_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Vamp_Claws_Parry_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				thePlayer.SetPlayerTarget( npcAttacker );
-
-				thePlayer.SetPlayerCombatTarget( npcAttacker );
-
-				thePlayer.UpdateDisplayTarget( true );
-
-				thePlayer.UpdateLookAtTarget();
-
-				if (thePlayer.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.1)
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage;
-					thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.5, 1, );
-				}
-				else
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
-					thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.05, 1, );
-				}
-	
-				if ( RandF() < 0.5 )
-				{
-					if ( RandF() < 0.45 )
-					{
-						if ( RandF() < 0.45 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_left_01_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							if ( RandF() < 0.5 )
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_parry_center_ACS', 'PLAYER_SLOT', settingsB );
-							}
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_parry_left_ACS', 'PLAYER_SLOT', settingsB );
-							}
-						}	
-					}
-					else
-					{
-						if ( RandF() < 0.5 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_left_back_01_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_left_back_02_ACS', 'PLAYER_SLOT', settingsB );
-						}
-					}
-				}
-				else
-				{
-					if ( RandF() < 0.45 )
-					{
-						if ( RandF() < 0.45 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_right_01_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							if ( RandF() < 0.5 )
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_parry_center_ACS', 'PLAYER_SLOT', settingsB );
-							}
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_parry_right_ACS', 'PLAYER_SLOT', settingsB );
-							}
-						}	
-					}
-					else
-					{
-						if ( RandF() < 0.5 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_right_back_01_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'parry_right_back_02_ACS', 'PLAYER_SLOT', settingsB );
-						}
-					}
-				}
-				
-				thePlayer.StopEffect('taunt_sparks');
-				thePlayer.PlayEffectSingle('taunt_sparks');
-			}
-		}
-		else if ( thePlayer.HasTag('axii_sword_equipped') && thePlayer.GetStat( BCS_Stamina ) >= thePlayer.GetStatMax( BCS_Stamina ) * 0.05 )
-		{
-			movementAdjustor.CancelAll();
-			ticket = movementAdjustor.CreateNewRequest( 'ACS_Parry_Rotate' );
-			movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-			movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-			movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-			if (thePlayer.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.1)
-			{
-				action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage;
-				thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.5, 1, );
-			}
-			else
-			{
-				action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage;
-				thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.1, 1, );
-			}
-
-			//thePlayer.SetPlayerTarget( npcAttacker );
-
-			//thePlayer.SetPlayerCombatTarget( npcAttacker );
-
-			//thePlayer.UpdateDisplayTarget( true );
-
-			//thePlayer.UpdateLookAtTarget();
-
-			if ( RandF() < 0.5 )
-			{
-				if ( RandF() < 0.45 )
-				{
-					if ( RandF() < 0.45 )
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_rp_01_ACS', 'PLAYER_SLOT', settingsB );
-					}
-					else
-					{
-						if ( RandF() < 0.5 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_rp_02_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_rp_03_ACS', 'PLAYER_SLOT', settingsB );
-						}
-					}	
-				}
-				else
-				{
-					if ( RandF() < 0.5 )
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_rp_02_ACS', 'PLAYER_SLOT', settingsB );
-					}
-					else
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_rp_03_ACS', 'PLAYER_SLOT', settingsB );
-					}
-				}
-			}
-			else
-			{
-				if ( RandF() < 0.45 )
-				{
-					if ( RandF() < 0.45 )
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_lp_01_ACS', 'PLAYER_SLOT', settingsB );
-					}
-					else
-					{
-						if ( RandF() < 0.5 )
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_lp_02_ACS', 'PLAYER_SLOT', settingsB );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_lp_03_ACS', 'PLAYER_SLOT', settingsB );
-						}
-					}	
-				}
-				else
-				{
-					if ( RandF() < 0.5 )
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_lp_02_ACS', 'PLAYER_SLOT', settingsB );
-					}
-					else
-					{
-						playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_block_lp_03_ACS', 'PLAYER_SLOT', settingsB );
-					}
-				}
-			}
-
-			ACS_Shield().PlayEffectSingle('aard_cone_hit');
-			ACS_Shield().StopEffect('aard_cone_hit');
-		}
-		else 
-		{
-			movementAdjustor.CancelAll();
-			ticket = movementAdjustor.CreateNewRequest( 'ACS_Parry_Rotate' );
-			movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-			movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-			/*
-			if (
-			thePlayer.IsGuarded()
-			|| thePlayer.IsInGuardedState()
-			)
-			{
-				thePlayer.SetGuarded(false);
-				thePlayer.OnGuardedReleased();	
-			}
-			*/
-
-			movementAdjustor.RotateTowards( ticket, npcAttacker );
-		}
-	}
-
-	if ( playerVictim
-	//&& !playerAttacker
-	&& !action.IsDoTDamage()
-	//&& action.DealsAnyDamage() 
-	&& action.GetHitReactionType() != EHRT_Reflect
-	&& action.GetBuffSourceName() != "vampirism" 
-	&& !thePlayer.IsCurrentlyDodging()
-	&& !action.WasDodged()
-	&& !thePlayer.IsPerformingFinisher()
-	&& !thePlayer.HasTag('ACS_IsPerformingFinisher')
-	//&& action.DealtDamage()
-	&& !thePlayer.IsGuarded()
-	&& !GetWitcherPlayer().IsAnyQuenActive()
-	&& !thePlayer.IsInGuardedState()
-	&& (thePlayer.HasTag('aard_sword_equipped')
-	|| thePlayer.HasTag('aard_secondary_sword_equipped')
-	|| thePlayer.HasTag('yrden_sword_equipped')
-	|| thePlayer.HasTag('yrden_secondary_sword_equipped')
-	|| thePlayer.HasTag('quen_secondary_sword_equipped')
-	|| thePlayer.HasTag('axii_sword_equipped')
-	|| thePlayer.HasTag('axii_secondary_sword_equipped')
-	|| thePlayer.HasTag('quen_sword_equipped')
-	//|| thePlayer.HasTag('igni_sword_equipped')
-	//|| thePlayer.HasTag('igni_secondary_sword_equipped')
-	|| ( thePlayer.HasTag('vampire_claws_equipped') && !thePlayer.HasBuff(EET_BlackBlood) ))
-	)
-	{	
-		//if (playerVictim.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.01) 
-		if ( action.processedDmg.vitalityDamage >= playerVictim.GetCurrentHealth() )
-		{
-			if (((CNewNPC)npcAttacker).GetNPCType() == ENGT_Guard)
-			{
-				if(!thePlayer.IsAlive())
-				{
-					thePlayer.StopAllEffects();
-
-					thePlayer.ClearAnimationSpeedMultipliers();	
-																
-					thePlayer.SetAnimationSpeedMultiplier(0.125 );
-															
-					GetACSWatcher().AddTimer('ACS_ResetAnimation', 3  , false);
-
-					GetACSWatcher().Grow_Geralt_Immediate();
-
-					playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'death_01_caretaker_ACS', 'PLAYER_SLOT', settings_interrupt );
-				}
-			}
-			else 
-			{
-				if(!thePlayer.IsAlive())
-				{
-					GetACSWatcher().Grow_Geralt_Immediate();
-
-					/*
-					if( RandF() < 0.5 ) 
-					{ 
-						thePlayer.ClearAnimationSpeedMultipliers();	
-																
-						thePlayer.SetAnimationSpeedMultiplier(0.25);
-																
-						GetACSWatcher().AddTimer('ACS_ResetAnimation', 2, false);
-
-						if( RandF() < 0.5 ) 
-						{ 
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_right', 'PLAYER_SLOT', settings_interrupt );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_left', 'PLAYER_SLOT', settings_interrupt );
-						}
-					}
-					else
-					{
-						thePlayer.StopAllEffects();
-
-						thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-						thePlayer.SetAnimationSpeedMultiplier(0.95);
-																
-						GetACSWatcher().AddTimer('ACS_ResetAnimation', 1, false);
-
-						if( RandF() < 0.5 ) 
-						{ 
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_back_ACS', 'PLAYER_SLOT', settings_interrupt );
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_front_ACS', 'PLAYER_SLOT', settings_interrupt );
-						}
-					}
-					*/
-
-					ACS_TauntInit();
-
-					if( RandF() < 0.5 ) 
-					{
-						if( RandF() < 0.5 ) 
-						{ 
-							thePlayer.ClearAnimationSpeedMultipliers();	
-																	
-							thePlayer.SetAnimationSpeedMultiplier(0.25 );
-																	
-							GetACSWatcher().AddTimer('ACS_ResetAnimation', 2 , false);
-
-							if( RandF() < 0.5 ) 
-							{ 
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_right', 'PLAYER_SLOT', settings_interrupt );
-							}
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_left', 'PLAYER_SLOT', settings_interrupt );
-							}
-						}
-						else
-						{
-							if( RandF() < 0.5 ) 
-							{ 
-								thePlayer.ClearAnimationSpeedMultipliers();	
-																	
-								thePlayer.SetAnimationSpeedMultiplier(0.25 );
-																		
-								GetACSWatcher().AddTimer('ACS_ResetAnimation', 5 , false);
-
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_focus_throat_cut_death_ACS', 'PLAYER_SLOT', settings_interrupt );
-							}
-							else
-							{
-								thePlayer.ClearAnimationSpeedMultipliers();	
-																	
-								thePlayer.SetAnimationSpeedMultiplier(0.125 );
-																		
-								GetACSWatcher().AddTimer('ACS_ResetAnimation', 5 , false);
-
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_wounded_knockdown_ACS', 'PLAYER_SLOT', settings_interrupt );
-							}
-						}
-					}
-					else
-					{
-						if( RandF() < 0.5 ) 
-						{
-							thePlayer.StopAllEffects();
-
-							thePlayer.ClearAnimationSpeedMultipliers();	
-																		
-							thePlayer.SetAnimationSpeedMultiplier(2.5 );
-																	
-							GetACSWatcher().AddTimer('ACS_ResetAnimation', 2 , false);
-
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'death_01_caretaker_ACS', 'PLAYER_SLOT', settings_interrupt );
-						}
-						else
-						{
-							thePlayer.ClearAnimationSpeedMultipliers();	
-																	
-							thePlayer.SetAnimationSpeedMultiplier(0.95 );
-																	
-							GetACSWatcher().AddTimer('ACS_ResetAnimation', 1 , false);
-
-							if( RandF() < 0.5 ) 
-							{ 
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_back_ACS', 'PLAYER_SLOT', settings_interrupt );
-							}
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_front_ACS', 'PLAYER_SLOT', settings_interrupt );
-							}
-						}
-					}
-				}
-			}
-		}
-		else
-		{					
-			if ( npcAttacker.HasTag('ACS_taunted') )
-			{
-				/*
-				if ( thePlayer.HasTag('blood_sucking') )
-				{
-					thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-					//GetACSWatcher().bruxa_blood_suck_end_actual();
-					action.SetHitReactionType(0, false);
-					action.ClearDamage();
-					action.ClearEffects();
-					action.SuppressHitSounds();
-					action.SetWasDodged();
-					action.SetCannotReturnDamage(true);
-
-					thePlayer.GainStat( BCS_Vitality, action.processedDmg.vitalityDamage);
-					
-					ACS_PlayerHitEffects();
-
-					GetACSWatcher().bruxa_blood_suck_end_actual();
-
-					ACS_ThingsThatShouldBeRemoved();
-				}
-				*/
-
-				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-				GetACSWatcher().Grow_Geralt_Immediate();
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				thePlayer.SetPlayerTarget( npcAttacker );
-
-				thePlayer.SetPlayerCombatTarget( npcAttacker );
-
-				thePlayer.UpdateDisplayTarget( true );
-
-				thePlayer.UpdateLookAtTarget();
-
-				thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-				if( !playerVictim.IsImmuneToBuff( EET_Bleeding ) && !playerVictim.HasBuff( EET_Bleeding ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Knockdown ) && !playerVictim.HasBuff( EET_Knockdown ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Knockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-
-				ACS_PlayerHitEffects();
-
-				thePlayer.PlayEffectSingle('smoke_explosion');
-				thePlayer.StopEffect('smoke_explosion');
-			}
-			else if ( thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9
-			&& thePlayer.GetStat(BCS_Stamina) >= thePlayer.GetStatMax(BCS_Stamina) * 0.5
-			&& thePlayer.GetStat(BCS_Vitality) <= thePlayer.GetStatMax(BCS_Vitality) * 0.5
-			)
-			{
-				/*
-				if ( thePlayer.HasTag('blood_sucking') )
-				{
-					thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-					//GetACSWatcher().bruxa_blood_suck_end_actual();
-					action.SetHitReactionType(0, false);
-					action.ClearDamage();
-					action.ClearEffects();
-					action.SuppressHitSounds();
-					action.SetWasDodged();
-					action.SetCannotReturnDamage(true);
-
-					thePlayer.GainStat( BCS_Vitality, action.processedDmg.vitalityDamage);
-					
-					ACS_PlayerHitEffects();
-
-					GetACSWatcher().bruxa_blood_suck_end_actual();
-
-					ACS_ThingsThatShouldBeRemoved();
-				}
-				*/
-				GetACSWatcher().Grow_Geralt_Immediate();
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-				
-				thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax(BCS_Focus) * 0.25 );
-
-				if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) )
-				{
-					if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.3;
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.4;
-					}
-					else
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-					}
-				}
-				else
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-				}
-
-				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				ACS_PlayerHitEffects();
-
-				thePlayer.PlayEffectSingle('special_attack_break');
-				thePlayer.StopEffect('special_attack_break');
-
-				GetACSWatcher().ACS_Hit_Reaction();
-			}
-			else
-			{
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				ACS_PlayerHitEffects();
-
-				if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) && action.IsActionMelee() )
-				{
-					if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
-					{
-						if( (RandF() < 0.45) || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.325;
-
-							if ( thePlayer.HasTag('vampire_claws_equipped') )
-							{
-								movementAdjustor.CancelAll();
-
-								GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
-
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_down_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_up_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-								}
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-								}
-							}
-							else 
-							{
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_down_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_up_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-								}	
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_sword_hit_back_1', 'PLAYER_SLOT', settingsB );
-								}
-							}
-						}
-						else
-						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
-
-							thePlayer.SoundEvent("grunt_vo_block");
-							
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.05; 
-								
-								damageMin = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.05; 
-								
-								damageMin = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.2 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.2, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
-					{
-						if( ( RandF() < 0.65 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
-
-							if ( thePlayer.HasTag('vampire_claws_equipped') )
-							{
-								movementAdjustor.CancelAll();
-
-								GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
-
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_down_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_up_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-								}
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-								}
-							}
-							else 
-							{
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_down_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_up_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-								}	
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_sword_hit_back_1', 'PLAYER_SLOT', settingsB );
-								}
-							}
-						}
-						else
-						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
-
-							thePlayer.SoundEvent("grunt_vo_block");
-
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
-								
-								damageMin = 0; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
-								
-								damageMin = 0; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
-					{
-						if( ( RandF() < 0.85 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.125;
-
-							if ( thePlayer.HasTag('vampire_claws_equipped') )
-							{
-								movementAdjustor.CancelAll();
-
-								GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
-
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_down_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.45 )
-										{
-											if ( RandF() < 0.45 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_up_ACS', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_ACS', 'PLAYER_SLOT', settingsB );
-												}
-											}	
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}
-								}
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-								}
-							}
-							else 
-							{
-								if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_up_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_down_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-											else
-											{
-												if ( RandF() < 0.5 )
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_down_rp_01', 'PLAYER_SLOT', settingsB );
-												}
-												else
-												{
-													playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_up_lp_01', 'PLAYER_SLOT', settingsB );
-												}
-											}
-										}	
-									}
-								}	
-								else
-								{
-									playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_sword_hit_back_1', 'PLAYER_SLOT', settingsB );
-								}
-							}
-						}
-						else
-						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
-
-							thePlayer.SoundEvent("grunt_vo_block");
-
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.01; 
-								
-								damageMin = 0; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.01; 
-								
-								damageMin = 0; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
-					}
-					else
-					{
-						GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
-
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.1;
-
-						if ( thePlayer.HasTag('vampire_claws_equipped') )
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							movementAdjustor.CancelAll();
-
-							GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
-
-							if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-							{
-								if ( RandF() < 0.5 )
-								{
-									if ( RandF() < 0.45 )
-									{
-										if ( RandF() < 0.45 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_down_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}	
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_up_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_down_ACS', 'PLAYER_SLOT', settingsB );
-										}
-									}
-								}
-								else
-								{
-									if ( RandF() < 0.45 )
-									{
-										if ( RandF() < 0.45 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_up_ACS', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_ACS', 'PLAYER_SLOT', settingsB );
-											}
-										}	
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_up_ACS', 'PLAYER_SLOT', settingsB );
-										}
-									}
-								}
-							}
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-							}
-						}
-						else 
-						{
-							if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-							{
-								if ( RandF() < 0.5 )
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_down_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_up_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}	
-								}
-								else
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_up_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_down_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-										else
-										{
-											if ( RandF() < 0.5 )
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_down_rp_01', 'PLAYER_SLOT', settingsB );
-											}
-											else
-											{
-												playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_up_lp_01', 'PLAYER_SLOT', settingsB );
-											}
-										}
-									}	
-								}
-							}	
-							else
-							{
-								playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_sword_hit_back_1', 'PLAYER_SLOT', settingsB );
-							}
-						}
-					}
-				}
-				else
-				{
-					GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
-					
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.1;
-
-					if ( thePlayer.HasTag('vampire_claws_equipped') )
-					{
-						movementAdjustor.CancelAll();
-
-						GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
-
-						if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-						{
-							if ( RandF() < 0.5 )
-							{
-								if ( RandF() < 0.45 )
-								{
-									if ( RandF() < 0.45 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_down_ACS', 'PLAYER_SLOT', settingsB );
-										}
-									}	
-								}
-								else
-								{
-									if ( RandF() < 0.5 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_left_up_ACS', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_down_ACS', 'PLAYER_SLOT', settingsB );
-									}
-								}
-							}
-							else
-							{
-								if ( RandF() < 0.45 )
-								{
-									if ( RandF() < 0.45 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_ACS', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_up_ACS', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_ACS', 'PLAYER_SLOT', settingsB );
-										}
-									}	
-								}
-								else
-								{
-									if ( RandF() < 0.5 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_up_ACS', 'PLAYER_SLOT', settingsB );
-									}
-								}
-							}
-						}
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'reaction_hit_front_right_down_ACS', 'PLAYER_SLOT', settingsB );
-						}
-					}
-					else 
-					{
-						if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 60, npcAttacker ))
-						{
-							if ( RandF() < 0.5 )
-							{
-								if ( RandF() < 0.5 )
-								{
-									if ( RandF() < 0.5 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-									}
-								}
-								else
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_down_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_up_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_lp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-								}	
-							}
-							else
-							{
-								if ( RandF() < 0.5 )
-								{
-									if ( RandF() < 0.5 )
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_rp_01', 'PLAYER_SLOT', settingsB );
-									}
-									else
-									{
-										playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_lp_01', 'PLAYER_SLOT', settingsB );
-									}
-								}
-								else
-								{
-									if ( RandF() < 0.5 )
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_up_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_down_lp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-									else
-									{
-										if ( RandF() < 0.5 )
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_right_down_rp_01', 'PLAYER_SLOT', settingsB );
-										}
-										else
-										{
-											playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_hit_front_left_up_lp_01', 'PLAYER_SLOT', settingsB );
-										}
-									}
-								}	
-							}
-						}	
-						else
-						{
-							playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_sword_hit_back_1', 'PLAYER_SLOT', settingsB );
-						}
-					}
-				}
-			}
-		}	
-	}
-
-	if ( npcAttacker
-	&& npcAttacker.HasTag('ACS_Forest_God')
-	&& !action.IsDoTDamage()
-	//&& !thePlayer.IsCurrentlyDodging()
-	//&& !action.WasDodged()
-	//&& !thePlayer.IsGuarded()
-	//&& !GetWitcherPlayer().IsAnyQuenActive()
-	//&& !thePlayer.IsInGuardedState()
-	//&& action.IsActionMelee()
-	)
-	{	
-		if (action.IsActionMelee())
-		{
-			if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
-			{
-				if (thePlayer.IsGuarded()
-				&& thePlayer.IsInGuardedState())
-				{
-					if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded')
-					&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded')
-					)
-					{
-						npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
-
-						npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
-
-						if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
-						{
-							GetWitcherPlayer().FinishQuen(false);
-						}
-	
-						playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-					}
-				}
-				else
-				{
-					if (!playerVictim)
-					{
-						npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.10 );
-					}
-					else
-					{
-						npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.05 );
-					}
-					
-					if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded')
-					&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded')
-					)
-					{
-						playerVictim.AddEffectDefault( EET_Stagger, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-						npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
-	
-						playerVictim.AddEffectDefault( EET_Stagger, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-						npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
-
-						if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
-						{
-							GetWitcherPlayer().FinishQuen(false);
-						}
-
-						playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-					}
-				}
-			}
-		}
-		else
-		{
-			if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
-			{
-				playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-				playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 		
-			}					
-		}
-	}
-	
-	if ( playerAttacker 
-	&& !action.IsDoTDamage() 
-	&& action.DealsAnyDamage() 
-	&& action.DealtDamage()
-	&& !action.WasDodged() )
-	{
-		/*
-		if( action.HasAnyCriticalEffect() 
-		|| action.GetIsHeadShot() 
-		|| action.HasForceExplosionDismemberment()
-		|| action.IsCriticalHit() )
-		{
-			ACS_Heavy_Attack_trail();
-		}
-		*/
-		if (npc.HasAbility('mon_rotfiend')||npc.HasAbility('mon_rotfiend_large')){npc.AddAbility('OneShotImmune');}
-
-		if ( npc.HasTag('ACS_Forest_God') )
-		{
-			if (GetWitcherPlayer().IsAnyQuenActive())
-			{
-				//GetWitcherPlayer().FinishQuen(false);
-			}
-
-			if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.5)
-			&& !npc.HasTag('ACS_Spawn_Adds_1'))
-			{
-				ACS_Forest_God_Adds_1_Spawner();
-
-				npc.AddTag('ACS_Spawn_Adds_1');
-			}
-			else if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.25 )
-			&& !npc.HasTag('ACS_Spawn_Adds_2'))
-			{
-				ACS_Forest_God_Adds_2_Spawner();
-
-				npc.AddTag('ACS_Spawn_Adds_2');
-			} 
-
-			//thePlayer.StopEffect('critical_poison');
-			//thePlayer.PlayEffectSingle('critical_poison');
-		}
-
-		ACS_Caretaker_Drain_Energy();
-
-		if (thePlayer.CanUseSkill(S_Sword_s01) && action.GetHitReactionType() != EHRT_Reflect)
-		{
-			npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-			npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-
-			npc.ForceSetStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.5 );
-		}
-
-		if( playerAttacker.HasAbility('Runeword 2 _Stats', true)
-		||  thePlayer.HasTag('ACS_Shielded_Entity') )
-		{
-			ACS_Light_Attack_Extended_Trail();
-		}
-		
-		if ( action.GetHitReactionType() == EHRT_Light )
-		{
-			ACS_Light_Attack_Trail();
-
-			if (thePlayer.IsDeadlySwordHeld())
-			{
-				if ( thePlayer.HasTag('ACS_Storm_Spear_Active') )
-				{
-					thePlayer.SoundEvent("magic_man_sand_gust");
-				}
-				else
-				{
-					thePlayer.SoundEvent("cmb_play_hit_light");
-				}
-			}
-		}
-		else if ( action.GetHitReactionType() == EHRT_Heavy )
-		{
-			ACS_Heavy_Attack_Trail();
-			
-			if (thePlayer.IsDeadlySwordHeld())
-			{
-				if ( thePlayer.HasTag('ACS_Storm_Spear_Active') )
-				{
-					thePlayer.SoundEvent("magic_man_sand_gust");
-				}
-				else
-				{
-					thePlayer.SoundEvent("cmb_play_hit_heavy");
-				}
-			}
-		}
-		
-		if ( action.HasAnyCriticalEffect() 
-		|| action.GetIsHeadShot() 
-		|| action.HasForceExplosionDismemberment()
-		|| action.IsCriticalHit() )
-		{
-			ACS_Fast_Attack_Buff();
-
-			ACS_Fast_Attack_Buff_Hit();
-		}
-
-		if (npc.HasAbility( 'ForceHeadbuttFinisher' ))
-		{
-			npc.RemoveAbility('ForceHeadbuttFinisher');
-		}
-
-		if (npc.HasAbility( 'ForceHiltFinisher' ))
-		{
-			npc.RemoveAbility('ForceHiltFinisher');
-		}
-
-		if (
-		thePlayer.HasTag('aard_sword_equipped')
-		|| thePlayer.HasTag('aard_secondary_sword_equipped')
-		|| thePlayer.HasTag('yrden_sword_equipped')
-		|| thePlayer.HasTag('yrden_secondary_sword_equipped')
-		|| thePlayer.HasTag('quen_secondary_sword_equipped')
-		|| thePlayer.HasTag('vampire_claws_equipped')
-		)
-		{
-			if (npc.UsesEssence())
-			{
-				action.processedDmg.essenceDamage += action.processedDmg.essenceDamage * (GetACSWatcher().combo_counter_damage * 0.1);
-			}
-			else if (npc.UsesVitality())
-			{
-				action.processedDmg.vitalityDamage += action.processedDmg.vitalityDamage * (GetACSWatcher().combo_counter_damage * 0.1);
-			}
-
-			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15)
-			{
-				if (npc.UsesEssence())
-				{
-					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.5;
-				}
-				else if (npc.UsesVitality())
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-				}
-			}
-
-			if (thePlayer.HasTag('ACS_Storm_Spear_Active'))
-			{
-				if (npc.UsesEssence())
-				{
-					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.9;
-				}
-				else if (npc.UsesVitality())
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.9;
-				}
-
-				action.SetCanPlayHitParticle(false);
-				action.SetSuppressHitSounds(true);
-				action.SuppressHitSounds();
-			}
-
-			npc.AddAbility( 'InstantKillImmune' );
-
-			npc.SignalGameplayEvent('DisableFinisher');
-
-			if (thePlayer.HasTag('ACS_AardPull_Active'))
-			{
-				thePlayer.GainStat( BCS_Stamina, thePlayer.GetStatMax( BCS_Stamina ) * 0.1 );
-			}
-
-			if (npc.IsHuman())
-			{
-				if (!npc.HasAbility('DisableFinishers'))
-				{
-					npc.AddAbility( 'DisableFinishers', true);
-				}
-				
-				if (!npc.HasAbility('ForceDismemberment'))
-				{
-					npc.AddAbility( 'ForceDismemberment', true);
-				}
-				
-				npc.PlayHitEffect( action );
-				
-				if (
-				(npc.GetStat( BCS_Vitality ) <= npc.GetStatMax( BCS_Vitality ) * 0.25)
-				&& npc.HasTag('ACS_taunted')
-				)
-				{
-					npc.PlayEffectSingle('pee');	
-					npc.StopEffect('pee');
-						
-					npc.StopEffect('puke');
-					npc.PlayEffectSingle('puke');
-					
-					if (!npc.HasTag('ACS_mettle'))
-					{
-						if( RandF() < 0.5 ) 
-						{
-							((CNewNPC)npc).SetLevel( thePlayer.GetLevel() * 2 );
-							
-							// npc.AddEffectDefault( EET_Bleeding, thePlayer, 'acs_weapon_effects' );	
-							
-							npc.AddTag('ContractTarget');
-							npc.AddTag('MonsterHuntTarget');
-						
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
-							
-							npc.RemoveBuffImmunity_AllNegative();
-
-							npc.RemoveBuffImmunity_AllCritical();
-
-							if (npc.UsesEssence())
-							{
-								npc.StartEssenceRegen();
-							}
-							else
-							{
-								npc.StartVitalityRegen();
-							}
-								
-							if ( !npc.HasBuff( EET_IgnorePain ) )
-							{
-								npc.AddEffectDefault( EET_IgnorePain, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellFed ) )
-							{
-								npc.AddEffectDefault( EET_WellFed, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellHydrated ) )
-							{
-								npc.AddEffectDefault( EET_WellHydrated, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoEssenceRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoEssenceRegen, npc, 'console' );
-							}
-							
-							if ( !npc.HasBuff( EET_AutoMoraleRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoMoraleRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoPanicRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoPanicRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoVitalityRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoVitalityRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_BoostedStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_BoostedStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WeatherBonus ) )
-							{
-								npc.AddEffectDefault( EET_WeatherBonus, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_Thunderbolt ) )
-							{
-								npc.AddEffectDefault( EET_Thunderbolt, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AbilityOnLowHealth ) )
-							{
-								npc.AddEffectDefault( EET_AbilityOnLowHealth, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedArmor ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedArmor, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedWeapon ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedWeapon, npc, 'console' );
-							}
-						}
-						else
-						{	
-							//animatedComponentA.PlaySlotAnimationAsync ( ' ', 'NPC_ANIM_SLOT', settings_interrupt);
-
-							//animatedComponentA.PlaySlotAnimationAsync ( 'man_ex_scared_loop_1', 'NPC_ANIM_SLOT', settings_interrupt);
-						
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0 );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0 );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0 );	
-
-							//npc.GetComponent("Finish").SetEnabled( true );
-					
-							//npc.SignalGameplayEvent( 'Finisher' );
-						}
-						
-						npc.AddTag('ACS_mettle');
-					}
-				}
-			}
-		}
-		else if ( 
-		thePlayer.HasTag('axii_sword_equipped')
-		|| thePlayer.HasTag('axii_secondary_sword_equipped')
-		|| thePlayer.HasTag('quen_sword_equipped'))
-		{
-			if (npc.UsesEssence())
-			{
-				action.processedDmg.essenceDamage += action.processedDmg.essenceDamage * (GetACSWatcher().combo_counter_damage * 0.1);
-			}
-			else if (npc.UsesVitality())
-			{
-				action.processedDmg.vitalityDamage += action.processedDmg.vitalityDamage * (GetACSWatcher().combo_counter_damage * 0.1);
-			}
-			
-			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15)
-			{
-				if (npc.UsesEssence())
-				{
-					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.5;
-				}
-				else if (npc.UsesVitality())
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-				}
-			}
-
-			if (thePlayer.HasTag('ACS_Storm_Spear_Active'))
-			{
-				if (npc.UsesEssence())
-				{
-					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.9;
-				}
-				else if (npc.UsesVitality())
-				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.9;
-				}
-
-				action.SetCanPlayHitParticle(false);
-				action.SetSuppressHitSounds(true);
-				action.SuppressHitSounds();
-			}
-
-			if (npc.IsHuman())
-			{
-				if (!npc.HasAbility('ForceDismemberment'))
-				{
-					npc.AddAbility( 'ForceDismemberment', true);
-				}
-				
-				if (npc.HasAbility('DisableFinishers'))
-				{
-					npc.RemoveAbility( 'DisableFinishers');
-				}
-				
-				npc.PlayHitEffect( action );
-				
-				if (
-				(npc.GetStat( BCS_Vitality ) <= npc.GetStatMax( BCS_Vitality ) * 0.25)
-				&& npc.HasTag('ACS_taunted')
-				)
-				{	
-					npc.PlayEffectSingle('pee');	
-					npc.StopEffect('pee');
-						
-					npc.StopEffect('puke');
-					npc.PlayEffectSingle('puke');
-					
-					if (!npc.HasTag('ACS_mettle'))
-					{
-						if( RandF() < 0.5 ) 
-						{
-							((CNewNPC)npc).SetLevel( thePlayer.GetLevel() * 2 );
-							
-							npc.AddTag('ContractTarget');
-							npc.AddTag('MonsterHuntTarget');
-							
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
-							
-							npc.RemoveBuffImmunity_AllNegative();
-
-							npc.RemoveBuffImmunity_AllCritical();
-
-							if (npc.UsesEssence())
-							{
-								npc.StartEssenceRegen();
-							}
-							else
-							{
-								npc.StartVitalityRegen();
-							}
-								
-							if ( !npc.HasBuff( EET_IgnorePain ) )
-							{
-								npc.AddEffectDefault( EET_IgnorePain, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellFed ) )
-							{
-								npc.AddEffectDefault( EET_WellFed, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellHydrated ) )
-							{
-								npc.AddEffectDefault( EET_WellHydrated, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoEssenceRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoEssenceRegen, npc, 'console' );
-							}
-							
-							if ( !npc.HasBuff( EET_AutoMoraleRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoMoraleRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoPanicRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoPanicRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoVitalityRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoVitalityRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_BoostedStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_BoostedStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WeatherBonus ) )
-							{
-								npc.AddEffectDefault( EET_WeatherBonus, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_Thunderbolt ) )
-							{
-								npc.AddEffectDefault( EET_Thunderbolt, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AbilityOnLowHealth ) )
-							{
-								npc.AddEffectDefault( EET_AbilityOnLowHealth, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedArmor ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedArmor, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedWeapon ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedWeapon, npc, 'console' );
-							}
-						}
-						else
-						{	
-							//npc.AddEffectDefault( EET_Paralyzed, thePlayer, 'acs_weapon_effects' );	
-							
-							//npc.AddEffectDefault( EET_Bleeding, thePlayer, 'acs_weapon_effects' );	
-							
-							//animatedComponentA.PlaySlotAnimationAsync ( ' ', 'NPC_ANIM_SLOT', settings_interrupt);
-
-							//animatedComponentA.PlaySlotAnimationAsync ( 'man_ex_scared_loop_1', 'NPC_ANIM_SLOT', settings_interrupt);
-						
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0 );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0 );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0 );
-
-							//npc.GetComponent("Finish").SetEnabled( true );
-					
-							//npc.SignalGameplayEvent( 'Finisher' );
-						}
-						
-						npc.AddTag('ACS_mettle');
-					}
-				}
-			}
-		}
-		else if 
-		(
-		thePlayer.HasTag('igni_sword_equipped')
-		|| thePlayer.HasTag('igni_secondary_sword_equipped')
-		)
-		{
-			if (npc.IsHuman())
-			{
-				if (npc.HasAbility('ForceDismemberment'))
-				{
-					npc.RemoveAbility( 'ForceDismemberment');
-				}
-				
-				if (npc.HasAbility('DisableFinishers'))
-				{
-					npc.RemoveAbility( 'DisableFinishers');
-				}
-				
-				if (
-				(npc.GetStat( BCS_Vitality ) <= npc.GetStatMax( BCS_Vitality ) * 0.25)
-				&& npc.HasTag('ACS_taunted')
-				)
-				{	
-					npc.PlayEffectSingle('pee');	
-					npc.StopEffect('pee');
-						
-					npc.StopEffect('puke');
-					npc.PlayEffectSingle('puke');
-					
-					if (!npc.HasTag('ACS_mettle'))
-					{
-						if( RandF() < 0.5 ) 
-						{
-							((CNewNPC)npc).SetLevel( (thePlayer.GetLevel() * 7 ) / 4 );
-							
-							npc.AddTag('ContractTarget');
-							npc.AddTag('MonsterHuntTarget');
-							
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
-							
-							npc.RemoveBuffImmunity_AllNegative();
-
-							npc.RemoveBuffImmunity_AllCritical();
-
-							if (npc.UsesEssence())
-							{
-								npc.StartEssenceRegen();
-							}
-							else
-							{
-								npc.StartVitalityRegen();
-							}
-								
-							if ( !npc.HasBuff( EET_IgnorePain ) )
-							{
-								npc.AddEffectDefault( EET_IgnorePain, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellFed ) )
-							{
-								npc.AddEffectDefault( EET_WellFed, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WellHydrated ) )
-							{
-								npc.AddEffectDefault( EET_WellHydrated, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoEssenceRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoEssenceRegen, npc, 'console' );
-							}
-							
-							if ( !npc.HasBuff( EET_AutoMoraleRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoMoraleRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoPanicRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoPanicRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AutoVitalityRegen ) )
-							{
-								npc.AddEffectDefault( EET_AutoVitalityRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_BoostedStaminaRegen ) )
-							{
-								npc.AddEffectDefault( EET_BoostedStaminaRegen, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_WeatherBonus ) )
-							{
-								npc.AddEffectDefault( EET_WeatherBonus, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_Thunderbolt ) )
-							{
-								npc.AddEffectDefault( EET_Thunderbolt, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_AbilityOnLowHealth ) )
-							{
-								npc.AddEffectDefault( EET_AbilityOnLowHealth, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedArmor ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedArmor, npc, 'console' );
-							}
-								
-							if ( !npc.HasBuff( EET_EnhancedWeapon ) )
-							{
-								npc.AddEffectDefault( EET_EnhancedWeapon, npc, 'console' );
-							}
-						}
-						else
-						{	
-							//npc.AddEffectDefault( EET_Paralyzed, thePlayer, 'acs_weapon_effects' );	
-							
-							//npc.AddEffectDefault( EET_Bleeding, thePlayer, 'acs_weapon_effects' );	
-							
-							//animatedComponentA.PlaySlotAnimationAsync ( ' ', 'NPC_ANIM_SLOT', settings_interrupt);
-
-							//animatedComponentA.PlaySlotAnimationAsync ( 'man_ex_scared_loop_1', 'NPC_ANIM_SLOT', settings_interrupt);
-						
-							npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0 );  
-
-							npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0 );  
-								
-							npc.ForceSetStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0 );
-
-							//npc.GetComponent("Finish").SetEnabled( true );
-					
-							//npc.SignalGameplayEvent( 'Finisher' );
-						}
-						
-						npc.AddTag('ACS_mettle');
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -5058,7 +2511,10 @@ state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 
 		if( thePlayer.IsInCombat() )
 		{
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			if (thePlayer.IsAlive())
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			}
 
 			Sleep(0.0125);
 		}
@@ -5110,7 +2566,10 @@ state Setup_Combat_Action_Heavy_Engage in cACS_Setup_Combat_Action_Heavy
 
 		if( thePlayer.IsInCombat() )
 		{
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			if (thePlayer.IsAlive())
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			}
 
 			Sleep(0.0125);
 		}
@@ -6688,6 +4147,417 @@ function ACS_Forest_God_Secondary() : CActor
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function ACS_Ice_Titans_Static_Spawner()
+{
+	var vACS_Ice_Titans_Static_Spawner : cACS_Ice_Titans_Static_Spawner;
+
+	vACS_Ice_Titans_Static_Spawner = new cACS_Ice_Titans_Static_Spawner in theGame;
+
+	ACS_Ice_Titan_Destroy();
+
+	vACS_Ice_Titans_Static_Spawner.ACS_Ice_Titans_Static_Spawner_Engage();
+}
+
+statemachine class cACS_Ice_Titans_Static_Spawner
+{
+	function ACS_Ice_Titans_Static_Spawner_Engage()
+	{
+		this.PushState('ACS_Ice_Titans_Static_Spawner_Engage');
+	}
+}
+
+state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
+{
+	private var temp_1, temp_2, temp_3																													: CEntityTemplate;
+	private var ent_1, ent_2, ent_3, ent_4, ent_5, ent_6, ent_7, ent_8, ent_9																			: CEntity;
+	private var i, count																																: int;
+	private var playerPos, spawnPos_1 , spawnPos_2 , spawnPos_3 , spawnPos_4 , spawnPos_5 , spawnPos_6 , spawnPos_7 , spawnPos_8 , spawnPos_9			: Vector;
+	private var randAngle, randRange																													: float;
+	private var meshcomp																																: CComponent;
+	private var animcomp 																																: CAnimatedComponent;
+	private var h 																																		: float;
+	private var gasEntity																																: W3ToxicCloud;
+	private var weapon_names, armor_names																												: array<CName>;
+	private var currWorld 																																: CWorld;
+		
+	event OnEnterState(prevStateName : name)
+	{
+		super.OnEnterState(prevStateName);
+
+		Static_Spawn_Entry();
+	}
+	
+	entry function Static_Spawn_Entry()
+	{	
+		LockEntryFunction(true);
+		
+		Static_Spawn_Latent();
+		
+		LockEntryFunction(false);
+	}
+
+	latent function Static_Spawn_Latent()
+	{
+		currWorld = theGame.GetWorld();
+
+		temp_1 = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\dlc_acs\data\entities\monsters\ice_giant_1.w2ent"
+			
+		, true );
+
+		temp_2 = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\dlc_acs\data\entities\monsters\ice_giant_2.w2ent"
+		
+		, true );
+
+		temp_3 = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\dlc_acs\data\entities\monsters\ice_giant_3.w2ent"
+		
+		, true );
+
+		if ((currWorld.GetDepotPath() == "levels\skellige\skellige.w2w"))
+		{
+			spawnPos_1 = Vector(-321.784027, -117.463120, 23.569407, 1);
+
+			spawnPos_2 = Vector(-2565.660889, -1334.807983, 8.729300, 1);
+
+			spawnPos_3 = Vector(-2411.800537, -733.482727, 0.528175, 1);
+
+			spawnPos_4 = Vector(-217.916077, -1965.651978, 0.149090, 1);
+
+			spawnPos_5 = Vector(2325.307129, 630.480408, 1.681702, 1);
+
+			spawnPos_6 = Vector(1495.861328, 1156.037598, 0.594969, 1);
+
+			spawnPos_7 = Vector(335.897614, 1542.949951, 2.687820, 1);
+
+			spawnPos_8 = Vector(-1032.823975, 2006.107666, 0.313784, 1);
+
+			spawnPos_9 = Vector(-377.889740, 2108.553955, 0.941095, 1);
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_1 = theGame.CreateEntity( temp_1, spawnPos_1, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_1.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_1.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_1).SetLevel(75);
+			((CNewNPC)ent_1).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_1).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_1).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_1).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_1).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_1).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_1).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_1).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_1).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_1).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_1.PlayEffectSingle('demonic_possession');
+
+			ent_1.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_2 = theGame.CreateEntity( temp_2, spawnPos_2, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_2.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_2.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_2).SetLevel(75);
+			((CNewNPC)ent_2).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_2).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_2).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_2).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_2).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_2).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_2).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_2).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_2).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_2).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_2.PlayEffectSingle('demonic_possession');
+
+			ent_2.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_3 = theGame.CreateEntity( temp_3, spawnPos_3, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_3.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_3.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_3).SetLevel(75);
+			((CNewNPC)ent_3).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_3).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_3).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_3).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_3).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_3).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_3).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_3).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_3).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_3).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_3.PlayEffectSingle('demonic_possession');
+
+			ent_3.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_4 = theGame.CreateEntity( temp_1, spawnPos_4, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_4.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_4.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_4).SetLevel(75);
+			((CNewNPC)ent_4).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_4).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_4).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_4).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_4).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_4).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_4).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_4).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_4).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_4).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_4.PlayEffectSingle('demonic_possession');
+
+			ent_4.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_5 = theGame.CreateEntity( temp_2, spawnPos_5, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_5.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_5.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_5).SetLevel(75);
+			((CNewNPC)ent_5).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_5).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_5).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_5).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_5).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_5).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_5).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_5).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_5).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_5).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_5.PlayEffectSingle('demonic_possession');
+
+			ent_5.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_6 = theGame.CreateEntity( temp_3, spawnPos_6, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_6.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_6.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_6).SetLevel(75);
+			((CNewNPC)ent_6).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_6).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_6).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_6).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_6).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_6).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_6).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_6).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_6).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_6).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_6.PlayEffectSingle('demonic_possession');
+
+			ent_6.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_7 = theGame.CreateEntity( temp_1, spawnPos_7, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_7.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_7.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_7).SetLevel(75);
+			((CNewNPC)ent_7).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_7).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_7).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_7).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_7).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_7).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_7).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_7).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_7).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_7).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_7.PlayEffectSingle('demonic_possession');
+
+			ent_7.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_8 = theGame.CreateEntity( temp_2, spawnPos_8, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_8.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_8.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_8).SetLevel(75);
+			((CNewNPC)ent_8).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_8).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_8).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_8).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_8).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_8).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_8).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_8).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_8).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_8).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_8.PlayEffectSingle('demonic_possession');
+
+			ent_8.PlayEffect('ice');
+
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			ent_9 = theGame.CreateEntity( temp_3, spawnPos_9, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent_9.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent_9.GetComponentByClassName('CMeshComponent');
+			h = 1.75;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent_9).SetLevel(75);
+			((CNewNPC)ent_9).SetAttitude(thePlayer, AIA_Hostile);
+			((CNewNPC)ent_9).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
+			((CActor)ent_9).SetAnimationSpeedMultiplier(0.75);
+
+			((CActor)ent_9).GetInventory().AddAnItem( 'Crowns', 25000 );
+
+			((CActor)ent_9).GetInventory().AddAnItem( 'Diamond flawless', 10 );
+
+			((CActor)ent_9).AddTag( 'ACS_Ice_Titan' );
+
+			((CActor)ent_9).AddTag( 'ACS_Big_Boi' );
+
+			((CActor)ent_9).AddBuffImmunity(EET_SlowdownFrost, 'ACS_Ice_Titan', true);
+
+			((CActor)ent_9).AddBuffImmunity(EET_Frozen , 'ACS_Ice_Titan', true);
+
+			((CActor)ent_9).AddBuffImmunity(EET_Burning , 'ACS_Ice_Titan', true);
+
+			ent_9.PlayEffectSingle('demonic_possession');
+
+			ent_9.PlayEffect('ice');
+		}
+	}
+	
+	event OnLeaveState( nextStateName : name ) 
+	{
+		super.OnLeaveState(nextStateName);
+	}
+}
+
+function ACS_Ice_Titan_Destroy()
+{	
+	var titan 											: array<CActor>;
+	var i												: int;
+	
+	theGame.GetActorsByTag( 'ACS_Ice_Titan', titan );	
+	
+	for( i = 0; i < titan.Size(); i += 1 )
+	{
+		titan[i].Destroy();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function ACS_Spawner()
 {
 	var vACS_Spawner : cACS_Spawner;
@@ -6711,6 +4581,9 @@ state ACS_Spawner_Engage in cACS_Spawner
 	private var i, count														: int;
 	private var playerPos, spawnPos												: Vector;
 	private var randAngle, randRange											: float;
+	private var meshcomp														: CComponent;
+	private var animcomp 														: CAnimatedComponent;
+	private var h 																: float;
 		
 	event OnEnterState(prevStateName : name)
 	{
@@ -6733,12 +4606,23 @@ state ACS_Spawner_Engage in cACS_Spawner
 
 			//"dlc/dlc_acs/data/entities/monsters/hym.w2ent"
 
-			"dlc\dlc_acs\data\entities\monsters\treant.w2ent"
+			//"dlc\dlc_acs\data\entities\monsters\treant.w2ent"
+
+			//"quests\part_1\quest_files\q202_giant\characters\q202_ice_giant.w2ent"
+
+			"dlc\dlc_acs\data\entities\monsters\ice_giant_1.w2ent"
+
+			//"dlc\dlc_acs\data\entities\monsters\shadow_wolf.w2ent"
+
+			//"dlc\bob\data\characters\npc_entities\monsters\bruxa_alp_cloak_always_spawn.w2ent"
+
+			//"dlc\bob\data\characters\npc_entities\monsters\bruxa_cloak_always_spawn.w2ent"
 			
 			, true );
+
 		playerPos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 5;
 		
-		count = 3;
+		count = 1;
 			
 		for( i = 0; i < count; i += 1 )
 		{
@@ -6750,10 +4634,26 @@ state ACS_Spawner_Engage in cACS_Spawner
 			spawnPos.Z = playerPos.Z;
 			
 			ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent.GetComponentByClassName('CMeshComponent');
+			h = 1;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
 			((CNewNPC)ent).SetLevel(thePlayer.GetLevel() + 10);
 			((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
-			((CActor)ent).SetAnimationSpeedMultiplier(1.5);
+			((CActor)ent).SetAnimationSpeedMultiplier(1);
+
+			ent.PlayEffect('ice');
+
+			//ent.PlayEffectSingle('appear');
+			//ent.StopEffect('appear');
+			//ent.PlayEffectSingle('shadow_form');
+			//ent.PlayEffectSingle('demonic_possession');
+
 			ent.AddTag( 'ACS_enemy' );
+			ent.AddTag( 'ACS_Big_Boi' );
 		}
 	}
 	

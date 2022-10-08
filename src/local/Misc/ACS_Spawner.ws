@@ -10466,3 +10466,103 @@ state ACS_Giant_Sword_Fall_Engage in cACS_Giant_Sword_Fall
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function ACS_Dagger_Summon()
+{
+	var vACS_Dagger_Summon : cACS_Dagger_Summon;
+	vACS_Dagger_Summon = new cACS_Dagger_Summon in theGame;
+			
+	vACS_Dagger_Summon.vACS_Dagger_Summon_Engage();
+}
+
+statemachine class cACS_Dagger_Summon
+{
+    function vACS_Dagger_Summon_Engage()
+	{
+		this.PushState('vACS_Dagger_Summon_Engage');
+	}
+}
+
+state vACS_Dagger_Summon_Engage in cACS_Dagger_Summon
+{
+	private var attach_vec				: Vector;
+	private var dagger_1 				: CEntity;
+	private var attach_rot				: EulerAngles;
+	private var meshcomp 				: CComponent;
+	private var h 						: float;
+
+	event OnEnterState(prevStateName : name)
+	{
+		super.OnEnterState(prevStateName);
+		
+		GetACSWatcher().RemoveTimer('ACS_Dagger_Destroy_Timer');
+		//ACS_Dagger().Destroy();
+
+		if(!thePlayer.HasTag('ACS_Dagger_Summoned'))
+		{
+			Dagger_Summon_Entry();
+		}
+
+		GetACSWatcher().AddTimer('ACS_Dagger_Destroy_Timer', 1.25, false);
+	}
+	
+	entry function Dagger_Summon_Entry()
+	{
+		Dagger_Summon_Latent();
+	}
+	
+	latent function Dagger_Summon_Latent()
+	{
+		thePlayer.AddTag('ACS_Dagger_Summoned');
+
+		dagger_1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+						
+		"items\weapons\unique\baron_dagger.w2ent" 
+
+		//"items\quest_items\q105\q105_item__ritual_dagger.w2ent"
+			
+		, true), thePlayer.GetWorldPosition() );
+			
+		attach_rot.Roll = 30;
+		attach_rot.Pitch = 30;
+		attach_rot.Yaw = 30;
+		attach_vec.X = 0.025;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.0125;
+			
+		dagger_1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		dagger_1.AddTag('acs_dagger_1');
+
+		dagger_1.PlayEffectSingle('fire_sparks_trail');
+
+		dagger_1.PlayEffectSingle('runeword1_fire_trail');
+
+		dagger_1.PlayEffectSingle('fast_attack_buff');
+
+		dagger_1.PlayEffectSingle('fast_attack_buff_hit');
+	}
+	
+	event OnLeaveState( nextStateName : name ) 
+	{
+		super.OnLeaveState(nextStateName);
+	}
+}
+
+function ACS_Dagger() : CEntity
+{
+	var sword 			 : CEntity;
+	
+	sword = (CEntity)theGame.GetEntityByTag( 'acs_dagger_1' );
+	return sword;
+}
+
+function ACS_Dagger_Destroy()
+{
+	ACS_Dagger().BreakAttachment(); 
+	ACS_Dagger().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Dagger().DestroyAfter(0.00125);
+
+	thePlayer.RemoveTag('ACS_Dagger_Summoned');
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

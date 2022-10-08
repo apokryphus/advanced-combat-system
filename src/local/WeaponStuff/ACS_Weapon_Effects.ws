@@ -993,13 +993,6 @@ function quen_secondary_sword_trail()
 		}
 		else if (thePlayer.GetEquippedSign() == ST_Aard)
 		{
-			quen_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_3().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_4().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_5().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_6().PlayEffectSingle('fire_sparks_trail');
-
 			quen_secondary_sword_1().PlayEffectSingle('aard_power');
 			quen_secondary_sword_2().PlayEffectSingle('aard_power');
 			quen_secondary_sword_3().PlayEffectSingle('aard_power');
@@ -1016,13 +1009,6 @@ function quen_secondary_sword_trail()
 		}
 		else if (thePlayer.GetEquippedSign() == ST_Yrden)
 		{	
-			quen_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_3().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_4().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_5().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_6().PlayEffectSingle('fire_sparks_trail');
-
 			quen_secondary_sword_1().PlayEffectSingle('yrden_power');
 			quen_secondary_sword_2().PlayEffectSingle('yrden_power');
 			quen_secondary_sword_3().PlayEffectSingle('yrden_power');
@@ -1039,13 +1025,6 @@ function quen_secondary_sword_trail()
 		}
 		else if (thePlayer.GetEquippedSign() == ST_Quen)
 		{
-			quen_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_3().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_4().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_5().PlayEffectSingle('fire_sparks_trail');
-			quen_secondary_sword_6().PlayEffectSingle('fire_sparks_trail');
-
 			quen_secondary_sword_1().PlayEffectSingle('quen_power');
 			quen_secondary_sword_2().PlayEffectSingle('quen_power');
 			quen_secondary_sword_3().PlayEffectSingle('quen_power');
@@ -2402,9 +2381,141 @@ function ACS_Heavy_Attack_Trail()
 	}
 }
 
+function ACS_Wraith_Attack_Trail()
+{
+	if (thePlayer.HasTag('axii_sword_equipped'))
+	{
+		axii_sword_1().PlayEffectSingle('wraith_trail');
+		axii_sword_2().PlayEffectSingle('wraith_trail');
+		axii_sword_3().PlayEffectSingle('wraith_trail');
+		axii_sword_4().PlayEffectSingle('wraith_trail');
+		axii_sword_5().PlayEffectSingle('wraith_trail');
 
+		axii_sword_1().StopEffect('wraith_trail');
+		axii_sword_2().StopEffect('wraith_trail');
+		axii_sword_3().StopEffect('wraith_trail');
+		axii_sword_4().StopEffect('wraith_trail');
+		axii_sword_5().StopEffect('wraith_trail');
+	}
+	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	{ 
+		axii_secondary_sword_1().PlayEffectSingle('wraith_trail');
+		axii_secondary_sword_2().PlayEffectSingle('wraith_trail');
+		axii_secondary_sword_3().PlayEffectSingle('wraith_trail');
 
+		axii_secondary_sword_1().StopEffect('wraith_trail');
+		axii_secondary_sword_2().StopEffect('wraith_trail');
+		axii_secondary_sword_3().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('quen_sword_equipped'))
+	{
+		quen_sword_1().PlayEffectSingle('wraith_trail');
+		quen_sword_2().PlayEffectSingle('wraith_trail');
+		quen_sword_3().PlayEffectSingle('wraith_trail');
 
+		quen_sword_1().StopEffect('wraith_trail');
+		quen_sword_2().StopEffect('wraith_trail');
+		quen_sword_3().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	{
+		quen_secondary_sword_1().PlayEffectSingle('wraith_trail');
+		quen_secondary_sword_2().PlayEffectSingle('wraith_trail');
+		quen_secondary_sword_3().PlayEffectSingle('wraith_trail');
+		quen_secondary_sword_4().PlayEffectSingle('wraith_trail');
+		quen_secondary_sword_5().PlayEffectSingle('wraith_trail');
+		quen_secondary_sword_6().PlayEffectSingle('wraith_trail');
+
+		quen_secondary_sword_1().StopEffect('wraith_trail');
+		quen_secondary_sword_2().StopEffect('wraith_trail');
+		quen_secondary_sword_3().StopEffect('wraith_trail');
+		quen_secondary_sword_4().StopEffect('wraith_trail');
+		quen_secondary_sword_5().StopEffect('wraith_trail');
+		quen_secondary_sword_6().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('aard_sword_equipped'))
+	{
+		aard_blade_1().PlayEffectSingle('wraith_trail');
+		aard_blade_2().PlayEffectSingle('wraith_trail');
+		aard_blade_3().PlayEffectSingle('wraith_trail');
+		aard_blade_4().PlayEffectSingle('wraith_trail');
+		aard_blade_5().PlayEffectSingle('wraith_trail');
+		aard_blade_6().PlayEffectSingle('wraith_trail');
+		aard_blade_7().PlayEffectSingle('wraith_trail');
+		aard_blade_8().PlayEffectSingle('wraith_trail');
+
+		aard_blade_1().StopEffect('wraith_trail');
+		aard_blade_2().StopEffect('wraith_trail');
+		aard_blade_3().StopEffect('wraith_trail');
+		aard_blade_4().StopEffect('wraith_trail');
+		aard_blade_5().StopEffect('wraith_trail');
+		aard_blade_6().StopEffect('wraith_trail');
+		aard_blade_7().StopEffect('wraith_trail');
+		aard_blade_8().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	{
+		aard_secondary_sword_1().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_2().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_3().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_4().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_5().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_6().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_7().PlayEffectSingle('wraith_trail');
+		aard_secondary_sword_8().PlayEffectSingle('wraith_trail');
+
+		aard_secondary_sword_1().StopEffect('wraith_trail');
+		aard_secondary_sword_2().StopEffect('wraith_trail');
+		aard_secondary_sword_3().StopEffect('wraith_trail');
+		aard_secondary_sword_4().StopEffect('wraith_trail');
+		aard_secondary_sword_5().StopEffect('wraith_trail');
+		aard_secondary_sword_6().StopEffect('wraith_trail');
+		aard_secondary_sword_7().StopEffect('wraith_trail');
+		aard_secondary_sword_8().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('yrden_sword_equipped'))
+	{
+		yrden_sword_1().PlayEffectSingle('wraith_trail');
+		yrden_sword_2().PlayEffectSingle('wraith_trail');
+		yrden_sword_3().PlayEffectSingle('wraith_trail');
+		yrden_sword_4().PlayEffectSingle('wraith_trail');
+		yrden_sword_5().PlayEffectSingle('wraith_trail');
+		yrden_sword_6().PlayEffectSingle('wraith_trail');
+		yrden_sword_7().PlayEffectSingle('wraith_trail');
+		yrden_sword_8().PlayEffectSingle('wraith_trail');
+
+		yrden_sword_1().StopEffect('wraith_trail');
+		yrden_sword_2().StopEffect('wraith_trail');
+		yrden_sword_3().StopEffect('wraith_trail');
+		yrden_sword_4().StopEffect('wraith_trail');
+		yrden_sword_5().StopEffect('wraith_trail');
+		yrden_sword_6().StopEffect('wraith_trail');
+		yrden_sword_7().StopEffect('wraith_trail');
+		yrden_sword_8().StopEffect('wraith_trail');
+	}
+	
+	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	{
+		yrden_secondary_sword_1().PlayEffectSingle('wraith_trail');
+		yrden_secondary_sword_2().PlayEffectSingle('wraith_trail');
+		yrden_secondary_sword_3().PlayEffectSingle('wraith_trail');
+		yrden_secondary_sword_4().PlayEffectSingle('wraith_trail');
+		yrden_secondary_sword_5().PlayEffectSingle('wraith_trail');
+		yrden_secondary_sword_6().PlayEffectSingle('wraith_trail');
+
+		yrden_secondary_sword_1().StopEffect('wraith_trail');
+		yrden_secondary_sword_2().StopEffect('wraith_trail');
+		yrden_secondary_sword_3().StopEffect('wraith_trail');
+		yrden_secondary_sword_4().StopEffect('wraith_trail');
+		yrden_secondary_sword_5().StopEffect('wraith_trail');
+		yrden_secondary_sword_6().StopEffect('wraith_trail');
+	}
+}
 
 function ACS_Fast_Attack_Buff()
 {

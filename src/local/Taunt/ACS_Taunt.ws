@@ -1348,6 +1348,11 @@ state Engage in cTaunt
 	
 	latent function claw_taunt() 
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+		
 		if (!ACS_TauntSystem_Enabled())
 		{
 			if( RandF() < 0.5 ) 
@@ -1421,6 +1426,11 @@ state Engage in cTaunt
 	
 	latent function olgierd_combat_taunt ()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
@@ -1596,6 +1606,11 @@ state Engage in cTaunt
 	
 	latent function eredin_combat_taunt ()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
@@ -1819,6 +1834,11 @@ state Engage in cTaunt
 	
 	latent function imlerith_combat_taunt ()
 	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
@@ -1977,7 +1997,12 @@ state Engage in cTaunt
 	}
 	
 	latent function normal_combat_taunt ()
-	{	
+	{
+		if (!thePlayer.HasTag('ACS_Special_Dodge'))
+		{
+			thePlayer.AddTag('ACS_Special_Dodge');
+		}
+
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		

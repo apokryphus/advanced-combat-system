@@ -61,7 +61,14 @@ function ACS_can_perform_light_attack(): bool
 
 	property = GetACSWatcher().vACS_Cooldown_Manager;
 
-	return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > property.light_attack_cooldown;
+	if (thePlayer.HasTag('igni_sword_equipped') || thePlayer.HasTag('igni_secondary_sword_equipped'))
+	{
+		return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > (property.light_attack_cooldown + 0.75);
+	}
+	else
+	{
+		return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > property.light_attack_cooldown;
+	}
 }
 
 function ACS_refresh_light_attack_cooldown() 
@@ -77,6 +84,11 @@ function ACS_refresh_light_attack_cooldown()
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
+	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 }
 
@@ -103,6 +115,11 @@ function ACS_refresh_heavy_attack_cooldown()
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
+	}
 }
 
 function ACS_can_perform_guard_attack(): bool 
@@ -127,6 +144,11 @@ function ACS_refresh_guard_attack_cooldown()
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
+	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 }
 
@@ -153,6 +175,11 @@ function ACS_refresh_guard_doubletap_attack_cooldown()
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
+	}
 }
 
 function ACS_can_perform_special_attack(): bool 
@@ -178,6 +205,11 @@ function ACS_refresh_special_attack_cooldown()
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
+	}
 }
 
 function ACS_can_bruxa_dash(): bool 
@@ -202,6 +234,11 @@ function ACS_refresh_bruxa_dash_cooldown()
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
+	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 }
 
@@ -278,6 +315,11 @@ function ACS_refresh_beam_attack_cooldown()
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
+	}
 }
 
 function ACS_can_shoot_bow_stationary(): bool 
@@ -302,6 +344,11 @@ function ACS_refresh_bow_stationary_cooldown()
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
+	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 }
 
@@ -328,6 +375,11 @@ function ACS_refresh_bow_moving_cooldown()
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
 	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
+	}
 }
 
 function ACS_can_shoot_crossbow(): bool 
@@ -352,5 +404,10 @@ function ACS_refresh_crossbow_cooldown()
 		GetACSWatcher().Grow_Geralt_Immediate();
 
 		thePlayer.RemoveTag('ACS_Size_Adjusted');
+	}
+
+	if (thePlayer.HasTag('ACS_Special_Dodge'))
+	{
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 }

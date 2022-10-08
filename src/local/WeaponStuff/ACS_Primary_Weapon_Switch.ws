@@ -812,7 +812,14 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		{
 			//theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
 
-			thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+			if (ACS_PassiveTaunt_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+			}
+			else
+			{
+				thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+			}
 
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
 			{
@@ -885,11 +892,25 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk' );
+				}
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh' );
+				}
 			}
 
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
@@ -913,7 +934,14 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh' );
+			if (ACS_PassiveTaunt_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_passive_taunt' );
+			}
+			else
+			{
+				thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh' );
+			}
 
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
 			{
@@ -938,11 +966,25 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		{	
 			if (ACS_SwordWalk_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk' );
+				}
 			}
 			else
-			{		
-				thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh' );
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh' );
+				}
 			}
 
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
@@ -969,11 +1011,25 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk' );
+				}
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh' );
+				}
 			}
 					
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
@@ -1886,46 +1942,78 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-			
-					//AXII SWORD PATH
-					
-					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl2.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
-					
+						
+					"items\weapons\unique\eredin_sword.w2ent" 
+						
 					, true), thePlayer.GetWorldPosition() );
-					
+						
+					attach_rot.Roll = 0;
+					attach_rot.Pitch = 0;
+					attach_rot.Yaw = 0;
+					attach_vec.X = -0.005;
+					attach_vec.Y = 0;
+					attach_vec.Z = 0.1;
+						
+					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.AddTag('axii_sword_1');
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+						
+					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent"
+						
+					, true), thePlayer.GetWorldPosition() );
+						
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 180;
-					attach_vec.X = 0;
+					attach_vec.X = 0.005;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.025;
-					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword1.AddTag('axii_sword_1');
+					attach_vec.Z = 0.16;
+						
+					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.AddTag('axii_sword_2');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-			
-					//AXII SWORD PATH
-					
-					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
-					
+						
+					"items\weapons\unique\eredin_sword.w2ent" 
+						
 					, true), thePlayer.GetWorldPosition() );
-					
+						
+					attach_rot.Roll = 0;
+					attach_rot.Pitch = 0;
+					attach_rot.Yaw = 0;
+					attach_vec.X = -0.005;
+					attach_vec.Y = 0;
+					attach_vec.Z = 0.1;
+						
+					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.AddTag('axii_sword_1');
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+						
+					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent"
+						
+					, true), thePlayer.GetWorldPosition() );
+						
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 180;
-					attach_vec.X = 0;
+					attach_vec.X = 0.005;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
-					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword1.AddTag('axii_sword_1');
+					attach_vec.Z = 0.16;
+						
+					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.AddTag('axii_sword_2');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					//AXII SWORD PATH
 					
@@ -1940,8 +2028,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('axii_sword_2');
+					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.AddTag('axii_sword_3');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
@@ -2069,46 +2157,78 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-			
-					//AXII SWORD PATH
-					
-					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
-					
+						
+					"items\weapons\unique\eredin_sword.w2ent" 
+						
 					, true), thePlayer.GetWorldPosition() );
-					
+						
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.005;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
-					
+					attach_vec.Z = 0.1;
+						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+						
+					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent"
+						
+					, true), thePlayer.GetWorldPosition() );
+						
+					attach_rot.Roll = 0;
+					attach_rot.Pitch = 0;
+					attach_rot.Yaw = 180;
+					attach_vec.X = 0.005;
+					attach_vec.Y = 0;
+					attach_vec.Z = 0.16;
+						
+					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.AddTag('axii_sword_2');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-			
-					//AXII SWORD PATH
-					
-					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
-					
+						
+					"items\weapons\unique\eredin_sword.w2ent" 
+						
 					, true), thePlayer.GetWorldPosition() );
-					
+						
+					attach_rot.Roll = 0;
+					attach_rot.Pitch = 0;
+					attach_rot.Yaw = 0;
+					attach_vec.X = -0.005;
+					attach_vec.Y = 0;
+					attach_vec.Z = 0.1;
+						
+					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.AddTag('axii_sword_1');
+
+					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+						
+					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent"
+						
+					, true), thePlayer.GetWorldPosition() );
+						
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 180;
-					attach_vec.X = 0;
+					attach_vec.X = 0.005;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
-					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword1.AddTag('axii_sword_1');
+					attach_vec.Z = 0.16;
+						
+					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.AddTag('axii_sword_2');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					//AXII SWORD PATH
 					
@@ -2123,8 +2243,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('axii_sword_2');
+					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.AddTag('axii_sword_3');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
@@ -7064,7 +7184,14 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 		{
 			//theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
 
-			thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+			if (ACS_PassiveTaunt_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+			}
+			else
+			{
+				thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+			}
 
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
 		}

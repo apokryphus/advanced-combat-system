@@ -27,6 +27,13 @@ function ACS_WeaponHolsterInit()
 		thePlayer.RemoveAbility('ForceDismemberment');
 	}
 
+	if (thePlayer.HasTag('ACS_Size_Adjusted')) //ACS
+	{
+		GetACSWatcher().Grow_Geralt_Immediate_Fast(); //ACS
+
+		thePlayer.RemoveTag('ACS_Size_Adjusted'); //ACS
+	}
+
 	if (thePlayer.HasTag('igni_sword_equipped')
 	|| thePlayer.HasTag('igni_secondary_sword_equipped')
 	|| thePlayer.HasTag('igni_sword_equipped_TAG')

@@ -42,8 +42,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			if (thePlayer.IsAnyWeaponHeld())
 			{
-				thePlayer.PlayEffectSingle('claws_effect');
-				thePlayer.StopEffect('claws_effect');
+				//thePlayer.PlayEffectSingle('claws_effect');
+				//thePlayer.StopEffect('claws_effect');
 			}
 
 			ClawDestroy_Latent_OnDodge();
@@ -5790,7 +5790,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5808,7 +5808,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5842,7 +5842,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5892,7 +5892,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5929,7 +5929,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5947,7 +5947,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5981,7 +5981,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6031,7 +6031,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6071,7 +6071,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6089,7 +6089,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6123,7 +6123,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6173,7 +6173,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6210,7 +6210,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6228,7 +6228,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6262,7 +6262,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6312,7 +6312,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6359,7 +6359,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
-			"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -6377,7 +6377,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
-			"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -8915,7 +8915,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8933,7 +8933,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8949,7 +8949,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8967,7 +8967,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8983,7 +8983,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9065,7 +9065,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9081,7 +9081,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9102,7 +9102,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9120,7 +9120,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9136,7 +9136,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9154,7 +9154,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9170,7 +9170,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9252,7 +9252,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9268,7 +9268,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9299,7 +9299,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"items\weapons\polearms\guisarme_02.w2ent"
+			"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -9317,7 +9317,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				

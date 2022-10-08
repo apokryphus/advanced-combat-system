@@ -741,14 +741,22 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'axii_secondary_beh_swordwalk' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk' );
 				}
 			}
 			else
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'axii_secondary_beh' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh' );
 				}
@@ -782,14 +790,22 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'aard_secondary_beh_swordwalk' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk' );
 				}
 			}
 			else
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'aard_secondary_beh' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh' );
 				}
@@ -823,14 +839,22 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'yrden_secondary_beh_swordwalk' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk' );
 				}
 			}
 			else
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'yrden_secondary_beh' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh' );
 				}
@@ -864,14 +888,22 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			if (ACS_SwordWalk_Enabled())
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'quen_secondary_beh_swordwalk' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk' );
 				}
 			}
 			else
 			{
-				if ( thePlayer.GetBehaviorGraphInstanceName() != 'quen_secondary_beh' )
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_passive_taunt' );
+				}
+				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh' );
 				}
@@ -1000,7 +1032,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1018,7 +1050,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1052,7 +1084,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1102,7 +1134,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1139,7 +1171,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1157,7 +1189,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1191,7 +1223,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1241,7 +1273,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1281,7 +1313,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1299,7 +1331,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1333,7 +1365,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1383,7 +1415,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1420,7 +1452,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1438,7 +1470,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1472,7 +1504,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1522,7 +1554,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -1569,7 +1601,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
-			"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -1587,7 +1619,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
-			"dlc\bob\data\items\weapons\swords\sword_for_champion_of_arena\sword_for_champion_of_arena.w2ent"
+			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -3844,7 +3876,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 						
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -3862,7 +3894,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -3880,7 +3912,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -3898,7 +3930,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -4037,7 +4069,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4053,7 +4085,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4069,7 +4101,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4085,7 +4117,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4143,7 +4175,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4161,7 +4193,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4177,7 +4209,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4195,7 +4227,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4211,7 +4243,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4293,7 +4325,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4309,7 +4341,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\polearms\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4330,7 +4362,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4348,7 +4380,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4364,7 +4396,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4382,7 +4414,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4398,7 +4430,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4414,7 +4446,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4430,7 +4462,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4446,7 +4478,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4462,7 +4494,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4480,7 +4512,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4496,7 +4528,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4527,7 +4559,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"items\weapons\polearms\guisarme_02.w2ent"
+			"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -4545,7 +4577,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"dlc\ep1\data\items\weapons\spears\hakland_spear_01.w2ent"
+			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				

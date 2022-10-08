@@ -8,6 +8,7 @@ function ACS_Jump_Extend_Init( type : EJumpType )
 	&& ACS_JumpExtend_Enabled() 
 	&& !thePlayer.HasTag('in_wraith') 
 	&& thePlayer.IsAlive()
+	&& !thePlayer.IsInAir()
 	&& (type == EJT_Idle 
 	|| type == EJT_IdleToWalk 
 	|| type == EJT_Walk 

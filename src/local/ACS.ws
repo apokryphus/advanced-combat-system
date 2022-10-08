@@ -783,6 +783,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	default bruxa_dash_index_2 																												= -1;
 	default previous_bruxa_dash_index_1 																									= -1;
 	default previous_bruxa_dash_index_2 																									= -1;
+
+	private var TeleportCallTime																											: float;
+	private var TeleportDoubleTap 																											: bool;
 	
 	//On-hit Vars
 	private var heal, playerVitality 																										: float;
@@ -986,21 +989,24 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		AddTimer( 'ACS_INIT_TIMER', 0.001f, false );
 
-		if (!ACS_Forest_God())
-		{
-			ACS_Forest_God_Static_Spawner();
-		}
+		AddTimer( 'ACS_Spawn_Delay', 3, false );
 	}
 
-	public timer function ACS_Set_Player_Scale ( dt : float, id : int){ ACS_Set_Player_Scale_Actual(); } 
+	public timer function ACS_Spawn_Delay ( dt : float, id : int){ if (!ACS_Forest_God()){ACS_Forest_God_Static_Spawner();} ACS_Ice_Titans_Static_Spawner(); } 
+
+	public timer function ACS_Set_Player_Scale ( dt : float, id : int){ if(thePlayer.IsAlive()){ACS_Set_Player_Scale_Actual();} } 
 
 	public timer function Remove_Player_Grow_Immediate ( dt : float, id : int){ RemoveTimer('Grow_Geralt_Immediate_Repeat'); AddTimer( 'ACS_Set_Player_Scale', 0.01, true );} 
 
 	public timer function ACS_BARADDUR ( dt : float, id : int){ ACS_BARRADUR(); } 
 
+	public timer function ACS_Shield_Spawn_Delay ( dt : float, id : int){ vACS_Shield_Summon = new cACS_Shield_Summon in this; action_interrupt(); vACS_Shield_Summon.Axii_Persistent_Shield_Summon(); } 
+
 	public timer function ACS_Embers_Timer ( dt : float, id : int){ EmbersIndicator(); } 
 
-	public timer function ACS_ResetAnimation ( dt: float, id : int){ thePlayer.ClearAnimationSpeedMultipliers(); } 
+	public timer function ACS_ResetAnimation ( dt: float, id : int){ if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();} } 
+
+	public timer function ACS_ResetAnimation_On_Death ( dt: float, id : int){ thePlayer.ClearAnimationSpeedMultipliers(); } 
 	
 	public timer function ACS_dodge_timer ( dt : float, id : int) { dodge_timer_actual(); } 
 	
@@ -1072,6 +1078,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	public timer function ACS_HeadbuttDamage(deltaTime : float , id : int){HeadbuttDamageActual();}
 
+	public timer function ACS_ShieldEntityDamage(deltaTime : float , id : int){ShieldEntityDamageActual();}
+
+	public timer function ACS_ShieldEntityDamage_2(deltaTime : float , id : int){ShieldEntityDamageActual();}
+
+	public timer function ACS_ShieldEntityDamageShort(deltaTime : float , id : int){ShieldEntityDamageShortActual();}
+
 	public timer function ACS_Forest_God_Spikes(deltaTime : float , id : int){ACS_Forest_God_Spikes_Actual();}
 
 	public timer function ACS_Forest_God_Demonic_Effect(deltaTime : float , id : int){forest_god_demonic_effect_actual();}
@@ -1084,6 +1096,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	public timer function ACS_Finisher_Unblock_Action(deltaTime : float , id : int){finisherUnblockAction();}
 
+	public timer function ACS_Death_Delay_Animation(deltaTime : float , id : int){Death_Delay_Animation_Actual();}
+
+	public timer function ACS_Dagger_Destroy_Timer(deltaTime : float , id : int){ACS_Dagger_Destroy();}
+
 	public timer function ACS_INIT_TIMER( deltaTime : float , id : int)
 	{
 		register_extra_inputs();
@@ -1094,16 +1110,14 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			if(ACS_Enabled())
 			{
-				ACS_BehSwitchINIT(); 
-				
-				//ACSCheck();
+				ACS_BehSwitchINIT();
+
+				AddTimer('ACS_BARADDUR', 0.000000000000000001f, true); 
+
+				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+
+				AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
 			}
-
-			AddTimer('ACS_BARADDUR', 0.000000000000000001f, true); 
-
-			AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
-
-			AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
 		}
 	}
 
@@ -1119,6 +1133,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Dodge' );
 
+		//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'WalkToggle' );
+
+		//theInput.RegisterListener( this, 'OnCommWalkToggle', 'WalkToggle' );
+
 		theInput.RegisterListener( this, 'OnMovementDoubleTapW', 'MovementDoubleTapW' );
 
 		theInput.RegisterListener( this, 'OnMovementDoubleTapS', 'MovementDoubleTapS' ); 
@@ -1132,6 +1150,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//theInput.RegisterListener( this, 'OnMoveBackward', 'GI_AxisRightY' );
 
 		theInput.RegisterListener( this, 'OnMoveSide', 'GI_AxisLeftX' );
+
+		theInput.RegisterListener( this, 'OnJump', 'Jump' );
 
 		//theInput.RegisterListener( this, 'OnMoveSideLeft', 'GI_AxisRightX' );
 
@@ -1184,6 +1204,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'LockAndGuard' );
 
 		theInput.RegisterListener( this, 'OnCbtLockAndGuard', 'LockAndGuard' );
+
+		//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Guard' );
+
+		//theInput.RegisterListener( this, 'OnCommGuard', 'Guard' );
 	}
 	
 
@@ -1258,13 +1282,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	event OnCommSprint( action : SInputAction )
 	{
-		if ( IsPressed( action ) && ACS_Enabled() ) { BruxaDash(); } //ACS
 		if( IsPressed( action ) )
 		{
 			thePlayer.SetSprintActionPressed(true);
 			
 			if ( thePlayer.rangedWeapon )
 				thePlayer.rangedWeapon.OnSprintHolster();
+		}
+	}
+
+	event OnCommWalkToggle( action : SInputAction )
+	{
+		if( IsPressed(action) && !thePlayer.GetIsSprinting() && !thePlayer.modifyPlayerSpeed )
+		{
+			if ( thePlayer.GetIsWalkToggled() )
+				thePlayer.SetWalkToggle( false );
+			else
+				thePlayer.SetWalkToggle( true );
 		}
 	}
 
@@ -1528,44 +1562,38 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 
-	event OnCbtRoll( action : SInputAction )
+	event OnCommGuard( action : SInputAction )
 	{
-		if ( theInput.LastUsedPCInput() )
+		if(thePlayer.IsCiri() && !GetCiriPlayer().HasSword())
+			return false;
+			
+		if ( !thePlayer.IsInsideInteraction() )
 		{
-			if ( IsPressed( action ) )
+			if (  thePlayer.IsActionAllowed(EIAB_Parry) )
 			{
-				if ( ACS_Enabled() ) 
-				{ 
-					if(theInput.IsActionPressed('Sprint') && theInput.LastUsedPCInput() || thePlayer.GetIsSprinting())
-					{
-						thePlayer.substateManager.QueueStateExternal('Jump');
-					}
-					else
-					{
-						ACS_WildHuntBlinkInit(); 
-					}
-	
-					return true;
-				} //ACS
-				thePlayer.EvadePressed(EBAT_Roll);
-			}
-		}
-		else
-		{
-			if ( IsPressed( action ) )
-			{
-				thePlayer.StartDodgeTimer();
-			}
-			else if ( IsReleased( action ) )
-			{
-				if ( thePlayer.IsDodgeTimerRunning() )
-				{
-					if ( ACS_Enabled() ) { thePlayer.StopDodgeTimer(); if ( !thePlayer.IsInsideInteraction() ) { ACS_WildHuntBlinkInit(); } return true; } //ACS
-					thePlayer.StopDodgeTimer();
-					if ( !thePlayer.IsInsideInteraction() )
-						thePlayer.EvadePressed(EBAT_Roll);
-				}
+				if( IsReleased(action) && thePlayer.GetCurrentStateName() == 'CombatFists' )
+					thePlayer.OnGuardedReleased();
+					if ( ACS_Enabled() ) { RemoveTimer('ACS_Shield_Spawn_Delay'); ACS_Shield_Destroy(); return true;} //ACS
 				
+				if( IsPressed(action) )
+				{
+					thePlayer.AddCounterTimeStamp(theGame.GetEngineTime());	
+
+					action_interrupt(); //ACS
+					thePlayer.SetGuarded(true);
+					thePlayer.OnPerformGuard();
+
+					if ( ACS_Enabled() ) { GuardAttack(); } //ACS
+				}
+				else if( IsReleased(action) )
+				{
+					thePlayer.SetGuarded(false);
+					if ( ACS_Enabled() ) { RemoveTimer('ACS_Shield_Spawn_Delay'); ACS_Shield_Destroy(); return true;} //ACS
+				}	
+			}
+			else
+			{
+				thePlayer.DisplayActionDisallowedHudMessage(EIAB_Parry);				
 			}
 		}
 	}
@@ -1583,7 +1611,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			thePlayer.SetGuarded(false);
 			thePlayer.OnGuardedReleased();	
-			if ( ACS_Enabled() ) { ACS_Shield_Destroy(); return true;} //ACS
+			if ( ACS_Enabled() ) { RemoveTimer('ACS_Shield_Spawn_Delay'); ACS_Shield_Destroy(); return true;} //ACS
 		}
 		
 		if( (thePlayer.IsWeaponHeld('fists') || thePlayer.GetCurrentStateName() == 'CombatFists') && !thePlayer.IsActionAllowed(EIAB_Fists))
@@ -1614,6 +1642,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.OnRangedForceHolster( true, true );
 			
 			thePlayer.AddCounterTimeStamp(theGame.GetEngineTime());	
+
+			if (thePlayer.HasTag('ACS_Size_Adjusted')) //ACS
+			{
+				 Grow_Geralt_Immediate_Fast(); //ACS
+
+				thePlayer.RemoveTag('ACS_Size_Adjusted'); //ACS
+			}
 
 			action_interrupt(); //ACS
 
@@ -1729,16 +1764,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& ACS_Enabled() 
 		)
 		{
-			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			if (thePlayer.HasTag('in_wraith'))
 			{
-				action_interrupt_on_movement(); //ACS
-				
-				thePlayer.RemoveTag('ACS_Special_Dodge');
-			}
+				BruxaDash_NEW();
 
-			if (
-				(theInput.GetActionValue('Sprint') > 0.85 
+				return true;
+			}
+			else if 
+			(
+			(theInput.GetActionValue('Sprint') > 0.85 
 			&& theInput.GetActionValue('Jump') == 0 
+			&& !thePlayer.IsInCombat() 
+			&& ACS_CombatToExplorationCheck()
 			//&& thePlayer.substateManager.GetStateCur() != 'Vault'
 			//&& thePlayer.substateManager.GetStateCur() != 'Climb' 
 			//&& thePlayer.substateManager.GetStateCur() != 'Jump' 
@@ -1748,7 +1785,14 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				BruxaDash_NEW();
 
 				return true;
-			}		
+			}
+
+			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			{
+				action_interrupt_on_movement(); //ACS
+				
+				thePlayer.RemoveTag('ACS_Special_Dodge');
+			}
 
 			ACS_Hijack_YAxis_Up_Forward();
 		}
@@ -1791,6 +1835,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 
+	event OnJump ( action : SInputAction )
+	{
+		if ( action.value > 0.7f
+		&& ACS_Enabled() 
+		)
+		{
+			action_interrupt_on_jump(); //ACS
+		}
+	}
+
 	event OnCbtDodge( action : SInputAction )
 	{
 		if( theInput.IsActionPressed('ControllerCastModifier') )
@@ -1800,11 +1854,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if(theInput.IsActionPressed('Sprint') && theInput.LastUsedPCInput() || thePlayer.GetIsSprinting())
 			{
+				action_interrupt_on_jump(); //ACS
+
 				thePlayer.substateManager.QueueStateExternal('Jump');
 			}
 			else
 			{
-				ACS_BruxaDodgeSlideBackInit(); 
+				BruxaDash_Combat(); 
 			}
 
 			return true;
@@ -1812,6 +1868,68 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if ( IsPressed(action) )
 			thePlayer.EvadePressed(EBAT_Dodge);
+	}
+
+	event OnCbtRoll( action : SInputAction )
+	{
+		if ( theInput.LastUsedPCInput() )
+		{
+			if ( IsPressed( action ) )
+			{
+				if ( ACS_Enabled() ) 
+				{
+					if( TeleportCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
+					{
+						TeleportDoubleTap = true;
+					}
+					else
+					{
+						TeleportDoubleTap = false;	
+					}
+
+					if(theInput.IsActionPressed('Sprint') && theInput.LastUsedPCInput() || thePlayer.GetIsSprinting())
+					{
+						action_interrupt_on_jump(); //ACS
+
+						thePlayer.substateManager.QueueStateExternal('Jump');
+					}
+					else
+					{
+						if (TeleportDoubleTap)
+						{
+							ACS_WildHuntBlinkInit(); 
+						}
+						else
+						{
+							ACS_RollInit();
+						}
+					}
+
+					TeleportCallTime = theGame.GetEngineTimeAsSeconds();
+
+					return true;
+				} //ACS
+				thePlayer.EvadePressed(EBAT_Roll);
+			}
+		}
+		else
+		{
+			if ( IsPressed( action ) )
+			{
+				thePlayer.StartDodgeTimer();
+			}
+			else if ( IsReleased( action ) )
+			{
+				if ( thePlayer.IsDodgeTimerRunning() )
+				{
+					if ( ACS_Enabled() ) { thePlayer.StopDodgeTimer(); if ( !thePlayer.IsInsideInteraction() ) { ACS_WildHuntBlinkInit(); } return true; } //ACS
+					thePlayer.StopDodgeTimer();
+					if ( !thePlayer.IsInsideInteraction() )
+						thePlayer.EvadePressed(EBAT_Roll);
+				}
+				
+			}
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1839,7 +1957,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		*/
 
-		thePlayer.SetSlideTarget ( actor );
+		//thePlayer.SetSlideTarget ( actor );
 
 		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
 			
@@ -1945,7 +2063,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if(!thePlayer.HasTag('ACS_Camo_Active'))
 		{
-			thePlayer.StopAllEffects();
+			//thePlayer.StopAllEffects();
 		}
 		
 		if (thePlayer.HasTag('ACS_ember_particles_active'))
@@ -1961,7 +2079,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if(!thePlayer.HasTag('ACS_Camo_Active'))
 		{
-			thePlayer.StopAllEffects();
+			//thePlayer.StopAllEffects();
 		}
 		
 		if (thePlayer.HasTag('ACS_ember_particles_active'))
@@ -2024,6 +2142,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if ( !thePlayer.HasTag('axii_sword_equipped') || !thePlayer.IsGuarded() )
 		{
+			RemoveTimer('ACS_Shield_Spawn_Delay');
+
 			ACS_Axii_Shield_Destroy_IMMEDIATE();
 		}
 		
@@ -2075,6 +2195,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if ( !thePlayer.HasTag('axii_sword_equipped') || !thePlayer.IsGuarded() )
 		{
+			RemoveTimer('ACS_Shield_Spawn_Delay');
+
 			ACS_Axii_Shield_Destroy_IMMEDIATE();
 		}
 		
@@ -2117,20 +2239,83 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		//thePlayer.RaiseEvent( 'AttackInterrupt' );
 
-		if (thePlayer.IsInCombat())
-		{
-			thePlayer.ClearAnimationSpeedMultipliers();
+		//if (thePlayer.IsInCombat())
+		//{
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 
 			movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
 			movementAdjustor.CancelAll();
 
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			ticket = movementAdjustor.CreateNewRequest( 'ACS_Action_Interrupt_Adjust' );
+
+			actor = (CActor)( thePlayer.GetTarget() );
+				
+			movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+
+			movementAdjustor.ShouldStartAt(ticket, thePlayer.GetWorldPosition());
+			movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+			movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
+
+			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			{	
+				if ( ACS_GetTargetMode() == 0 )
+				{
+					movementAdjustor.RotateTowards( ticket, actor );  
+				}
+				else if ( ACS_GetTargetMode() == 1 )
+				{
+					if (thePlayer.IsHardLockEnabled())
+					{
+						movementAdjustor.RotateTowards( ticket, actor );  
+					}
+				}
+			}
+
+			if (thePlayer.IsAlive())
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			}
 			
 			if( !thePlayer.HasTag('axii_sword_equipped') && !thePlayer.IsGuarded() )
 			{
-				thePlayer.RaiseEvent( 'CombatTaunt' );
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );}
 			}
+		//}
+	}
+
+	function action_interrupt_on_jump()
+	{
+		settings_interrupt.blendIn = 0;
+		settings_interrupt.blendOut = 0;
+
+		if (thePlayer.IsAlive() && !thePlayer.IsInAir())
+		{
+			if (thePlayer.HasTag('ACS_Size_Adjusted'))
+			{
+				GetACSWatcher().Grow_Geralt_Immediate();
+
+				thePlayer.RemoveTag('ACS_Size_Adjusted');
+			}
+
+			if ( thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+			//&& !thePlayer.HasTag('blood_sucking')
+			)
+			{
+				if (!thePlayer.HasTag('aard_sword_equipped'))
+				{
+					ACS_Weapon_Respawn();
+				}
+				
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+			}
+
+			movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+			movementAdjustor.CancelAll();
+			thePlayer.ClearAnimationSpeedMultipliers();
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 		}
 	}
 
@@ -2153,19 +2338,45 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
 
-		thePlayer.ClearAnimationSpeedMultipliers();
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
 		movementAdjustor.CancelAll();
 
-		thePlayer.ActionCancelAll();
+		ticket = movementAdjustor.CreateNewRequest( 'ACS_Action_Interrupt_On_Movement_Adjust' );
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+		actor = (CActor)( thePlayer.GetTarget() );
+			
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+
+		movementAdjustor.ShouldStartAt(ticket, thePlayer.GetWorldPosition());
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
+
+		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		{	
+			if ( ACS_GetTargetMode() == 0 )
+			{
+				movementAdjustor.RotateTowards( ticket, actor );  
+			}
+			else if ( ACS_GetTargetMode() == 1 )
+			{
+				if (thePlayer.IsHardLockEnabled())
+				{
+					movementAdjustor.RotateTowards( ticket, actor );  
+				}
+			}
+		}
+
+		if (thePlayer.IsAlive())
+		{
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+		}
 
 		if( !thePlayer.HasTag('axii_sword_equipped') && !thePlayer.IsGuarded() )
 		{
-			thePlayer.RaiseEvent( 'CombatTaunt' );
+			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );}
 		}
 	}
 
@@ -2219,13 +2430,20 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& VecDistance( thePlayer.GetWorldPosition(), combatTarget.GetNearestPointInBothPersonalSpaces( thePlayer.GetWorldPosition() ) ) < finisherDist 
 		)
 		{
-			RemoveTimer('Grow_Geralt_Delay');
-			RemoveTimer('Grow_Geralt_Repeat');
-			RemoveTimer('Shrink_Geralt_Repeat');
-			RemoveTimer('Grow_Geralt_Immediate_Repeat');
-			RemoveTimer('Remove_Player_Grow_Immediate');
+			//RemoveTimer('Grow_Geralt_Delay');
+			//RemoveTimer('Grow_Geralt_Repeat');
+			//RemoveTimer('Shrink_Geralt_Repeat');
+			//RemoveTimer('Grow_Geralt_Immediate_Repeat');
+			//RemoveTimer('Remove_Player_Grow_Immediate');
 
-			AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
+			if (thePlayer.HasTag('ACS_Size_Adjusted'))
+			{
+				GetACSWatcher().Grow_Geralt_Immediate();
+
+				thePlayer.RemoveTag('ACS_Size_Adjusted');
+			}
+
+			//AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
 
 			thePlayer.BlockAction( EIAB_Crossbow, 			'ACS_Finisher');
 			thePlayer.BlockAction( EIAB_CallHorse,			'ACS_Finisher');
@@ -2248,7 +2466,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Finisher');
 
 			thePlayer.SetGuarded(false);
-			thePlayer.OnGuardedReleased();	
+			thePlayer.OnGuardedReleased();
+
+			ACS_Axii_Shield_Destroy_IMMEDIATE();
 
 			thePlayer.AddTag('ACS_IsPerformingFinisher');
 
@@ -2261,6 +2481,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			forcedFinisherVictim = combatTarget;
 			thePlayer.CleanCombatActionBuffer();
 			thePlayer.OnBlockAllCombatTickets( true );
+
+			moveTargets.Clear();
 			moveTargets = thePlayer.GetMoveTargets();
 					
 			for( i = 0; i < moveTargets.Size(); i += 1 )
@@ -2311,6 +2533,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function ACS_Finisher_Internal()
 	{
+		wounds.Clear();
+
 		ccomp = npc.GetComponent("Finish");
 
 		ccompEnabled = ccomp.IsEnabled();
@@ -2351,7 +2575,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
 
-				npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+				npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
 				action_interrupt();
 
@@ -2414,9 +2638,14 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					
 					npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
 
-					npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+					npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
 					npc.Kill('ACS_Dismember', false, thePlayer);
+
+					if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+					{
+						thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+					}
 				}
 			}	
 		}
@@ -2424,6 +2653,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function ACS_Dismember_Internal()
 	{
+		wounds.Clear();
+
 		thePlayer.AddTimer( 'RemoveForceFinisher', 0.0, false );
 
 		npc.AddAbility( 'InstantKillImmune' );
@@ -2467,16 +2698,27 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 				
-				if ( wounds.Size() > 0 )
+				if ( wounds.Size() >= 0 )
 				{
 					usedWound = wounds[ RandRange( wounds.Size() ) ];
 				}
 				
-				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
+				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
 
-				npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+				npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
 				npc.Kill('ACS_Dismember', false, thePlayer);
+
+				if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+				{
+					thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+				}
+
+				if (thePlayer.HasTag('vampire_claws_equipped'))
+				{
+					thePlayer.PlayEffectSingle('blood_effect_claws_test');
+					thePlayer.StopEffect('blood_effect_claws_test');
+				}
 			}
 			else if ( npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0 )
 			{	
@@ -2498,23 +2740,32 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 				
-				if ( wounds.Size() > 0 )
+				if ( wounds.Size() >= 0 )
 				{
 					usedWound = wounds[ RandRange( wounds.Size() ) ];
 				}
 				
-				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
+				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
 
-				npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+				npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
 				npc.Kill('ACS_Dismember', false, thePlayer);
+
+				if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+				{
+					thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+				}
+
+				if (thePlayer.HasTag('vampire_claws_equipped'))
+				{
+					thePlayer.PlayEffectSingle('blood_effect_claws_test');
+					thePlayer.StopEffect('blood_effect_claws_test');
+				}
 			}
 		}
 		else
 		{
-			if (
-			npc.UsesVitality() && npc.GetStat( BCS_Vitality ) <= 0
-			)
+			if ( npc.UsesVitality() && npc.GetStat( BCS_Vitality ) <= 0 )
 			{	
 				npc.StopAllEffects();
 
@@ -2541,20 +2792,24 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 
-				if ( wounds.Size() > 0 )
+				if ( wounds.Size() >= 0 )
 				{
 					usedWound = wounds[ RandRange( wounds.Size() ) ];
 				}
 				
-				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
+				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
 
-				npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+				npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
 				npc.Kill('ACS_Dismember', false, thePlayer);
+
+				if (thePlayer.HasTag('vampire_claws_equipped'))
+				{
+					thePlayer.PlayEffectSingle('blood_effect_claws_test');
+					thePlayer.StopEffect('blood_effect_claws_test');
+				}
 			}
-			else if (
-			npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0
-			)
+			else if ( npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0 )
 			{	
 				npc.StopAllEffects();
 
@@ -2581,18 +2836,103 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 
-				if ( wounds.Size() > 0 )
+				if ( wounds.Size() >= 0 )
 				{
 					usedWound = wounds[ RandRange( wounds.Size() ) ];
 				}
 				
-				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
+				npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
 
-				npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+				npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
 
-				//npc.Kill('ACS_Dismember', false, thePlayer);
+				npc.Kill('ACS_Dismember', false, thePlayer);
+
+				if (thePlayer.HasTag('vampire_claws_equipped'))
+				{
+					thePlayer.PlayEffectSingle('blood_effect_claws_test');
+					thePlayer.StopEffect('blood_effect_claws_test');
+				}
 			}
 		}	
+	}
+
+	function ACS_Dismember_Vampire_Claws()
+	{
+		wounds.Clear();
+
+		thePlayer.AddTimer( 'RemoveForceFinisher', 0.0, false );
+
+		npc.AddAbility( 'InstantKillImmune' );
+
+		if (!npc.HasAbility('DisableFinishers'))
+		{
+			npc.AddAbility( 'DisableFinishers', true);
+		}
+
+		if (npc.HasAbility('ForceFinisher'))
+		{
+			npc.RemoveAbility( 'ForceFinisher');
+		} 
+
+		npc.SignalGameplayEvent('DisableFinisher');
+
+		if ( npc.UsesVitality() && npc.GetStat( BCS_Vitality ) <= 0 )
+		{
+			dismembermentComp = (CDismembermentComponent)(npc.GetComponentByClassName( 'CDismembermentComponent' ));
+			if(!dismembermentComp) return;
+			
+			dismembermentComp.GetWoundsNames( wounds, WTF_Explosion );
+			
+			if ( wounds.Size() > 0 )
+			{
+				usedWound = wounds[ RandRange( wounds.Size() ) ];
+			}
+			
+			npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
+
+			npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+
+			npc.Kill('ACS_Dismember', false, thePlayer);
+
+			thePlayer.PlayEffectSingle('blood_effect_claws_test');
+			thePlayer.StopEffect('blood_effect_claws_test');
+
+			if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+			{
+				thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+			}
+
+			return;
+		}
+
+		if ( npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0 )
+		{
+			dismembermentComp = (CDismembermentComponent)(npc.GetComponentByClassName( 'CDismembermentComponent' ));
+			if(!dismembermentComp) return;
+			
+			dismembermentComp.GetWoundsNames( wounds, WTF_Explosion );
+			
+			if ( wounds.Size() > 0 )
+			{
+				usedWound = wounds[ RandRange( wounds.Size() ) ];
+			}
+			
+			npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false );
+
+			npc.AddTimer( 'DelayedDismemberTimer', 0.0, false );
+
+			npc.Kill('ACS_Dismember', false, thePlayer);
+
+			thePlayer.PlayEffectSingle('blood_effect_claws_test');
+			thePlayer.StopEffect('blood_effect_claws_test');
+
+			if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
+			{
+				thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
+			}
+
+			return;
+		}
 	}
 
 	function EmbersIndicator()
@@ -2638,6 +2978,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		register_extra_inputs();
 
 		vACS_Shield_Summon = new cACS_Shield_Summon in this;
+
+		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
+		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
 
 		if ( !theGame.IsDialogOrCutscenePlaying() 
 		&& !thePlayer.IsInNonGameplayCutscene() 
@@ -2840,6 +3183,66 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					thePlayer.RemoveTag('ACS_Holster_Sword_Effect');
 				}
 			}
+
+			if ( thePlayer.IsPerformingFinisher()
+			|| thePlayer.HasTag('ACS_IsPerformingFinisher')
+			)
+			{
+				if (ACS_Player_Scale() != 1)
+				{
+					if (thePlayer.HasTag('ACS_Player_Scale_Revert'))
+					{
+						thePlayer.RemoveTag('ACS_Player_Scale_Revert');
+					}
+
+					if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
+					{
+						RemoveTimer('ACS_Embers_Timer');
+
+						thePlayer.StopAllEffects();
+
+						thePlayer.PlayEffectSingle('ethereal_appear');
+						thePlayer.StopEffect('ethereal_appear');
+
+						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+						thePlayer.StopEffect('special_attack_only_black_fx');
+
+						thePlayer.AddTag('ACS_Player_Scale_Force_Changed');
+					}
+				}
+
+				playerAnimcomp.SetScale(Vector(ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale()));
+			}
+			else
+			{
+				if (ACS_Player_Scale() != 1)
+				{
+					if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
+					{
+						thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
+					}
+
+					if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
+					{
+						thePlayer.StopAllEffects();
+						
+						thePlayer.PlayEffectSingle('ethereal_appear');
+						thePlayer.StopEffect('ethereal_appear');
+
+						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+						thePlayer.StopEffect('special_attack_only_black_fx');
+
+						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+
+						thePlayer.AddTag('ACS_Player_Scale_Revert');
+					}
+				}
+			}
+		}
+
+		if( thePlayer.GetStat( BCS_Vitality ) >= thePlayer.GetStatMax( BCS_Vitality ) * 0.25 )
+		{
+			thePlayer.StopEffect('critical_low_health');
 		}
 
 		LangCheck();
@@ -3126,7 +3529,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		if
 		(
 		thePlayer.HasTag('axii_sword_equipped') 
-		&& !thePlayer.IsPerformingFinisher() 
+		&& !thePlayer.HasTag('ACS_IsPerformingFinisher') 
 		//&& thePlayer.HasTag('ACS_Shield_Destroyed') 
 		&& !thePlayer.HasTag('ACS_Shield_Summoned') 
 		&& !thePlayer.IsCurrentlyDodging()
@@ -3139,29 +3542,36 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		)
 		)
 		{
-			vACS_Shield_Summon.Axii_Persistent_Shield_Summon();	
+			//RemoveTimer('ACS_Shield_Spawn_Delay');
+
+			//AddTimer('ACS_Shield_Spawn_Delay', 0.75, false);
+
+			//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
+
+			//thePlayer.AddTag('ACS_Shield_Summoned');
 		}
 		else if 
 		(
 			thePlayer.HasTag('ACS_Shield_Summoned')
 			&&
 			(
-				!thePlayer.IsGuarded()
-				|| !thePlayer.HasTag('axii_sword_equipped') 
+				!thePlayer.IsGuarded()|| 
+				!thePlayer.HasTag('axii_sword_equipped') 
 				|| thePlayer.IsPerformingFinisher()
 				//|| thePlayer.IsCurrentlyDodging()
 			)	
 		)
 		{
-			ACS_Axii_Shield_Destroy_DELAY();
+			//RemoveTimer('ACS_Shield_Spawn_Delay');
+			//ACS_Axii_Shield_Destroy_DELAY();
 		}
 
 		if (thePlayer.IsInCombat())
 		{
 			if(thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				thePlayer.StopEffect('third_teleport_out');
-				thePlayer.PlayEffectSingle('third_teleport_out');
+				//thePlayer.StopEffect('third_teleport_out');
+				//thePlayer.PlayEffectSingle('third_teleport_out');
 			}
 
 			if(thePlayer.HasTag('ACS_Camo_Active'))
@@ -3316,6 +3726,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function NPC_Fear_Reaction()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -3507,6 +3919,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//actors = GetActorsInRange(thePlayer, 100, 100, 'ACS_taunted' );
 
 		//theGame.GetActorsByTag( 'ACS_taunted', actors );
+
+		actors.Clear();
 	
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -3540,6 +3954,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function npc_notice_player()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 20, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -3563,6 +3979,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//actors = GetActorsInRange(thePlayer, 10, 10 );
 
 		//actors = GetActorsInRange(thePlayer, 100, 100, 'ACS_taunted' );
+
+		actors.Clear();
 
 		theGame.GetActorsByTag( 'ACS_taunted', actors );
 
@@ -3599,7 +4017,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& WraithModeCheck()
 		&& BruxaBiteCheck())
 		{
-			thePlayer.StopAllEffects();
+			//thePlayer.StopAllEffects();
 
 			if (
 			thePlayer.HasTag('quen_sword_equipped')
@@ -3661,7 +4079,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2  ); }
 															
@@ -3713,7 +4131,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2  ); }
 															
@@ -3765,7 +4183,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		geraltRandomGiantHeavyAttackAlt();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 3  ); }
 																
@@ -3776,7 +4194,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		geraltClawWhirlReactionAttack();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2  ); }
 																
@@ -3787,7 +4205,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		geraltRandomGiantHeavyAttack();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 3  ); }
 																
@@ -3798,7 +4216,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		geraltRandomAxeSpecialAttackAlt();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 3  ); }
 															
@@ -3905,6 +4323,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function forest_god_demonic_effects()
 	{
+		forest_god_demonic_fx.Clear();
+
 		forest_god_demonic_fx.PushBack('demonic_possession');
 		forest_god_demonic_fx.PushBack('demonic_possession_r_hand');
 		forest_god_demonic_fx.PushBack('demonic_possession_l_hand');
@@ -4184,7 +4604,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					RemoveTimer('ACS_Embers_Timer');
 
-					thePlayer.StopAllEffects();
+					//thePlayer.StopAllEffects();
 
 					thePlayer.PlayEffectSingle('ethereal_appear');
 					thePlayer.StopEffect('ethereal_appear');
@@ -4215,7 +4635,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
 					{
-						thePlayer.StopAllEffects();
+						//thePlayer.StopAllEffects();
 						
 						thePlayer.PlayEffectSingle('ethereal_appear');
 						thePlayer.StopEffect('ethereal_appear');
@@ -4223,9 +4643,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
 						thePlayer.StopEffect('special_attack_only_black_fx');
 
-						thePlayer.AddTag('ACS_Player_Scale_Revert');
-
 						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+
+						thePlayer.AddTag('ACS_Player_Scale_Revert');
 					}
 				}
 
@@ -4238,6 +4658,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function Shrink_Geralt( delay : float )
 	{
+		RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
+		RemoveTimer('ACS_Set_Player_Scale');
+
 		if (!thePlayer.HasTag('ACS_Size_Adjusted'))
 		{
 			thePlayer.AddTag('ACS_Size_Adjusted');
@@ -4290,6 +4713,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		RemoveTimer('Shrink_Geralt_Repeat');
 		RemoveTimer('Grow_Geralt_Immediate_Repeat');
+		RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
 		RemoveTimer('Grow_Geralt_Repeat');
 		RemoveTimer('Remove_Player_Grow_Immediate');
 
@@ -4333,6 +4757,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		RemoveTimer('Grow_Geralt_Repeat');
 		RemoveTimer('Shrink_Geralt_Repeat');
 		RemoveTimer('Grow_Geralt_Immediate_Repeat');
+		RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
 		RemoveTimer('Remove_Player_Grow_Immediate');
 		RemoveTimer('ACS_Set_Player_Scale');
 
@@ -4344,7 +4769,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		else
 		{
 			AddTimer('Grow_Geralt_Immediate_Repeat', 0.01, true);
-			AddTimer('Remove_Player_Grow_Immediate', 3, false);
+			AddTimer('Remove_Player_Grow_Immediate', 0.75, false);
 		}
 	}
 
@@ -4372,6 +4797,79 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	function Grow_Geralt_Immediate_Fast()
+	{
+		RemoveTimer('Grow_Geralt_Delay');
+		RemoveTimer('Grow_Geralt_Repeat');
+		RemoveTimer('Shrink_Geralt_Repeat');
+		RemoveTimer('Grow_Geralt_Immediate_Repeat');
+		RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
+		RemoveTimer('Remove_Player_Grow_Immediate');
+		RemoveTimer('ACS_Set_Player_Scale');
+
+		if (size == ACS_Player_Scale())
+		{
+			AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
+			RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
+		}
+		else
+		{
+			AddTimer('Grow_Geralt_Immediate_Fast_Repeat', 0.01, true);
+			AddTimer('Remove_Player_Grow_Immediate', 0.75, false);
+		}
+	}
+
+	function Grow_Geralt_Immediate_Fast_Actual()
+	{
+		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
+		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
+
+		if (size < ACS_Player_Scale())
+		{
+			size += ACS_Player_Scale() * 0.01;
+
+			playerAnimcomp.SetScale(Vector(size,size,size,size));
+		}
+	}
+
+	timer function Grow_Geralt_Immediate_Fast_Repeat( time : float , id : int )
+	{
+		Grow_Geralt_Immediate_Fast_Actual();
+
+		if (size == ACS_Player_Scale())
+		{
+			AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
+			RemoveTimer('Grow_Geralt_Immediate_Fast_Repeat');
+		}
+	}
+
+	function Death_Delay_Animation_Actual()
+	{
+		settings_interrupt.blendIn = 0;
+		settings_interrupt.blendOut = 1;
+
+		thePlayer.StopAllEffects();
+		thePlayer.PlayEffectSingle('ethereal_debuff');
+		thePlayer.StopEffect('ethereal_debuff');
+
+		if ( ACS_GetWeaponMode() == 0 
+		|| ACS_GetWeaponMode() == 1
+		|| ACS_GetWeaponMode() == 2 )
+		{
+			//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_burning_ACS', 'PLAYER_SLOT', settings_interrupt );
+		}
+
+		if( RandF() < 0.5 ) 
+		{ 
+			//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_right', 'PLAYER_SLOT', settings_interrupt );
+		}
+		else
+		{
+			//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_left', 'PLAYER_SLOT', settings_interrupt );
+		}
+	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	timer function ACS_Combo_Counter_Reset_Timer(deltaTime : float , id : int)
@@ -4587,6 +5085,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		blood_fx.PushBack('weapon_blood_stage1');
 		blood_fx.PushBack('weapon_blood_stage2'); 
 	}
+
+	function monster_blood_trail_effects()
+	{
+		blood_fx.Clear();
+		blood_fx.PushBack('green_blood_trail');
+	}
 	
 	function weapon_blood_fx()
 	{
@@ -4599,13 +5103,61 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				axii_sword_1().StopEffect('default_blood_trail');
+				axii_sword_1().StopEffect('cutscene_blood_trail');
+				axii_sword_1().StopEffect('blood_trail_horseriding');
+				axii_sword_1().StopEffect('blood_trail_finisher');
+				axii_sword_1().StopEffect('fast_trail_blood_fx');
+				axii_sword_1().StopEffect('weapon_blood');
+				axii_sword_1().StopEffect('weapon_blood_stage1');
+				axii_sword_1().StopEffect('weapon_blood_stage2');
 
-				axii_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_sword_4().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_sword_5().StopEffect(blood_fx[blood_fx.Size()]);
+				axii_sword_2().StopEffect('default_blood_trail');
+				axii_sword_2().StopEffect('cutscene_blood_trail');
+				axii_sword_2().StopEffect('blood_trail_horseriding');
+				axii_sword_2().StopEffect('blood_trail_finisher');
+				axii_sword_2().StopEffect('fast_trail_blood_fx');
+				axii_sword_2().StopEffect('weapon_blood');
+				axii_sword_2().StopEffect('weapon_blood_stage1');
+				axii_sword_2().StopEffect('weapon_blood_stage2');
+
+				axii_sword_3().StopEffect('default_blood_trail');
+				axii_sword_3().StopEffect('cutscene_blood_trail');
+				axii_sword_3().StopEffect('blood_trail_horseriding');
+				axii_sword_3().StopEffect('blood_trail_finisher');
+				axii_sword_3().StopEffect('fast_trail_blood_fx');
+				axii_sword_3().StopEffect('weapon_blood');
+				axii_sword_3().StopEffect('weapon_blood_stage1');
+				axii_sword_3().StopEffect('weapon_blood_stage2');
+
+				axii_sword_4().StopEffect('default_blood_trail');
+				axii_sword_4().StopEffect('cutscene_blood_trail');
+				axii_sword_4().StopEffect('blood_trail_horseriding');
+				axii_sword_4().StopEffect('blood_trail_finisher');
+				axii_sword_4().StopEffect('fast_trail_blood_fx');
+				axii_sword_4().StopEffect('weapon_blood');
+				axii_sword_4().StopEffect('weapon_blood_stage1');
+				axii_sword_4().StopEffect('weapon_blood_stage2');
+
+				axii_sword_5().StopEffect('default_blood_trail');
+				axii_sword_5().StopEffect('cutscene_blood_trail');
+				axii_sword_5().StopEffect('blood_trail_horseriding');
+				axii_sword_5().StopEffect('blood_trail_finisher');
+				axii_sword_5().StopEffect('fast_trail_blood_fx');
+				axii_sword_5().StopEffect('weapon_blood');
+				axii_sword_5().StopEffect('weapon_blood_stage1');
+				axii_sword_5().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				axii_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				axii_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4615,7 +5167,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
@@ -4626,11 +5186,43 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				axii_secondary_sword_1().StopEffect('default_blood_trail');
+				axii_secondary_sword_1().StopEffect('cutscene_blood_trail');
+				axii_secondary_sword_1().StopEffect('blood_trail_horseriding');
+				axii_secondary_sword_1().StopEffect('blood_trail_finisher');
+				axii_secondary_sword_1().StopEffect('fast_trail_blood_fx');
+				axii_secondary_sword_1().StopEffect('weapon_blood');
+				axii_secondary_sword_1().StopEffect('weapon_blood_stage1');
+				axii_secondary_sword_1().StopEffect('weapon_blood_stage2');
 
-				axii_secondary_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_secondary_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				axii_secondary_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
+				axii_secondary_sword_2().StopEffect('default_blood_trail');
+				axii_secondary_sword_2().StopEffect('cutscene_blood_trail');
+				axii_secondary_sword_2().StopEffect('blood_trail_horseriding');
+				axii_secondary_sword_2().StopEffect('blood_trail_finisher');
+				axii_secondary_sword_2().StopEffect('fast_trail_blood_fx');
+				axii_secondary_sword_2().StopEffect('weapon_blood');
+				axii_secondary_sword_2().StopEffect('weapon_blood_stage1');
+				axii_secondary_sword_2().StopEffect('weapon_blood_stage2');
+
+				axii_secondary_sword_3().StopEffect('default_blood_trail');
+				axii_secondary_sword_3().StopEffect('cutscene_blood_trail');
+				axii_secondary_sword_3().StopEffect('blood_trail_horseriding');
+				axii_secondary_sword_3().StopEffect('blood_trail_finisher');
+				axii_secondary_sword_3().StopEffect('fast_trail_blood_fx');
+				axii_secondary_sword_3().StopEffect('weapon_blood');
+				axii_secondary_sword_3().StopEffect('weapon_blood_stage1');
+				axii_secondary_sword_3().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				axii_secondary_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				axii_secondary_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4638,7 +5230,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
@@ -4649,11 +5249,43 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				quen_sword_1().StopEffect('default_blood_trail');
+				quen_sword_1().StopEffect('cutscene_blood_trail');
+				quen_sword_1().StopEffect('blood_trail_horseriding');
+				quen_sword_1().StopEffect('blood_trail_finisher');
+				quen_sword_1().StopEffect('fast_trail_blood_fx');
+				quen_sword_1().StopEffect('weapon_blood');
+				quen_sword_1().StopEffect('weapon_blood_stage1');
+				quen_sword_1().StopEffect('weapon_blood_stage2');
 
-				quen_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
+				quen_sword_2().StopEffect('default_blood_trail');
+				quen_sword_2().StopEffect('cutscene_blood_trail');
+				quen_sword_2().StopEffect('blood_trail_horseriding');
+				quen_sword_2().StopEffect('blood_trail_finisher');
+				quen_sword_2().StopEffect('fast_trail_blood_fx');
+				quen_sword_2().StopEffect('weapon_blood');
+				quen_sword_2().StopEffect('weapon_blood_stage1');
+				quen_sword_2().StopEffect('weapon_blood_stage2');
+
+				quen_sword_3().StopEffect('default_blood_trail');
+				quen_sword_3().StopEffect('cutscene_blood_trail');
+				quen_sword_3().StopEffect('blood_trail_horseriding');
+				quen_sword_3().StopEffect('blood_trail_finisher');
+				quen_sword_3().StopEffect('fast_trail_blood_fx');
+				quen_sword_3().StopEffect('weapon_blood');
+				quen_sword_3().StopEffect('weapon_blood_stage1');
+				quen_sword_3().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				quen_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				quen_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4661,7 +5293,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
@@ -4672,14 +5312,70 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				quen_secondary_sword_1().StopEffect('default_blood_trail');
+				quen_secondary_sword_1().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_1().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_1().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_1().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_1().StopEffect('weapon_blood');
+				quen_secondary_sword_1().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_1().StopEffect('weapon_blood_stage2');
 
-				quen_secondary_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_secondary_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_secondary_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_secondary_sword_4().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_secondary_sword_5().StopEffect(blood_fx[blood_fx.Size()]);
-				quen_secondary_sword_6().StopEffect(blood_fx[blood_fx.Size()]);
+				quen_secondary_sword_2().StopEffect('default_blood_trail');
+				quen_secondary_sword_2().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_2().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_2().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_2().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_2().StopEffect('weapon_blood');
+				quen_secondary_sword_2().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_2().StopEffect('weapon_blood_stage2');
+
+				quen_secondary_sword_3().StopEffect('default_blood_trail');
+				quen_secondary_sword_3().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_3().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_3().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_3().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_3().StopEffect('weapon_blood');
+				quen_secondary_sword_3().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_3().StopEffect('weapon_blood_stage2');
+
+				quen_secondary_sword_4().StopEffect('default_blood_trail');
+				quen_secondary_sword_4().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_4().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_4().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_4().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_4().StopEffect('weapon_blood');
+				quen_secondary_sword_4().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_4().StopEffect('weapon_blood_stage2');
+
+				quen_secondary_sword_5().StopEffect('default_blood_trail');
+				quen_secondary_sword_5().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_5().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_5().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_5().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_5().StopEffect('weapon_blood');
+				quen_secondary_sword_5().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_5().StopEffect('weapon_blood_stage2');
+
+				quen_secondary_sword_6().StopEffect('default_blood_trail');
+				quen_secondary_sword_6().StopEffect('cutscene_blood_trail');
+				quen_secondary_sword_6().StopEffect('blood_trail_horseriding');
+				quen_secondary_sword_6().StopEffect('blood_trail_finisher');
+				quen_secondary_sword_6().StopEffect('fast_trail_blood_fx');
+				quen_secondary_sword_6().StopEffect('weapon_blood');
+				quen_secondary_sword_6().StopEffect('weapon_blood_stage1');
+				quen_secondary_sword_6().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				quen_secondary_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				quen_secondary_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4690,22 +5386,91 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
 		else if (thePlayer.HasTag('aard_sword_equipped'))
 		{
-			//ACSGetEquippedSword().StopAllEffects();
+			aard_blade_1().StopEffect('default_blood_trail');
+			aard_blade_1().StopEffect('cutscene_blood_trail');
+			aard_blade_1().StopEffect('blood_trail_horseriding');
+			aard_blade_1().StopEffect('blood_trail_finisher');
+			aard_blade_1().StopEffect('fast_trail_blood_fx');
+			aard_blade_1().StopEffect('weapon_blood');
+			aard_blade_1().StopEffect('weapon_blood_stage1');
+			aard_blade_1().StopEffect('weapon_blood_stage2');
 
-			aard_blade_1().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_2().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_3().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_4().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_5().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_6().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_7().StopEffect(blood_fx[blood_fx.Size()]);
-			aard_blade_8().StopEffect(blood_fx[blood_fx.Size()]);
+			aard_blade_2().StopEffect('default_blood_trail');
+			aard_blade_2().StopEffect('cutscene_blood_trail');
+			aard_blade_2().StopEffect('blood_trail_horseriding');
+			aard_blade_2().StopEffect('blood_trail_finisher');
+			aard_blade_2().StopEffect('fast_trail_blood_fx');
+			aard_blade_2().StopEffect('weapon_blood');
+			aard_blade_2().StopEffect('weapon_blood_stage1');
+			aard_blade_2().StopEffect('weapon_blood_stage2');
+
+			aard_blade_3().StopEffect('default_blood_trail');
+			aard_blade_3().StopEffect('cutscene_blood_trail');
+			aard_blade_3().StopEffect('blood_trail_horseriding');
+			aard_blade_3().StopEffect('blood_trail_finisher');
+			aard_blade_3().StopEffect('fast_trail_blood_fx');
+			aard_blade_3().StopEffect('weapon_blood');
+			aard_blade_3().StopEffect('weapon_blood_stage1');
+			aard_blade_3().StopEffect('weapon_blood_stage2');
+
+			aard_blade_4().StopEffect('default_blood_trail');
+			aard_blade_4().StopEffect('cutscene_blood_trail');
+			aard_blade_4().StopEffect('blood_trail_horseriding');
+			aard_blade_4().StopEffect('blood_trail_finisher');
+			aard_blade_4().StopEffect('fast_trail_blood_fx');
+			aard_blade_4().StopEffect('weapon_blood');
+			aard_blade_4().StopEffect('weapon_blood_stage1');
+			aard_blade_4().StopEffect('weapon_blood_stage2');
+
+			aard_blade_5().StopEffect('default_blood_trail');
+			aard_blade_5().StopEffect('cutscene_blood_trail');
+			aard_blade_5().StopEffect('blood_trail_horseriding');
+			aard_blade_5().StopEffect('blood_trail_finisher');
+			aard_blade_5().StopEffect('fast_trail_blood_fx');
+			aard_blade_5().StopEffect('weapon_blood');
+			aard_blade_5().StopEffect('weapon_blood_stage1');
+			aard_blade_5().StopEffect('weapon_blood_stage2');
+
+			aard_blade_6().StopEffect('default_blood_trail');
+			aard_blade_6().StopEffect('cutscene_blood_trail');
+			aard_blade_6().StopEffect('blood_trail_horseriding');
+			aard_blade_6().StopEffect('blood_trail_finisher');
+			aard_blade_6().StopEffect('fast_trail_blood_fx');
+			aard_blade_6().StopEffect('weapon_blood');
+			aard_blade_6().StopEffect('weapon_blood_stage1');
+			aard_blade_6().StopEffect('weapon_blood_stage2');
+
+			aard_blade_7().StopEffect('default_blood_trail');
+			aard_blade_7().StopEffect('cutscene_blood_trail');
+			aard_blade_7().StopEffect('blood_trail_horseriding');
+			aard_blade_7().StopEffect('blood_trail_finisher');
+			aard_blade_7().StopEffect('fast_trail_blood_fx');
+			aard_blade_7().StopEffect('weapon_blood');
+			aard_blade_7().StopEffect('weapon_blood_stage1');
+			aard_blade_7().StopEffect('weapon_blood_stage2');
+
+			aard_blade_8().StopEffect('default_blood_trail');
+			aard_blade_8().StopEffect('cutscene_blood_trail');
+			aard_blade_8().StopEffect('blood_trail_horseriding');
+			aard_blade_8().StopEffect('blood_trail_finisher');
+			aard_blade_8().StopEffect('fast_trail_blood_fx');
+			aard_blade_8().StopEffect('weapon_blood');
+			aard_blade_8().StopEffect('weapon_blood_stage1');
+			aard_blade_8().StopEffect('weapon_blood_stage2');
 
 			aard_blade_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			aard_blade_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4723,16 +5488,88 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				aard_secondary_sword_1().StopEffect('default_blood_trail');
+				aard_secondary_sword_1().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_1().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_1().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_1().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_1().StopEffect('weapon_blood');
+				aard_secondary_sword_1().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_1().StopEffect('weapon_blood_stage2');
 
-				aard_secondary_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_4().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_5().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_6().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_7().StopEffect(blood_fx[blood_fx.Size()]);
-				aard_secondary_sword_8().StopEffect(blood_fx[blood_fx.Size()]);
+				aard_secondary_sword_2().StopEffect('default_blood_trail');
+				aard_secondary_sword_2().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_2().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_2().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_2().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_2().StopEffect('weapon_blood');
+				aard_secondary_sword_2().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_2().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_3().StopEffect('default_blood_trail');
+				aard_secondary_sword_3().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_3().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_3().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_3().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_3().StopEffect('weapon_blood');
+				aard_secondary_sword_3().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_3().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_4().StopEffect('default_blood_trail');
+				aard_secondary_sword_4().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_4().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_4().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_4().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_4().StopEffect('weapon_blood');
+				aard_secondary_sword_4().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_4().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_5().StopEffect('default_blood_trail');
+				aard_secondary_sword_5().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_5().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_5().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_5().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_5().StopEffect('weapon_blood');
+				aard_secondary_sword_5().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_5().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_6().StopEffect('default_blood_trail');
+				aard_secondary_sword_6().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_6().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_6().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_6().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_6().StopEffect('weapon_blood');
+				aard_secondary_sword_6().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_6().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_7().StopEffect('default_blood_trail');
+				aard_secondary_sword_7().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_7().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_7().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_7().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_7().StopEffect('weapon_blood');
+				aard_secondary_sword_7().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_7().StopEffect('weapon_blood_stage2');
+
+				aard_secondary_sword_8().StopEffect('default_blood_trail');
+				aard_secondary_sword_8().StopEffect('cutscene_blood_trail');
+				aard_secondary_sword_8().StopEffect('blood_trail_horseriding');
+				aard_secondary_sword_8().StopEffect('blood_trail_finisher');
+				aard_secondary_sword_8().StopEffect('fast_trail_blood_fx');
+				aard_secondary_sword_8().StopEffect('weapon_blood');
+				aard_secondary_sword_8().StopEffect('weapon_blood_stage1');
+				aard_secondary_sword_8().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				aard_secondary_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				aard_secondary_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4745,7 +5582,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
@@ -4756,16 +5601,88 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				yrden_sword_1().StopEffect('default_blood_trail');
+				yrden_sword_1().StopEffect('cutscene_blood_trail');
+				yrden_sword_1().StopEffect('blood_trail_horseriding');
+				yrden_sword_1().StopEffect('blood_trail_finisher');
+				yrden_sword_1().StopEffect('fast_trail_blood_fx');
+				yrden_sword_1().StopEffect('weapon_blood');
+				yrden_sword_1().StopEffect('weapon_blood_stage1');
+				yrden_sword_1().StopEffect('weapon_blood_stage2');
 
-				yrden_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_4().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_5().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_6().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_7().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_sword_8().StopEffect(blood_fx[blood_fx.Size()]);
+				yrden_sword_2().StopEffect('default_blood_trail');
+				yrden_sword_2().StopEffect('cutscene_blood_trail');
+				yrden_sword_2().StopEffect('blood_trail_horseriding');
+				yrden_sword_2().StopEffect('blood_trail_finisher');
+				yrden_sword_2().StopEffect('fast_trail_blood_fx');
+				yrden_sword_2().StopEffect('weapon_blood');
+				yrden_sword_2().StopEffect('weapon_blood_stage1');
+				yrden_sword_2().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_3().StopEffect('default_blood_trail');
+				yrden_sword_3().StopEffect('cutscene_blood_trail');
+				yrden_sword_3().StopEffect('blood_trail_horseriding');
+				yrden_sword_3().StopEffect('blood_trail_finisher');
+				yrden_sword_3().StopEffect('fast_trail_blood_fx');
+				yrden_sword_3().StopEffect('weapon_blood');
+				yrden_sword_3().StopEffect('weapon_blood_stage1');
+				yrden_sword_3().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_4().StopEffect('default_blood_trail');
+				yrden_sword_4().StopEffect('cutscene_blood_trail');
+				yrden_sword_4().StopEffect('blood_trail_horseriding');
+				yrden_sword_4().StopEffect('blood_trail_finisher');
+				yrden_sword_4().StopEffect('fast_trail_blood_fx');
+				yrden_sword_4().StopEffect('weapon_blood');
+				yrden_sword_4().StopEffect('weapon_blood_stage1');
+				yrden_sword_4().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_5().StopEffect('default_blood_trail');
+				yrden_sword_5().StopEffect('cutscene_blood_trail');
+				yrden_sword_5().StopEffect('blood_trail_horseriding');
+				yrden_sword_5().StopEffect('blood_trail_finisher');
+				yrden_sword_5().StopEffect('fast_trail_blood_fx');
+				yrden_sword_5().StopEffect('weapon_blood');
+				yrden_sword_5().StopEffect('weapon_blood_stage1');
+				yrden_sword_5().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_6().StopEffect('default_blood_trail');
+				yrden_sword_6().StopEffect('cutscene_blood_trail');
+				yrden_sword_6().StopEffect('blood_trail_horseriding');
+				yrden_sword_6().StopEffect('blood_trail_finisher');
+				yrden_sword_6().StopEffect('fast_trail_blood_fx');
+				yrden_sword_6().StopEffect('weapon_blood');
+				yrden_sword_6().StopEffect('weapon_blood_stage1');
+				yrden_sword_6().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_7().StopEffect('default_blood_trail');
+				yrden_sword_7().StopEffect('cutscene_blood_trail');
+				yrden_sword_7().StopEffect('blood_trail_horseriding');
+				yrden_sword_7().StopEffect('blood_trail_finisher');
+				yrden_sword_7().StopEffect('fast_trail_blood_fx');
+				yrden_sword_7().StopEffect('weapon_blood');
+				yrden_sword_7().StopEffect('weapon_blood_stage1');
+				yrden_sword_7().StopEffect('weapon_blood_stage2');
+
+				yrden_sword_8().StopEffect('default_blood_trail');
+				yrden_sword_8().StopEffect('cutscene_blood_trail');
+				yrden_sword_8().StopEffect('blood_trail_horseriding');
+				yrden_sword_8().StopEffect('blood_trail_finisher');
+				yrden_sword_8().StopEffect('fast_trail_blood_fx');
+				yrden_sword_8().StopEffect('weapon_blood');
+				yrden_sword_8().StopEffect('weapon_blood_stage1');
+				yrden_sword_8().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				yrden_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				yrden_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4778,7 +5695,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
@@ -4789,14 +5714,70 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				//ACSGetEquippedSword().StopAllEffects();
+				yrden_secondary_sword_1().StopEffect('default_blood_trail');
+				yrden_secondary_sword_1().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_1().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_1().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_1().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_1().StopEffect('weapon_blood');
+				yrden_secondary_sword_1().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_1().StopEffect('weapon_blood_stage2');
 
-				yrden_secondary_sword_1().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_secondary_sword_2().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_secondary_sword_3().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_secondary_sword_4().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_secondary_sword_5().StopEffect(blood_fx[blood_fx.Size()]);
-				yrden_secondary_sword_6().StopEffect(blood_fx[blood_fx.Size()]);
+				yrden_secondary_sword_2().StopEffect('default_blood_trail');
+				yrden_secondary_sword_2().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_2().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_2().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_2().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_2().StopEffect('weapon_blood');
+				yrden_secondary_sword_2().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_2().StopEffect('weapon_blood_stage2');
+
+				yrden_secondary_sword_3().StopEffect('default_blood_trail');
+				yrden_secondary_sword_3().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_3().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_3().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_3().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_3().StopEffect('weapon_blood');
+				yrden_secondary_sword_3().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_3().StopEffect('weapon_blood_stage2');
+
+				yrden_secondary_sword_4().StopEffect('default_blood_trail');
+				yrden_secondary_sword_4().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_4().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_4().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_4().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_4().StopEffect('weapon_blood');
+				yrden_secondary_sword_4().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_4().StopEffect('weapon_blood_stage2');
+
+				yrden_secondary_sword_5().StopEffect('default_blood_trail');
+				yrden_secondary_sword_5().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_5().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_5().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_5().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_5().StopEffect('weapon_blood');
+				yrden_secondary_sword_5().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_5().StopEffect('weapon_blood_stage2');
+
+				yrden_secondary_sword_6().StopEffect('default_blood_trail');
+				yrden_secondary_sword_6().StopEffect('cutscene_blood_trail');
+				yrden_secondary_sword_6().StopEffect('blood_trail_horseriding');
+				yrden_secondary_sword_6().StopEffect('blood_trail_finisher');
+				yrden_secondary_sword_6().StopEffect('fast_trail_blood_fx');
+				yrden_secondary_sword_6().StopEffect('weapon_blood');
+				yrden_secondary_sword_6().StopEffect('weapon_blood_stage1');
+				yrden_secondary_sword_6().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
+				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 
 				yrden_secondary_sword_1().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 				yrden_secondary_sword_2().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
@@ -4807,11 +5788,462 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if (ACS_GetWeaponMode() == 3)
 			{
-				ACSGetEquippedSword().StopEffect(blood_fx[blood_fx.Size()]);
+				ACSGetEquippedSword().StopEffect('default_blood_trail');
+				ACSGetEquippedSword().StopEffect('cutscene_blood_trail');
+				ACSGetEquippedSword().StopEffect('blood_trail_horseriding');
+				ACSGetEquippedSword().StopEffect('blood_trail_finisher');
+				ACSGetEquippedSword().StopEffect('fast_trail_blood_fx');
+				ACSGetEquippedSword().StopEffect('weapon_blood');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage1');
+				ACSGetEquippedSword().StopEffect('weapon_blood_stage2');
+
 				ACSGetEquippedSword().PlayEffectSingle(blood_fx[RandRange(blood_fx.Size())]);
 			}
 		}
 	}
+
+	function monster_weapon_blood_fx()
+	{
+		if (thePlayer.HasTag('axii_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				axii_sword_1().StopEffect('wraith_trail');
+				axii_sword_1().StopEffect('green_blood_trail');
+
+				axii_sword_2().StopEffect('wraith_trail');
+				axii_sword_2().StopEffect('green_blood_trail');
+
+				axii_sword_3().StopEffect('wraith_trail');
+				axii_sword_3().StopEffect('green_blood_trail');
+
+				axii_sword_4().StopEffect('wraith_trail');
+				axii_sword_4().StopEffect('green_blood_trail');
+
+				axii_sword_5().StopEffect('wraith_trail');
+				axii_sword_5().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				axii_sword_1().PlayEffectSingle('wraith_trail');
+				axii_sword_1().PlayEffectSingle('green_blood_trail');
+
+				axii_sword_2().PlayEffectSingle('wraith_trail');
+				axii_sword_2().PlayEffectSingle('green_blood_trail');
+
+				axii_sword_3().PlayEffectSingle('wraith_trail');
+				axii_sword_3().PlayEffectSingle('green_blood_trail');
+
+				axii_sword_4().PlayEffectSingle('wraith_trail');
+				axii_sword_4().PlayEffectSingle('green_blood_trail');
+
+				axii_sword_5().PlayEffectSingle('wraith_trail');
+				axii_sword_5().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				axii_secondary_sword_1().StopEffect('wraith_trail');
+				axii_secondary_sword_1().StopEffect('green_blood_trail');
+
+				axii_secondary_sword_2().StopEffect('wraith_trail');
+				axii_secondary_sword_2().StopEffect('green_blood_trail');
+
+				axii_secondary_sword_3().StopEffect('wraith_trail');
+				axii_secondary_sword_3().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				axii_secondary_sword_1().PlayEffectSingle('wraith_trail');
+				axii_secondary_sword_1().PlayEffectSingle('green_blood_trail');
+
+				axii_secondary_sword_2().PlayEffectSingle('wraith_trail');
+				axii_secondary_sword_2().PlayEffectSingle('green_blood_trail');
+
+				axii_secondary_sword_3().PlayEffectSingle('wraith_trail');
+				axii_secondary_sword_3().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('quen_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				quen_sword_1().StopEffect('wraith_trail');
+				quen_sword_1().StopEffect('green_blood_trail');
+
+				quen_sword_2().StopEffect('wraith_trail');
+				quen_sword_2().StopEffect('green_blood_trail');
+
+				quen_sword_3().StopEffect('wraith_trail');
+				quen_sword_3().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				quen_sword_1().PlayEffectSingle('wraith_trail');
+				quen_sword_1().PlayEffectSingle('green_blood_trail');
+
+				quen_sword_2().PlayEffectSingle('wraith_trail');
+				quen_sword_2().PlayEffectSingle('green_blood_trail');
+
+				quen_sword_3().PlayEffectSingle('wraith_trail');
+				quen_sword_3().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				quen_secondary_sword_1().StopEffect('wraith_trail');
+				quen_secondary_sword_1().StopEffect('green_blood_trail');
+
+				quen_secondary_sword_2().StopEffect('wraith_trail');
+				quen_secondary_sword_2().StopEffect('green_blood_trail');
+
+				quen_secondary_sword_3().StopEffect('wraith_trail');
+				quen_secondary_sword_3().StopEffect('green_blood_trail');
+
+				quen_secondary_sword_4().StopEffect('wraith_trail');
+				quen_secondary_sword_4().StopEffect('green_blood_trail');
+
+				quen_secondary_sword_5().StopEffect('wraith_trail');
+				quen_secondary_sword_5().StopEffect('green_blood_trail');
+
+				quen_secondary_sword_6().StopEffect('wraith_trail');
+				quen_secondary_sword_6().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_1().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_1().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_2().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_2().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_3().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_3().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_4().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_4().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_5().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_5().PlayEffectSingle('green_blood_trail');
+
+				quen_secondary_sword_6().PlayEffectSingle('wraith_trail');
+				quen_secondary_sword_6().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('aard_sword_equipped'))
+		{
+			aard_blade_1().StopEffect('wraith_trail');
+			aard_blade_1().StopEffect('green_blood_trail');
+
+			aard_blade_2().StopEffect('wraith_trail');
+			aard_blade_2().StopEffect('green_blood_trail');
+
+			aard_blade_3().StopEffect('wraith_trail');
+			aard_blade_3().StopEffect('green_blood_trail');
+
+			aard_blade_4().StopEffect('wraith_trail');
+			aard_blade_4().StopEffect('green_blood_trail');
+
+			aard_blade_5().StopEffect('wraith_trail');
+			aard_blade_5().StopEffect('green_blood_trail');
+
+			aard_blade_6().StopEffect('wraith_trail');
+			aard_blade_6().StopEffect('green_blood_trail');
+
+			aard_blade_7().StopEffect('wraith_trail');
+			aard_blade_7().StopEffect('green_blood_trail');
+
+			aard_blade_8().StopEffect('wraith_trail');
+			aard_blade_8().StopEffect('green_blood_trail');
+
+			aard_blade_1().PlayEffectSingle('wraith_trail');
+			aard_blade_1().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_2().PlayEffectSingle('wraith_trail');
+			aard_blade_2().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_3().PlayEffectSingle('wraith_trail');
+			aard_blade_3().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_4().PlayEffectSingle('wraith_trail');
+			aard_blade_4().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_5().PlayEffectSingle('wraith_trail');
+			aard_blade_5().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_6().PlayEffectSingle('wraith_trail');
+			aard_blade_6().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_7().PlayEffectSingle('wraith_trail');
+			aard_blade_7().PlayEffectSingle('green_blood_trail');
+
+			aard_blade_8().PlayEffectSingle('wraith_trail');
+			aard_blade_8().PlayEffectSingle('green_blood_trail');
+		}
+		else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				aard_secondary_sword_1().StopEffect('wraith_trail');
+				aard_secondary_sword_1().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_2().StopEffect('wraith_trail');
+				aard_secondary_sword_2().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_3().StopEffect('wraith_trail');
+				aard_secondary_sword_3().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_4().StopEffect('wraith_trail');
+				aard_secondary_sword_4().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_5().StopEffect('wraith_trail');
+				aard_secondary_sword_5().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_6().StopEffect('wraith_trail');
+				aard_secondary_sword_6().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_7().StopEffect('wraith_trail');
+				aard_secondary_sword_7().StopEffect('green_blood_trail');
+
+				aard_secondary_sword_8().StopEffect('wraith_trail');
+				aard_secondary_sword_8().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_1().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_1().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_2().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_2().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_3().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_3().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_4().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_4().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_5().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_5().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_6().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_6().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_7().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_7().PlayEffectSingle('green_blood_trail');
+
+				aard_secondary_sword_8().PlayEffectSingle('wraith_trail');
+				aard_secondary_sword_8().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('yrden_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				yrden_sword_1().StopEffect('wraith_trail');
+				yrden_sword_1().StopEffect('green_blood_trail');
+
+				yrden_sword_2().StopEffect('wraith_trail');
+				yrden_sword_2().StopEffect('green_blood_trail');
+
+				yrden_sword_3().StopEffect('wraith_trail');
+				yrden_sword_3().StopEffect('green_blood_trail');
+
+				yrden_sword_4().StopEffect('wraith_trail');
+				yrden_sword_4().StopEffect('green_blood_trail');
+
+				yrden_sword_5().StopEffect('wraith_trail');
+				yrden_sword_5().StopEffect('green_blood_trail');
+
+				yrden_sword_6().StopEffect('wraith_trail');
+				yrden_sword_6().StopEffect('green_blood_trail');
+
+				yrden_sword_7().StopEffect('wraith_trail');
+				yrden_sword_7().StopEffect('green_blood_trail');
+
+				yrden_sword_8().StopEffect('wraith_trail');
+				yrden_sword_8().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_1().PlayEffectSingle('wraith_trail');
+				yrden_sword_1().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_2().PlayEffectSingle('wraith_trail');
+				yrden_sword_2().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_3().PlayEffectSingle('wraith_trail');
+				yrden_sword_3().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_4().PlayEffectSingle('wraith_trail');
+				yrden_sword_4().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_5().PlayEffectSingle('wraith_trail');
+				yrden_sword_5().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_6().PlayEffectSingle('wraith_trail');
+				yrden_sword_6().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_7().PlayEffectSingle('wraith_trail');
+				yrden_sword_7().PlayEffectSingle('green_blood_trail');
+
+				yrden_sword_8().PlayEffectSingle('wraith_trail');
+				yrden_sword_8().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+		else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+		{
+			if (ACS_GetWeaponMode() == 0
+			|| ACS_GetWeaponMode() == 1
+			|| ACS_GetWeaponMode() == 2
+			)
+			{
+				yrden_secondary_sword_1().StopEffect('wraith_trail');
+				yrden_secondary_sword_1().StopEffect('green_blood_trail');
+
+				yrden_secondary_sword_2().StopEffect('wraith_trail');
+				yrden_secondary_sword_2().StopEffect('green_blood_trail');
+
+				yrden_secondary_sword_3().StopEffect('wraith_trail');
+				yrden_secondary_sword_3().StopEffect('green_blood_trail');
+
+				yrden_secondary_sword_4().StopEffect('wraith_trail');
+				yrden_secondary_sword_4().StopEffect('green_blood_trail');
+
+				yrden_secondary_sword_5().StopEffect('wraith_trail');
+				yrden_secondary_sword_5().StopEffect('green_blood_trail');
+
+				yrden_secondary_sword_6().StopEffect('wraith_trail');
+				yrden_secondary_sword_6().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_1().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_1().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_2().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_2().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_3().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_3().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_4().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_4().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_5().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_5().PlayEffectSingle('green_blood_trail');
+
+				yrden_secondary_sword_6().PlayEffectSingle('wraith_trail');
+				yrden_secondary_sword_6().PlayEffectSingle('green_blood_trail');
+			}
+			else if (ACS_GetWeaponMode() == 3)
+			{
+				ACSGetEquippedSword().StopEffect('wraith_trail');
+				ACSGetEquippedSword().StopEffect('green_blood_trail');
+
+				ACSGetEquippedSword().PlayEffectSingle('wraith_trail');
+				ACSGetEquippedSword().PlayEffectSingle('green_blood_trail');
+			}
+		}
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	function VampVoiceEffects_Effort()
@@ -4870,6 +6302,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function Remove_On_Hit_Tags()
 	{
 		//actors = GetActorsInRange(thePlayer, 100, 100);
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100);
 
@@ -5105,6 +6539,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			npc.AddTag('ACS_Add_Weapon_To_Inventory');
 		}
 
+		/*
 		if 
 		(playerAttacker && npc &&
 		( 
@@ -5133,6 +6568,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SignalGameplayEvent('DisableFinisher');
 		}
+		*/
 
 		if (playerAttacker && npc && thePlayer.HasTag('ACS_Sparagmos_Active') )
 		{
@@ -5243,7 +6679,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 			}	
 		}
-		else if 
+
+		if 
 		(playerAttacker && npc &&
 		( 
 		thePlayer.HasTag('aard_sword_equipped') 
@@ -5251,7 +6688,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		|| thePlayer.HasTag('quen_secondary_sword_equipped') 
 		|| thePlayer.HasTag('yrden_sword_equipped') 
 		|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
-		|| thePlayer.HasTag('vampire_claws_equipped')
 		)
 		)
 		{
@@ -5259,6 +6695,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				ACS_Dismember_Internal();
 			}
+		}
+
+		if 
+		(playerAttacker && npc &&
+		( 
+		thePlayer.HasTag('vampire_claws_equipped')
+		)
+		)
+		{
+			//ACS_Dismember_Vampire_Claws();
+			ACS_Dismember_Internal();
 		}
 
 		if ( playerAttacker && npc && thePlayer.HasTag('ACS_Shadow_Dash_Empowered') )
@@ -5271,6 +6718,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
 			}
 			*/
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInCone(2.5, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 			if( actors.Size() > 0 )
@@ -5348,18 +6797,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		*/
 
-		if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
-		{
-			thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
-		}
-
 		if (playerAttacker && npc && thePlayer.HasTag('aard_sword_equipped') ) 
 		{ 
 			thePlayer.IncreaseUninterruptedHitsCount();	
 
 			npc.SoundEvent("cmb_play_hit_heavy");
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -5372,6 +6816,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 
 					ACS_Drain_Energy();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5413,6 +6859,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 
 					ACS_Drain_Energy();
+
+					actors.Clear();
 						
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5453,6 +6901,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 
 					ACS_Drain_Energy();
+
+					actors.Clear();
 						
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5554,7 +7004,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			thePlayer.IncreaseUninterruptedHitsCount();	
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -5564,6 +7014,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('aard_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5598,6 +7050,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 					if( actors.Size() > 0 )
@@ -5630,6 +7084,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('aard_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5767,7 +7223,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 			}
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 			
 			if ( ACS_GetWeaponMode() == 0 )	
 			{
@@ -5776,6 +7232,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('yrden_heavy_attack_primer') ) 
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5809,6 +7267,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 					for( i = 0; i < actors.Size(); i += 1 )
 					{
@@ -5836,6 +7296,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('yrden_heavy_attack_primer') ) 
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5929,7 +7391,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SoundEvent("monster_cloud_giant_cmb_weapon_hit_add", 'head');
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 			
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -5939,6 +7401,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('yrden_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -5972,6 +7436,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 					if( actors.Size() > 0 )
@@ -6003,6 +7469,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('yrden_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6098,7 +7566,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SoundEvent("cmb_play_hit_heavy");
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 			
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -6108,6 +7576,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('axii_heavy_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6141,6 +7611,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 					if( actors.Size() > 0 )
@@ -6172,6 +7644,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('axii_heavy_attack_primer') ) 
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6267,7 +7741,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SoundEvent("cmb_play_hit_heavy");
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -6277,6 +7751,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('axii_light_attack_primer') ) 
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6310,6 +7786,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 					if( actors.Size() > 0 )
@@ -6341,6 +7819,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('axii_light_attack_primer') ) 
 				{
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6434,7 +7914,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SoundEvent("cmb_play_hit_heavy");
 			
-			weapon_blood_fx();
+			//weapon_blood_fx();
 
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -6445,6 +7925,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6479,6 +7961,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 						
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6513,6 +7997,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 						
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6610,7 +8096,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.SoundEvent("cmb_play_hit_heavy");
 
-			weapon_blood_fx();
+			//weapon_blood_fx();
 
 			if (ACS_OnHitEffects_Enabled()
 			&& ACS_GetWeaponMode() == 0)
@@ -6620,6 +8106,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('quen_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6654,6 +8142,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
 
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 					if( actors.Size() > 0 )
@@ -6686,6 +8176,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& npc.HasTag('quen_light_attack_primer') ) 
 				{	
 					ACS_Detonation_Weapon_Effects_Switch();
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6806,6 +8298,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 							
 					npc.OnIgniHit( NULL );
+
+					actors.Clear();
 							
 					actors = thePlayer.GetNPCsAndPlayersInRange( 1.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6846,6 +8340,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 							
 					npc.OnIgniHit( NULL );
+
+					actors.Clear();
 							
 					actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6886,6 +8382,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					ACS_Detonation_Weapon_Effects_Switch();
 							
 					npc.OnIgniHit( NULL );
+
+					actors.Clear();
 							
 					actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -6930,239 +8428,18 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
-
-		if ( playerAttacker && npc && thePlayer.HasTag('vampire_claws_equipped')  )
-		{
-			npc.StopEffect('focus_sound_red_fx');
-
-			if (npc.IsUsingVehicle()) 
-			{
-				npc.SignalGameplayEventParamInt( 'RidingManagerDismountHorse', DT_instant | DT_fromScript );
-			}
-
-			if (npc.UsesVitality()) 
-			{ 
-				thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.05 );
-
-				maxTargetVitality = npc.GetStatMax( BCS_Vitality );
-
-				damageMax = maxTargetVitality * ACS_Vampire_Claws_Human_Max_Damage(); 
-				
-				damageMin = maxTargetVitality * ACS_Vampire_Claws_Human_Min_Damage(); 
-			} 
-			else if (npc.UsesEssence()) 
-			{ 
-				thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.1 ); 
-
-				maxTargetEssence = npc.GetStatMax( BCS_Essence );
-				
-				damageMax = maxTargetEssence * ACS_Vampire_Claws_Monster_Max_Damage(); 
-				
-				damageMin = maxTargetEssence * ACS_Vampire_Claws_Monster_Min_Damage(); 
-			} 
-
-			//thePlayer.StopEffect('blood_effect_claws_test');
-			//thePlayer.PlayEffectSingle('blood_effect_claws_test');
-
-			if ( npc.GetCurrentHealth() <= 0.01 ) 
-			{
-				thePlayer.StopEffect('blood_effect_claws_test');
-				thePlayer.PlayEffect('blood_effect_claws_test');
-			}
-
-			ACS_Passive_Weapon_Effects_Switch();
-
-			if (((CActor)npc).HasAbility('DisableDismemberment'))
-			{
-				((CActor)npc).RemoveAbility( 'DisableDismemberment');
-			}
-			
-			thePlayer.SoundEvent("monster_dettlaff_vampire_movement_whoosh_claws_large");
-
-			thePlayer.IncreaseUninterruptedHitsCount();	
-			
-			if (thePlayer.IsGuarded())
-			{
-				thePlayer.GainStat( BCS_Vitality, heal ); 
-			}
-			else
-			{
-				thePlayer.GainStat( BCS_Vitality, heal * 2 ); 
-			}
-			
-			if ( thePlayer.HasBuff(EET_BlackBlood) )
-			{
-				if (RandF() < 0.5 )
-				{
-					ACS_Vampire_Arms_1_Get().PlayEffectSingle('blood');
-
-					ACS_Vampire_Arms_1_Get().StopEffect('blood');
-
-					ACS_Vampire_Arms_2_Get().PlayEffectSingle('blood');
-
-					ACS_Vampire_Arms_2_Get().StopEffect('blood');
-
-					ACS_Vampire_Arms_3_Get().PlayEffectSingle('blood');
-
-					ACS_Vampire_Arms_3_Get().StopEffect('blood');
-
-					ACS_Vampire_Arms_4_Get().PlayEffectSingle('blood');
-
-					ACS_Vampire_Arms_4_Get().StopEffect('blood');
-
-					thePlayer.StopEffect('blood_effect_claws');
-					thePlayer.PlayEffectSingle('blood_effect_claws');
-				}
-
-				//actors = thePlayer.GetNPCsAndPlayersInCone(2, VecHeading(thePlayer.GetHeadingVector()), 90, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
-			}
-			else
-			{
-				//actors = thePlayer.GetNPCsAndPlayersInCone(1.25, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
-			}
-
-			/*for( i = 0; i < actors.Size(); i += 1 )
-			{
-				actortarget = (CActor)actors[i];
-
-				thePlayer.SoundEvent("cmb_play_dismemberment_gore");
-
-				thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
-
-				dmg = new W3DamageAction in theGame.damageMgr;
-				
-				dmg.Initialize(thePlayer, actortarget, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-				
-				dmg.SetProcessBuffsIfNoDamage(true);
-
-				dmg.SetForceExplosionDismemberment();
-				
-				dmg.SetHitReactionType( EHRT_Heavy, true);
-
-				dmg.SetIgnoreArmor(true);
-
-				dmg.SetIgnoreImmortalityMode(true);
-				
-				//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, RandRangeF(damageMax,damageMin) );
-
-				if (actortarget.UsesVitality()) 
-				{ 
-					//dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, damageMax );
-				}
-				else if (actortarget.UsesEssence()) 
-				{ 
-					//dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, damageMax );
-				}
-
-				if (RandF() < 0.25 )
-				{
-					if( !npc.IsImmuneToBuff( EET_Stagger ) && !npc.HasBuff( EET_Stagger ) ) 
-					{ 
-						dmg.AddEffectInfo( EET_Stagger, 0.1 );
-					}
-				}
-
-				if( !npc.IsImmuneToBuff( EET_Bleeding ) && !npc.HasBuff( EET_Bleeding ) ) 
-				{ 
-					dmg.AddEffectInfo( EET_Bleeding, 1 );
-				}
-
-				if( !npc.IsImmuneToBuff( EET_BleedingTracking ) && !npc.HasBuff( EET_BleedingTracking ) ) 
-				{ 
-					dmg.AddEffectInfo( EET_BleedingTracking, 3 );
-				}
-					
-				theGame.damageMgr.ProcessAction( dmg );
-					
-				delete dmg;	
-			}
-			*/
-
-			thePlayer.SoundEvent("cmb_play_dismemberment_gore");
-
-			thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
-
-			dmg = new W3DamageAction in theGame.damageMgr;
-			
-			dmg.Initialize(thePlayer, npc, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-			
-			//dmg.SetProcessBuffsIfNoDamage(true);
-			
-			dmg.SetHitReactionType( EHRT_Heavy, true);
-
-			dmg.SetIgnoreArmor(true);
-
-			dmg.SetIgnoreImmortalityMode(true);
-			
-			//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, RandRangeF(damageMax,damageMin) );
-
-			if (npc.UsesVitality()) 
-			{ 
-				if (ACS_Vampire_Claws_Human_Max_Damage() <= 0.25)
-				{
-					dmg.SetForceExplosionDismemberment();
-				}
-
-				if (ACS_Vampire_Claws_Human_Max_Damage() == 1)
-				{
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
-				}
-				else
-				{
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) + (damageMax * (combo_counter_damage * 0.1)) );
-				}
-			}
-			else if (npc.UsesEssence()) 
-			{ 
-				if (ACS_Vampire_Claws_Monster_Max_Damage() <= 0.25)
-				{
-					dmg.SetForceExplosionDismemberment();
-				}
-
-				if (ACS_Vampire_Claws_Monster_Max_Damage() == 1 )
-				{
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
-				}
-				else
-				{
-					dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) + (damageMax * (combo_counter_damage * 0.1)) );
-				}
-			}
-
-			if (RandF() < 0.25 )
-			{
-				if( !npc.IsImmuneToBuff( EET_Stagger ) && !npc.HasBuff( EET_Stagger ) ) 
-				{ 
-					dmg.AddEffectInfo( EET_Stagger, 0.1 );
-				}
-			}
-
-			if( !npc.IsImmuneToBuff( EET_Bleeding ) && !npc.HasBuff( EET_Bleeding ) ) 
-			{ 
-				dmg.AddEffectInfo( EET_Bleeding, 1 );
-			}
-
-			if( !npc.IsImmuneToBuff( EET_BleedingTracking ) && !npc.HasBuff( EET_BleedingTracking ) ) 
-			{ 
-				dmg.AddEffectInfo( EET_BleedingTracking, 3 );
-			}
-				
-			theGame.damageMgr.ProcessAction( dmg );
-				
-			delete dmg;	
-
-			return;
-		}
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	function shield_play_anim()
 	{
+		RemoveTimer('ACS_ShieldEntityDamage');
+
+		RemoveTimer('ACS_ShieldEntityDamage_2');
+
+		RemoveTimer('ACS_ShieldEntityDamageShort');
+
 		shieldAnimatedComponent = (CAnimatedComponent)ACS_Shield_Entity().GetComponentByClassName( 'CAnimatedComponent' );	
 
 		//shieldAnimSettings.blendIn = 0.2f;
@@ -7193,36 +8470,53 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		switch (acs_shield_attack_index_1) 
 		{	
 			case 6:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
+			AddTimer('ACS_ShieldEntityDamage_2', 1.25, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_counter_attack', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 
 			case 5:
+			AddTimer('ACS_ShieldEntityDamageShort', 0.5, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_back', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 
 			case 4:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_right_swing', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 				
 			case 3:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_right', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 
 			case 2:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_left_swing', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;	
 				
 			case 1:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_left', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 
 			default:
+			AddTimer('ACS_ShieldEntityDamage', 0.75, false);
+
 			shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_attack_center', 'NPC_ANIM_SLOT', shieldAnimSettings);
 			break;
 		}
 			
 		this.previous_acs_shield_attack_index_1 = acs_shield_attack_index_1;
 
+		/*
 		ACS_Shield_Entity().StopEffect('yrden_shock');
 		ACS_Shield_Entity().PlayEffectSingle('yrden_shock');
 
@@ -7234,6 +8528,137 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ACS_Shield_Entity().PlayEffectSingle('demonic_possession');
 		ACS_Shield_Entity().StopEffect('demonic_possession');
+		*/
+	}
+
+	function ShieldEntityDamageActual()
+	{
+		actors.Clear();
+
+		actors = thePlayer.GetNPCsAndPlayersInCone(6, VecHeading(thePlayer.GetHeadingVector()), 90, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
+
+		if( actors.Size() > 0 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.05 );
+
+				actortarget = (CActor)actors[i];
+
+				dmg = new W3DamageAction in theGame.damageMgr;
+				
+				dmg.Initialize(thePlayer, actortarget, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+				
+				dmg.SetProcessBuffsIfNoDamage(true);
+				
+				dmg.SetHitReactionType( EHRT_Heavy, true);
+
+				dmg.SetIgnoreImmortalityMode(true);
+				
+				//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, RandRangeF(damageMax,damageMin) );
+
+				if (actortarget.UsesVitality()) 
+				{ 
+					maxTargetVitality = actortarget.GetStatMax( BCS_Vitality ) - actortarget.GetStat( BCS_Vitality );
+
+					damageMax = maxTargetVitality * 0.20; 
+
+					damageMin = maxTargetVitality * 0.145; 
+				} 
+				else if (actortarget.UsesEssence()) 
+				{ 
+					maxTargetEssence = actortarget.GetStatMax( BCS_Essence ) - actortarget.GetStat( BCS_Essence );
+					
+					damageMax = maxTargetEssence * 0.225; 
+					
+					damageMin = maxTargetEssence * 0.145; 
+				}
+
+				dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(50 + damageMax,50 + damageMin) );
+
+				dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(50 + damageMax,50 + damageMin) );
+
+				if( !npc.IsImmuneToBuff( EET_Stagger ) && !npc.HasBuff( EET_Stagger ) ) 
+				{ 
+					dmg.AddEffectInfo( EET_Stagger, 0.1 );
+				}
+
+				dmg.SetForceExplosionDismemberment();
+					
+				theGame.damageMgr.ProcessAction( dmg );
+					
+				delete dmg;	
+
+				thePlayer.SoundEvent("cmb_play_dismemberment_gore");
+
+				thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
+			}
+		}
+	}
+
+	function ShieldEntityDamageShortActual()
+	{
+		actors.Clear();
+
+		actors = thePlayer.GetNPCsAndPlayersInCone(4, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
+
+		if( actors.Size() > 0 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.05 );
+
+				actortarget = (CActor)actors[i];
+
+				dmg = new W3DamageAction in theGame.damageMgr;
+				
+				dmg.Initialize(thePlayer, actortarget, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+				
+				dmg.SetProcessBuffsIfNoDamage(true);
+				
+				dmg.SetHitReactionType( EHRT_Heavy, true);
+
+				dmg.SetIgnoreImmortalityMode(true);
+				
+				//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, RandRangeF(damageMax,damageMin) );
+
+				if (actortarget.UsesVitality()) 
+				{ 
+					maxTargetVitality = actortarget.GetStatMax( BCS_Vitality ) - actortarget.GetStat( BCS_Vitality );
+
+					damageMax = maxTargetVitality * 0.20; 
+
+					damageMin = maxTargetVitality * 0.145; 
+				} 
+				else if (actortarget.UsesEssence()) 
+				{ 
+					maxTargetEssence = actortarget.GetStatMax( BCS_Essence ) - actortarget.GetStat( BCS_Essence );
+					
+					damageMax = maxTargetEssence * 0.225; 
+					
+					damageMin = maxTargetEssence * 0.145; 
+				}
+
+				dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(50 + damageMax,50 + damageMin) );
+
+				dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(50 + damageMax,50 + damageMin) );
+
+				if( !npc.IsImmuneToBuff( EET_Stagger ) && !npc.HasBuff( EET_Stagger ) ) 
+				{ 
+					dmg.AddEffectInfo( EET_Stagger, 0.1 );
+				}
+
+				dmg.SetForceExplosionDismemberment();
+					
+				theGame.damageMgr.ProcessAction( dmg );
+					
+				delete dmg;	
+
+				thePlayer.SoundEvent("cmb_play_dismemberment_gore");
+
+				thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
+			}
+		}
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7643,7 +9068,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& StaminaCheck()
 						)
 						{							 
-							thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+							if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 						}
 						else
 						{
@@ -7835,29 +9260,31 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 											if(thePlayer.IsInCombat()){ACS_Beam_Attack();}
 										}
-									}	
+									}
 								}
 												
 								GuardAttackCallTime = theGame.GetEngineTimeAsSeconds();
 							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 )
+							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 
+							|| theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
+							{	
+								if (ACS_can_perform_guard_attack())
+								{
+									ACS_refresh_guard_attack_cooldown();
+
+									geraltRandomPush();
+									
+									thePlayer.DrainStamina(ESAT_LightAttack);
+								}	
+							}
+							else if ( theInput.GetActionValue('AttackWithAlternateLight') > 0.7f
+							|| theInput.GetActionValue('AttackLight') > 0.7f )
 							{	
 								if (ACS_can_perform_guard_attack())
 								{
 									ACS_refresh_guard_attack_cooldown();
 
 									geraltRandomPunch();
-									
-									thePlayer.DrainStamina(ESAT_LightAttack);
-								}	
-							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
-							{		
-								if (ACS_can_perform_guard_attack())
-								{
-									ACS_refresh_guard_attack_cooldown();
-
-									geraltRandomPush();
 									
 									thePlayer.DrainStamina(ESAT_LightAttack);
 								}	
@@ -7874,7 +9301,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										&& ACS_ShieldEntity_Enabled()
 										)
 										{
-											if(thePlayer.IsInCombat()){vACS_Shield_Summon.Axii_Shield_Summon();}
+											RemoveTimer('ACS_Shield_Spawn_Delay');
+
+											AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+
+											vACS_Shield_Summon.Axii_Shield_Summon();
+
 											vACS_Shield_Summon.Axii_Shield_Entity();
 										}
 										else if (thePlayer.HasTag('quen_sword_equipped')
@@ -7932,8 +9364,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if(thePlayer.HasTag('axii_sword_equipped'))
 									{
-										action_interrupt();
-										vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
+										RemoveTimer('ACS_Shield_Spawn_Delay');
+
+										AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+
+										//action_interrupt();
+										//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
 									}
 								}
 												
@@ -7949,7 +9385,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& StaminaCheck()
 						)
 						{
-							thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+							if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 						}
 						else
 						{
@@ -8104,29 +9540,31 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 											if(thePlayer.IsInCombat()){ACS_Beam_Attack();}
 										}
-									}	
+									}
 								}
 												
 								GuardAttackCallTime = theGame.GetEngineTimeAsSeconds();
 							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 )
+							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 
+							|| theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
+							{	
+								if (ACS_can_perform_guard_attack())
+								{
+									ACS_refresh_guard_attack_cooldown();
+
+									geraltRandomPush();
+									
+									thePlayer.DrainStamina(ESAT_LightAttack);
+								}	
+							}
+							else if ( theInput.GetActionValue('AttackWithAlternateLight') > 0.7f
+							|| theInput.GetActionValue('AttackLight') > 0.7f )
 							{	
 								if (ACS_can_perform_guard_attack())
 								{
 									ACS_refresh_guard_attack_cooldown();
 
 									geraltRandomPunch();
-									
-									thePlayer.DrainStamina(ESAT_LightAttack);
-								}	
-							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
-							{		
-								if (ACS_can_perform_guard_attack())
-								{
-									ACS_refresh_guard_attack_cooldown();
-
-									geraltRandomPush();
 									
 									thePlayer.DrainStamina(ESAT_LightAttack);
 								}	
@@ -8143,7 +9581,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										&& ACS_ShieldEntity_Enabled()
 										)
 										{
-											if(thePlayer.IsInCombat()){vACS_Shield_Summon.Axii_Shield_Summon();}
+											RemoveTimer('ACS_Shield_Spawn_Delay');
+
+											AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+
+											vACS_Shield_Summon.Axii_Shield_Summon();
+
 											vACS_Shield_Summon.Axii_Shield_Entity();
 										}
 										else if (thePlayer.HasTag('quen_sword_equipped')
@@ -8201,8 +9644,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if(thePlayer.HasTag('axii_sword_equipped'))
 									{
-										action_interrupt();
-										vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
+										RemoveTimer('ACS_Shield_Spawn_Delay');
+
+										AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+										
+										//action_interrupt();
+										//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
 									}
 								}
 												
@@ -8218,7 +9665,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& StaminaCheck()
 						)
 						{
-							thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+							if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 						}
 						else
 						{
@@ -8352,29 +9799,31 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 											if(thePlayer.IsInCombat()){ACS_Beam_Attack();}
 										}
-									}	
+									}
 								}
 												
 								GuardAttackCallTime = theGame.GetEngineTimeAsSeconds();
 							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 )
+							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 
+							|| theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
+							{	
+								if (ACS_can_perform_guard_attack())
+								{
+									ACS_refresh_guard_attack_cooldown();
+
+									geraltRandomPush();
+									
+									thePlayer.DrainStamina(ESAT_LightAttack);
+								}	
+							}
+							else if ( theInput.GetActionValue('AttackWithAlternateLight') > 0.7f
+							|| theInput.GetActionValue('7fAttackLight') > 0.7f )
 							{	
 								if (ACS_can_perform_guard_attack())
 								{
 									ACS_refresh_guard_attack_cooldown();
 
 									geraltRandomPunch();
-									
-									thePlayer.DrainStamina(ESAT_LightAttack);
-								}	
-							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
-							{		
-								if (ACS_can_perform_guard_attack())
-								{
-									ACS_refresh_guard_attack_cooldown();
-
-									geraltRandomPush();
 									
 									thePlayer.DrainStamina(ESAT_LightAttack);
 								}	
@@ -8391,7 +9840,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										&& ACS_ShieldEntity_Enabled()
 										)
 										{
-											if(thePlayer.IsInCombat()){vACS_Shield_Summon.Axii_Shield_Summon();}
+											RemoveTimer('ACS_Shield_Spawn_Delay');
+
+											AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+
+											vACS_Shield_Summon.Axii_Shield_Summon();
+
 											vACS_Shield_Summon.Axii_Shield_Entity();
 										}
 										else if (thePlayer.HasTag('quen_sword_equipped')
@@ -8449,8 +9903,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if(thePlayer.HasTag('axii_sword_equipped'))
 									{
-										action_interrupt();
-										vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
+										RemoveTimer('ACS_Shield_Spawn_Delay');
+
+										AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+										
+										//action_interrupt();
+										//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
 									}
 								}
 												
@@ -8464,7 +9922,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& StaminaCheck()
 						)
 						{
-							thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+							if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 						}
 						else
 						{
@@ -8596,29 +10054,31 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 											if(thePlayer.IsInCombat()){ACS_Beam_Attack();}
 										}
-									}	
+									}
 								}
 												
 								GuardAttackCallTime = theGame.GetEngineTimeAsSeconds();
 							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 )
+							else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 
+							|| theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
+							{	
+								if (ACS_can_perform_guard_attack())
+								{
+									ACS_refresh_guard_attack_cooldown();
+
+									geraltRandomPush();
+									
+									thePlayer.DrainStamina(ESAT_LightAttack);
+								}	
+							}
+							else if ( theInput.GetActionValue('AttackWithAlternateLight') > 0.7f
+							|| theInput.GetActionValue('7fAttackLight') > 0.7f )
 							{	
 								if (ACS_can_perform_guard_attack())
 								{
 									ACS_refresh_guard_attack_cooldown();
 
 									geraltRandomPunch();
-									
-									thePlayer.DrainStamina(ESAT_LightAttack);
-								}	
-							}
-							else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
-							{		
-								if (ACS_can_perform_guard_attack())
-								{
-									ACS_refresh_guard_attack_cooldown();
-
-									geraltRandomPush();
 									
 									thePlayer.DrainStamina(ESAT_LightAttack);
 								}	
@@ -8635,7 +10095,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										&& ACS_ShieldEntity_Enabled()
 										)
 										{
-											if(thePlayer.IsInCombat()){vACS_Shield_Summon.Axii_Shield_Summon();}
+											RemoveTimer('ACS_Shield_Spawn_Delay');
+
+											AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+
+											vACS_Shield_Summon.Axii_Shield_Summon();
+
 											vACS_Shield_Summon.Axii_Shield_Entity();
 										}
 										else if (thePlayer.HasTag('quen_sword_equipped')
@@ -8693,8 +10158,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									if(thePlayer.HasTag('axii_sword_equipped'))
 									{
-										action_interrupt();
-										vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
+										RemoveTimer('ACS_Shield_Spawn_Delay');
+
+										AddTimer('ACS_Shield_Spawn_Delay', 0.05, false);
+										
+										//action_interrupt();
+										//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
 									}
 									else if (thePlayer.HasTag('quen_secondary_sword_equipped')
 									|| thePlayer.HasTag('axii_secondary_sword_equipped')
@@ -8725,7 +10194,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& StaminaCheck()
 						)
 						{ 
-							thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+							if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 						}
 						else
 						{
@@ -9900,6 +11369,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//thePlayer.SetBehaviorVariable( 'playerToTargetDistForOverlay', VecDistance( thePlayer.GetWorldPosition(), actor.GetNearestPointInPersonalSpace( thePlayer.GetWorldPosition() ) ) );
 
 		DeactivateThings();
+
+		thePlayer.SetSprintActionPressed( false );
+		thePlayer.SetSprintToggle( false );
+		thePlayer.SetWalkToggle( true );
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -9935,6 +11408,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							if (ACS_Armiger_Axii_Set_Sign_Weapon_Type() == 0)
 							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -9964,6 +11439,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							if (ACS_Armiger_Quen_Set_Sign_Weapon_Type() == 0)
 							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -9993,6 +11470,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							if (ACS_Armiger_Aard_Set_Sign_Weapon_Type() == 0)
 							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10022,6 +11501,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							if (ACS_Armiger_Yrden_Set_Sign_Weapon_Type() == 0)
 							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10051,6 +11532,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{	
 							if (ACS_Armiger_Igni_Set_Sign_Weapon_Type() == 0)
 							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10084,7 +11567,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						if (thePlayer.IsWeaponHeld('silversword'))
 						{
 							if( ACS_GetFocusModeSilverWeapon() == 0 )
-							{	
+							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10129,7 +11614,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						else if (thePlayer.IsWeaponHeld('steelsword'))
 						{
 							if( ACS_GetFocusModeSteelWeapon() == 0 )
-							{		
+							{
+								action_interrupt();
+
 								ACS_PrimaryWeaponSwitch(); 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10180,6 +11667,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							if ( ACS_GetHybridModeForwardSpecialAttack() == 0 )
 							{
+								action_interrupt();
+
 								if (!thePlayer.HasTag('HybridDefaultWeaponTicket')){thePlayer.AddTag('HybridDefaultWeaponTicket');}
 
 								ACS_PrimaryWeaponSwitch(); 
@@ -10243,6 +11732,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							if ( ACS_GetHybridModeSpecialAttack() == 0 )
 							{
+								action_interrupt();
+
 								if (!thePlayer.HasTag('HybridDefaultWeaponTicket')){thePlayer.AddTag('HybridDefaultWeaponTicket');}
 
 								ACS_PrimaryWeaponSwitch(); 
@@ -10344,8 +11835,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								FocusModeGregSpecialAttack();
 							}
 							else
-							{					
+							{			
 								ACS_DefaultSwitch();
+
+								action_interrupt();
 
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
@@ -10396,6 +11889,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							else
 							{					
 								ACS_DefaultSwitch();
+
+								action_interrupt();
+
 								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
 								thePlayer.AddTag('igni_sword_equipped_TAG');
 
@@ -10409,6 +11905,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else
 			{
+				action_interrupt();
+
 				thePlayer.PrepareToAttack();
 				thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
 				thePlayer.AddTimer( 'IsSpecialLightAttackInputHeld', 0.00001, true );
@@ -10416,6 +11914,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
+			action_interrupt();
+
 			thePlayer.PrepareToAttack();
 			thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
 			thePlayer.AddTimer( 'IsSpecialLightAttackInputHeld', 0.00001, true );
@@ -10455,6 +11955,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			if (ACS_can_perform_guard_doubletap_attack() && thePlayer.IsInCombat())
 			{
 				ACS_refresh_guard_doubletap_attack_cooldown();
+
+				if (thePlayer.HasTag('axii_sword_equipped'))
+				{
+					RemoveTimer('ACS_Shield_Spawn_Delay');
+
+					AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
+				}
 																
 				geraltRandomKick();
 											
@@ -10531,7 +12038,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				ACS_refresh_guard_attack_cooldown();
 
 				if (thePlayer.HasTag('axii_sword_equipped'))
-				{				
+				{
+					RemoveTimer('ACS_Shield_Spawn_Delay');
+
+					AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
+
 					geraltRandomAxiiCounter();
 				}
 				else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
@@ -10573,6 +12084,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				ACS_refresh_guard_attack_cooldown();
 
 				ACS_PrimaryWeaponSwitch();
+
+				RemoveTimer('ACS_Shield_Spawn_Delay');
+
+				AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
 
 				geraltRandomAxiiCounter();
 			}
@@ -11011,7 +12526,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& VampireClawsStaminaCheck()
 		)
 		{					 
-			thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 		}
 		else
 		{
@@ -11094,7 +12609,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& VampireClawsStaminaCheck()
 		)
 		{
-			thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 		}
 		else
 		{
@@ -11134,7 +12649,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					geraltRandomClawAttackSpecialDash();
 
-					//thePlayer.ClearAnimationSpeedMultipliers();	
+					//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
 
@@ -11146,7 +12661,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					geraltRandomHeavyClawAttack();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
 
@@ -11166,7 +12681,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			StaminaCheck()
 			)
 			{ 
-				thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else
 			{
@@ -11191,7 +12706,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			StaminaCheck()
 			)
 			{					 
-				thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else
 			{
@@ -11240,7 +12755,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				)
 				{
 					ACS_PrimaryWeaponSwitch();
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -11252,7 +12767,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																	
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }		
 
@@ -11283,7 +12798,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 					else
 					{
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5 ); }		
 
@@ -11329,7 +12844,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				)
 				{
 					ACS_PrimaryWeaponSwitch();
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -11399,13 +12914,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_light_attack_cooldown();
 																	
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 																	
 					thePlayer.BreakPheromoneEffect();
 																	
@@ -11428,7 +12943,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinComboAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 																			
@@ -11460,7 +12975,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 																			
@@ -11506,7 +13021,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -11520,7 +13035,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithBerserkAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(2  ); }
 
@@ -11551,7 +13066,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 
@@ -11572,7 +13087,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{ 
 				ACS_RangedWeaponSwitch();
 
-				thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 			{
@@ -11609,7 +13124,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{ 
 				ACS_RangedWeaponSwitch();
 
-				thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 			{
@@ -11681,7 +13196,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -11718,7 +13233,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -11753,7 +13268,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{ 
 						ACS_SecondaryWeaponSwitch();
 
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -11765,7 +13280,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomSpearAttackAlt();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 																		
@@ -11795,7 +13310,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomSpearAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 																		
@@ -11841,7 +13356,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -11878,7 +13393,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -11913,7 +13428,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{	
 						ACS_SecondaryWeaponSwitch();
 
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -11925,7 +13440,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{										
 							geraltRandomAxeAttackAlt();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 																
@@ -12003,7 +13518,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -12040,7 +13555,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -12075,13 +13590,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{ 
 						ACS_SecondaryWeaponSwitch();
 
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
 						ACS_refresh_heavy_attack_cooldown();
 																		
-						shield_play_anim();															
+						if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}															
 
 						ACS_SecondaryWeaponSwitch();
 
@@ -12100,7 +13615,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{												
 							geraltRandomGregAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 																		
@@ -12148,7 +13663,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -12185,7 +13700,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_RangedWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftX') == 0  && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
@@ -12220,7 +13735,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{	
 						ACS_SecondaryWeaponSwitch();
 
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -12232,7 +13747,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{					
 							geraltRandomHammerSpecialAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }
 
@@ -12304,7 +13819,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12316,7 +13831,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 
@@ -12346,7 +13861,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 					else
 					{
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 
@@ -12395,7 +13910,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12407,7 +13922,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomOlgierdLightAttack();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -12452,7 +13967,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12464,7 +13979,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomOlgierdLightAttackAlt();	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 												
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 												
@@ -12508,7 +14023,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12579,7 +14094,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();		
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12629,7 +14144,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{			
 					ACS_PrimaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12688,13 +14203,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_light_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -12717,7 +14232,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinLightAttackAlt();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 														
@@ -12748,7 +14263,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinLightAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 														
@@ -12796,13 +14311,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_light_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -12817,7 +14332,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomEredinLightAttack();
 					} 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -12863,13 +14378,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_light_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -12884,7 +14399,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomEredinLightAttackAlt();
 					} 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -12928,7 +14443,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -12968,7 +14483,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithLightAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 
@@ -13013,7 +14528,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();		
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13025,7 +14540,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					geraltRandomImlerithLightAttack(); 			
 
-					thePlayer.ClearAnimationSpeedMultipliers();			
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}			
 													
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 					
@@ -13069,7 +14584,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{		
 					ACS_PrimaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13121,7 +14636,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13135,7 +14650,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearLightAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 
@@ -13165,7 +14680,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearLightAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 
@@ -13210,7 +14725,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13222,7 +14737,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					geraltRandomSpearLightAttack(); 				
 
-					thePlayer.ClearAnimationSpeedMultipliers();		
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}		
 													
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 
@@ -13266,7 +14781,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13278,7 +14793,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					geraltRandomSpearLightAttackAlt(); 		
 
-					thePlayer.ClearAnimationSpeedMultipliers();				
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}				
 													
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 
@@ -13324,7 +14839,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13338,7 +14853,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{		
 						geraltRandomGregLightAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }
 
@@ -13355,7 +14870,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomGregLightAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }
 
@@ -13402,7 +14917,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13414,7 +14929,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					geraltRandomGregLightAttack(); 		
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 													
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 
@@ -13460,7 +14975,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();		
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13472,7 +14987,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					geraltRandomGregLightAttackAlt(); 		
 
-					thePlayer.ClearAnimationSpeedMultipliers();				
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}				
 													
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 				
@@ -13516,7 +15031,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13644,7 +15159,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{		
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13696,7 +15211,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13748,7 +15263,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13758,7 +15273,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 													
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
@@ -13835,7 +15350,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13847,7 +15362,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																					
 					geraltRandomAxeLightAttack();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }
 					
@@ -13891,7 +15406,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13903,7 +15418,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																					
 					geraltRandomAxeLightAttackAlt();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }
 					
@@ -13945,7 +15460,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& StaminaCheck()
 				)
 				{ 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -13959,7 +15474,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomGiantHeavyAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }
 					}
@@ -14008,7 +15523,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14060,7 +15575,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14072,7 +15587,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									
 					geraltRandomGiantHeavyAttackAlt(); 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 						
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }
 									
@@ -14116,7 +15631,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14135,7 +15650,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomAxeHeavyAttack();
 					}
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 										
@@ -14179,7 +15694,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14191,7 +15706,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										
 					geraltRandomAxeHeavyAttack(); 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();															
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}															
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 										
@@ -14235,7 +15750,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14247,7 +15762,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										
 					geraltRandomAxeHeavyAttackAlt(); 				
 
-					thePlayer.ClearAnimationSpeedMultipliers();													
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}													
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 										
@@ -14291,7 +15806,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14305,7 +15820,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearHeavyAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2  ); }
 					}
@@ -14313,7 +15828,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearHeavyAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 					}
@@ -14358,7 +15873,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14370,7 +15885,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											
 					geraltRandomSpearHeavyAttack(); 				
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }
 
@@ -14414,7 +15929,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -14426,7 +15941,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											
 					geraltRandomSpearHeavyAttackAlt(); 	
 					
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2  ); }
 
@@ -14472,13 +15987,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14493,7 +16008,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomGregHeavyAttack();
 					}
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 
@@ -14539,13 +16054,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14553,7 +16068,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomGregHeavyAttack(); 			
 
-					thePlayer.ClearAnimationSpeedMultipliers();				
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}				
 												
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 											
@@ -14599,13 +16114,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14613,7 +16128,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomGregHeavyAttackAlt();	 				
 
-					thePlayer.ClearAnimationSpeedMultipliers();			
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}			
 												
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 					
@@ -14659,13 +16174,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14679,7 +16194,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomOlgierdHeavyAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -14726,13 +16241,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14740,7 +16255,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomOlgierdHeavyAttack(); 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();						
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}						
 												
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 											
@@ -14786,13 +16301,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14840,13 +16355,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14875,7 +16390,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						}	
 					} 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -14921,13 +16436,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -14942,7 +16457,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomEredinHeavyAttack();
 					} 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -14988,13 +16503,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15009,7 +16524,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomEredinHeavyAttackAlt();
 					} 	
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -15053,13 +16568,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15073,7 +16588,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithHeavyAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -15118,13 +16633,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 										
@@ -15132,7 +16647,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomImlerithHeavyAttack(); 			
 
-					thePlayer.ClearAnimationSpeedMultipliers();																
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}																
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -15222,13 +16737,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15276,13 +16791,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15296,7 +16811,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomClawHeavyAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -15341,13 +16856,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15355,7 +16870,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 												
 					geraltRandomClawHeavyAttack(); 		
 
-					thePlayer.ClearAnimationSpeedMultipliers();															
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}															
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 												
@@ -15399,13 +16914,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_heavy_attack_cooldown();
 												
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 												
 					thePlayer.BreakPheromoneEffect();
 												
@@ -15453,13 +16968,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_special_attack_cooldown();
 						
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 						
 					thePlayer.BreakPheromoneEffect();	
 
@@ -15475,7 +16990,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltEredinStab();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15487,7 +17002,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltEredinFuryCombo();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15536,7 +17051,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -15568,7 +17083,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomOlgierdComboAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -15613,7 +17128,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -15627,7 +17142,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomAttackSpecialDash();
 
-						//thePlayer.ClearAnimationSpeedMultipliers();	
+						//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 						//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -15675,7 +17190,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				)
 				{ 
 					ACS_PrimaryWeaponSwitch();
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -15687,7 +17202,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							
 					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 					{
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -15699,7 +17214,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithComboAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -15746,13 +17261,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_special_attack_cooldown();
 						
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 						
 					thePlayer.BreakPheromoneEffect();	
 
@@ -15777,7 +17292,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinSpecialAttackAlt();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15789,7 +17304,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							geraltRandomEredinSpecialAttack();
 
-							thePlayer.ClearAnimationSpeedMultipliers();	
+							if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 							if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15837,13 +17352,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_special_attack_cooldown();
 						
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 						
 					thePlayer.BreakPheromoneEffect();	
 
@@ -15859,7 +17374,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomEredinSpecialAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15906,13 +17421,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
 					ACS_refresh_special_attack_cooldown();
 						
-					shield_play_anim();
+					if(thePlayer.HasTag('ACS_Shielded_Entity')){shield_play_anim();}
 						
 					thePlayer.BreakPheromoneEffect();	
 
@@ -15926,7 +17441,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomEredinSpecialAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 							
@@ -15973,7 +17488,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16005,7 +17520,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomOlgierdSpecialAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }
 						
@@ -16052,7 +17567,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16064,7 +17579,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					geraltRandomOlgierdSpecialAttack(); 				
 
-					thePlayer.ClearAnimationSpeedMultipliers();				
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}				
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }
 						
@@ -16110,7 +17625,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16122,7 +17637,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					geraltRandomOlgierdSpecialAttackAlt();
 
-					//thePlayer.ClearAnimationSpeedMultipliers();	
+					//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 					//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -16166,7 +17681,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16180,7 +17695,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomClawSpecialAttackAlt();
 
-						//thePlayer.ClearAnimationSpeedMultipliers();	
+						//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 						//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -16229,7 +17744,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16279,7 +17794,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16291,7 +17806,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					geraltRandomClawSpecialAttackAlt();
 
-					//thePlayer.ClearAnimationSpeedMultipliers();	
+					//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 						
 					//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 					
@@ -16335,7 +17850,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_PrimaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16349,7 +17864,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithSpecialAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -16359,11 +17874,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomImlerithSpecialAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
-						AddTimer('ACS_ResetAnimation', 1  , false);
+						AddTimer('ACS_ResetAnimation', 1.5  , false);
 					}
 				}
 			}
@@ -16404,7 +17919,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16416,11 +17931,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					geraltRandomImlerithSpecialAttack();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 						
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 					
-					AddTimer('ACS_ResetAnimation', 1  , false);
+					AddTimer('ACS_ResetAnimation', 1.5  , false);
 				}
 			}
 		//}
@@ -16460,7 +17975,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_PrimaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16472,7 +17987,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					geraltRandomImlerithSpecialAttackAlt();			
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 					
@@ -16516,7 +18031,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16530,7 +18045,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearSpecialAttackAlt();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 							
@@ -16540,7 +18055,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						geraltRandomSpearSpecialAttack();
 
-						thePlayer.ClearAnimationSpeedMultipliers();	
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 						
 						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 							
@@ -16585,7 +18100,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16597,7 +18112,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					geraltRandomSpearSpecialAttack();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 					
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 						
@@ -16641,7 +18156,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16653,7 +18168,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							
 					geraltRandomSpearSpecialAttackAlt();
 
-					thePlayer.ClearAnimationSpeedMultipliers();	
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 								
 					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 							
@@ -16699,7 +18214,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16758,7 +18273,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16810,7 +18325,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{ 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16860,7 +18375,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16917,7 +18432,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{		
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -16967,7 +18482,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch();	
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -17017,7 +18532,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -17076,7 +18591,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	
 					ACS_SecondaryWeaponSwitch(); 
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -17126,7 +18641,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{	 
 					ACS_SecondaryWeaponSwitch();
 
-					thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
 				else
 				{
@@ -17180,7 +18695,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			ACS_Weapon_Invisible();
 		}
 
-		thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
+		//thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 	
 		AddTimer('ACS_dodge_timer_end', 0.875  , false);
 	}
@@ -17208,7 +18723,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (!thePlayer.HasTag('ACS_Camo_Active'))
 			{
-				thePlayer.StopAllEffects();
+				//thePlayer.StopAllEffects();
+				thePlayer.StopEffect( 'shadowdash' );
 			}
 
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_jump_up_stop_failsafe_ACS', 'PLAYER_SLOT', settings);
@@ -17234,7 +18750,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			movementAdjustor.SlideTo( ticket, victimPos );
 		}
 
-		thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
+		//thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 
 		AddTimer('ACS_dodge_timer_end', 0.75  , false);
 	}
@@ -17309,7 +18825,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
 		thePlayer.SetIsCurrentlyDodging(true);
 
-		thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
+		//thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 
 		AddTimer('ACS_dodge_timer_end', 1  , false);
 	}
@@ -17318,9 +18834,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function dodge_timer_end_actual() 
 	{ 
-		thePlayer.UnblockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
+		//thePlayer.UnblockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 
-		//thePlayer.ClearAnimationSpeedMultipliers();
+		//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 		
 		MovementAdjust();
 
@@ -17331,7 +18847,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if (!thePlayer.HasTag('ACS_Camo_Active') && !thePlayer.HasTag('in_wraith'))
 		{
-			thePlayer.StopAllEffects();
+			//thePlayer.StopAllEffects();
 		}
 
 		if ( !thePlayer.HasTag('ACS_Camo_Active') && thePlayer.HasTag('ACS_Bruxa_Jump_End') && (thePlayer.HasTag('aard_sword_equipped') || thePlayer.HasTag('vampire_claws_equipped')) )
@@ -17689,6 +19205,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
 
+		actors.Clear();
+
 		actors = GetActorsInRange( thePlayer, 10, 10, 'bruxa_bite_victim' );
 
 		//theGame.GetActorsByTag( 'bruxa_bite_victim', actors );
@@ -17894,6 +19412,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		settings_SMOOTH.blendIn = 0.15f;
 		settings_SMOOTH.blendOut = 1.0f;
+
+		actors.Clear();
 		
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim');
 
@@ -18091,7 +19611,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			ticket = movementAdjustor.CreateNewRequest( 'ACS_Movement_Adjust_Shadowdash' );
 		
-			movementAdjustor.AdjustmentDuration( ticket, 0.5 );
+			movementAdjustor.AdjustmentDuration( ticket, 0.35 );
 			
 			//movementAdjustor.ShouldStartAt(ticket, thePlayer.GetWorldPosition());
 
@@ -18104,9 +19624,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			movementAdjustor.ScaleAnimationLocationVertically( ticket, true );
 
 			dist = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 1.25;
+			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 2;
 
-			thePlayer.ClearAnimationSpeedMultipliers();
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 									
 			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 			
@@ -18190,6 +19710,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (thePlayer.HasTag('ACS_Eredin_Stab'))
 			{
+				actors.Clear();
+
 				actors = thePlayer.GetNPCsAndPlayersInCone(2.5, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 				if( actors.Size() > 0 )
@@ -18252,7 +19774,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			distVampSpecialDash = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius());
 
-			thePlayer.ClearAnimationSpeedMultipliers();
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 
 			if (thePlayer.HasTag('ACS_Whirl_Attack'))
 			{
@@ -18329,7 +19851,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			distVampSpecialDash = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 0.75;
 
-			thePlayer.ClearAnimationSpeedMultipliers();
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 									
 			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 			
@@ -18409,7 +19931,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			dist = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 1.25;
 
-			thePlayer.ClearAnimationSpeedMultipliers();
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 									
 			//thePlayer.SetAnimationSpeedMultiplier( 1.75 );
 			
@@ -18477,7 +19999,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		distVampSpecialDash = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 0.5;
 
-		thePlayer.ClearAnimationSpeedMultipliers();
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 								
 		if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 		
@@ -18573,6 +20095,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			thePlayer.RemoveTag('ACS_Hijack_Flight_End');
 		}
+
+		actors.Clear();
 		
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim');
 
@@ -18744,6 +20268,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			thePlayer.RemoveTag('ACS_Hijack_Flight_End');
 		}
+
+		actors.Clear();
 		
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim');
 
@@ -18811,6 +20337,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function HijackMoveForwardActual()
 	{
 		//MovementAdjust();
+
+		actors.Clear();
 
 		theGame.GetActorsByTag( 'bruxa_bite_victim', actors );
 
@@ -18997,454 +20525,124 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	// Bruxa Dash
 	
-	// Bruxa Dash For Sprint
-	function BruxaDash()
+	function BruxaDash_Combat()
 	{
-		if (CiriCheck()
+		if( BruxaDashCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
+		{
+			BruxaDashDoubleTap = true;
+		}
+		else
+		{
+			BruxaDashDoubleTap = false;	
+		}
+		
+		if( BruxaDashDoubleTap 
+		&& CiriCheck()
 		&& HitAnimCheck()
 		&& FinisherCheck() 
 		&& thePlayer.IsActionAllowed(EIAB_Movement)
+		&& (thePlayer.IsInCombat() || !ACS_CombatToExplorationCheck())
 		)
 		{
 			DeactivateThings_BruxaDash();
 
 			ACS_ThingsThatShouldBeRemoved_NoWeaponRespawn();
 
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
-			if( BruxaDashCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
+			if (ACS_BruxaDash_Enabled() 
+			&& ACS_can_bruxa_dash())
 			{
-				BruxaDashDoubleTap = true;
-			}
-			else
-			{
-				BruxaDashDoubleTap = false;	
-			}
-			
-			if( BruxaDashDoubleTap )
-			{
-				if ( ACS_WraithMode_Enabled() && ACS_WraithModeInput() == 1 && !thePlayer.HasTag('in_wraith') )
-				{
-					if (!thePlayer.IsInCombat()) 
-					{
-						if (theGame.IsFocusModeActive())
-						{
-							if ( ACS_StaminaBlockAction_Enabled() 
-							&& StaminaCheck()
-							)
-							{									 
-								thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
-							}
-							else
-							{
-								thePlayer.AddTag('in_wraith');
-
-								thePlayer.SoundEvent("magic_yennefer_necromancy_loop_start");
-								thePlayer.SoundEvent("magic_yennefer_necromancy_loop_start");
-
-								environment = (CEnvironmentDefinition)LoadResource(
-									//"dlc\bob\data\fx\cutscenes\cs702_vision\vision_env.env"
-									"dlc\dlc_acs\data\env\q605_hell_red_blockout.env"
-									, true);
-								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 1.f );
-								theGame.SetEnvironmentID(envID);
-
-								camera = (CCustomCamera)theCamera.GetTopmostCameraObject();
-
-								camera.StopAnimation('camera_shake_loop_lvl1_1');
-
-								theGame.GetGameCamera().StopAnimation( 'camera_shake_loop_lvl1_1' );
-
-								camera.StopAnimation('camera_shake_loop_lvl1_5');
-
-								theGame.GetGameCamera().StopAnimation( 'camera_shake_loop_lvl1_5' );
-
-								thePlayer.BlockAction( EIAB_Crossbow, 			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_CallHorse,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Signs, 				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_FastTravel, 		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Fists, 				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_InteractionAction, 	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_UsableItem,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_ThrowBomb,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SwordAttack,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_LightAttacks,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_HeavyAttacks,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SpecialAttackLight,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SpecialAttackHeavy,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Dodge,				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Roll,				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_MeditationWaiting,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_OpenMeditation,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Wraith');
-									
-								if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}
-
-								else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}
-
-								thePlayer.StopAllEffects();
-
-								RemoveTimer('ACS_Embers_Timer');
-									
-								thePlayer.StopEffect('special_attack_short_fx');
-								thePlayer.PlayEffectSingle('special_attack_short_fx');
-
-								thePlayer.StopEffect('mist_fly_regis');
-								thePlayer.PlayEffectSingle('mist_fly_regis');
-
-								thePlayer.PlayEffectSingle( 'mist_regis' );
-
-								thePlayer.EnableCollisions(false);
-								thePlayer.EnableCharacterCollisions(false);
-																
-								AddTimer('ACS_wraith', 0.000000000000000001f, true);
-							}
-						}
-					}
+				if ( ACS_StaminaBlockAction_Enabled() 
+				&& StaminaCheck()
+				&& !thePlayer.HasTag('in_wraith')
+				)
+				{	
+					if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 				}
-
-				if (ACS_can_bruxa_dash()
-				&& ACS_BruxaDash_Enabled() 
-				&& !theGame.IsFocusModeActive())
+				else
 				{
-					if ( ACS_StaminaBlockAction_Enabled() 
-					&& StaminaCheck()
-					&& !thePlayer.HasTag('in_wraith')
-					)
-					{	
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
-					}
-					else
+					thePlayer.SetIsCurrentlyDodging(true);
+
+					thePlayer.EnableCharacterCollisions(false); 
+
+					ACS_refresh_bruxa_dash_cooldown();
+
+					if (thePlayer.HasTag('in_wraith'))
 					{
-						thePlayer.SetIsCurrentlyDodging(true);
+						thePlayer.EnableCollisions(true);
 
-						thePlayer.EnableCharacterCollisions(false); 
+						thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
 
-						ACS_refresh_bruxa_dash_cooldown();
+						DeactivateEnvironment(envID, 1);
 
-						if (thePlayer.HasTag('in_wraith'))
-						{
-							thePlayer.EnableCollisions(true);
+						RemoveTimer('ACS_wraith');
 
-							thePlayer.SoundEvent("magic_yennefer_necromancy_loop_stop");
+						thePlayer.StopEffect('special_attack_short_fx');
 
-							RemoveTimer('ACS_wraith');
+						thePlayer.StopEffect('wraith_fx');
 
-							thePlayer.StopEffect('special_attack_short_fx');
+						thePlayer.StopEffect('mist_fly_regis');
 
-							thePlayer.StopEffect('wraith_fx');
+						thePlayer.PlayEffectSingle( 'mist_regis' );
 
-							thePlayer.StopEffect('mist_fly_regis');
+						thePlayer.StopEffect( 'mist_regis' );
 
-							thePlayer.PlayEffectSingle( 'mist_regis' );
+						thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_Signs, 				'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_FastTravel, 			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_Fists, 				'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_InteractionAction, 	'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_UsableItem,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_ThrowBomb,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_SwordAttack,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_LightAttacks,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_HeavyAttacks,			'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_SpecialAttackLight,	'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_SpecialAttackHeavy,	'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_Dodge,				'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_Roll,					'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_MeditationWaiting,	'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_OpenMeditation,		'ACS_Wraith');
+						thePlayer.UnblockAction( EIAB_RadialMenu,			'ACS_Wraith');
 
-							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_Signs, 				'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_FastTravel, 			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_Fists, 				'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_InteractionAction, 	'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_UsableItem,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_ThrowBomb,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_SwordAttack,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_LightAttacks,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_HeavyAttacks,			'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_SpecialAttackLight,	'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_SpecialAttackHeavy,	'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_Dodge,				'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_Roll,					'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_MeditationWaiting,	'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_OpenMeditation,		'ACS_Wraith');
-							thePlayer.UnblockAction( EIAB_RadialMenu,			'ACS_Wraith');
+						thePlayer.RemoveTag('in_wraith');
 
-							DeactivateEnvironment(envID, 1);
-
-							thePlayer.RemoveTag('in_wraith');
-
-							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
-						}
-						
-						if( thePlayer.IsInCombat())
-						{
-							if (theInput.GetActionValue('GI_AxisLeftY') == 0)
-							{
-								if (!thePlayer.HasTag('ACS_Camo_Active')
-								&& !thePlayer.HasTag('blood_sucking'))
-								{
-									thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
-									thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
-
-									thePlayer.PlayEffectSingle( 'shadowdash_short' );
-									thePlayer.StopEffect( 'shadowdash_short' );
-								}
-
-								if (thePlayer.HasTag('blood_sucking'))
-								{
-									bruxa_blood_suck_end_no_jump_actual();
-								}
-								
-								dodge_timer_actual();
-									
-								thePlayer.BreakAttachment();
-															
-								bruxa_dash();
-							}
-							else if (theInput.GetActionValue('GI_AxisLeftY') > 0.85
-							&& ACS_Enabled()
-							&& ACS_BruxaLeapAttack_Enabled())
-							{	
-								//thePlayer.SoundEvent("monster_dettlaff_monster_construct_whoosh_claws_large");
-									
-								if (!thePlayer.HasTag('ACS_Camo_Active')
-								&& !thePlayer.HasTag('blood_sucking'))
-								{
-									thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
-									thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
-
-									thePlayer.PlayEffectSingle( 'shadowdash_short' );
-									thePlayer.StopEffect( 'shadowdash_short' );
-								}
-		
-								if (thePlayer.HasTag('blood_sucking'))
-								{
-									bruxa_blood_suck_end_no_jump_actual();
-								}
-
-								dodge_timer_actual();
-													
-								if (thePlayer.IsInAir())
-								{	
-									air_jump_attack();
-								}
-								else
-								{
-									jump_attack();
-								}
-							}	
-						}
-						else if (!thePlayer.IsInCombat())
-						{		
-							if (!thePlayer.HasTag('ACS_Camo_Active')
-							&& !thePlayer.HasTag('blood_sucking'))
-							{
-								thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
-								thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
-
-								thePlayer.PlayEffectSingle( 'shadowdash_short' );
-								thePlayer.StopEffect( 'shadowdash_short' );
-							}
-																							
-							if (thePlayer.HasTag('blood_sucking'))
-							{
-								bruxa_blood_suck_end_no_jump_actual();
-							}
-
-							dodge_timer_actual();
-								
-							thePlayer.BreakAttachment();
-															
-							bruxa_dash();
-						}
+						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
 					}
-				}
-			}
-			else
-			{	
-				thePlayer.SetSprintActionPressed(true);
 
-				if ( thePlayer.HasTag('vampire_claws_equipped') )
-				{
-					if ( !thePlayer.HasTag('ACS_Camo_Active') && !thePlayer.HasTag('in_wraith') && !thePlayer.HasTag('blood_sucking') )
+					if (!thePlayer.HasTag('ACS_Camo_Active')
+					&& !thePlayer.HasTag('blood_sucking'))
 					{
-						thePlayer.PlayEffectSingle( 'magic_step_l_new' );
-						thePlayer.StopEffect( 'magic_step_l_new' );	
-
-						thePlayer.PlayEffectSingle( 'magic_step_r_new' );
-						thePlayer.StopEffect( 'magic_step_r_new' );	
-
-						thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
-						thePlayer.StopEffect( 'bruxa_dash_trails' );
+						thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
+						thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
 
 						thePlayer.PlayEffectSingle( 'shadowdash_short' );
 						thePlayer.StopEffect( 'shadowdash_short' );
 					}
-				}
-						
-				if ( thePlayer.rangedWeapon )
-					thePlayer.rangedWeapon.OnSprintHolster();
-				
-				if ( ACS_WraithMode_Enabled() && ACS_WraithModeInput() == 0 && !thePlayer.HasTag('in_wraith') )
-				{
-					if (!thePlayer.IsInCombat()) 
+
+					if (thePlayer.HasTag('blood_sucking'))
 					{
-						if (theGame.IsFocusModeActive())
-						{
-							if ( ACS_StaminaBlockAction_Enabled() 
-							&& StaminaCheck()
-							)
-							{									 
-								thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
-							}
-							else
-							{
-								thePlayer.AddTag('in_wraith');
-
-								environment = (CEnvironmentDefinition)LoadResource(
-									//"dlc\bob\data\fx\cutscenes\cs702_vision\vision_env.env"
-									"dlc\dlc_acs\data\env\q605_hell_red_blockout.env"
-									, true);
-								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 1.f );
-								theGame.SetEnvironmentID(envID);
-
-								camera.StopAnimation('camera_shake_loop_lvl1_1');
-
-								theGame.GetGameCamera().StopAnimation( 'camera_shake_loop_lvl1_1' );
-
-								camera.StopAnimation('camera_shake_loop_lvl1_5');
-
-								theGame.GetGameCamera().StopAnimation( 'camera_shake_loop_lvl1_5' );
-
-								thePlayer.BlockAction( EIAB_Crossbow, 			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_CallHorse,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Signs, 				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_FastTravel, 		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Fists, 				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_InteractionAction, 	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_UsableItem,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_ThrowBomb,			'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SwordAttack,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_LightAttacks,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_HeavyAttacks,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SpecialAttackLight,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_SpecialAttackHeavy,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Dodge,				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_Roll,				'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_MeditationWaiting,	'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_OpenMeditation,		'ACS_Wraith');
-								thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Wraith');
-									
-								if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}
-
-								else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}	
-								else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-								{
-									thePlayer.StopEffect('smoke_explosion');
-									thePlayer.PlayEffectSingle('smoke_explosion');
-
-									thePlayer.StopEffect('suck_out');
-									thePlayer.PlayEffectSingle('suck_out');
-								}
-										
-								thePlayer.StopAllEffects();
-
-								RemoveTimer('ACS_Embers_Timer');
-									
-								thePlayer.StopEffect('special_attack_short_fx');
-								thePlayer.PlayEffectSingle('special_attack_short_fx');
-
-								thePlayer.StopEffect('mist_fly_regis');
-								thePlayer.PlayEffectSingle('mist_fly_regis');
-
-								thePlayer.PlayEffectSingle( 'mist_regis' );
-
-								thePlayer.EnableCollisions(false);
-								thePlayer.EnableCharacterCollisions(false);
-																
-								AddTimer('ACS_wraith', 0.000000000000000001f, true);
-							}
-						}
+						bruxa_blood_suck_end_no_jump_actual();
 					}
+					
+					dodge_timer_actual();
+						
+					thePlayer.BreakAttachment();		
+
+					bruxa_dash();						
 				}
 			}
 
 			DeactivateThings_BruxaDash();
-			
-			BruxaDashCallTime = theGame.GetEngineTimeAsSeconds();
 		}
+		else
+		{
+			ACS_BruxaDodgeSlideBackInit(); 
+		}
+		
+		BruxaDashCallTime = theGame.GetEngineTimeAsSeconds();
 	}
 
 	function JumpAttackCombat()
@@ -19468,6 +20666,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.StopEffect('wraith_fx');
 
 				thePlayer.PlayEffectSingle( 'mist_regis' );
+
+				thePlayer.StopEffect( 'mist_regis' );
 
 				thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 				thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19547,7 +20747,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			ACS_ThingsThatShouldBeRemoved_NoWeaponRespawn();
 
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 			if( BruxaDashCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
 			{
@@ -19560,7 +20760,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			if( BruxaDashDoubleTap )
 			{
-				if ( ACS_WraithMode_Enabled() && ACS_WraithModeInput() == 1 && !thePlayer.HasTag('in_wraith') )
+				if ( 
+				ACS_WraithMode_Enabled() 
+				&& ACS_WraithModeInput() == 1 
+				&& !thePlayer.HasTag('in_wraith') )
 				{
 					if (!thePlayer.IsInCombat()) 
 					{
@@ -19570,7 +20773,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							&& StaminaCheck()
 							)
 							{									 
-								thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+								if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 							}
 							else
 							{
@@ -19626,6 +20829,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 								thePlayer.PlayEffectSingle( 'mist_regis' );
 
+								thePlayer.StopEffect( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
@@ -19645,7 +20850,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					&& !thePlayer.HasTag('in_wraith')
 					)
 					{	
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -19672,6 +20877,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							thePlayer.StopEffect('mist_fly_regis');
 
 							thePlayer.PlayEffectSingle( 'mist_regis' );
+
+							thePlayer.StopEffect( 'mist_regis' );
 
 							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19720,7 +20927,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 			}
-			else
+			else 
 			{	
 				if ( thePlayer.HasTag('vampire_claws_equipped') )
 				{
@@ -19750,7 +20957,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							&& StaminaCheck()
 							)
 							{									 
-								thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+								if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 							}
 							else
 							{
@@ -19802,6 +21009,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 								thePlayer.PlayEffectSingle( 'mist_regis' );
 
+								thePlayer.StopEffect( 'mist_regis' );
+
 								thePlayer.EnableCollisions(false);
 								thePlayer.EnableCharacterCollisions(false);
 																
@@ -19821,7 +21030,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					&& !thePlayer.HasTag('in_wraith')
 					)
 					{	
-						thePlayer.RaiseEvent( 'CombatTaunt' ); thePlayer.SoundEvent("gui_no_stamina");
+						if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -19848,6 +21057,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							thePlayer.StopEffect('mist_fly_regis');
 
 							thePlayer.PlayEffectSingle( 'mist_regis' );
+
+							thePlayer.StopEffect( 'mist_regis' );
 
 							thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 							thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -19979,15 +21190,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_run_dash_ACS', 'PLAYER_SLOT', settings);
-				
-				movementAdjustor.SlideTo( ticket, dest1 );
-			}	
-			else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
-			{
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_run_dash_right_ACS', 'PLAYER_SLOT', settings);
 				
 				movementAdjustor.SlideTo( ticket, dest2 );
+			}	
+			else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_run_dash_ACS', 'PLAYER_SLOT', settings);
+				
+				movementAdjustor.SlideTo( ticket, dest1 );
 			}	
 			else
 			{	
@@ -20013,7 +21224,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{	
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
+			if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 			{
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_run_dash_ACS', 'PLAYER_SLOT', settings);
 				
@@ -20026,7 +21237,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					movementAdjustor.SlideTo( ticket, dest3 );
 				}
 			}	
-			else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
+			else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 			{
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_run_dash_right_ACS', 'PLAYER_SLOT', settings);
 				
@@ -20292,7 +21503,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_attack_special_charge_run_ACS', 'PLAYER_SLOT', settings);
-		}	
+		}
 
 		thePlayer.SetSprintActionPressed( false );
 		thePlayer.SetSprintToggle( false );
@@ -21684,6 +22895,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function geraltRandomPush() 
 	{
 		MovementAdjust();
+
+		if (thePlayer.HasTag('axii_sword_equipped'))
+		{
+			RemoveTimer('ACS_Shield_Spawn_Delay');
+
+			AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
+		}
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
@@ -21789,9 +23007,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}	
 	}
 	
+	/*
 	function geraltRandomPunch() 
 	{
 		MovementAdjust();
+
+		ACS_Dagger_Summon();
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
@@ -21849,6 +23070,93 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 					
 				this.previous_punch_index_1 = punch_index_1;
+			}
+		}
+		else
+		{
+			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
+
+			if (ACS_ComboMode() == 0)
+			{
+				ACS_Combo_Mode_Reset();
+				
+				if (combo_counter_punch == 0)
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_70ms_far', 'PLAYER_SLOT', settings);	
+
+					combo_counter_damage -= combo_counter_damage;
+
+					combo_counter_punch += 1;
+				}
+
+				else if (combo_counter_punch == 1)
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_40ms_close', 'PLAYER_SLOT', settings);	
+
+					combo_counter_damage += 1;
+
+					combo_counter_punch -= combo_counter_punch;
+				}
+			}
+			else if (ACS_ComboMode() == 1)
+			{
+				punch_index_2 = RandDifferent(this.previous_punch_index_2 , 2);
+
+				switch (punch_index_2) 
+				{	
+					case 1:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_70ms_far', 'PLAYER_SLOT', settings);
+					break;
+
+					default:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_40ms_close', 'PLAYER_SLOT', settings);
+					break;
+				}
+				
+				this.previous_punch_index_2 = punch_index_2;
+			}
+		}	
+	}
+	*/
+
+	function geraltRandomPunch() 
+	{
+		MovementAdjust();
+
+		ACS_Dagger_Summon();
+
+		if (thePlayer.HasTag('axii_sword_equipped'))
+		{
+			RemoveTimer('ACS_Shield_Spawn_Delay');
+
+			AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
+		}
+		
+		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		{	
+			if ( ACS_GetTargetMode() == 0 )
+			{
+				movementAdjustor.RotateTowards( ticket, actor );  
+			}
+			else if ( ACS_GetTargetMode() == 1 )
+			{
+				if (thePlayer.IsHardLockEnabled())
+				{
+					movementAdjustor.RotateTowards( ticket, actor );  
+				}
+				else
+				{
+					movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
+				}	
+			}
+
+			if( targetDistance <= 1.75 * 1.75 ) 
+			{	
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_40ms_close', 'PLAYER_SLOT', settings);
+			}
+			else
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'combat_locomotion_sucker_punch_70ms_far', 'PLAYER_SLOT', settings);
 			}
 		}
 		else
@@ -22351,7 +23659,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_axii_counter == 4)
 				{
-					Shrink_Geralt(1);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_kickswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -22386,7 +23694,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					default:
-					Shrink_Geralt(1);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_kickswing_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 				}
@@ -22444,7 +23752,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_axii_counter == 4)
 				{
-					Shrink_Geralt(1);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_kickswing_01_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -22479,7 +23787,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					default:
-					Shrink_Geralt(1);
+					Shrink_Geralt(1.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'attack_ready_kickswing_01_ACS', 'PLAYER_SLOT', settings);
 					break;
 				}
@@ -22871,6 +24179,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function HeadbuttDamageActual()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInCone(1.75, VecHeading(thePlayer.GetHeadingVector()), 10, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 		if( actors.Size() > 0 )
@@ -23954,7 +25264,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -24007,7 +25317,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -24038,7 +25348,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
@@ -24129,7 +25439,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -24184,7 +25494,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -24217,7 +25527,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
@@ -25087,7 +26397,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -25136,7 +26446,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5  ); }	
 						
@@ -25169,7 +26479,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
@@ -26248,7 +27558,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				
@@ -26297,7 +27607,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 				
@@ -26346,7 +27656,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 				
@@ -26393,7 +27703,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			switch (olgierd_shadow_attack_index_2) 
 			{	
 				case 3:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -26401,7 +27711,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 
 				case 2:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -26409,7 +27719,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 				
 				case 1:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -26417,7 +27727,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 
 				default:
-				thePlayer.ClearAnimationSpeedMultipliers();						
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}						
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
@@ -26435,6 +27745,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		//thePlayer.PlayBattleCry( 'BattleCryAttack', 1, true, false );
 		thePlayer.PlayEffect('special_attack_break'); thePlayer.StopEffect('special_attack_break');
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 50, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -26475,7 +27787,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{			
 			RemoveTimer('ACS_dodge_timer_end');
 
-			thePlayer.ClearAnimationSpeedMultipliers();	
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 									
 			thePlayer.SetAnimationSpeedMultiplier( 1.25 );
 			
@@ -26509,7 +27821,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			thePlayer.ClearAnimationSpeedMultipliers();						
+			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}						
 			thePlayer.SetAnimationSpeedMultiplier( 1.25  );
 			AddTimer('ACS_ResetAnimation', 0.25 , false);
 
@@ -28135,7 +29447,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				
@@ -28184,7 +29496,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }
 				
@@ -28233,7 +29545,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 																
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				thePlayer.ClearAnimationSpeedMultipliers();	
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 										
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 				
@@ -28280,7 +29592,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			switch (olgierd_shadow_attack_index_2) 
 			{	
 				case 3:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -28288,7 +29600,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 
 				case 2:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -28296,7 +29608,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 				
 				case 1:
-				thePlayer.ClearAnimationSpeedMultipliers();							
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}							
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
@@ -28304,7 +29616,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				break;
 
 				default:
-				thePlayer.ClearAnimationSpeedMultipliers();						
+				if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}						
 				if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.25  ); }
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
@@ -28552,217 +29864,223 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage -= combo_counter_damage;
-
-					combo_counter_shield_attack += 1;
-				}
-				else if (combo_counter_shield_attack == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-				else if (combo_counter_shield_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 3)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 4)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 5)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
 					
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack -= combo_counter_shield_attack;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				if( targetDistance <= 1.5*1.5 ) 
-				{	
-					eredin_attack_index_1 = RandDifferent(this.previous_eredin_attack_index_1 , 2);
-
-					switch (eredin_attack_index_1) 
-					{	
-						case 1:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						default:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-						break;
-					}
-					
-					this.previous_eredin_attack_index_1 = eredin_attack_index_1;
-
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-				}
-				else
-				{		
-					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
-
-					switch (eredin_attack_index_2) 
-					{	
-						case 3:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						case 2:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						case 1:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						default:
+					if (combo_counter_shield_attack == 0)
+					{
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-						break;
+
+						combo_counter_damage -= combo_counter_damage;
+
+						combo_counter_shield_attack += 1;
+					}
+					else if (combo_counter_shield_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+					else if (combo_counter_shield_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
 					}
 
-					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+					else if (combo_counter_shield_attack == 3)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+
+					else if (combo_counter_shield_attack == 4)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+
+					else if (combo_counter_shield_attack == 5)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+						
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack -= combo_counter_shield_attack;
+					}
 				}
-			}		
+				else if (ACS_ComboMode() == 1)
+				{
+					if( targetDistance <= 1.5*1.5 ) 
+					{	
+						eredin_attack_index_1 = RandDifferent(this.previous_eredin_attack_index_1 , 2);
+
+						switch (eredin_attack_index_1) 
+						{	
+							case 1:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							default:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+							break;
+						}
+						
+						this.previous_eredin_attack_index_1 = eredin_attack_index_1;
+
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+					}
+					else
+					{		
+						eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
+
+						switch (eredin_attack_index_2) 
+						{	
+							case 3:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							case 2:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							case 1:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							default:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
+							break;
+						}
+
+						this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+					}
+				}
+			}	
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage -= combo_counter_damage;
-
-					combo_counter_shield_attack += 1;
-				}
-				else if (combo_counter_shield_attack == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-				else if (combo_counter_shield_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 3)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 4)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack += 1;
-				}
-
-				else if (combo_counter_shield_attack == 5)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
 					
-					combo_counter_damage += 1;
+					if (combo_counter_shield_attack == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_shield_attack -= combo_counter_shield_attack;
+						combo_counter_damage -= combo_counter_damage;
+
+						combo_counter_shield_attack += 1;
+					}
+					else if (combo_counter_shield_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+					else if (combo_counter_shield_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+
+					else if (combo_counter_shield_attack == 3)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+
+					else if (combo_counter_shield_attack == 4)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack += 1;
+					}
+
+					else if (combo_counter_shield_attack == 5)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+						
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack -= combo_counter_shield_attack;
+					}
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
+				else if (ACS_ComboMode() == 1)
+				{
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
 
-				switch (eredin_attack_index_3) 
-				{					
-					case 5:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-					break;
-						
-					case 4:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-					break;
-						
-					case 3:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-					break;
+					switch (eredin_attack_index_3) 
+					{					
+						case 5:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+						break;
+							
+						case 4:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+						break;
+							
+						case 3:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 2:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
+
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -28789,135 +30107,141 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_attack_alt += 1;
+						combo_counter_shield_attack_alt += 1;
+					}
+					else if (combo_counter_shield_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt += 1;
+					}
+					else if (combo_counter_shield_attack_alt == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt += 1;
+					}
+
+					else if (combo_counter_shield_attack_alt == 3)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt -= combo_counter_shield_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
 
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_alt += 1;
+					switch (eredin_attack_index_2) 
+					{	
+						case 3:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 2:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
+					this.previous_eredin_attack_index_2 = eredin_attack_index_2;			
 				}
-				else if (combo_counter_shield_attack_alt == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_alt += 1;
-				}
-
-				else if (combo_counter_shield_attack_alt == 3)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_alt -= combo_counter_shield_attack_alt;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
-
-				switch (eredin_attack_index_2) 
-				{	
-					case 3:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-				this.previous_eredin_attack_index_2 = eredin_attack_index_2;			
 			}
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_attack_alt += 1;
+						combo_counter_shield_attack_alt += 1;
+					}
+					else if (combo_counter_shield_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt += 1;
+					}
+					else if (combo_counter_shield_attack_alt == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt += 1;
+					}
+
+					else if (combo_counter_shield_attack_alt == 3)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_alt -= combo_counter_shield_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 4);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{					
+						case 3:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 2:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_attack_alt += 1;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-				else if (combo_counter_shield_attack_alt == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_alt += 1;
-				}
-
-				else if (combo_counter_shield_attack_alt == 3)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_alt -= combo_counter_shield_attack_alt;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 4);
-
-				switch (eredin_attack_index_3) 
-				{					
-					case 3:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -28944,86 +30268,92 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack_special_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_attack_special_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_attack_special_alt += 1;
+						combo_counter_shield_attack_special_alt += 1;
+					}
+					else if (combo_counter_shield_attack_special_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_special_alt -= combo_counter_shield_attack_special_alt;
+					}
 				}
-				else if (combo_counter_shield_attack_special_alt == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_attack_special_alt -= combo_counter_shield_attack_special_alt;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{	
-				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
-
-				switch (eredin_attack_index_2) 
+				else if (ACS_ComboMode() == 1)
 				{	
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
+					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
 
-				this.previous_eredin_attack_index_2 = eredin_attack_index_2;
-			}		
+					switch (eredin_attack_index_2) 
+					{	
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
+
+					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+				}
+			}	
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_attack_special_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_attack_special_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_attack_special_alt += 1;
+						combo_counter_shield_attack_special_alt += 1;
+					}
+					else if (combo_counter_shield_attack_special_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_attack_special_alt -= combo_counter_shield_attack_special_alt;
+					}
 				}
-				else if (combo_counter_shield_attack_special_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{						
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_attack_special_alt -= combo_counter_shield_attack_special_alt;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
-
-				switch (eredin_attack_index_3) 
-				{						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29053,86 +30383,92 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_heavy_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_heavy_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_heavy_attack_alt += 1;
+						combo_counter_shield_heavy_attack_alt += 1;
+					}
+					else if (combo_counter_shield_heavy_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack_alt -= combo_counter_shield_heavy_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_heavy_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_2) 
+					{	
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_heavy_attack_alt -= combo_counter_shield_heavy_attack_alt;
+					this.previous_eredin_attack_index_2 = eredin_attack_index_2;	
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
-
-				switch (eredin_attack_index_2) 
-				{	
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_2 = eredin_attack_index_2;	
-			}		
+			}	
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_heavy_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_heavy_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_heavy_attack_alt += 1;
+						combo_counter_shield_heavy_attack_alt += 1;
+					}
+					else if (combo_counter_shield_heavy_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack_alt -= combo_counter_shield_heavy_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_heavy_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_heavy_attack_alt -= combo_counter_shield_heavy_attack_alt;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
-
-				switch (eredin_attack_index_3) 
-				{							
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_2_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29159,121 +30495,127 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_heavy_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage -= combo_counter_damage;
-
-					combo_counter_shield_heavy_attack += 1;
-				}
-				else if (combo_counter_shield_heavy_attack == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_heavy_attack += 1;
-				}
-
-				else if (combo_counter_shield_heavy_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_heavy_attack -= combo_counter_shield_heavy_attack;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				if( targetDistance <= 1.5*1.5 ) 
-				{	
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-				}
-				else
-				{		
-					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
-
-					switch (eredin_attack_index_2) 
-					{	
-						case 1:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						default:
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_heavy_attack == 0)
+					{
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-						break;
+
+						combo_counter_damage -= combo_counter_damage;
+
+						combo_counter_shield_heavy_attack += 1;
+					}
+					else if (combo_counter_shield_heavy_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack += 1;
 					}
 
-					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
-				}		
-			}		
+					else if (combo_counter_shield_heavy_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack -= combo_counter_shield_heavy_attack;
+					}
+				}
+				else if (ACS_ComboMode() == 1)
+				{
+					if( targetDistance <= 1.5*1.5 ) 
+					{	
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+					}
+					else
+					{		
+						eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
+
+						switch (eredin_attack_index_2) 
+						{	
+							case 1:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							default:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+							break;
+						}
+
+						this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+					}		
+				}
+			}
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_heavy_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_heavy_attack == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_heavy_attack += 1;
+						combo_counter_shield_heavy_attack += 1;
+					}
+					else if (combo_counter_shield_heavy_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack += 1;
+					}
+
+					else if (combo_counter_shield_heavy_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_heavy_attack -= combo_counter_shield_heavy_attack;
+					}
 				}
-				else if (combo_counter_shield_heavy_attack == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 3);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{					
+						case 2:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+						break;
+							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_heavy_attack += 1;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-
-				else if (combo_counter_shield_heavy_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_heavy_attack -= combo_counter_shield_heavy_attack;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 3);
-
-				switch (eredin_attack_index_3) 
-				{					
-					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_rp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-					break;
-						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_03_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_lp_02_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29300,86 +30642,92 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_light_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_light_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_light_attack_alt += 1;
+						combo_counter_shield_light_attack_alt += 1;
+					}
+					else if (combo_counter_shield_light_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack_alt -= combo_counter_shield_light_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_light_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_2) 
+					{	
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_light_attack_alt -= combo_counter_shield_light_attack_alt;
+					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
 				}
 			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
-
-				switch (eredin_attack_index_2) 
-				{	
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_2 = eredin_attack_index_2;
-			}	
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_light_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_light_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_light_attack_alt += 1;
+						combo_counter_shield_light_attack_alt += 1;
+					}
+					else if (combo_counter_shield_light_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack_alt -= combo_counter_shield_light_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_light_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_light_attack_alt -= combo_counter_shield_light_attack_alt;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
-
-				switch (eredin_attack_index_3) 
-				{							
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_right_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_h_1_left_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29406,123 +30754,129 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_light_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage -= combo_counter_damage;
-
-					combo_counter_shield_light_attack += 1;
-				}
-				else if (combo_counter_shield_light_attack == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_light_attack += 1;
-				}
-
-				else if (combo_counter_shield_light_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_light_attack -= combo_counter_shield_light_attack;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				if( targetDistance <= 1.5*1.5 ) 
-				{	
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-				}
-				else
-				{		
-					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
-
-					switch (eredin_attack_index_2) 
-					{	
-						case 1:
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-						break;
-						
-						default:
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_light_attack == 0)
+					{
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-						break;
+
+						combo_counter_damage -= combo_counter_damage;
+
+						combo_counter_shield_light_attack += 1;
+					}
+					else if (combo_counter_shield_light_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack += 1;
 					}
 
-					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
-				}	
-			}			
+					else if (combo_counter_shield_light_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack -= combo_counter_shield_light_attack;
+					}
+				}
+				else if (ACS_ComboMode() == 1)
+				{
+					if( targetDistance <= 1.5*1.5 ) 
+					{	
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+					}
+					else
+					{		
+						eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 2);
+
+						switch (eredin_attack_index_2) 
+						{	
+							case 1:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+							break;
+							
+							default:
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
+							break;
+						}
+
+						this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+					}	
+				}
+			}		
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_light_attack == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_light_attack == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_light_attack += 1;
+						combo_counter_shield_light_attack += 1;
+					}
+					else if (combo_counter_shield_light_attack == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack += 1;
+					}
+
+					else if (combo_counter_shield_light_attack == 2)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_light_attack -= combo_counter_shield_light_attack;
+					}
 				}
-				else if (combo_counter_shield_light_attack == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 3);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{					
+						case 2:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
+						ACS_Shield().PlayEffectSingle('aard_cone_hit');
+						ACS_Shield().StopEffect('aard_cone_hit');
+						break;
+							
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_light_attack += 1;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-
-				else if (combo_counter_shield_light_attack == 2)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_light_attack -= combo_counter_shield_light_attack;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 3);
-
-				switch (eredin_attack_index_3) 
-				{					
-					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_push_lp_ACS', 'PLAYER_SLOT', settings);
-					ACS_Shield().PlayEffectSingle('aard_cone_hit');
-					ACS_Shield().StopEffect('aard_cone_hit');
-					break;
-						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_03_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_attack_rp_02_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29549,86 +30903,92 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}	
 			}
 
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_special_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_special_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_special_attack_alt += 1;
+						combo_counter_shield_special_attack_alt += 1;
+					}
+					else if (combo_counter_shield_special_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_special_attack_alt -= combo_counter_shield_special_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_special_attack_alt == 1)
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
-
-					combo_counter_damage += 1;
-
-					combo_counter_shield_special_attack_alt -= combo_counter_shield_special_attack_alt;
-				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{	
-				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
-
-				switch (eredin_attack_index_2) 
+				else if (ACS_ComboMode() == 1)
 				{	
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
+					eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
 
-				this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+					switch (eredin_attack_index_2) 
+					{	
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
+
+					this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+				}
 			}		
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			if (ACS_ComboMode() == 0)
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
 			{
-				ACS_Combo_Mode_Reset();
-				
-				if (combo_counter_shield_special_attack_alt == 0)
+				if (ACS_ComboMode() == 0)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+					ACS_Combo_Mode_Reset();
+					
+					if (combo_counter_shield_special_attack_alt == 0)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
 
-					combo_counter_damage -= combo_counter_damage;
+						combo_counter_damage -= combo_counter_damage;
 
-					combo_counter_shield_special_attack_alt += 1;
+						combo_counter_shield_special_attack_alt += 1;
+					}
+					else if (combo_counter_shield_special_attack_alt == 1)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+
+						combo_counter_damage += 1;
+
+						combo_counter_shield_special_attack_alt -= combo_counter_shield_special_attack_alt;
+					}
 				}
-				else if (combo_counter_shield_special_attack_alt == 1)
+				else if (ACS_ComboMode() == 1)
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+					eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
 
-					combo_counter_damage += 1;
+					switch (eredin_attack_index_3) 
+					{						
+						case 1:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
+						break;
+							
+						default:
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
+						break;
+					}
 
-					combo_counter_shield_special_attack_alt -= combo_counter_shield_special_attack_alt;
+					this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 				}
-			}
-			else if (ACS_ComboMode() == 1)
-			{
-				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 6);
-
-				switch (eredin_attack_index_3) 
-				{						
-					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_lf_l_ACS', 'PLAYER_SLOT', settings);
-					break;
-						
-					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_sword_1hand_charge_attack_rf_r_ACS', 'PLAYER_SLOT', settings);
-					break;
-				}
-
-				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
 			}
 		}
 	}
@@ -29654,55 +31014,62 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 				}	
 			}
-				
-			eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
+			
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
+			{
+				eredin_attack_index_2 = RandDifferent(this.previous_eredin_attack_index_2 , 4);
 
-			switch (eredin_attack_index_2) 
-			{	
-				case 3:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', settings);
-				break;
-				
-				case 2:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', settings);
-				break;
-				
-				case 1:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', settings);
-				break;
+				switch (eredin_attack_index_2) 
+				{	
+					case 3:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', settings);
+					break;
 					
-				default:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', settings);
-				break;
-			}
-			this.previous_eredin_attack_index_2 = eredin_attack_index_2;			
+					case 2:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', settings);
+					break;
+					
+					case 1:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', settings);
+					break;
+						
+					default:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', settings);
+					break;
+				}
+
+				this.previous_eredin_attack_index_2 = eredin_attack_index_2;
+			}	
 		}
 		else
 		{
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			
-			eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
+			if(!thePlayer.HasTag('ACS_Shielded_Entity'))
+			{
+				eredin_attack_index_3 = RandDifferent(this.previous_eredin_attack_index_3 , 2);
 
-			switch (eredin_attack_index_3) 
-			{							
-				case 3:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', settings);
-				break;
-				
-				case 2:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', settings);
-				break;
-				
-				case 1:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', settings);
-				break;
+				switch (eredin_attack_index_3) 
+				{							
+					case 3:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', settings);
+					break;
 					
-				default:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', settings);
-				break;
-			}
+					case 2:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', settings);
+					break;
+					
+					case 1:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', settings);
+					break;
+						
+					default:
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', settings);
+					break;
+				}
 
-			this.previous_eredin_attack_index_3 = eredin_attack_index_3;
+				this.previous_eredin_attack_index_3 = eredin_attack_index_3;
+			}
 		}
 	}
 	
@@ -41305,6 +42672,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.StopEffect('mist_fly_regis');
 
 				thePlayer.PlayEffectSingle( 'mist_regis' );
+
+				thePlayer.StopEffect( 'mist_regis' );
 					
 				thePlayer.RemoveTag('in_wraith');
 
@@ -41362,7 +42731,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		thePlayer.SetAnimationSpeedMultiplier( 4  );
 
@@ -41421,6 +42790,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		RemoveTimer('Sparagmos_Deactivate');
 
 		thePlayer.PlayEffectSingle('hit_lightning');
+		thePlayer.StopEffect('hit_lightning');
 
 		ACS_Fast_Attack_Buff();
 
@@ -41428,7 +42798,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		thePlayer.SetAnimationSpeedMultiplier( 0.25 );
 
@@ -41637,7 +43007,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
@@ -41691,7 +43061,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
@@ -41763,7 +43133,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
@@ -41806,7 +43176,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		thePlayer.SetAnimationSpeedMultiplier( 0.25 );
 
@@ -41905,7 +43275,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 
-		thePlayer.ClearAnimationSpeedMultipliers();	
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
 		thePlayer.SetAnimationSpeedMultiplier( 2 );
 

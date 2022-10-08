@@ -1927,45 +1927,93 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 		{
 			if ( theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
 			{
-				if (ACS_can_special_dodge())
+				if (ACS_BruxaDodgeSlideBack_Enabled())
 				{
-					if ( ACS_StaminaBlockAction_Enabled() 
-					&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
-					)
+					if (ACS_can_special_dodge())
 					{
-						thePlayer.RaiseEvent( 'CombatTaunt' );
-						thePlayer.SoundEvent("gui_no_stamina");
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_special_dodge_cooldown();
+					
+							olgierd_slide_back();	
+							
+							thePlayer.DrainStamina(ESAT_Roll);
+						}
+						
 					}
 					else
 					{
-						ACS_refresh_special_dodge_cooldown();
-				
-						olgierd_slide_back();	
-						
-						thePlayer.DrainStamina(ESAT_Roll);
+						if (ACS_can_dodge())
+						{
+							if ( ACS_StaminaBlockAction_Enabled() 
+							&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+							)
+							{
+								thePlayer.RaiseEvent( 'CombatTaunt' );
+								thePlayer.SoundEvent("gui_no_stamina");
+							}
+							else
+							{
+								ACS_refresh_dodge_cooldown();
+
+								if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+								{
+									thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+									thePlayer.StopEffect( 'magic_step_l_new' );	
+
+									thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+									thePlayer.StopEffect( 'magic_step_r_new' );	
+
+									thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+									thePlayer.StopEffect( 'bruxa_dash_trails' );
+								}
+
+								one_hand_sword_back_dodge_alt_2();
+								
+								thePlayer.DrainStamina(ESAT_Dodge);
+							}
+						}
 					}
-					
 				}
 				else
 				{
-					if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
-					&& !thePlayer.HasTag('blood_sucking')
-					)
+					if (ACS_can_dodge())
 					{
-						ACS_Weapon_Respawn();
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
 
-						thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
 
-						thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_2();
+							
+							thePlayer.DrainStamina(ESAT_Dodge);
+						}
 					}
-
-					GetACSWatcher().dodge_timer_attack_actual();
-
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
-
-					Sleep(0.125);
-
-					thePlayer.EvadePressed(EBAT_Dodge);	
 				}
 			}
 			else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
@@ -2151,7 +2199,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
-						Sleep(0.125);
+						Sleep(0.0625);
 
 						thePlayer.EvadePressed(EBAT_Dodge);	
 					}
@@ -2174,7 +2222,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
-				Sleep(0.125);
+				Sleep(0.0625);
 
 				thePlayer.EvadePressed(EBAT_Dodge);	
 			}
@@ -3171,7 +3219,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
-		Sleep(0.125);
+		Sleep(0.0625);
 
 		thePlayer.EvadePressed(EBAT_Dodge);	
 	}
@@ -3412,7 +3460,7 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
-		Sleep(0.125);
+		Sleep(0.0625);
 
 		thePlayer.EvadePressed(EBAT_Dodge);	
 
@@ -5334,7 +5382,7 @@ state BruxaDodgeSlideBackInitForWeaponSwitching_Engage in cBruxaDodgeSlideBackIn
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
-		Sleep(0.125);
+		Sleep(0.0625);
 
 		thePlayer.EvadePressed(EBAT_Dodge);	
 	}

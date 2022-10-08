@@ -3,6 +3,7 @@
 function ACS_Shield_Destroy()
 {		
 	ACS_Axii_Shield_Destroy();
+	ACS_Axii_Shield_Destroy_DELAY();
 	Quen_Monsters_Despawn();
 	Bruxa_Camo_Decoy_Deactivate();
 	AardPull_Deactivate();
@@ -19,8 +20,11 @@ statemachine class cACS_Shield_Summon
 	}
 
 	 function Axii_Persistent_Shield_Summon()
-	{	
-		this.PushState('Axii_Persistent_Shield');
+	{
+		if(!thePlayer.HasTag('ACS_Shield_Summoned'))
+		{
+			this.PushState('Axii_Persistent_Shield');
+		}
 	}
 
 	function Axii_Shield_Entity()
@@ -807,6 +811,7 @@ state Axii_Persistent_Shield in cACS_Shield_Summon
 	
 	entry function Persistent_Shield_Summon()
 	{
+		//Sleep(0.5);
 		shield_pre = (CEntity)theGame.GetEntityByTag( 'ACS_Shield' );
 		shield_pre.Destroy();
 		Persistent_SummonAxiiShield();
