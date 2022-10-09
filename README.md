@@ -1048,7 +1048,7 @@ https://user-images.githubusercontent.com/98017171/160717021-c0664cbb-ae76-46cd-
 
 ### || Bruxa Camouflage ||
  ```Double-tapping and holding down Parry/Counterattack``` while vampire claws are equipped triggers Bruxa camouflage.
-   - 5% current health is continuously drained while camouflage is active. 
+   - 5% current health is continuously drained while camouflage is active. Health drain is halved if the player stands still.
    - The player can dash, attack, and do special abilities when in Bruxa Stealth mode. Doing a vampire dash attack or attacking while not having vampire claws equipped reveals the player.
    - Enemies close to the player will notice the player, while enemies farther away will not. 
    - The lower the enemy's health is, the greater their fear, which will be reflected in their reaction towards the camouflaged player. 
