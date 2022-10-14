@@ -5,7 +5,7 @@
 Combat animation overhaul mod for The Witcher 3.
  </div>
  
- ## OVERVIEW
+ # OVERVIEW
 The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations available in the game.
 
 The NPC animations are organized into 8 unique extra movesets:
@@ -47,32 +47,31 @@ ACS is:
 - Does not cause blurry dialogue loading screen from prolonged usage.
 - Just about compatible with almost anything you can imagine.
   
-## REQUIREMENTS
+# REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
 
-## INSTALLATION
-IF UPDATING FROM v1.8.3e OR LOWER, DELETE `mod_ACS` and `dlc_ACS` FIRST, THEN INSTALL MANUALLY AGAIN.
+# INSTALLATION
 
-### Automatic Installation: 
+## Automatic Installation: 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
 - Right click the script and click **Run with PowerShell**.
 
-### Manual Installation: 
+## Manual Installation: 
 For those that prefer to install manually.
 - Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
 - Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under **Assets**. Do not download the source code.
 - Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 
-### After Installation:
+## After Installation:
 - Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. If you don't know how to use the script merger, please read through this [guide](https://aelto.github.io/tw3-notes/misc/merging/index.html) by Aeltoth. 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 
-### Updating the mod:
+## Updating the mod:
 - You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click, or run the automatic installer again if you installed the mod that way. 
 
-## PREFACE
+# PREFACE
 
   A lot of videos on this page. Give them a moment to load, or else right click the video and open in new tab to load it faster. 
   
@@ -102,16 +101,17 @@ For those that prefer to install manually.
 ### [6. PARRY SKILLS](#6-parry-skills-1)
 ### [7. TAUNT SYSTEM](#7-taunt-system-1)
 ### [8. MOVEMENT SYSTEM](#8-movement-system-1)
-### [9. SPECIAL ABILITIES](#9-special-abilities-1)
-### [10. COOLDOWN ADJUSTMENT](#10-cooldown-adjustment-1)
-### [11. STAMINA](#11-stamina-1)
-### [12. COMPATIBILITY](#12-compatibility-1)
-### [13. Q&A](#13-qa-1)
-### [14. CONTACT ME](#14-contact-me-1)
+### [9. ARMOR SYSTEM](#9-armor-system-1)
+### [10. SPECIAL ABILITIES](#10-special-abilities-1)
+### [11. COOLDOWN ADJUSTMENT](#11-cooldown-adjustment-1)
+### [12. STAMINA](#12-stamina-1)
+### [13. COMPATIBILITY](#13-compatibility-1)
+### [14. Q&A](#14-qa-1)
+### [15. CONTACT ME](#15-contact-me-1)
 </div>
 
 
-## 1. MENU
+# 1. MENU
 ACS has four primary weapon modes, Armiger Mode, Focus Mode, Hybrid Mode, and Equipment Mode. 
 - Modes are selected in the Main Settings menu.
 
@@ -456,7 +456,7 @@ Lethal Baguettes:
   
   </div>
   
-## 2. FISTS
+# 2. FISTS
 When Armiger Mode, Focus Mode, or Hybrid Mode is selected, there are three options for fists, available for selection in the Main Settings menu:
 - Normal fists
 - Vampire claws
@@ -492,7 +492,7 @@ Vampire Claw Parries:
   
   </div>
   
-## 3. ARMED
+# 3. ARMED
 While in Armiger Mode, selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 - Light attacks switch to ```primary weapons```.
 - Heavy attacks switch to ```secondary weapons```.
@@ -690,7 +690,7 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
   
   </div>
   
-## 4. ELEMENTAL COMBO SYSTEM
+# 4. ELEMENTAL COMBO SYSTEM
 When this option is enabled in the Main Settings menu, it allows the player's weapon to produce additional effects.
 
 When ``successfully damaging an enemy`` while holding a ``primary weapon`` in a specific stance, the player will ``prime`` the enemy for a ``detonation effect``, which will be activated upon ``successfully damaging the enemy`` with a subsequent attack while holding the ``secondary weapon``.
@@ -790,7 +790,7 @@ https://user-images.githubusercontent.com/98017171/160708354-9f5c8761-4b3c-4fcf-
   
   </div>
   
-## 5. ELEMENTAL REND SYSTEM
+# 5. ELEMENTAL REND SYSTEM
 When this option is enabled in the Main Settings menu, releasing rend while holding ``secondary weapons`` have addtional effects. In Igni's case, this is activated by attacking with heavy attack once, and then using rend. 
 - Requires the rend skill to use.
 - Elemental rend can only be activated at max adrenaline.  
@@ -837,7 +837,7 @@ https://user-images.githubusercontent.com/98017171/160715122-cbd65c80-de43-4ddd-
   
   </div>
   
-## 6. PARRY SKILLS
+# 6. PARRY SKILLS
 ### General Use/Available at all times
 
 #### || Kick ||
@@ -915,7 +915,7 @@ https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-
   
   </div>
   
-## 7. TAUNT SYSTEM
+# 7. TAUNT SYSTEM
 ```Switching weapons (signs, default button is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 
 Out of combat:
@@ -941,7 +941,7 @@ In combat:
   
   </div>
   
-## 8. MOVEMENT SYSTEM
+# 8. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
 Out of Combat: ```Hold Sprint + Forward (W)```
 
@@ -986,13 +986,10 @@ https://user-images.githubusercontent.com/98017171/160714317-82842f82-181f-4d8e-
 
 ### || Teleport Dodge ||
 ```Doubletap + Roll```
-- Eredin's short range teleport.
+- Each weapon/moveset has their own teleport dodge.
 - Can only be used in combat.
 - Teleports the player behind your targeted enemy. 
-- Will occasionally freeze enemies based on timing and chance.
-- Slowly covers up the screen in frost. Disappears after combat is finished.
 - Don't use this while near the edge of a terrain. Might teleport you somewhere you don't want to be.
-- Vampire movesets have a different teleport dodge. 
 
 https://user-images.githubusercontent.com/98017171/160714398-64ea6a4e-bd67-45af-a628-218202df3263.mp4
 
@@ -1007,12 +1004,33 @@ https://user-images.githubusercontent.com/98017171/160714398-64ea6a4e-bd67-45af-
 
 https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-a643-c3b2e76daa05.mp4
 
+ <div align="right">
   
-## 9. SPECIAL ABILITIES
-  <div align="center">
+##### [Return to Index](#index)
   
+  </div>
+
+# 9. ARMOR SYSTEM
+
+ - While wielding an ACS weapon or using an ACS moveset, the player's armor is enhanced. Enemies scoring a hit on the player will have a chance to have a small percentage of that damage reflected back at them. 
+ - The chances of this happening is based upon the type of armor the player is wearing:
+    - Heavy armor: 55% chance
+    - Medium armor: 35% chance
+    - Light armor: 15% chance
+- Each time this occurs, the damage is reduced by a certain amount, but will consume 15% of the player's max stamina.
+
+ <div align="right">
+  
+##### [Return to Index](#index)
+  
+  </div>
+  
+# 10. SPECIAL ABILITIES
+  
+ <div align="center">
+ 
 ### Special Abilities Index
-#### [Axii Shield](#-axii-shield-)
+#### [Shield](#-shield-)
 #### [Aspect of the Hym](#-aspect-of-the-hym-)
 #### [Bruxa Camouflage](#-bruxa-camouflage-)
 #### [Bruxa Bite](#-bruxa-bite-)
@@ -1282,7 +1300,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 10. COOLDOWN ADJUSTMENT
+# 11. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1291,7 +1309,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 11. STAMINA
+# 12. STAMINA
 - Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
 - This feature can be toggled off in the Main Settings menu. 
 - In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
@@ -1303,7 +1321,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 12. COMPATIBILITY
+# 13. COMPATIBILITY
 - Most likely completely conflict free in terms of scripts.
 
  <div align="right">
@@ -1312,7 +1330,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 13. Q&A
+# 14. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1346,7 +1364,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-## 14. CONTACT ME
+# 15. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
