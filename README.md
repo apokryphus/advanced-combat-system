@@ -943,7 +943,7 @@ In combat:
   
 # 8. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
-Out of Combat: ```Hold Sprint + Forward (W)```
+Out of Combat: ```Hold Sprint + Forward (W)``` or ```Hold Sprint + Doubletap Forward (W)```
 
 In Combat: ```Doubletap + Dodge```
 - Dashes a fixed distance forward, alternating a little bit left or right.
@@ -954,7 +954,7 @@ In Combat: ```Doubletap + Dodge```
 https://user-images.githubusercontent.com/98017171/160713938-ec49b801-a8d8-42ce-ba20-865e4ec08a61.mp4
 
 ### || Wraith Mode ||
-```Witcher Sense + Hold Sprint + Forward (W)```
+```Witcher Sense + Hold Sprint + Forward (W)``` or ```Witcher Sense + Hold Sprint + Doubletap Forward (W)```
 - Can only be used out of combat.
 - Enables the player to ignore collision, phase through walls, and fly through the air.
 - Hold the jump button to fly directly upwards.
@@ -976,13 +976,12 @@ https://user-images.githubusercontent.com/98017171/160714180-15b2173a-3a95-4d3c-
 
 https://user-images.githubusercontent.com/98017171/160728891-9edba35f-b10d-424d-a1e3-3e750a9cdc4c.mp4
 
-### || Bruxa Dodge Slide ||
+### || Dodge Slide ||
 ```S key + Dodge```
 - Can only be used in combat.
 - Slides the player back a fixed distance away from the targeted enemy.
 - Replaced with a different type of dodge when on cooldown.
-
-https://user-images.githubusercontent.com/98017171/160714317-82842f82-181f-4d8e-b6ea-259711af1b23.mp4
+- Vampire movesets have a different dodge slide. 
 
 ### || Teleport Dodge ||
 ```Doubletap + Roll```
