@@ -37,10 +37,10 @@ Depending on which weapon mode option is selected through the mod's Main Setting
 Addtionally, the mod:
 - Comes with a whole host of different offensive and defensive abilities / combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
 - Allows the player to use special movement systems available both in combat and out of combat.
+- Incorporates a number of bugfixes not covered by other modders, such as fixing weapons not making impact sounds when applying debuffs to enemies. 
 - Interfaces with other potential weapon DLCs that you may have installed, and applies the animations to them when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
 - Adds custom enemies into the game world with their own mechanics and systems in place.
-- Incorporates a number of bugfixes not covered by other modders, such as fixing weapons not making impact sounds when applying debuffs to enemies. 
 
 ACS is:
 - Highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
