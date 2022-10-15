@@ -139,7 +139,7 @@ There are different weapons for silver and steel.
 
 The weapons are:
 - Default Geralt sword
-- Olgierd sabre / Vlodimir ghost sabre
+- Olgierd sabre / Ofieri sabre
 - Eredin longsword / Shield (Holding down parry will bring out a shield. Attacks while shield is active have their own set of animations.)
 - Imlerith hammer / Caretaker shovel (Scythe for evolving weapons option)
 - Claws
@@ -182,7 +182,7 @@ There, you can customize your own array of attacks for:
  
  Enemies will drop special ACS weapons as loot, which grants access to the movesets.
 
-ACS also supports weapon DLCs made by other mod authors, which include the majority of the weapons from:
+ACS also supports weapon DLCs made by other mod authors, which include (but not limited to) the majority of the weapons from:
 
 - Shades of Iron
 https://discord.com/channels/728022548796801064/728023281558618214/964947835986509854
@@ -190,7 +190,7 @@ https://discord.com/channels/728022548796801064/728023281558618214/9649478359865
 - Exotic Arsenal
 https://www.nexusmods.com/witcher3/mods/4074
 
-- NPC Weapons Mod V1.01
+- NPC Weapons Mod V1.01 (Note that this mod causes bugs. ACS already includes the majority of these weapons)
 https://www.nexusmods.com/witcher3/mods/930
 
 - Lethal Baguettes
@@ -469,8 +469,8 @@ Equipment Mode disables this setting, and the animations are applied only when s
 
 https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-aa8a-70df9c829bb5.mp4
 
-- Vampire claws are automatically equipped when attacking while unarmed in `combat`.
-- Vampire claws retract once the player is `out of combat`.
+- Vampire claws are automatically equipped when attacking while unarmed.
+- Vampire claws retract once the player is `out of combat`, or equips a weapon.
 - Vampire claws deal `5% - 10%` maximum health damage to `red health enemies`, and `10% - 20%` maximum health damage to `monsters`. This damage can be modified in the Damage Settings menu.
 - Attacks apply `bleeding` and `heals for 2.5%` of the player's maximum health.
 - ```Light attacks``` are light vampire strikes. 
@@ -479,7 +479,7 @@ https://user-images.githubusercontent.com/98017171/160662412-115d9641-c9e8-4232-
 - ```W + heavy attack``` are vampire dash attacks.
 
 Vampire Claw Parries:
-- Vampire claw parries blocks 75% of the damage dealt to the player.
+- Vampire claw parries blocks 90% of the damage dealt to the player.
 - Will block as long as the player has stamina.
 - Drains 5% of the player's stamina on each block.
 - Drains 50% of the player's stamina if the player takes lethal damage. Will block full damage.
@@ -682,7 +682,7 @@ https://user-images.githubusercontent.com/98017171/160690963-92a91bc4-2f7f-498c-
 - `W + Counterattack`
 
 - The ```range/distance of opponent``` from the player will also alter attack moveset.
-- Eredin, Olgierd, and Gregoire de Gorgon's moveset possess the ability to perform automatic finishers on enemies below 15% health.
+- Eredin, Olgierd, and Gregoire de Gorgon's moveset possess the ability to perform automatic finishers on enemies.
 - All other weapons do not have automatic finishers, and will instead attempt to ``dismember`` the enemy, unless triggering a manual finisher.
 
 <div align="right">
