@@ -941,7 +941,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	private var combatTarget 																												: CActor;
 
-	private var moveTargets 																												: array<CActor>;
+	private var moveTargets, moveTargets_ACS_INIT 																							: array<CActor>;
 
 	private var environment 																												: CEnvironmentDefinition;	
 
@@ -983,6 +983,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	private var finisherDist 																												: float;
 
+	private var evadeTarget 																												: CActor;
+
 	event OnSpawned( spawnData : SEntitySpawnData )
 	{
 		CreateAttachment( thePlayer );	
@@ -997,6 +999,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	public timer function ACS_Set_Player_Scale ( dt : float, id : int){ if(thePlayer.IsAlive()){ACS_Set_Player_Scale_Actual();} } 
 
 	public timer function Remove_Player_Grow_Immediate ( dt : float, id : int){ RemoveTimer('Grow_Geralt_Immediate_Repeat'); AddTimer( 'ACS_Set_Player_Scale', 0.01, true );} 
+
+	public timer function ACS_DetachBehaviorTimer ( dt : float, id : int){ ACS_EnemyBehDetach(); } 
 
 	public timer function ACS_BARADDUR ( dt : float, id : int){ ACS_BARRADUR(); } 
 
@@ -1013,6 +1017,20 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	public timer function ACS_dodge_timer_slideback ( dt : float, id : int) { dodge_timer_slideback_actual();} 
 	
 	public timer function ACS_dodge_timer_wildhunt ( dt : float, id : int) { dodge_timer_wildhunt_actual(); } 
+
+	public timer function ACS_dodge_timer_fire ( dt : float, id : int) { dodge_timer_fire_actual(); } 
+
+	public timer function ACS_dodge_timer_mage ( dt : float, id : int) { dodge_timer_mage_actual(); } 
+
+	public timer function ACS_dodge_timer_dolphin ( dt : float, id : int) { dodge_timer_dolphin_actual(); } 
+
+	public timer function ACS_dodge_timer_explosion ( dt : float, id : int) { dodge_timer_explosion_actual(); } 
+
+	public timer function ACS_dodge_timer_fountain_portal ( dt : float, id : int) { dodge_timer_fountain_portal_actual(); } 
+
+	public timer function ACS_dodge_timer_iris ( dt : float, id : int) { dodge_timer_iris_actual(); } 
+
+	public timer function ACS_dodge_timer_lightning ( dt : float, id : int) { dodge_timer_lightning_actual(); } 
 	
 	public timer function ACS_hide_timer ( dt : float, id : int) { thePlayer.SetVisibility( false ); } 
 
@@ -1071,6 +1089,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	public timer function ACS_HijackMoveForward(deltaTime : float , id : int){HijackMoveForwardActual();}
 	
 	public timer function ACS_Weapon_Summon_Delay(deltaTime : float , id : int){sword_summon_effect();}
+
+	public timer function ACS_Dagger_Summon_Delay(deltaTime : float , id : int){dagger_summon_effect();}
 	
 	public timer function ACS_ExplorationDelay(deltaTime : float , id : int){ACS_ExplorationDelay_actual();}
 
@@ -1210,7 +1230,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//theInput.RegisterListener( this, 'OnCommGuard', 'Guard' );
 	}
 	
-
 	event OnCbtAttackWithAlternateLight( action : SInputAction )
 	{
 		if( theInput.IsActionPressed('ControllerCastModifier') )
@@ -1319,7 +1338,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					
 					if( thePlayer.GetCurrentMeleeWeaponType() == PW_Fists || thePlayer.GetCurrentMeleeWeaponType() == PW_None )
 					{
-						if ( ACS_Enabled() ) { checkedFists = true; if(thePlayer.IsActionAllowed(EIAB_Fists)) {allowed = true;} ClawFistLightAttack(); return true; } //ACS
+						//if ( ACS_Enabled() ) { checkedFists = true; if(thePlayer.IsActionAllowed(EIAB_Fists)) {allowed = true;} ClawFistLightAttack(); return true; } //ACS
 						checkedFists = true;
 						if(thePlayer.IsActionAllowed(EIAB_Fists))
 							allowed = true;
@@ -1332,8 +1351,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					
 					if(allowed)
 					{
-						if ( ACS_Enabled() ) { LightAttackSwitch(); return true; } //ACS
-						thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
+						if ( ACS_Enabled() ) 
+						{
+							if( thePlayer.GetCurrentMeleeWeaponType() == PW_Fists || thePlayer.GetCurrentMeleeWeaponType() == PW_None )
+							{
+								ClawFistLightAttack(); //ACS
+							}
+							else
+							{
+								LightAttackSwitch(); //ACS
+							}
+						}
+						else
+						{
+							thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
+						}
 					}
 					else
 					{
@@ -1378,10 +1410,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( IsPressed(action) && thePlayer.CanUseSkill(S_Sword_s01) )	
 		{
-			if ( ACS_Enabled() ) { SpecialAttackSwitch(); return true; } //ACS
-			thePlayer.PrepareToAttack();
-			thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
-			thePlayer.AddTimer( 'IsSpecialLightAttackInputHeld', 0.00001, true );
+			if ( ACS_Enabled() ) 
+			{ 
+				SpecialAttackSwitch(); //ACS
+				//return true;
+			} 
+			else
+			{
+				thePlayer.PrepareToAttack();
+				thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
+				thePlayer.AddTimer( 'IsSpecialLightAttackInputHeld', 0.00001, true );
+			}
 		}
 	}
 
@@ -1393,12 +1432,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		if( action.value < -tolerance )
 		{
 			GetWitcherPlayer().TogglePreviousSign();
-			if ( ACS_Enabled() ) { ACS_SignSwitchArsenalInit(); } //ACS
+			if ( ACS_Enabled() && !thePlayer.GetWeaponHolster().IsOnTheMiddleOfHolstering() ) { ACS_SignSwitchArsenalInit(); } //ACS
 		}
 		else if( action.value > tolerance )
 		{
 			GetWitcherPlayer().ToggleNextSign();
-			if ( ACS_Enabled() ) { ACS_SignSwitchArsenalInit(); } //ACS
+			if ( ACS_Enabled() && !thePlayer.GetWeaponHolster().IsOnTheMiddleOfHolstering() ) { ACS_SignSwitchArsenalInit(); } //ACS
 		}
 	}
 
@@ -1432,15 +1471,29 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					if ( ( thePlayer.GetCurrentMeleeWeaponType() == PW_Fists || thePlayer.GetCurrentMeleeWeaponType() == PW_None ) && IsPressed(action)  )
 					{
-						if ( ACS_Enabled() ) { ClawFistHeavyAttack(); return true; } //ACS
-						thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );				
+						if ( ACS_Enabled() ) 
+						{ 
+							ClawFistHeavyAttack(); //ACS
+							//return true; 
+						} 
+						else
+						{
+							thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );		
+						}	
 					}
 					else
 					{
 						if( IsReleased(action) && theInput.GetLastActivationTime( action.aName ) < 0.2 )
 						{
-							if ( ACS_Enabled() ) { HeavyAttackSwitch(); return true; } //ACS
-							thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
+							if ( ACS_Enabled() ) 
+							{ 
+								HeavyAttackSwitch(); //ACS
+								//return true; 
+							} 
+							else
+							{
+								thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
+							}
 						}
 					}
 				}
@@ -1549,11 +1602,26 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{	
 			thePlayer.PrepareToAttack();
 			thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
+
+			if (thePlayer.HasTag('ACS_Size_Adjusted')) //ACS
+			{
+				 Grow_Geralt_Immediate_Fast(); //ACS
+
+				thePlayer.RemoveTag('ACS_Size_Adjusted'); //ACS
+			}
+
 			if ( ACS_Enabled() ) { action_interrupt(); } //ACS
 			thePlayer.AddTimer( 'IsSpecialHeavyAttackInputHeld', 0.00001, true );
 		}
 		else if ( IsPressed(action) )
 		{
+			if (thePlayer.HasTag('ACS_Size_Adjusted')) //ACS
+			{
+				 Grow_Geralt_Immediate_Fast(); //ACS
+
+				thePlayer.RemoveTag('ACS_Size_Adjusted'); //ACS
+			}
+
 			if ( ACS_Enabled() ) { action_interrupt(); } //ACS
 			if ( theInput.IsActionPressed('AttackHeavy') )
 				theInput.ForceDeactivateAction('AttackHeavy');
@@ -1650,7 +1718,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				thePlayer.RemoveTag('ACS_Size_Adjusted'); //ACS
 			}
 
-			action_interrupt(); //ACS
+			if (thePlayer.IsInCombat()){action_interrupt();} //ACS
 
 			thePlayer.SetGuarded(true);
 			thePlayer.OnPerformGuard();
@@ -1760,77 +1828,101 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	event OnMoveForward ( action : SInputAction )
 	{
-		if ( IsPressed( action ) 
-		&& ACS_Enabled() 
-		)
+		if (ACS_Enabled() )
 		{
-			if (thePlayer.HasTag('in_wraith'))
+			if ( action.value > 0.7f )
 			{
-				BruxaDash_NEW();
+				if 
+				(
+				(theInput.GetActionValue('Sprint') > 0.85 
+				&& theInput.GetActionValue('Jump') == 0 
+				&& !thePlayer.IsInCombat() 
+				&& ACS_CombatToExplorationCheck()
+				//&& thePlayer.substateManager.GetStateCur() != 'Vault'
+				//&& thePlayer.substateManager.GetStateCur() != 'Climb' 
+				//&& thePlayer.substateManager.GetStateCur() != 'Jump' 
+				)
+				)
+				{
+					BruxaDash_NEW();
 
-				return true;
+					return true;
+				}
+
+				if (thePlayer.HasTag('ACS_Second_Life_Active') && thePlayer.IsActionAllowed(EIAB_Movement))
+				{
+					thePlayer.ActionPlaySlotAnimationAsync('PLAYER_SLOT','', 0.1, 1, false);
+					
+					thePlayer.RemoveTag('ACS_Second_Life_Active');
+				}
+
+				if (thePlayer.HasTag('ACS_Special_Dodge') && thePlayer.IsActionAllowed(EIAB_Movement) && !thePlayer.IsCurrentlyDodging() )
+				{
+					action_interrupt_on_movement(); //ACS
+					
+					thePlayer.RemoveTag('ACS_Special_Dodge');
+				}
+
+				ACS_Hijack_YAxis_Up_Forward();
 			}
-			else if 
-			(
-			(theInput.GetActionValue('Sprint') > 0.85 
-			&& theInput.GetActionValue('Jump') == 0 
-			&& !thePlayer.IsInCombat() 
-			&& ACS_CombatToExplorationCheck()
-			//&& thePlayer.substateManager.GetStateCur() != 'Vault'
-			//&& thePlayer.substateManager.GetStateCur() != 'Climb' 
-			//&& thePlayer.substateManager.GetStateCur() != 'Jump' 
-			)
-			)
+			else if ( action.value < -0.7f )
 			{
-				BruxaDash_NEW();
+				if (thePlayer.HasTag('ACS_Second_Life_Active') && thePlayer.IsActionAllowed(EIAB_Movement))
+				{
+					thePlayer.ActionPlaySlotAnimationAsync('PLAYER_SLOT','', 0.1, 1, false);
+					
+					thePlayer.RemoveTag('ACS_Second_Life_Active');
+				}
 
-				return true;
+				if (thePlayer.HasTag('ACS_Special_Dodge') && thePlayer.IsActionAllowed(EIAB_Movement) && !thePlayer.IsCurrentlyDodging() )
+				{
+					action_interrupt_on_movement(); //ACS
+					
+					thePlayer.RemoveTag('ACS_Special_Dodge');
+				}
 			}
-
-			if (thePlayer.HasTag('ACS_Special_Dodge'))
-			{
-				action_interrupt_on_movement(); //ACS
-				
-				thePlayer.RemoveTag('ACS_Special_Dodge');
+			else if ( IsReleased( action ) )
+			{	
+				RemoveTimer('ACS_HijackMoveForward');
 			}
-
-			ACS_Hijack_YAxis_Up_Forward();
-		}
-		else if ( action.value < -0.7f && ACS_Enabled() )
-		{
-			if (thePlayer.HasTag('ACS_Special_Dodge'))
-			{
-				action_interrupt_on_movement(); //ACS
-				
-				thePlayer.RemoveTag('ACS_Special_Dodge');
-			}
-		}
-		else if ( IsReleased( action ) && ACS_Enabled() )
-		{	
-			RemoveTimer('ACS_HijackMoveForward');
 		}
 	}
 
 	event OnMoveSide ( action : SInputAction )
 	{
-		if ( action.value > 0.7f
-		&& ACS_Enabled() 
-		)
+		if (ACS_Enabled() )
 		{
-			if (thePlayer.HasTag('ACS_Special_Dodge'))
+			if ( action.value > 0.7f )
 			{
-				action_interrupt_on_movement(); //ACS
+				if (thePlayer.HasTag('ACS_Second_Life_Active') && thePlayer.IsActionAllowed(EIAB_Movement))
+				{
+					thePlayer.ActionPlaySlotAnimationAsync('PLAYER_SLOT','', 0.1, 1, false);
+					
+					thePlayer.RemoveTag('ACS_Second_Life_Active');
+				}
 
-				thePlayer.RemoveTag('ACS_Special_Dodge');
-			}	
-		}
-		else if ( action.value < -0.7f && ACS_Enabled() )
-		{			
-			if (thePlayer.HasTag('ACS_Special_Dodge'))
+				if (thePlayer.HasTag('ACS_Special_Dodge') && thePlayer.IsActionAllowed(EIAB_Movement) && !thePlayer.IsCurrentlyDodging())
+				{
+					action_interrupt_on_movement(); //ACS
+
+					thePlayer.RemoveTag('ACS_Special_Dodge');
+				}	
+			}
+			else if ( action.value < -0.7f )
 			{
-				action_interrupt_on_movement(); //ACS
-				
-				thePlayer.RemoveTag('ACS_Special_Dodge');
+				if (thePlayer.HasTag('ACS_Second_Life_Active') && thePlayer.IsActionAllowed(EIAB_Movement))
+				{
+					thePlayer.ActionPlaySlotAnimationAsync('PLAYER_SLOT','', 0.1, 1, false);
+					
+					thePlayer.RemoveTag('ACS_Second_Life_Active');
+				}
+
+				if (thePlayer.HasTag('ACS_Special_Dodge') && thePlayer.IsActionAllowed(EIAB_Movement) && !thePlayer.IsCurrentlyDodging())
+				{
+					action_interrupt_on_movement(); //ACS
+					
+					thePlayer.RemoveTag('ACS_Special_Dodge');
+				}
 			}
 		}
 	}
@@ -1852,6 +1944,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 		if ( IsPressed(action) && ACS_Enabled() ) 
 		{
+			if( BruxaDashCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
+			{
+				BruxaDashDoubleTap = true;
+			}
+			else
+			{
+				BruxaDashDoubleTap = false;	
+			}
+
 			if(theInput.IsActionPressed('Sprint') && theInput.LastUsedPCInput() || thePlayer.GetIsSprinting())
 			{
 				action_interrupt_on_jump(); //ACS
@@ -1860,8 +1961,24 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else
 			{
-				BruxaDash_Combat(); 
+				if (BruxaDashDoubleTap)
+				{
+					if ( ACS_BruxaDash_Enabled() )
+					{
+						BruxaDash_Combat();
+					}
+					else
+					{
+						ACS_BruxaDodgeSlideBackInit();
+					}
+				}
+				else
+				{
+					ACS_BruxaDodgeSlideBackInit();
+				}
 			}
+
+			BruxaDashCallTime = theGame.GetEngineTimeAsSeconds();
 
 			return true;
 		}
@@ -1897,7 +2014,14 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						if (TeleportDoubleTap)
 						{
-							ACS_WildHuntBlinkInit(); 
+							if ( ACS_WildHuntBlink_Enabled() )
+							{
+								ACS_WildHuntBlinkInit();
+							}
+							else
+							{
+								ACS_RollInit();
+							}
 						}
 						else
 						{
@@ -1909,6 +2033,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					return true;
 				} //ACS
+
 				thePlayer.EvadePressed(EBAT_Roll);
 			}
 		}
@@ -1934,37 +2059,60 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	function SetPlayerTarget()
+	{
+		if (ACS_GetTargetMode() == 1)
+		{
+			if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+				actor = (CActor)( thePlayer.GetTarget() );	
+			else
+			{
+				thePlayer.FindMoveTarget();
+				actor = (CActor)( thePlayer.moveTarget );		
+			}
+		}
+		else
+		{
+			actor = (CActor)( thePlayer.GetTarget() );	
+		}
+	
+		if( ACS_AttitudeCheck ( actor ) )
+		{
+			thePlayer.SetPlayerTarget( actor );
+
+			thePlayer.SetPlayerCombatTarget( actor );
+
+			thePlayer.UpdateDisplayTarget( true );
+
+			thePlayer.UpdateLookAtTarget();
+		}
+	}
+
 	function ACS_INIT()
 	{
 		ACS_Init_Attempt();
 
 		ACS_Load_Sound();
 
-		actor = (CActor)( thePlayer.GetTarget() );	
-
-		//thePlayer.OnCombatActionStart();
-
-		//thePlayer.customOrientationInfoStack.Clear();
-
-		//thePlayer.finishableEnemiesList.Clear();
-
-		/*
-		if ( thePlayer.rangedWeapon && thePlayer.rangedWeapon.GetCurrentStateName() != 'State_WeaponWait' )
+		if (ACS_GetTargetMode() == 1)
 		{
-			thePlayer.CleanCombatActionBuffer();
-			thePlayer.SetIsAimingCrossbow( false );
-			thePlayer.OnRangedForceHolster( false, true );
+			if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+				actor = (CActor)( thePlayer.GetTarget() );	
+			else
+			{
+				actor = (CActor)( thePlayer.moveTarget );		
+			}
 		}
-		*/
+		else
+		{
+			actor = (CActor)( thePlayer.GetTarget() );	
+		}
 
-		//thePlayer.SetSlideTarget ( actor );
+		theGame.GetBehTreeReactionManager().CreateReactionEvent( thePlayer, 'PlayerEvade', 1.0f, 10.0f, -1.0f, -1 );	
+
+		actor.SignalGameplayEventParamInt('Time2DodgeFast', (int)EDT_Attack_Light );
 
 		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
-			
-		//settings.blendIn = 0.2f;
-		//settings.blendOut = 1.0f;
-		//settings.blendIn = 0.25f;
-		//settings.blendOut = 0.75f;
 
 		settings.blendIn = 0.25f;
 		settings.blendOut = 0.875f;
@@ -1981,14 +2129,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		distClawWhirl = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 1.5;
 	
-		//thePlayer.ActionCancelAll();
-
-		//thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-
-		//thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-
-		//thePlayer.ResetRawPlayerHeading();
-
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
 		movementAdjustor.CancelAll();
@@ -2259,11 +2399,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{	
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -2272,7 +2412,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 			}
 
-			if (thePlayer.IsAlive())
+			if (thePlayer.IsAlive() && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
 			{
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			}
@@ -2322,7 +2462,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function action_interrupt_on_movement()
 	{
 		if ( thePlayer.HasTag('ACS_HideWeaponOnDodge') 
-		//&& !thePlayer.HasTag('blood_sucking')
+		&& !thePlayer.HasTag('blood_sucking')
 		)
 		{
 			if (!thePlayer.HasTag('aard_sword_equipped'))
@@ -2356,17 +2496,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
-			{
-				movementAdjustor.RotateTowards( ticket, actor );  
-			}
-			else if ( ACS_GetTargetMode() == 1 )
-			{
-				if (thePlayer.IsHardLockEnabled())
-				{
-					movementAdjustor.RotateTowards( ticket, actor );  
-				}
-			}
+			movementAdjustor.RotateTowards( ticket, actor );  
 		}
 
 		if (thePlayer.IsAlive())
@@ -2378,6 +2508,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );}
 		}
+
+		thePlayer.RemoveTag('ACS_Special_Dodge');
 	}
 
 	function ACS_Finisher_PreAction()
@@ -2503,6 +2635,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			AddTimer( 'ACS_SignalFinisher', 0.2, false );
 		}
+		else
+		{
+			ACS_Dismember_Internal();
+		}
 	}
 	
 	timer function ACS_SignalFinisher( time : float , id : int )
@@ -2539,6 +2675,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ccompEnabled = ccomp.IsEnabled();
 
+		finisherDist = 1.5f;
+
+		if (ACS_Player_Scale() > 1)
+		{
+			finisherDist += ACS_Player_Scale() * 0.75;
+		}
+
 		if (
 		//(npc.GetStat( BCS_Vitality ) <= 0 )
 		//&& ccompEnabled()
@@ -2549,7 +2692,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& !npc.HasTag('ACS_caretaker_shade')
 		)
 		{	
-			if ( VecDistance( thePlayer.GetWorldPosition(), npc.GetNearestPointInBothPersonalSpaces( thePlayer.GetWorldPosition() ) ) < 1.5f )
+			if ( VecDistance( thePlayer.GetWorldPosition(), npc.GetNearestPointInBothPersonalSpaces( thePlayer.GetWorldPosition() ) ) < finisherDist )
 			{
 				Grow_Geralt_Immediate();
 
@@ -2614,40 +2757,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else
 			{
-				if (ACS_ExperimentalDismemberment_Enabled())
-				{
-					dismembermentComp = (CDismembermentComponent)(npc.GetComponentByClassName( 'CDismembermentComponent' ));
-					if(!dismembermentComp) return;
-					
-					dismembermentComp.GetWoundsNames( wounds );
-
-					//for( i=0; i < wounds.Size(); i+=1 )
-					for( i=wounds.Size()-1; i>=0; i-=1 )
-					{
-						if( !StrContains( wounds[ i ], "_torso" ) 
-						)
-						{
-							wounds.EraseFast( i );
-						}
-					}
-					
-					if ( wounds.Size() > 0 )
-					{
-						usedWound = wounds[ RandRange( wounds.Size() ) ];
-					}
-					
-					npc.SetDismembermentInfo( usedWound, npc.GetWorldPosition() - npc.GetWorldPosition(), false, DETF_Igni );
-
-					npc.AddTimer( 'DelayedDismemberTimer', 0.05f, false );
-
-					npc.Kill('ACS_Dismember', false, thePlayer);
-
-					if (npc.IsHuman() && npc.HasTag('ACS_caretaker_shade'))
-					{
-						thePlayer.GainStat( BCS_Vitality, thePlayer.GetStatMax( BCS_Vitality ) * 0.10 );
-					}
-				}
-			}	
+				ACS_Dismember_Internal();
+			}
 		}
 	}
 
@@ -2972,13 +3083,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 		}
 	}
-	
-	function ACS_BARRADUR()
+
+	function Sword_Hold_Forcer()
 	{
-		register_extra_inputs();
-
-		vACS_Shield_Summon = new cACS_Shield_Summon in this;
-
 		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
 		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
 
@@ -3238,11 +3345,25 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 			}
-		}
 
-		if( thePlayer.GetStat( BCS_Vitality ) >= thePlayer.GetStatMax( BCS_Vitality ) * 0.25 )
+			if ( thePlayer.IsInCombat() )
+			{
+				SetPlayerTarget();
+			}
+		}
+	}
+
+	function Sword_Persistent_Effects()
+	{
+		if (quen_sword_1().HasTag('quen_sword_upgraded_2'))
 		{
-			thePlayer.StopEffect('critical_low_health');
+			quen_sword_1().PlayEffectSingle('special_attack_ready');
+			quen_sword_2().PlayEffectSingle('special_attack_ready');
+			quen_sword_3().PlayEffectSingle('special_attack_ready');
+
+			quen_sword_1().StopEffect('special_attack_ready');
+			quen_sword_2().StopEffect('special_attack_ready');
+			quen_sword_3().StopEffect('special_attack_ready');
 		}
 
 		LangCheck();
@@ -3253,6 +3374,113 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			GetACSSparagmosEffect().PlayEffect('sword_slash_blue_large');
 		}
 
+		if (thePlayer.HasTag('vampire_claws_equipped'))
+		{
+			if (thePlayer.IsUsingHorse()
+			|| thePlayer.IsUsingVehicle()
+			|| !ACS_Enabled())
+			{
+				ClawDestroy();
+
+				thePlayer.PlayEffectSingle('claws_effect');
+				thePlayer.StopEffect('claws_effect');
+			}
+
+			theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
+
+			ACS_Vampire_Back_Claw_Get().PlayEffectSingle('blood_color');
+
+			ACS_Vampire_Back_Claw_Get().StopEffect('blood_color');
+
+			if (thePlayer.HasBuff(EET_BlackBlood))
+			{
+				thePlayer.StopEffect('blood_color');
+				thePlayer.PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Arms_1_Get().PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Arms_1_Get().StopEffect('blood_color');
+
+				ACS_Vampire_Arms_2_Get().PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Arms_2_Get().StopEffect('blood_color');
+
+				ACS_Vampire_Arms_3_Get().PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Arms_3_Get().StopEffect('blood_color');
+
+				ACS_Vampire_Arms_4_Get().PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Arms_4_Get().StopEffect('blood_color');
+				
+				ACS_Vampire_Head_Get().PlayEffectSingle('blood_color');
+
+				ACS_Vampire_Head_Get().StopEffect('blood_color');
+
+				if (!thePlayer.HasTag('ACS_blood_armor'))
+				{
+					ACS_BloodArmorStandalone();
+				}
+			}
+			else
+			{
+				ACS_Blood_Armor_Destroy_Without_Back_Claw_IMMEDIATE();
+			}
+		}
+		else if (thePlayer.HasTag('aard_sword_equipped'))
+		{
+			aard_blade_1().PlayEffectSingle('blood_color');
+
+			aard_blade_1().StopEffect('blood_color');
+
+			aard_blade_2().PlayEffectSingle('blood_color');
+
+			aard_blade_2().StopEffect('blood_color');
+
+			aard_blade_3().PlayEffectSingle('blood_color');
+
+			aard_blade_3().StopEffect('blood_color');
+
+			aard_blade_4().PlayEffectSingle('blood_color');
+
+			aard_blade_4().StopEffect('blood_color');
+
+			aard_blade_5().PlayEffectSingle('blood_color');
+
+			aard_blade_5().StopEffect('blood_color');
+
+			aard_blade_6().PlayEffectSingle('blood_color');
+
+			aard_blade_6().StopEffect('blood_color');
+
+			aard_blade_7().PlayEffectSingle('blood_color');
+
+			aard_blade_7().StopEffect('blood_color');
+
+			aard_blade_8().PlayEffectSingle('blood_color');
+
+			aard_blade_8().StopEffect('blood_color');
+
+			ACSGetEquippedSword().StopAllEffects();
+		}
+		/*
+		else if (!thePlayer.HasTag('vampire_claws_equipped'))
+		{
+			//ClawDestroy_NOTAG();
+		}
+		*/
+	}
+
+	function Critical_Low_Health_Fix()
+	{
+		if( thePlayer.GetStat( BCS_Vitality ) >= thePlayer.GetStatMax( BCS_Vitality ) * 0.25 )
+		{
+			thePlayer.StopEffect('critical_low_health');
+		}
+	}
+
+	function Scabbard_Thing()
+	{
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_RangedWeapon, rangedID);
@@ -3298,7 +3526,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					silverswordentity.SetHideInGame(true);
 				}
 
-				//ACSGetEquippedSword().StopAllEffects();
+				ACSGetEquippedSword().StopAllEffects();
 			}
 
 			if (ACS_CloakEquippedCheck() || ACS_HideSwordsheathes_Enabled())
@@ -3339,7 +3567,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					scabbard_silver.SetVisible(false);
 				}
 			}
-/*
+			/*
 			else if (
 			ACS_HideSwordsheathes_Enabled()
 			//&& !thePlayer.IsCrossbowHeld()
@@ -3386,7 +3614,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					scabbard_silver.SetVisible(false);
 				}
 			}
-*/
+			*/
 			else
 			{
 				if ( !theGame.IsDialogOrCutscenePlaying() 
@@ -3512,60 +3740,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 			}
 		}
+	}
 
-		if (thePlayer.IsUsingHorse()
-		|| thePlayer.IsUsingVehicle()
-		|| !ACS_Enabled())
-		{
-			if (thePlayer.HasTag('vampire_claws_equipped'))
-			{
-				ClawDestroy();
-
-				thePlayer.PlayEffectSingle('claws_effect');
-				thePlayer.StopEffect('claws_effect');
-			}
-		}
-
-		if
-		(
-		thePlayer.HasTag('axii_sword_equipped') 
-		&& !thePlayer.HasTag('ACS_IsPerformingFinisher') 
-		//&& thePlayer.HasTag('ACS_Shield_Destroyed') 
-		&& !thePlayer.HasTag('ACS_Shield_Summoned') 
-		&& !thePlayer.IsCurrentlyDodging()
-		&& !thePlayer.HasTag('blood_sucking') 
-		&& 
-		(
-			//thePlayer.IsInGuardedState()
-			//|| 
-			thePlayer.IsGuarded()
-		)
-		)
-		{
-			//RemoveTimer('ACS_Shield_Spawn_Delay');
-
-			//AddTimer('ACS_Shield_Spawn_Delay', 0.75, false);
-
-			//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
-
-			//thePlayer.AddTag('ACS_Shield_Summoned');
-		}
-		else if 
-		(
-			thePlayer.HasTag('ACS_Shield_Summoned')
-			&&
-			(
-				!thePlayer.IsGuarded()|| 
-				!thePlayer.HasTag('axii_sword_equipped') 
-				|| thePlayer.IsPerformingFinisher()
-				//|| thePlayer.IsCurrentlyDodging()
-			)	
-		)
-		{
-			//RemoveTimer('ACS_Shield_Spawn_Delay');
-			//ACS_Axii_Shield_Destroy_DELAY();
-		}
-
+	function Player_In_Combat()
+	{
 		if (thePlayer.IsInCombat())
 		{
 			if(thePlayer.HasTag('ACS_Shielded_Entity'))
@@ -3578,11 +3756,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				if (theInput.GetActionValue('GI_AxisLeftX') == 0 && theInput.GetActionValue('GI_AxisLeftY') == 0 )
 				{
-					thePlayer.ForceSetStat( BCS_Vitality,  thePlayer.GetStat( BCS_Vitality ) - (thePlayer.GetStat( BCS_Vitality ) * 0.00005) );
+					thePlayer.DrainVitality( thePlayer.GetStat( BCS_Vitality ) * 0.00005 );
 				}
 				else
 				{
-					thePlayer.ForceSetStat( BCS_Vitality,  thePlayer.GetStat( BCS_Vitality ) - (thePlayer.GetStat( BCS_Vitality ) * 0.0005) );
+					thePlayer.DrainVitality( thePlayer.GetStat( BCS_Vitality ) * 0.0005 );
 				}
 			}
 
@@ -3623,97 +3801,85 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			BerserkMarkDestroy();
 		}
+	}
 
-		if (thePlayer.HasTag('vampire_claws_equipped'))
+	function Shield_Manager()
+	{
+		vACS_Shield_Summon = new cACS_Shield_Summon in this;
+
+		if
+		(
+		thePlayer.HasTag('axii_sword_equipped') 
+		&& !thePlayer.HasTag('ACS_IsPerformingFinisher') 
+		//&& thePlayer.HasTag('ACS_Shield_Destroyed') 
+		&& !thePlayer.HasTag('ACS_Shield_Summoned') 
+		&& !thePlayer.IsCurrentlyDodging()
+		&& !thePlayer.HasTag('blood_sucking') 
+		&& 
+		(
+			//thePlayer.IsInGuardedState()
+			//|| 
+			thePlayer.IsGuarded()
+		)
+		)
 		{
-			theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
+			//RemoveTimer('ACS_Shield_Spawn_Delay');
 
-			ACS_Vampire_Back_Claw_Get().PlayEffectSingle('blood_color');
+			//AddTimer('ACS_Shield_Spawn_Delay', 0.75, false);
 
-			ACS_Vampire_Back_Claw_Get().StopEffect('blood_color');
+			//vACS_Shield_Summon.Axii_Persistent_Shield_Summon();
 
-			if (thePlayer.HasBuff(EET_BlackBlood))
-			{
-				thePlayer.StopEffect('blood_color');
-				thePlayer.PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Arms_1_Get().PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Arms_1_Get().StopEffect('blood_color');
-
-				ACS_Vampire_Arms_2_Get().PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Arms_2_Get().StopEffect('blood_color');
-
-				ACS_Vampire_Arms_3_Get().PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Arms_3_Get().StopEffect('blood_color');
-
-				ACS_Vampire_Arms_4_Get().PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Arms_4_Get().StopEffect('blood_color');
-				
-				ACS_Vampire_Head_Get().PlayEffectSingle('blood_color');
-
-				ACS_Vampire_Head_Get().StopEffect('blood_color');
-
-				if (!thePlayer.HasTag('ACS_blood_armor'))
-				{
-					ACS_BloodArmorStandalone();
-				}
-			}
-			else
-			{
-				ACS_Blood_Armor_Destroy_Without_Back_Claw_IMMEDIATE();
-			}
+			//thePlayer.AddTag('ACS_Shield_Summoned');
 		}
-		else if (thePlayer.HasTag('aard_sword_equipped'))
+		else if 
+		(
+			thePlayer.HasTag('ACS_Shield_Summoned')
+			&&
+			(
+				!thePlayer.IsGuarded()|| 
+				!thePlayer.HasTag('axii_sword_equipped') 
+				|| thePlayer.IsPerformingFinisher()
+				//|| thePlayer.IsCurrentlyDodging()
+			)	
+		)
 		{
-			aard_blade_1().PlayEffectSingle('blood_color');
-
-			aard_blade_1().StopEffect('blood_color');
-
-			aard_blade_2().PlayEffectSingle('blood_color');
-
-			aard_blade_2().StopEffect('blood_color');
-
-			aard_blade_3().PlayEffectSingle('blood_color');
-
-			aard_blade_3().StopEffect('blood_color');
-
-			aard_blade_4().PlayEffectSingle('blood_color');
-
-			aard_blade_4().StopEffect('blood_color');
-
-			aard_blade_5().PlayEffectSingle('blood_color');
-
-			aard_blade_5().StopEffect('blood_color');
-
-			aard_blade_6().PlayEffectSingle('blood_color');
-
-			aard_blade_6().StopEffect('blood_color');
-
-			aard_blade_7().PlayEffectSingle('blood_color');
-
-			aard_blade_7().StopEffect('blood_color');
-
-			aard_blade_8().PlayEffectSingle('blood_color');
-
-			aard_blade_8().StopEffect('blood_color');
-
-			ACSGetEquippedSword().StopAllEffects();
+			//RemoveTimer('ACS_Shield_Spawn_Delay');
+			//ACS_Axii_Shield_Destroy_DELAY();
 		}
+	}
+
+	function FUCKING_SECOND_LIFE_HACK()
+	{
+		if( thePlayer.IsActionBlockedBy(EIAB_Movement, 'Mutation11') && GetWitcherPlayer().IsMutationActive( EPMT_Mutation11 ) && !GetWitcherPlayer().HasBuff( EET_Mutation11Debuff ) && !GetWitcherPlayer().IsInAir() )
+		{
+			thePlayer.AddTag('ACS_Second_Life_Active');
+		}
+	}
+	
+	function ACS_BARRADUR()
+	{
+		register_extra_inputs();
+
+		Sword_Hold_Forcer();
+
+		Critical_Low_Health_Fix();
+
+		Sword_Persistent_Effects();
+
+		Scabbard_Thing();
+
+		Shield_Manager();
+
+		Player_In_Combat();
+
+		FUCKING_SECOND_LIFE_HACK();
+
 		/*
-		else if (!thePlayer.HasTag('vampire_claws_equipped'))
-		{
-			//ClawDestroy_NOTAG();
-		}
-		*/
-
 		if (!ACS_Forest_God().IsAlive())
 		{
 			ACS_Forest_God_Secondary().Destroy();
 		}
+		*/
 	}
 
 	function NPC_Fear_Reaction_Geralt()
@@ -4087,11 +4253,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -4139,11 +4305,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -4552,6 +4718,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 
+	function dagger_summon_effect()
+	{
+		//ACS_Dagger().PlayEffectSingle('fire_sparks_trail');
+
+		//ACS_Dagger().PlayEffectSingle('runeword1_fire_trail');
+
+		ACS_Dagger().PlayEffectSingle('fast_attack_buff_hit');
+	}
+
 	function Weapon_Summon_Effect_Delay()
 	{
 		settings_interrupt.blendIn = 0.25;
@@ -4870,6 +5045,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_geralt_sword_tornado_left', 'PLAYER_SLOT', settings_interrupt );
 		}
 	}
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	timer function ACS_Combo_Counter_Reset_Timer(deltaTime : float , id : int)
@@ -6359,6 +6535,26 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		PrimerMarkDestroy();
 	}
 
+	function Remove_Combat_Target_Tag()
+	{
+		actors.Clear();
+
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100);
+
+		if( actors.Size() > 0 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				actor = (CActor)actors[i];
+
+				if (actor.HasTag('ACS_Combat_Target'))
+				{
+					actor.RemoveTag('ACS_Combat_Target');
+				}
+			}
+		}
+	}
+
 	function PrimerMarkDestroy()
 	{
 		marks.Clear();
@@ -6478,11 +6674,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//silver_weapon_names.PushBack('ACS_Knight_Lance_2_Silver');
 		silver_weapon_names.PushBack('ACS_Zoltan_Axe_Silver');
 	}
-	
-	function ACS_On_Hit_Effects (action : W3DamageAction)
-	{	
-		NPC_Animation_Cancel_At_Low_Health();
 
+	function ACS_Add_Weapons_To_Inventory(action: W3DamageAction)
+	{
 		fill_acs_steel_weapons_array();
 
 		fill_acs_silver_weapons_array();
@@ -6538,37 +6732,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			npc.AddTag('ACS_Add_Weapon_To_Inventory');
 		}
+	}
 
-		/*
-		if 
-		(playerAttacker && npc &&
-		( 
-		thePlayer.HasTag('aard_sword_equipped') 
-		|| thePlayer.HasTag('aard_secondary_sword_equipped') 
-		|| thePlayer.HasTag('quen_secondary_sword_equipped') 
-		|| thePlayer.HasTag('yrden_sword_equipped') 
-		|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
-		//|| thePlayer.HasTag('vampire_claws_equipped')
-		)
-		)
-		{
-			thePlayer.AddTimer( 'RemoveForceFinisher', 0.0, false );
+	function ACS_Weapon_Art_Effects(action: W3DamageAction)
+	{
+		npc = (CActor)action.victim;
 
-			npc.AddAbility( 'InstantKillImmune' );
+		playerAttacker = (CPlayer)action.attacker;
 
-			if (!npc.HasAbility('DisableFinishers'))
-			{
-				npc.AddAbility( 'DisableFinishers', true);
-			}
+		npcPos = npc.GetWorldPosition();
 
-			if (npc.HasAbility('ForceFinisher'))
-			{
-				npc.RemoveAbility( 'ForceFinisher');
-			} 
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
 
-			npc.SignalGameplayEvent('DisableFinisher');
-		}
-		*/
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if (playerAttacker && npc && thePlayer.HasTag('ACS_Sparagmos_Active') )
 		{
@@ -6598,8 +6796,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
 
 			dmg.AddEffectInfo( EET_Burning, 3 );
-
-			dmg.AddEffectInfo( EET_HeavyKnockdown, 1 );
+			
+			if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.IsImmuneToBuff( EET_Ragdoll ) && !npc.HasBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_Ragdoll ) ) 
+			{
+				//dmg.AddEffectInfo( EET_HeavyKnockdown, 0.5 );
+			}
 				
 			theGame.damageMgr.ProcessAction( dmg );
 				
@@ -6647,155 +6848,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
 
-		if (action.WasDodged() 
-		|| action.IsDoTDamage() 
-		|| !action.IsActionMelee()
-		|| !action.DealtDamage()
-		|| (((W3Action_Attack)action).IsParried())
-		)
-		{
-			thePlayer.ResetUninterruptedHitsCount();
-			return;
-		}
+	function Aard_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
 
-		if (playerAttacker && npc &&
-		( 
-		thePlayer.HasTag('axii_sword_equipped') 
-		|| thePlayer.HasTag('axii_secondary_sword_equipped') 
-		|| thePlayer.HasTag('quen_sword_equipped') 
-		) 
-		)
-		{
-			if (npc.UsesVitality() && npc.IsHuman())
-			{
-				ACS_Finisher_Internal();
-			}
-			else
-			{
-				if (ACS_ExperimentalDismemberment_Enabled())
-				{
-					ACS_Dismember_Internal();
-				}
-			}	
-		}
+		playerAttacker = (CPlayer)action.attacker;
 
-		if 
-		(playerAttacker && npc &&
-		( 
-		thePlayer.HasTag('aard_sword_equipped') 
-		|| thePlayer.HasTag('aard_secondary_sword_equipped') 
-		|| thePlayer.HasTag('quen_secondary_sword_equipped') 
-		|| thePlayer.HasTag('yrden_sword_equipped') 
-		|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
-		)
-		)
-		{
-			if (ACS_ExperimentalDismemberment_Enabled())
-			{
-				ACS_Dismember_Internal();
-			}
-		}
+		npcPos = npc.GetWorldPosition();
 
-		if 
-		(playerAttacker && npc &&
-		( 
-		thePlayer.HasTag('vampire_claws_equipped')
-		)
-		)
-		{
-			//ACS_Dismember_Vampire_Claws();
-			ACS_Dismember_Internal();
-		}
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
 
-		if ( playerAttacker && npc && thePlayer.HasTag('ACS_Shadow_Dash_Empowered') )
-		{
-			/*
-			if (!npc.HasBuff( EET_HeavyKnockdown ) )
-			{
-				npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'ACS_Shadow_Dash_Effect' );
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
 
-				thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
-			}
-			*/
-			actors.Clear();
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
 
-			actors = thePlayer.GetNPCsAndPlayersInCone(2.5, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
 
-			if( actors.Size() > 0 )
-			{
-				for( i = 0; i < actors.Size(); i += 1 )
-				{
-					actortarget = (CActor)actors[i];
-
-					actortarget.SoundEvent("cmb_play_hit_heavy");
-
-					//damageMax = maxTargetVitality * 0.30; 
-
-					dmg = new W3DamageAction in theGame.damageMgr;
-					
-					dmg.Initialize(thePlayer, actortarget, thePlayer, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-					
-					dmg.SetProcessBuffsIfNoDamage(true);
-					
-					dmg.SetHitReactionType( EHRT_Heavy, true);
-					
-					//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
-
-					if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) ) 
-					{ 
-						if ( !npc.HasBuff( EET_HeavyKnockdown ) )
-						{
-							if (thePlayer.HasTag('ACS_Shadowstep_Long_Buff'))
-							{
-								dmg.AddEffectInfo( EET_HeavyKnockdown, 2);
-							}
-							else
-							{
-								dmg.AddEffectInfo( EET_HeavyKnockdown, 0.5 );
-							}
-						}
-						else
-						{
-							if( !npc.IsImmuneToBuff( EET_Bleeding ) ) 
-							{ 
-								dmg.AddEffectInfo( EET_Bleeding, 3 );
-							}
-						}	
-					}
-						
-					theGame.damageMgr.ProcessAction( dmg );
-						
-					delete dmg;	
-				}
-			}
-
-			thePlayer.RemoveTag('ACS_Shadowstep_Long_Buff');
-
-			thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
-
-			return;
-		}
-
-		/*
-		if (playerAttacker && npc && 
-		( 
-		thePlayer.HasTag('axii_sword_equipped') 
-		|| thePlayer.HasTag('axii_secondary_sword_equipped') 
-		|| thePlayer.HasTag('quen_sword_equipped') 
-		|| thePlayer.HasTag('aard_sword_equipped') 
-		|| thePlayer.HasTag('aard_secondary_sword_equipped') 
-		|| thePlayer.HasTag('quen_secondary_sword_equipped') 
-		|| thePlayer.HasTag('yrden_sword_equipped') 
-		|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
-		) 
-		)
-		{
-			ACS_Dismember_Internal();
-			
-			ACS_Finisher_Internal();
-		}
-		*/
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if (playerAttacker && npc && thePlayer.HasTag('aard_sword_equipped') ) 
 		{ 
@@ -6847,7 +6934,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 
 					thePlayer.GainStat( BCS_Vitality, heal * 4 ); 
 				}
@@ -6890,7 +6977,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 
 					thePlayer.GainStat( BCS_Vitality, heal * 8 ); 
 				}
@@ -6932,7 +7019,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3);
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 
 					thePlayer.GainStat( BCS_Vitality, heal * 16 ); 
 				}
@@ -6997,7 +7084,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}	
+	}
+
+	function Aard_Secondary_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
 		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
+
 		if (playerAttacker && npc && thePlayer.HasTag('aard_secondary_sword_equipped') )
 		{ 
 			theSound.SoundEvent("cmb_play_hit_heavy");
@@ -7042,7 +7164,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7078,7 +7200,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('aard_light_attack_primer') ) 
@@ -7113,7 +7235,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('aard_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{									
@@ -7126,7 +7248,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' );						
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );						
 							}
 						}		
 					}
@@ -7139,7 +7261,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' );							
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );							
 							}
 						}
 					}
@@ -7151,7 +7273,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' );					
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );					
 							}
 						}
 					}
@@ -7172,7 +7294,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 
 			return;
-		}	
+		}
+	}
+
+	function Yrden_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('yrden_sword_equipped') ) 
 		{ 
@@ -7259,7 +7416,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7290,7 +7447,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('yrden_heavy_attack_primer') ) 
@@ -7324,7 +7481,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{								
@@ -7337,7 +7494,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7350,7 +7507,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7362,7 +7519,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7384,6 +7541,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function Yrden_Secondary_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('yrden_secondary_sword_equipped')  ) 
 		{ 
@@ -7415,8 +7607,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							dmg = new W3DamageAction in theGame.damageMgr;
 							dmg.Initialize(thePlayer, actortarget, thePlayer, thePlayer.GetName(), EHRT_None, CPS_Undefined, false, false, true, false);
 							dmg.SetProcessBuffsIfNoDamage(true);
-				
-							dmg.AddEffectInfo( EET_HeavyKnockdown, 1 );
+							
+							if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.IsImmuneToBuff( EET_Ragdoll ) && !actortarget.HasBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_Ragdoll ) ) 
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 1 );
+							}
 				
 							theGame.damageMgr.ProcessAction( dmg );
 									
@@ -7428,7 +7623,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7449,8 +7644,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							dmg = new W3DamageAction in theGame.damageMgr;
 							dmg.Initialize(thePlayer, actortarget, thePlayer, thePlayer.GetName(), EHRT_None, CPS_Undefined, false, false, true, false);
 							dmg.SetProcessBuffsIfNoDamage(true);
-				
-							dmg.AddEffectInfo( EET_HeavyKnockdown, 2 );
+
+							if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.IsImmuneToBuff( EET_Ragdoll ) && !actortarget.HasBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_Ragdoll ) ) 
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 2 );
+							}
 				
 							theGame.damageMgr.ProcessAction( dmg );
 									
@@ -7463,7 +7661,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('yrden_light_attack_primer') ) 
@@ -7483,8 +7681,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							dmg = new W3DamageAction in theGame.damageMgr;
 							dmg.Initialize(thePlayer, actortarget, thePlayer, thePlayer.GetName(), EHRT_None, CPS_Undefined, false, false, true, false);
 							dmg.SetProcessBuffsIfNoDamage(true);
-				
-							dmg.AddEffectInfo( EET_HeavyKnockdown, 3 );
+
+							if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.IsImmuneToBuff( EET_Ragdoll ) && !actortarget.HasBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_Ragdoll ) ) 
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 3 );
+							}
 				
 							theGame.damageMgr.ProcessAction( dmg );
 									
@@ -7497,7 +7698,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('yrden_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{						
@@ -7506,11 +7707,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						if( RandF() < 0.0625 ) 
 						{ 
-							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_HeavyKnockdown ) ) 
+							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.IsImmuneToBuff( EET_Ragdoll ) && !npc.HasBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_Ragdoll ) ) 
 							{ 
 								ACS_Passive_Weapon_Effects_Switch();	
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7519,11 +7720,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						if( RandF() < 0.125 ) 
 						{ 
-							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_HeavyKnockdown ) ) 
+							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.IsImmuneToBuff( EET_Ragdoll ) && !npc.HasBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_Ragdoll ) ) 
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7531,11 +7732,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						if( RandF() < 0.25 ) 
 						{ 
-							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_HeavyKnockdown ) ) 
+							if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.IsImmuneToBuff( EET_Ragdoll ) && !npc.HasBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_Ragdoll ) ) 
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7557,6 +7758,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function Axii_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('axii_sword_equipped')  )
 		{ 
@@ -7603,7 +7839,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7638,7 +7874,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('axii_heavy_attack_primer') ) 
@@ -7672,7 +7908,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{		
@@ -7685,7 +7921,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7698,7 +7934,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7710,7 +7946,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7732,6 +7968,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		} 
+	}
+
+	function Axii_Secondary_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('axii_secondary_sword_equipped') )
 		{
@@ -7778,7 +8049,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7813,7 +8084,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('axii_light_attack_primer') ) 
@@ -7847,7 +8118,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					Remove_On_Hit_Tags();
 					npc.RemoveTag('axii_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{									
@@ -7860,7 +8131,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7873,7 +8144,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7885,7 +8156,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
 							}
 						}
 					}
@@ -7907,6 +8178,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function Quen_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('quen_sword_equipped')  )
 		{ 
@@ -7953,7 +8259,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -7990,7 +8296,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('quen_heavy_attack_primer') 
@@ -8026,7 +8332,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_heavy_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3);
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{							
@@ -8038,9 +8344,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if( !npc.IsImmuneToBuff( EET_Blindness ) && !npc.HasBuff( EET_Blindness ) ) 
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
-								quen_sword_glow();	
+								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8052,9 +8358,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if( !npc.IsImmuneToBuff( EET_Blindness ) && !npc.HasBuff( EET_Blindness ) ) 
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
-								quen_sword_glow();	
+								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8065,9 +8371,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if( !npc.IsImmuneToBuff( EET_Blindness ) && !npc.HasBuff( EET_Blindness ) ) 
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
-								quen_sword_glow();	
+								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8089,6 +8395,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function Quen_Secondary_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('quen_secondary_sword_equipped')  )
 		{
@@ -8134,7 +8475,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if( curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -8170,7 +8511,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if( curAdrenaline == maxAdrenaline
 				&& npc.HasTag('quen_light_attack_primer') ) 
@@ -8205,7 +8546,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					Remove_On_Hit_Tags();
 						
 					npc.RemoveTag('quen_light_attack_primer');
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else
 				{									
@@ -8218,7 +8559,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8231,7 +8572,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8243,7 +8584,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
 							}
 						}
 					}
@@ -8264,7 +8605,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 
 			return;
-		}	
+		}
+	}
+
+	function Igni_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('igni_sword_equipped_TAG') ) 
 		{ 
@@ -8283,6 +8659,41 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function Igni_Secondary_Sword_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
 
 		if ( playerAttacker && npc && thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
 		{	
@@ -8331,7 +8742,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					//PrimerMarkDestroy();
 					npc.RemoveTag('igni_light_attack_primer');
 						
-					thePlayer.ForceSetStat( BCS_Focus, curAdrenaline * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 				}
 				else if (curAdrenaline >= maxAdrenaline * 2/3
 				&& curAdrenaline < maxAdrenaline
@@ -8358,9 +8769,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							dmg.SetForceExplosionDismemberment();
 									
 							dmg.AddEffectInfo( EET_Burning, 2 );
-									
-							dmg.AddEffectInfo( EET_HeavyKnockdown, 2 );
-									
+
+							if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.IsImmuneToBuff( EET_Ragdoll ) && !actortarget.HasBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_Ragdoll ) ) 
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 2 );
+							}		
+		
 							theGame.damageMgr.ProcessAction( dmg );
 									
 							delete dmg;	
@@ -8374,7 +8788,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					//PrimerMarkDestroy();
 					npc.RemoveTag('igni_light_attack_primer');
 						
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				else if (curAdrenaline == maxAdrenaline 
 				&& npc.HasTag('igni_light_attack_primer'))
@@ -8400,8 +8814,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							dmg.SetForceExplosionDismemberment();
 									
 							dmg.AddEffectInfo( EET_Burning, 3 );
-									
-							dmg.AddEffectInfo( EET_HeavyKnockdown, 3 );
+							
+							if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.IsImmuneToBuff( EET_Ragdoll ) && !actortarget.HasBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_Ragdoll ) ) 
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 3 );
+							}
 									
 							theGame.damageMgr.ProcessAction( dmg );
 									
@@ -8416,7 +8833,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					//PrimerMarkDestroy();
 					npc.RemoveTag('igni_light_attack_primer');
 						
-					thePlayer.ForceSetStat( BCS_Focus, maxAdrenaline * 2/3 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3 );
 				}
 				/*
 				else
@@ -8428,6 +8845,269 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			return;
 		}
+	}
+
+	function ACS_Finisher_Or_Dismember (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
+
+		if (playerAttacker && npc &&
+		( 
+		thePlayer.HasTag('axii_sword_equipped') 
+		|| thePlayer.HasTag('axii_secondary_sword_equipped') 
+		|| thePlayer.HasTag('quen_sword_equipped') 
+		) 
+		)
+		{
+			if (npc.UsesVitality() && npc.IsHuman())
+			{
+				ACS_Finisher_Internal();
+			}
+			else
+			{
+				if (ACS_ExperimentalDismemberment_Enabled())
+				{
+					ACS_Dismember_Internal();
+				}
+			}	
+		}
+
+		if 
+		(playerAttacker && npc &&
+		( 
+		thePlayer.HasTag('aard_sword_equipped') 
+		|| thePlayer.HasTag('aard_secondary_sword_equipped') 
+		|| thePlayer.HasTag('quen_secondary_sword_equipped') 
+		|| thePlayer.HasTag('yrden_sword_equipped') 
+		|| thePlayer.HasTag('yrden_secondary_sword_equipped') 
+		)
+		)
+		{
+			if (ACS_ExperimentalDismemberment_Enabled())
+			{
+				ACS_Dismember_Internal();
+			}
+		}
+
+		if 
+		(playerAttacker && npc &&
+		( 
+		thePlayer.HasTag('vampire_claws_equipped')
+		)
+		)
+		{
+			ACS_Dismember_Internal();
+		}
+	}
+	
+	function ACS_Shadow_Dash_On_Hit_Effects (action : W3DamageAction)
+	{
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
+
+		if ( playerAttacker && npc && thePlayer.HasTag('ACS_Shadow_Dash_Empowered') )
+		{
+			/*
+			if (!npc.HasBuff( EET_HeavyKnockdown ) )
+			{
+				npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'ACS_Shadow_Dash_Effect' );
+
+				thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
+			}
+			*/
+			actors.Clear();
+
+			actors = thePlayer.GetNPCsAndPlayersInCone(2.5, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
+
+			if( actors.Size() > 0 )
+			{
+				for( i = 0; i < actors.Size(); i += 1 )
+				{
+					actortarget = (CActor)actors[i];
+
+					actortarget.SoundEvent("cmb_play_hit_heavy");
+
+					//damageMax = maxTargetVitality * 1/30; 
+
+					dmg = new W3DamageAction in theGame.damageMgr;
+					
+					dmg.Initialize(thePlayer, actortarget, thePlayer, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+					
+					dmg.SetProcessBuffsIfNoDamage(true);
+					
+					dmg.SetHitReactionType( EHRT_Heavy, true);
+					
+					//dmg.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
+
+					if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) ) 
+					{ 
+						if( !npc.IsImmuneToBuff( EET_HeavyKnockdown ) && !npc.IsImmuneToBuff( EET_Ragdoll ) && !npc.HasBuff( EET_HeavyKnockdown ) && !npc.HasBuff( EET_Ragdoll ) ) 
+						{
+							if (thePlayer.HasTag('ACS_Shadowstep_Long_Buff'))
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 1 );
+							}
+							else
+							{
+								dmg.AddEffectInfo( EET_HeavyKnockdown, 0.5 );
+							}
+						}
+						else
+						{
+							if( !npc.IsImmuneToBuff( EET_Bleeding ) ) 
+							{ 
+								dmg.AddEffectInfo( EET_Bleeding, 3 );
+							}
+						}	
+					}
+						
+					theGame.damageMgr.ProcessAction( dmg );
+						
+					delete dmg;	
+				}
+			}
+
+			thePlayer.RemoveTag('ACS_Shadowstep_Long_Buff');
+
+			thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
+
+			return;
+		}
+	}
+	
+	function ACS_On_Hit_Effects (action : W3DamageAction)
+	{	
+		NPC_Animation_Cancel_At_Low_Health();
+
+		npc = (CActor)action.victim;
+
+		playerAttacker = (CPlayer)action.attacker;
+
+		npcPos = npc.GetWorldPosition();
+
+		npcRot = npc.GetWorldRotation();
+		
+		curTargetVitality = npc.GetStat( BCS_Vitality );
+
+		maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+		
+		curTargetEssence = npc.GetStat( BCS_Essence );
+
+		maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+		maxAdrenaline = thePlayer.GetStatMax(BCS_Focus);
+		
+		curAdrenaline = thePlayer.GetStat(BCS_Focus);
+		
+		damage_action = (W3Action_Attack)action;
+
+		sword_dmg = action.GetDamageDealt();
+		
+		targetRotationNPC = npc.GetWorldRotation();
+		targetRotationNPC.Yaw = RandRangeF(360,1);
+		targetRotationNPC.Pitch = RandRangeF(45,-45);
+		
+		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
+		
+		heal = playerVitality * 0.025;
+
+		ACS_Add_Weapons_To_Inventory(action);
+
+		ACS_Weapon_Art_Effects(action);
+
+		if (action.WasDodged() 
+		|| action.IsDoTDamage() 
+		|| !action.IsActionMelee()
+		|| !action.DealtDamage()
+		|| (((W3Action_Attack)action).IsParried())
+		)
+		{
+			thePlayer.ResetUninterruptedHitsCount();
+			return;
+		}
+
+		ACS_Finisher_Or_Dismember(action);
+
+		ACS_Shadow_Dash_On_Hit_Effects(action);
+
+		Aard_Sword_On_Hit_Effects(action);
+
+		Aard_Secondary_Sword_On_Hit_Effects(action);
+
+		Yrden_Sword_On_Hit_Effects(action);
+
+		Yrden_Secondary_Sword_On_Hit_Effects(action);
+
+		Axii_Sword_On_Hit_Effects(action);
+
+		Axii_Secondary_Sword_On_Hit_Effects(action);
+
+		Quen_Sword_On_Hit_Effects(action);
+
+		Quen_Secondary_Sword_On_Hit_Effects(action);
+
+		Igni_Sword_On_Hit_Effects(action);
+
+		Igni_Secondary_Sword_On_Hit_Effects(action);
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -8776,8 +9456,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ACS_ThingsThatShouldBeRemoved();
 
-		ACS_ExplorationDelayHack();
-		
 		ACS_Finisher_PreAction();
 
 		if (thePlayer.IsActionAllowed(EIAB_LightAttacks))
@@ -10223,7 +10901,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ACS_ThingsThatShouldBeRemoved();
 
-		ACS_ExplorationDelayHack();
+		if ( !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			ACS_ExplorationDelayHack();
+		}
 
 		ACS_Finisher_PreAction();
 
@@ -10545,7 +11226,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							if (thePlayer.HasTag('quen_sword_equipped'))
 							{
-								if (thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if (thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									Umbral_Slash_Single();
 
@@ -10553,22 +11234,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
 										
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
 							else if (thePlayer.HasTag('axii_sword_equipped'))
 							{
-								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									Sparagmos();
 
@@ -10576,17 +11257,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
 										
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
 										
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
@@ -10596,12 +11277,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									Bruxa_Scream();
 
-									thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+									thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 								}
 							}
 							else if (thePlayer.HasTag('yrden_sword_equipped'))
 							{
-								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									ACS_TKInit();
 
@@ -10609,38 +11290,38 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
 										
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
 							else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
 							{
-								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if ( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									Storm_Spear();
 
 									if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
@@ -10650,50 +11331,50 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								{
 									Giant_Sword();
 
-									thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+									thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 								}
 							}
 							else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
 							{
-								if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									Water_Aard();
 
 									if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
 							else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
 							{
-								if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+								if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 								{
 									Giant_Stomp();
 
 									if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 									&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 									{	
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 									else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 									{
-										thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+										thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 									}
 								}
 							}
@@ -12522,6 +13203,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function VampClawLightAttack()
 	{
+		ACS_ExplorationDelayHack();
+
 		if (ACS_StaminaBlockAction_Enabled() 
 		&& VampireClawsStaminaCheck()
 		)
@@ -12574,23 +13257,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					}
 				}
 				else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-				&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+				&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 				{
 					Bruxa_Scream();
 
 					if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 					&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 					{	
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 					}
 					else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 					&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 					{	
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 					}
 					else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 					{
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 					}
 				}
 				else
@@ -12673,6 +13356,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function ShockwaveFistLightAttack()
 	{
+		ACS_ExplorationDelayHack();
+
 		if (ACS_can_perform_light_attack())
 		{
 			if (
@@ -12776,7 +13461,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomOlgierdPirouette();
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						Umbral_Slash_Single();
 
@@ -12784,16 +13469,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
 							
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -12870,7 +13555,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						Bruxa_Scream();
 
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 					}
 					else
 					{
@@ -12950,7 +13635,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							AddTimer('ACS_ResetAnimation', 0.5  , false);
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 						{
 							Sparagmos();
 
@@ -12958,17 +13643,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 							{	
 								
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 							{	
 								
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 						}
 						else
@@ -13042,7 +13727,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						AddTimer('ACS_ResetAnimation', 0.5  , false);
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						ACS_TKInit();
 
@@ -13050,16 +13735,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
 							
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -13287,23 +13972,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							AddTimer('ACS_ResetAnimation', 0.5  , false);	
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 						{
 							Storm_Spear();
 
 							if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 						}
 						else
@@ -13447,23 +14132,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							AddTimer('ACS_ResetAnimation', 0.5  , false);	
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 						{
 							Water_Aard();
 
 							if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 						}
 						else
@@ -13609,7 +14294,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							Giant_Sword();
 
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else
 						{												
@@ -13754,23 +14439,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							AddTimer('ACS_ResetAnimation', 0.5  , false);
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 						{
 							Giant_Stomp();
 
 							if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 						}
 						else
@@ -13840,23 +14525,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomOlgierdLightAttackAlt();
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						Umbral_Slash_Single();
 
 						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -14049,7 +14734,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						Bruxa_Scream();
 
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 					}
 					else
 					{
@@ -14239,7 +14924,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							AddTimer('ACS_ResetAnimation', 0.5  , false);	
 						}
 						else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+						&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 						{
 							Sparagmos();
 
@@ -14247,16 +14932,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 							{	
 								
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 							&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 							{	
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 							else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 							{
-								thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+								thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 							}
 						}
 						else
@@ -14460,23 +15145,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						AddTimer('ACS_ResetAnimation', 0.5  , false);	
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						ACS_TKInit();
 
 						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{		
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -14657,23 +15342,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						AddTimer('ACS_ResetAnimation', 0.5  , false);
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						Storm_Spear();
 
 						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -14864,7 +15549,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						Giant_Sword();
 
-						thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 					}
 					else
 					{
@@ -15046,23 +15731,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomGiantLightAttackAlt();
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						Giant_Stomp();
 
 						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -15117,8 +15802,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& audioLang != "DE" 
 		&& audioLang != "FR" )
 		{
-			if (label != "Special Abilities Settings"
-			|| label_2 != "Taunt System Settings")
+			if (label != "Sword Claws"
+			|| label_2 != "ACS: Taunt System")
 			{
 				theGame.ChangePlayer( "ACS" );
 			}
@@ -15284,23 +15969,23 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						geraltRandomAxeLightAttackAlt();
 					}
 					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 0.3 )
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
 					{
 						Water_Aard();
 
 						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
 						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
 						{	
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus )/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
 						{
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus ) * 2/3 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
 						}
 					}
 					else
@@ -16686,7 +17371,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		label = GetLocStringById( 2112923009 );
 
-		label_2 = GetLocStringByKey("preset_Mods_acs_name_acs_taunt_settings");
+		label_2 = GetLocStringByKey("preset_value_acs_hybrid_mode_imlerith_attack");
 
 		if ( lang != "DE" 
 		&& lang != "FR" 
@@ -16694,8 +17379,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		&& audioLang != "FR" )
 		{
 			if (
-				label != "Minimum Stamina Requirement Enabled" 
-			|| label_2 != "Taunt System Settings"
+			label != "Focus Mode" 
+			|| label_2 != "Imlerith/Caranthir/Caretaker"
 			)
 			{
 				theGame.ChangePlayer( "ACS" );
@@ -17068,11 +17753,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							Umbral_Slash_End();
 
-							thePlayer.DrainStamina(ESAT_HeavyAttack, , 5, , , 10);
+							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax( BCS_Stamina ) );
 
-							thePlayer.ForceSetStat( BCS_Stamina, thePlayer.GetStat( BCS_Stamina ) * 0 );
-
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else
 						{
@@ -17505,11 +18188,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						{
 							Umbral_Slash_End();
 
-							thePlayer.DrainStamina(ESAT_HeavyAttack, , 5, , , 10);
+							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax( BCS_Stamina ) );
 
-							thePlayer.ForceSetStat( BCS_Stamina, thePlayer.GetStat( BCS_Stamina ) * 0 );
-
-							thePlayer.ForceSetStat( BCS_Focus, thePlayer.GetStat( BCS_Focus ) * 0 );
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 						}
 						else
 						{
@@ -18656,12 +19337,40 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 		//}
 	}
-
-		
+	
 	// Dodge stuff
+
+	function ACS_Vampire_Back_Claw_Teleport()
+	{
+		if (ACS_Vampire_Back_Claw_Get())
+		{
+			ACS_Vampire_Back_Claw_Get().BreakAttachment(); 
+			ACS_Vampire_Back_Claw_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+		}
+	}
+
+	function ACS_Vampire_Back_Claw_Reattach()
+	{
+		var attach_vec																																					: Vector;
+		var attach_rot																																					: EulerAngles;
+
+		if (ACS_Vampire_Back_Claw_Get() && ACS_Vampire_Claw_Anchor_Get())
+		{
+			attach_rot.Roll = 90;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 45;
+			attach_vec.X = -1;
+			attach_vec.Y = -1;
+			attach_vec.Z = 0;
+			
+			ACS_Vampire_Back_Claw_Get().CreateAttachment( ACS_Vampire_Claw_Anchor_Get(), , attach_vec, attach_rot );
+		}
+	}
 	
 	function dodge_timer_actual() 
-	{ 
+	{
+		ACS_Vampire_Back_Claw_Teleport();
+
 		thePlayer.StopEffect('dive_shape');
 
 		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
@@ -18699,23 +19408,53 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 		AddTimer('ACS_dodge_timer_end', 0.875  , false);
 	}
-	
-	function dodge_timer_wildhunt_actual() 
-	{ 
-		thePlayer.StopEffect('dive_shape');
 
-		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
-
-		RemoveTimer('ACS_dodge_timer_end');
-
+	function EvadeTargetGet()
+	{
 		MovementAdjust();
 
-		victimPos = actor.PredictWorldPosition(0.35) + VecFromHeading( AngleNormalize180( thePlayer.GetHeading() - dist ) ) * 2;
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			evadeTarget = thePlayer.GetTarget();
+		else
+		{
+			thePlayer.FindMoveTarget();
+			evadeTarget = thePlayer.moveTarget;		
+		}
+
+		thePlayer.SetPlayerTarget( evadeTarget );
+
+		thePlayer.SetPlayerCombatTarget( evadeTarget );
+
+		thePlayer.UpdateDisplayTarget( true );
+
+		thePlayer.UpdateLookAtTarget();
+
+		victimPos = evadeTarget.PredictWorldPosition(0.35) + VecFromHeading( AngleNormalize180( thePlayer.GetHeading() - dist ) ) * 2;
 		if( !theGame.GetWorld().NavigationFindSafeSpot( victimPos, 0.3, 0.3 , newVictimPos ) )
 		{
 			theGame.GetWorld().NavigationFindSafeSpot( victimPos, 0.3, 3 , newVictimPos );
 			victimPos = newVictimPos;
 		}
+
+		if( ACS_AttitudeCheck ( evadeTarget ) && thePlayer.IsInCombat())
+		{	
+			UpdateHeading(); 
+			
+			movementAdjustor.RotateTowards( ticket, evadeTarget );
+
+			movementAdjustor.SlideTo( ticket, victimPos );
+		}
+	}
+	
+	function dodge_timer_wildhunt_actual() 
+	{
+		ACS_Vampire_Back_Claw_Teleport();
+
+		thePlayer.StopEffect('dive_shape');
+
+		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
+
+		RemoveTimer('ACS_dodge_timer_end');
 
 		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
 
@@ -18741,22 +19480,162 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
 		thePlayer.SetIsCurrentlyDodging(true);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
-		{	
-			UpdateHeading(); 
-			
-			movementAdjustor.RotateTowards( ticket, actor );
-
-			movementAdjustor.SlideTo( ticket, victimPos );
-		}
+		EvadeTargetGet();
 
 		//thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 
 		AddTimer('ACS_dodge_timer_end', 0.75  , false);
 	}
+
+	function dodge_timer_fire_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Fire_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.75  , false);
+	}
+
+	function dodge_timer_mage_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Mage_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
+
+	function dodge_timer_dolphin_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Dolphin_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
+
+	function dodge_timer_iris_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		if (!thePlayer.HasTag('ACS_HideWeaponOnDodge'))
+		{
+			thePlayer.AddTag('ACS_HideWeaponOnDodge');
+		}
+
+		ACS_Weapon_Invisible();
+
+		thePlayer.AddTag('ACS_Iris_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
+
+	function dodge_timer_explosion_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Explosion_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
+
+	function dodge_timer_fountain_portal_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Fountain_Portal_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
+
+	function dodge_timer_lightning_actual() 
+	{ 
+		RemoveTimer('ACS_dodge_timer_end');
+
+		thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+		thePlayer.AddTag('ACS_Lightning_Teleport');
+
+		thePlayer.SetImmortalityMode( AIM_Invulnerable, AIC_Combat ); 
+		thePlayer.SetCanPlayHitAnim(false); 
+		thePlayer.SetVisibility( false ); 
+		thePlayer.EnableCharacterCollisions(false);	
+		thePlayer.AddBuffImmunity_AllNegative('acs_dodge', true); 
+		thePlayer.SetIsCurrentlyDodging(true);
+
+		EvadeTargetGet();
+
+		AddTimer('ACS_dodge_timer_end', 0.5  , false);
+	}
 	
 	function dodge_timer_slideback_actual() 
-	{ 
+	{
+		ACS_Vampire_Back_Claw_Teleport();
+
 		thePlayer.StopEffect('dive_shape');
 
 		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
@@ -18796,7 +19675,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	}
 	
 	function dodge_timer_attack_actual() 
-	{ 
+	{
+		ACS_Vampire_Back_Claw_Teleport();
+
 		thePlayer.StopEffect('dive_shape');
 
 		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
@@ -18827,7 +19708,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		//thePlayer.BlockAction( EIAB_Jump, 			'ACS_Dodge_Timer');
 
-		AddTimer('ACS_dodge_timer_end', 1  , false);
+		AddTimer('ACS_dodge_timer_end', 0.75  , false);
 	}
 
 	function ACS_SCAAR_15_Installed(): bool{return theGame.GetDLCManager().IsDLCAvailable('dlc_netflixarmor');}
@@ -18893,6 +19774,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
 		}
 
+		ACS_Vampire_Back_Claw_Reattach();
+
 		if ( thePlayer.HasTag('ACS_wildhunt_teleport_init') )
 		{
 			ACS_wh_teleport_entity().CreateAttachment(thePlayer);
@@ -18907,6 +19790,123 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			ACS_wh_teleport_entity().DestroyAfter(1);
 
 			thePlayer.RemoveTag('ACS_wildhunt_teleport_init');
+		}
+
+		if ( thePlayer.HasTag('ACS_Mage_Teleport') )
+		{
+			thePlayer.PlayEffectSingle('teleport_in');
+			thePlayer.StopEffect('teleport_in');
+
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_mage_teleport_in_ACS', 'PLAYER_SLOT', settings);
+
+			thePlayer.RemoveTag('ACS_Mage_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Dolphin_Teleport') )
+		{
+			ACS_dolphin_teleport_entity().StopEffect('dolphin');
+			ACS_dolphin_teleport_entity().PlayEffectSingle('dolphin');
+
+			thePlayer.SoundEvent('monster_water_mage_combat_spray');
+
+			ACS_dolphin_teleport_entity().DestroyAfter(5);
+
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_mage_teleport_in_ACS', 'PLAYER_SLOT', settings);
+
+			thePlayer.RemoveTag('ACS_Dolphin_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Iris_Teleport') )
+		{	
+			thePlayer.PlayEffectSingle('ethereal_buff');
+
+			thePlayer.StopEffect('ethereal_buff');
+
+			thePlayer.StopEffect('special_attack_fx');
+
+			thePlayer.SoundEvent('magic_olgierd_tele');
+
+			if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+			&& !thePlayer.HasTag('blood_sucking')
+			)
+			{
+				ACS_Weapon_Respawn();
+
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+			}
+
+			ACS_Marker_Smoke();
+
+			thePlayer.RemoveTag('ACS_Iris_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Explosion_Teleport') )
+		{
+			ACS_explosion_teleport_entity().CreateAttachment(thePlayer);
+
+			ACS_explosion_teleport_entity().StopEffect('smoke_explosion');
+			ACS_explosion_teleport_entity().PlayEffectSingle('smoke_explosion');
+
+			ACS_explosion_teleport_entity().DestroyAfter(2);
+
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_mage_teleport_in_ACS', 'PLAYER_SLOT', settings);
+
+			thePlayer.RemoveTag('ACS_Explosion_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Fountain_Portal_Teleport') )
+		{
+			ACS_fountain_portal_teleport_entity().StopEffect('portal');
+			ACS_fountain_portal_teleport_entity().PlayEffectSingle('portal');
+
+			thePlayer.SoundEvent('magic_geralt_teleport');
+
+			ACS_fountain_portal_teleport_entity().DestroyAfter(2);
+
+			thePlayer.RemoveTag('ACS_Fountain_Portal_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Lightning_Teleport') )
+		{
+			ACS_lightning_teleport_entity().CreateAttachment(thePlayer);
+
+			ACS_Marker_Lightning();
+
+			//ACS_lightning_teleport_entity().StopEffect('lightning');
+			//ACS_lightning_teleport_entity().PlayEffectSingle('lightning');
+
+			//ACS_lightning_teleport_entity().StopEffect('pre_lightning');
+			//ACS_lightning_teleport_entity().PlayEffectSingle('pre_lightning');
+
+			ACS_Giant_Lightning_Strike_Mult();
+
+			ACS_lightning_teleport_entity().StopEffect('lighgtning');
+			ACS_lightning_teleport_entity().PlayEffectSingle('lighgtning');
+
+			thePlayer.SoundEvent('fx_other_lightning_hit');
+
+			ACS_lightning_teleport_entity().DestroyAfter(2);
+
+			thePlayer.PlayEffectSingle('hit_lightning');
+			thePlayer.StopEffect('hit_lightning');
+
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_mage_teleport_in_ACS', 'PLAYER_SLOT', settings);
+
+			thePlayer.RemoveTag('ACS_Lightning_Teleport');
+		}
+
+		if ( thePlayer.HasTag('ACS_Fire_Teleport') )
+		{
+			ACS_Marker_Fire();
+
+			thePlayer.PlayEffectSingle( 'lugos_vision_burning' );
+			thePlayer.StopEffect( 'lugos_vision_burning' );
+
+			thePlayer.SoundEvent('monster_dracolizard_combat_fireball_hit');
+
+			thePlayer.RemoveTag('ACS_Fire_Teleport');
 		}
 	}
 	
@@ -19310,7 +20310,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 							if( !npc.HasBuff( EET_Confusion ) )
 							{
-								npc.AddEffectDefault( EET_Confusion, npc, 'console' );	
+								npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_buff_effects' );	
 							}
 						}
 						else
@@ -19362,22 +20362,22 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 							if( !npc.HasBuff( EET_Confusion ) )
 							{
-								npc.AddEffectDefault( EET_Confusion, npc, 'console' );	
+								npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_buff_effects' );	
 							}
 
 							if( !npc.HasBuff( EET_Immobilized ) )
 							{
-								npc.AddEffectDefault( EET_Immobilized, npc, 'console' );	
+								npc.AddEffectDefault( EET_Immobilized, thePlayer, 'acs_buff_effects' );	
 							}
 
 							if( !npc.HasBuff( EET_LongStagger ) )
 							{
-								npc.AddEffectDefault( EET_LongStagger, npc, 'console' );	
+								npc.AddEffectDefault( EET_LongStagger, thePlayer, 'acs_buff_effects' );	
 							}
 
 							if( !npc.HasBuff( EET_Slowdown ) )
 							{
-								//npc.AddEffectDefault( EET_Slowdown, npc, 'console' );	
+								//npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_buff_effects' );	
 							}
 						}
 
@@ -19433,7 +20433,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					((CNewNPC)npc).SetImmortalityMode( AIM_None, AIC_Combat ); 
 
-					npc.RemoveBuff(EET_HeavyKnockdown, true, 'console');
+					npc.RemoveBuff(EET_HeavyKnockdown, true, 'acs_buff_effects');
 
 					npc.RemoveBuffImmunity_AllNegative();
 
@@ -19505,7 +20505,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else
 							{
-								npc.ForceSetStat( BCS_Vitality,  curTargetVitality - RandRangeF(damageMax,damageMin) );
+								npc.DrainVitality( RandRangeF(damageMax,damageMin) );
 							}
 						} 
 						else if (npc.UsesEssence()) 
@@ -19530,7 +20530,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else
 							{
-								npc.ForceSetStat( BCS_Essence,  curTargetEssence - RandRangeF(damageMax,damageMin) );
+								npc.DrainEssence( RandRangeF(damageMax,damageMin) );
 							}
 						}
 
@@ -19576,7 +20576,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					
 					if (!((CNewNPC)npc).IsFlying())
 					{
-						npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'console' );	
+						npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_buff_effects' );	
 					}
 				}
 				else
@@ -19585,7 +20585,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					{
 						if( !npc.HasBuff( EET_Confusion ) )
 						{
-							npc.AddEffectDefault( EET_Confusion, npc, 'console' );	
+							npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_buff_effects' );	
 						}
 					}
 				}
@@ -19611,7 +20611,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			ticket = movementAdjustor.CreateNewRequest( 'ACS_Movement_Adjust_Shadowdash' );
 		
-			movementAdjustor.AdjustmentDuration( ticket, 0.35 );
+			movementAdjustor.AdjustmentDuration( ticket, 0.25 );
 			
 			//movementAdjustor.ShouldStartAt(ticket, thePlayer.GetWorldPosition());
 
@@ -19623,12 +20623,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			movementAdjustor.ScaleAnimationLocationVertically( ticket, true );
 
-			dist = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 2;
+			dist = ((((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() * 1.75)
+			+ (((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 1.75);
 
 			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}
 									
-			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.75  ); }	
+			if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 2.25 ); }	
 			
 			AddTimer('ACS_ResetAnimation', 0.75  , false);
 
@@ -19638,13 +20638,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );
 
 					movementAdjustor.SlideTowards( ticket, actor, dist, dist );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -19791,13 +20791,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );
 
 					movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -19859,13 +20859,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );
 
 					movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -20009,12 +21009,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );
 				movementAdjustor.SlideTowards( ticket, actor, distVampSpecialDash, distVampSpecialDash );
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -20527,31 +21527,14 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function BruxaDash_Combat()
 	{
-		if( BruxaDashCallTime + DOUBLE_TAP_WINDOW >= theGame.GetEngineTimeAsSeconds() )
-		{
-			BruxaDashDoubleTap = true;
-		}
-		else
-		{
-			BruxaDashDoubleTap = false;	
-		}
-		
-		if( BruxaDashDoubleTap 
-		&& CiriCheck()
+		if( CiriCheck()
 		&& HitAnimCheck()
 		&& FinisherCheck() 
 		&& thePlayer.IsActionAllowed(EIAB_Movement)
 		&& (thePlayer.IsInCombat() || !ACS_CombatToExplorationCheck())
 		)
 		{
-			DeactivateThings_BruxaDash();
-
-			ACS_ThingsThatShouldBeRemoved_NoWeaponRespawn();
-
-			if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
-
-			if (ACS_BruxaDash_Enabled() 
-			&& ACS_can_bruxa_dash())
+			if (ACS_can_bruxa_dash())
 			{
 				if ( ACS_StaminaBlockAction_Enabled() 
 				&& StaminaCheck()
@@ -20562,11 +21545,17 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else
 				{
+					ACS_refresh_bruxa_dash_cooldown();
+
+					DeactivateThings_BruxaDash();
+
+					ACS_ThingsThatShouldBeRemoved_NoWeaponRespawn();
+
+					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
 					thePlayer.SetIsCurrentlyDodging(true);
 
 					thePlayer.EnableCharacterCollisions(false); 
-
-					ACS_refresh_bruxa_dash_cooldown();
 
 					if (thePlayer.HasTag('in_wraith'))
 					{
@@ -20631,18 +21620,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 					thePlayer.BreakAttachment();		
 
-					bruxa_dash();						
+					bruxa_dash();
+
+					DeactivateThings_BruxaDash();				
 				}
 			}
-
-			DeactivateThings_BruxaDash();
 		}
-		else
-		{
-			ACS_BruxaDodgeSlideBackInit(); 
-		}
-		
-		BruxaDashCallTime = theGame.GetEngineTimeAsSeconds();
 	}
 
 	function JumpAttackCombat()
@@ -21158,7 +22141,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				if (!thePlayer.IsSwimming())
 				{
@@ -21169,7 +22152,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 				}
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -21298,11 +22281,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -21480,11 +22463,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -21516,11 +22499,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -21778,11 +22761,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -22343,11 +23326,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -22790,11 +23773,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -22905,11 +23888,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23016,11 +23999,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23134,11 +24117,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23213,11 +24196,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23283,11 +24266,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23391,11 +24374,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23597,11 +24580,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23803,11 +24786,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -23975,11 +24958,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -24111,11 +25094,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -24246,11 +25229,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -24360,11 +25343,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -24470,11 +25453,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -24904,11 +25887,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -25042,12 +26025,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{	
 			if( targetDistance <= 2.5*2.5 ) 
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 					movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25063,12 +26046,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else if( targetDistance > 2.5*2.5 && targetDistance <= 5*5 ) 
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 					movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25084,12 +26067,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			}
 			else
 			{
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 					movementAdjustor.SlideTowards( ticket, actor, distJump, distJump );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25230,13 +26213,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, dist, dist );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25272,11 +26255,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25323,11 +26306,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 				AddTimer('ACS_ResetAnimation', 0.75 , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25405,13 +26388,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, dist, dist );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25447,11 +26430,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25500,11 +26483,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						
 				AddTimer('ACS_ResetAnimation', 1 , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25574,11 +26557,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25598,13 +26581,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25634,13 +26617,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -25679,11 +26662,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -25711,11 +26694,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck (actor) )
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -25897,11 +26880,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck (actor) )
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -26031,11 +27014,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -26165,11 +27148,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck (actor) )
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -26365,13 +27348,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, dist * 0.25, dist * 0.25 );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26405,11 +27388,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26454,11 +27437,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				//dodge_timer_attack_actual();
 				
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26523,11 +27506,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26547,13 +27530,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26583,13 +27566,13 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.DrainStamina(ESAT_HeavyAttack);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 
 					//movementAdjustor.SlideTowards( ticket, actor, distClawWhirl, distClawWhirl );
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -26632,11 +27615,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck (actor) )
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -27124,11 +28107,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -27564,11 +28547,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -27613,11 +28596,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -27662,11 +28645,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -27746,6 +28729,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//thePlayer.PlayBattleCry( 'BattleCryAttack', 1, true, false );
 		thePlayer.PlayEffect('special_attack_break'); thePlayer.StopEffect('special_attack_break');
 
+		quen_sword_glow();
+
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 50, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
@@ -27793,11 +28778,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			AddTimer('ACS_ResetAnimation', 0.25 , false);
 			
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -27837,11 +28822,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -28381,11 +29366,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -28553,11 +29538,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -28783,11 +29768,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -29107,11 +30092,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -29453,11 +30438,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -29502,11 +30487,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -29551,11 +30536,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				
 				AddTimer('ACS_ResetAnimation', 0.25 , false);
 
-				if ( ACS_GetTargetMode() == 0 )
+				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
 					movementAdjustor.RotateTowards( ticket, actor );  
 				}
-				else if ( ACS_GetTargetMode() == 1 )
+				else if ( ACS_GetTargetMode() == 2 )
 				{
 					if (thePlayer.IsHardLockEnabled())
 					{
@@ -29636,11 +30621,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -29848,11 +30833,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30091,11 +31076,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30252,11 +31237,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30367,11 +31352,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30479,11 +31464,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30626,11 +31611,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30738,11 +31723,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30887,11 +31872,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -30999,11 +31984,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -31083,11 +32068,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -31518,11 +32503,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -31797,11 +32782,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -31836,11 +32821,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -31956,11 +32941,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -32124,11 +33109,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -32464,11 +33449,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -32606,11 +33591,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -32851,11 +33836,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -32889,11 +33874,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -33011,11 +33996,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -33051,7 +34036,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33353,7 +34338,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						break;
 						
 						case 7:
-						Shrink_Geralt(2.25);
+						Shrink_Geralt(2.45);
 						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 						break;
 
@@ -33425,7 +34410,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -33681,7 +34666,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 						
 					case 16:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 
@@ -33771,11 +34756,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -34125,11 +35110,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -34269,11 +35254,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -34310,7 +35295,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34376,7 +35361,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34429,7 +35414,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_combo_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -34495,7 +35480,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -34531,11 +35516,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -34899,11 +35884,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -35133,11 +36118,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -35407,11 +36392,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -35448,7 +36433,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_light_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -35488,7 +36473,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -35535,7 +36520,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				else if (combo_counter_imlerith_light_attack == 2)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 
 					combo_counter_damage += 1;
@@ -35575,7 +36560,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					*/
 
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.45);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_after_death_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -35603,11 +36588,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck (actor) )
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -35927,11 +36912,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -35976,7 +36961,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 3)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -36032,7 +37017,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -36093,7 +37078,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else if (combo_counter_imlerith_special_attack == 3)
 				{
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					
 					combo_counter_damage += 1;
@@ -36149,7 +37134,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					break;
 					
 					case 2:
-					Shrink_Geralt(2.25);
+					Shrink_Geralt(2.5);
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'berserk_attack_combo_3_attacks_02_imlerith_ACS', 'PLAYER_SLOT', settings);
 					break;
 					
@@ -36185,11 +37170,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -36559,11 +37544,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -36873,11 +37858,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37039,11 +38024,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37259,11 +38244,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37392,11 +38377,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37525,11 +38510,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37658,11 +38643,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -37823,11 +38808,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -38237,11 +39222,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -38445,11 +39430,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -38599,11 +39584,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -38753,11 +39738,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -38883,11 +39868,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39013,11 +39998,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39173,11 +40158,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39285,11 +40270,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39517,11 +40502,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39751,11 +40736,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -39911,11 +40896,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40045,11 +41030,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40179,11 +41164,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40339,11 +41324,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40448,11 +41433,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40561,11 +41546,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -40908,11 +41893,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -41315,11 +42300,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -41471,11 +42456,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -41653,11 +42638,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42011,11 +42996,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42167,11 +43152,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42199,11 +43184,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42239,11 +43224,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				UpdateHeading(); movementAdjustor.RotateTowards( ticket, actor );   
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42277,11 +43262,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				UpdateHeading(); movementAdjustor.RotateTowards( ticket, actor );   
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42313,11 +43298,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				UpdateHeading(); movementAdjustor.RotateTowards( ticket, actor );   
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42347,11 +43332,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				UpdateHeading(); movementAdjustor.RotateTowards( ticket, actor );   
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42725,6 +43710,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		//thePlayer.PlayBattleCry( 'BattleCryAttack', 1, true, false );
 		thePlayer.PlayEffect('special_attack_break'); thePlayer.StopEffect('special_attack_break');
 
+		quen_sword_glow();
+
 		ACS_Fast_Attack_Buff();
 
 		ACS_Fast_Attack_Buff_Hit();
@@ -42739,11 +43726,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -42806,11 +43793,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -43011,11 +43998,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -43065,11 +44052,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -43137,11 +44124,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -43184,11 +44171,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{
@@ -43283,11 +44270,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			if ( ACS_GetTargetMode() == 0 )
+			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
 				movementAdjustor.RotateTowards( ticket, actor );  
 			}
-			else if ( ACS_GetTargetMode() == 1 )
+			else if ( ACS_GetTargetMode() == 2 )
 			{
 				if (thePlayer.IsHardLockEnabled())
 				{

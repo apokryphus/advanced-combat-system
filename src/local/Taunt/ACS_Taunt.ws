@@ -1382,7 +1382,13 @@ state Engage in cTaunt
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
@@ -1434,7 +1440,13 @@ state Engage in cTaunt
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
@@ -1614,7 +1626,13 @@ state Engage in cTaunt
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
@@ -1842,7 +1860,13 @@ state Engage in cTaunt
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
@@ -2006,7 +2030,13 @@ state Engage in cTaunt
 		settings.blendIn = 0.5f;
 		settings.blendOut = 0.75f;
 		
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		

@@ -125,9 +125,13 @@ state BruxaRegularDodgeRight_Engage in cBruxaDodgeBackRight
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius();
 		
-		actor = (CActor)( thePlayer.GetTarget() );
-
-		thePlayer.SetSlideTarget ( actor );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 
 		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
 		
@@ -476,7 +480,13 @@ state BruxaDodgeBackRight_Engage in cBruxaDodgeBackRight
 				
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() + ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius();
 		
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		

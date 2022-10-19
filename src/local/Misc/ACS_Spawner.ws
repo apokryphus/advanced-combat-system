@@ -16,9 +16,13 @@ statemachine class cACS_Giant_Lightning_Strike_Single
 
 state Giant_Lightning_Strike_Single_Engage in cACS_Giant_Lightning_Strike_Single
 {
-	private var targetRotationNPC							: EulerAngles;
-	private var actor										: CActor;
-	private var lightning, markerNPC, vfxEnt				: CEntity;
+	private var targetRotationNPC												: EulerAngles;
+	private var actor															: CActor;
+	private var lightning, lightning_2, markerNPC, vfxEnt						: CEntity;
+	private var temp															: CEntityTemplate;
+	private var i, count														: int;
+	private var actorPos, spawnPos												: Vector;
+	private var randAngle, randRange											: float;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -59,16 +63,43 @@ state Giant_Lightning_Strike_Single_Engage in cACS_Giant_Lightning_Strike_Single
 			lightning.PlayEffectSingle('pre_lightning');
 			lightning.PlayEffectSingle('lightning');
 			lightning.DestroyAfter(1.5);
-		
-			actor.AddEffectDefault( EET_HeavyKnockdown, actor, 'ACS_Lightning_Strike' );
 
-			actor.AddEffectDefault( EET_Burning, actor, 'ACS_Lightning_Strike' );
+			lightning_2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\quest\sq209\sq209_lightning_scene.w2ent", true ), actor.GetWorldPosition(), targetRotationNPC );
+			lightning_2.PlayEffectSingle('lighgtning');
+			lightning_2.DestroyAfter(1.5);
+		
+			actor.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'console' );
+
+			actor.AddEffectDefault( EET_Burning, thePlayer, 'console' );
 
 			if (actor.IsOnGround())
 			{
-				markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\quest\q403\meteorite\q403_marker.w2ent", true ), TraceFloor( actor.GetWorldPosition() ), EulerAngles(0,0,0) );
-				markerNPC.StopAllEffectsAfter(3);
-				markerNPC.DestroyAfter(3);
+				temp = (CEntityTemplate)LoadResourceAsync( 
+
+				"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+					
+				, true );
+
+				actorPos = actor.GetWorldPosition();
+				
+				count = 6;
+					
+				for( i = 0; i < count; i += 1 )
+				{
+					randRange = 2.5 + 2.5 * RandF();
+					randAngle = 2 * Pi() * RandF();
+					
+					spawnPos.X = randRange * CosF( randAngle ) + actorPos.X;
+					spawnPos.Y = randRange * SinF( randAngle ) + actorPos.Y;
+					spawnPos.Z = actorPos.Z;
+					
+					markerNPC = theGame.CreateEntity( temp, TraceFloor( spawnPos ), actor.GetWorldRotation() );
+
+					markerNPC.PlayEffectSingle('explosion');
+					markerNPC.DestroyAfter(7);
+				}
+
+				theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( actor.GetWorldPosition() ), 0.5f, 1.0f, 1.5f, 2.5f, 1);
 			}
 		}
 	}
@@ -80,6 +111,255 @@ state Giant_Lightning_Strike_Single_Engage in cACS_Giant_Lightning_Strike_Single
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function ACS_Marker_Fire()
+{
+	var vACS_Marker : cACS_Marker;
+	vACS_Marker = new cACS_Marker in theGame;
+			
+	vACS_Marker.ACS_Marker_Fire_Engage();
+}
+
+function ACS_Marker_Smoke()
+{
+	var vACS_Marker : cACS_Marker;
+	vACS_Marker = new cACS_Marker in theGame;
+			
+	vACS_Marker.ACS_Marker_Smoke_Engage();
+}
+
+function ACS_Marker_Lightning()
+{
+	var vACS_Marker : cACS_Marker;
+	vACS_Marker = new cACS_Marker in theGame;
+			
+	vACS_Marker.ACS_Marker_Lightning_Engage();
+}
+
+statemachine class cACS_Marker
+{
+    function ACS_Marker_Fire_Engage()
+	{
+		this.PushState('ACS_Marker_Fire_Engage');
+	}
+
+	function ACS_Marker_Lightning_Engage()
+	{
+		this.PushState('ACS_Marker_Lightning_Engage');
+	}
+
+	function ACS_Marker_Smoke_Engage()
+	{
+		this.PushState('ACS_Marker_Smoke_Engage');
+	}
+}
+
+state ACS_Marker_Smoke_Engage in cACS_Marker
+{
+	private var markerNPC, markerNPC_2											: CEntity;
+	private var temp															: CEntityTemplate;
+	private var i, count														: int;
+	private var playerPos, spawnPos												: Vector;
+	private var randAngle, randRange											: float;
+
+	event OnEnterState(prevStateName : name)
+	{
+		super.OnEnterState(prevStateName);
+		ACS_Marker_Smoke_Entry();
+	}
+	
+	entry function ACS_Marker_Smoke_Entry()
+	{
+		ACS_Marker_Smoke_Latent();
+	}
+	
+	latent function ACS_Marker_Smoke_Latent()
+	{
+		temp = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\ep1\data\fx\quest\q604\604_11_cellar\ground_smoke_ent.w2ent"
+			
+		, true );
+
+		playerPos = thePlayer.GetWorldPosition();
+
+		markerNPC = theGame.CreateEntity( temp, TraceFloor( playerPos ), thePlayer.GetWorldRotation() );
+
+		markerNPC.PlayEffectSingle('ground_smoke');
+		markerNPC.DestroyAfter(3);
+
+		markerNPC_2 = theGame.CreateEntity( temp, TraceFloor( playerPos ), thePlayer.GetWorldRotation() );
+
+		markerNPC_2.CreateAttachment( thePlayer, , Vector( 0, 0, -1 ) );	
+
+		markerNPC_2.PlayEffectSingle('ground_smoke');
+		markerNPC_2.DestroyAfter(3.5);
+		
+		/*
+		count = 3;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 1.5 + 1.5 * RandF();
+			randAngle = 0.5 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+			
+			markerNPC_2 = theGame.CreateEntity( temp, TraceFloor( spawnPos ), thePlayer.GetWorldRotation() );
+
+			markerNPC_2.PlayEffectSingle('ground_smoke');
+			markerNPC_2.DestroyAfter(7);
+		}
+		*/
+
+	}
+	
+	event OnLeaveState( nextStateName : name ) 
+	{
+		super.OnLeaveState(nextStateName);
+	}
+}
+
+state ACS_Marker_Fire_Engage in cACS_Marker
+{
+	private var markerNPC, markerNPC_2											: CEntity;
+	private var temp															: CEntityTemplate;
+	private var i, count														: int;
+	private var playerPos, playerPosLower, spawnPos								: Vector;
+	private var randAngle, randRange											: float;
+
+	event OnEnterState(prevStateName : name)
+	{
+		super.OnEnterState(prevStateName);
+		ACS_Marker_Fire_Entry();
+	}
+	
+	entry function ACS_Marker_Fire_Entry()
+	{
+		ACS_Marker_Fire_Latent();
+	}
+	
+	latent function ACS_Marker_Fire_Latent()
+	{
+		playerPosLower = thePlayer.GetWorldPosition();
+		playerPosLower.Z -= 6;
+
+		markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( 
+
+			//"dlc\bob\data\fx\quest\q701\q701_02_roof_fire.w2ent"
+
+			"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_hut_fire.w2ent"
+			
+			, true ), playerPosLower, EulerAngles(0,0,0) );
+
+		markerNPC.PlayEffectSingle('fire_01');
+		//markerNPC.PlayEffectSingle('fire_02');
+		markerNPC.DestroyAfter(5);
+
+		temp = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+			
+		, true );
+
+		playerPos = thePlayer.GetWorldPosition();
+		
+		count = 6;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 2.5 + 2.5 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+			
+			markerNPC_2 = theGame.CreateEntity( temp, TraceFloor( spawnPos ), thePlayer.GetWorldRotation() );
+
+			markerNPC_2.PlayEffectSingle('explosion');
+			markerNPC_2.DestroyAfter(7);
+		}
+
+		theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( thePlayer.GetWorldPosition() ), 0.5f, 1.0f, 5.5f, 5.f, 1);
+	}
+	
+	event OnLeaveState( nextStateName : name ) 
+	{
+		super.OnLeaveState(nextStateName);
+	}
+}
+
+state ACS_Marker_Lightning_Engage in cACS_Marker
+{
+	private var markerNPC														: CEntity;
+	private var temp															: CEntityTemplate;
+	private var i, count														: int;
+	private var playerPos, spawnPos												: Vector;
+	private var randAngle, randRange											: float;
+
+	event OnEnterState(prevStateName : name)
+	{
+		super.OnEnterState(prevStateName);
+		ACS_Marker_Lightning_Entry();
+	}
+	
+	entry function ACS_Marker_Lightning_Entry()
+	{
+		ACS_Marker_Lightning_Latent();
+	}
+	
+	latent function ACS_Marker_Lightning_Latent()
+	{
+		/*
+		markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( 
+			"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+			//"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_hut_fire.w2ent"
+			, true ), TraceFloor( thePlayer.GetWorldPosition() ), EulerAngles(0,0,0) );
+		markerNPC.PlayEffectSingle('explosion');
+		//markerNPC.PlayEffectSingle('fire_01');
+		markerNPC.StopAllEffectsAfter(3);
+		markerNPC.DestroyAfter(3);
+		*/
+
+		temp = (CEntityTemplate)LoadResourceAsync( 
+
+		"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+			
+		, true );
+
+		playerPos = thePlayer.GetWorldPosition();
+		
+		count = 6;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 2.5 + 2.5 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+			
+			markerNPC = theGame.CreateEntity( temp, TraceFloor( spawnPos ), thePlayer.GetWorldRotation() );
+
+			markerNPC.PlayEffectSingle('explosion');
+			markerNPC.DestroyAfter(7);
+		}
+
+		theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( thePlayer.GetWorldPosition() ), 0.5f, 1.0f, 1.5f, 5.f, 1);
+	}
+	
+	event OnLeaveState( nextStateName : name ) 
+	{
+		super.OnLeaveState(nextStateName);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function ACS_Giant_Lightning_Strike_Mult()
 {
@@ -99,11 +379,14 @@ statemachine class cACS_Giant_Lightning_Strike_Mult
 
 state Giant_Lightning_Strike_Mult_Engage in cACS_Giant_Lightning_Strike_Mult
 {
-	private var npc     							: CNewNPC;
-	private var actors    							: array<CActor>;
-	private var i         							: int;
-	private var lightning, markerNPC, vfxEnt		: CEntity;
-	private var targetRotationNPC					: EulerAngles;
+	private var npc     														: CNewNPC;
+	private var actors    														: array<CActor>;
+	private var lightning, markerNPC, vfxEnt									: CEntity;
+	private var targetRotationNPC												: EulerAngles;
+	private var temp															: CEntityTemplate;
+	private var i, count														: int;
+	private var actorPos, spawnPos												: Vector;
+	private var randAngle, randRange											: float;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -160,9 +443,32 @@ state Giant_Lightning_Strike_Mult_Engage in cACS_Giant_Lightning_Strike_Mult
 							
 							if (npc.IsOnGround())
 							{
-								markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\quest\q403\meteorite\q403_marker.w2ent", true ), TraceFloor( npc.GetWorldPosition() ), EulerAngles(0,0,0) );
-								markerNPC.StopAllEffectsAfter(1.5);
-								markerNPC.DestroyAfter(1.5);
+								temp = (CEntityTemplate)LoadResourceAsync( 
+
+								"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+									
+								, true );
+
+								actorPos = npc.GetWorldPosition();
+								
+								count = 6;
+									
+								for( i = 0; i < count; i += 1 )
+								{
+									randRange = 2.5 + 2.5 * RandF();
+									randAngle = 2 * Pi() * RandF();
+									
+									spawnPos.X = randRange * CosF( randAngle ) + actorPos.X;
+									spawnPos.Y = randRange * SinF( randAngle ) + actorPos.Y;
+									spawnPos.Z = actorPos.Z;
+									
+									markerNPC = theGame.CreateEntity( temp, TraceFloor( spawnPos ), npc.GetWorldRotation() );
+
+									markerNPC.PlayEffectSingle('explosion');
+									markerNPC.DestroyAfter(7);
+								}
+
+								theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( npc.GetWorldPosition() ), 0.5f, 1.0f, 1.5f, 5.f, 1);
 							}
 						}
 					}
@@ -564,7 +870,7 @@ state ACS_Rock_Pillar_Engage in cACS_Rock_Pillar
 					{
 						if (!npc.HasBuff(EET_HeavyKnockdown))
 						{
-							npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'ACS_Rock_Pillar' );
+							npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'ACS_Rock_Pillar' );
 						}
 					}
 				}
@@ -2666,14 +2972,14 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_SlowdownFrost ) && !actortarget.HasBuff( EET_SlowdownFrost ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_SlowdownFrost, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 
 					}
 					
 					if( RandF() < 0.10 ) 
 					{ 
 						if( !actortarget.IsImmuneToBuff( EET_Frozen ) && !actortarget.HasBuff( EET_Frozen ) ) 
 						{ 
-							actortarget.AddEffectDefault( EET_Frozen, actortarget, 'acs_weapon_effects' ); 
+							actortarget.AddEffectDefault( EET_Frozen, thePlayer, 'acs_weapon_effects' ); 
 						}
 					}
 				}
@@ -2701,14 +3007,14 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_SlowdownFrost ) && !actortarget.HasBuff( EET_SlowdownFrost ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_SlowdownFrost, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 
 					}
 					
 					if( RandF() < 0.25 ) 
 					{ 
 						if( !actortarget.IsImmuneToBuff( EET_Frozen ) && !actortarget.HasBuff( EET_Frozen ) ) 
 						{ 
-							actortarget.AddEffectDefault( EET_Frozen, actortarget, 'acs_weapon_effects' ); 
+							actortarget.AddEffectDefault( EET_Frozen, thePlayer, 'acs_weapon_effects' ); 
 						}
 					}
 				}
@@ -2748,14 +3054,14 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_SlowdownFrost ) && !actortarget.HasBuff( EET_SlowdownFrost ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_SlowdownFrost, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 
 					}
 					
 					if( RandF() < 0.75 ) 
 					{ 
 						if( !actortarget.IsImmuneToBuff( EET_Frozen ) && !actortarget.HasBuff( EET_Frozen ) ) 
 						{ 
-							actortarget.AddEffectDefault( EET_Frozen, actortarget, 'acs_weapon_effects' ); 
+							actortarget.AddEffectDefault( EET_Frozen, thePlayer, 'acs_weapon_effects' ); 
 						}
 					}
 				}
@@ -3021,7 +3327,7 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_Stagger ) && !actortarget.HasBuff( EET_Stagger ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_Stagger, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3048,7 +3354,7 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_Stagger ) && !actortarget.HasBuff( EET_Stagger ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_Stagger, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3087,7 +3393,7 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 				{
 					if( !actortarget.IsImmuneToBuff( EET_Stagger ) && !actortarget.HasBuff( EET_Stagger ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_Stagger, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3326,7 +3632,7 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 				{
 					if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_HeavyKnockdown ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_HeavyKnockdown, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3361,7 +3667,7 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 				{
 					if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_HeavyKnockdown ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_HeavyKnockdown, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3408,7 +3714,7 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 				{
 					if( !actortarget.IsImmuneToBuff( EET_HeavyKnockdown ) && !actortarget.HasBuff( EET_HeavyKnockdown ) ) 
 					{ 
-						actortarget.AddEffectDefault( EET_HeavyKnockdown, actortarget, 'acs_weapon_effects' ); 
+						actortarget.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 
 					}
 				}
 			}	
@@ -3754,7 +4060,7 @@ statemachine class cACS_Beam_Attack
 	{
 		if (thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ))
 		{
-			thePlayer.ForceSetStat( BCS_Stamina,  thePlayer.GetStat( BCS_Stamina ) * 0 );
+			thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 			this.PushState('ACS_Beam_Attack_Engage');
 		}
 	}
@@ -4174,7 +4480,7 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 				}
 				else
 				{
-					dist = 1.5;
+					dist = 1.6;
 					ang =	30;	
 				}
 			}
@@ -4187,12 +4493,12 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				dist = 2.25;
+				dist = 2;
 				ang =	30;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
-				dist = 2;
+				dist = 1.75;
 				ang =	30;
 			}
 		}
@@ -4267,7 +4573,7 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			}
 			else
 			{
-				dist = 1.5;
+				dist = 1.6;
 				ang =	30;
 			}
 		}
@@ -4297,6 +4603,11 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 		else if (ACS_Player_Scale() < 1)
 		{
 			dist -= ACS_Player_Scale() * 0.5;
+		}
+
+		if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			dist += 1;
 		}
 
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
@@ -4499,7 +4810,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 				}
 				else
 				{
-					dist = 1.5;
+					dist = 1.6;
 					ang =	30;	
 				}
 			}
@@ -4512,12 +4823,12 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				dist = 2.25;
+				dist = 2;
 				ang =	30;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
-				dist = 2;
+				dist = 1.75;
 				ang =	30;
 			}
 		}
@@ -4592,7 +4903,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			}
 			else
 			{
-				dist = 1.5;
+				dist = 1.6;
 				ang =	30;
 			}
 		}
@@ -4622,6 +4933,11 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 		else if (ACS_Player_Scale() < 1)
 		{
 			dist -= ACS_Player_Scale() * 0.5;
+		}
+
+		if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			dist += 1;
 		}
 
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
@@ -4924,7 +5240,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if ( thePlayer.HasTag('quen_sword_equipped') )
 									{
-										quen_sword_glow();
+										//quen_sword_glow();
 										quen_sword_trail();
 									}
 									else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -4968,7 +5284,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -4979,7 +5295,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_igni');
 												vfxEnt.DestroyAfter(1.5);	
-												npc.AddEffectDefault( EET_Burning, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Burning, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5016,7 +5332,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5027,7 +5343,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_igni');
 												vfxEnt.DestroyAfter(1.5);	
-												npc.AddEffectDefault( EET_Burning, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Burning, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5063,7 +5379,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5074,7 +5390,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_igni');
 												vfxEnt.DestroyAfter(1.5);	
-												npc.AddEffectDefault( EET_Burning, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Burning, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5114,7 +5430,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5125,7 +5441,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Confusion, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5162,7 +5478,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5173,7 +5489,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Confusion, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5209,7 +5525,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5220,7 +5536,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Confusion, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Confusion, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5260,7 +5576,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5271,7 +5587,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5308,7 +5624,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5319,7 +5635,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5355,7 +5671,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5366,7 +5682,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_aard');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Stagger, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5406,7 +5722,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5417,7 +5733,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_quen');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Paralyzed, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Paralyzed, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5454,7 +5770,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5465,7 +5781,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_quen');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Paralyzed, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Paralyzed, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5501,7 +5817,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5512,7 +5828,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_1\mutation_1_hit.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('mutation_1_hit_quen');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Paralyzed, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Paralyzed, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5552,7 +5868,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5563,7 +5879,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_yrden');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5600,7 +5916,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5611,7 +5927,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_yrden');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5647,7 +5963,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												}
 												else if ( thePlayer.HasTag('quen_sword_equipped') )
 												{
-													quen_sword_glow();
+													//quen_sword_glow();
 													quen_sword_trail();
 												}
 												else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5658,7 +5974,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 												vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_2\mutation_2_critical_force.w2ent", true ), targetPos, targetRot );
 												vfxEnt.PlayEffectSingle('critical_yrden');
 												vfxEnt.DestroyAfter(1.5);
-												npc.AddEffectDefault( EET_Slowdown, npc, 'acs_weapon_passive_effects' ); 							
+												npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_passive_effects' ); 							
 											}
 										}
 									}
@@ -5938,6 +6254,11 @@ state ACS_Caretaker_Drain_Energy_Engage in cACS_Caretaker_Drain_Energy
 			dist -= ACS_Player_Scale() * 0.5;
 		}
 
+		if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			dist += 1;
+		}
+
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
 		pos = thePlayer.GetWorldPosition();
 		pos.Z += 0.8;
@@ -6182,7 +6503,7 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 				}
 				else
 				{
-					dist = 1.5;
+					dist = 1.6;
 					ang =	30;	
 				}
 			}
@@ -6195,12 +6516,12 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			|| ACS_GetWeaponMode() == 2
 			)
 			{
-				dist = 2.25;
+				dist = 2;
 				ang =	30;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
-				dist = 2;
+				dist = 1.75;
 				ang =	30;
 			}
 		}
@@ -6275,7 +6596,7 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			}
 			else
 			{
-				dist = 1.5;
+				dist = 1.6;
 				ang =	30;
 			}
 		}
@@ -6305,6 +6626,11 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 		else if (ACS_Player_Scale() < 1)
 		{
 			dist -= ACS_Player_Scale() * 0.5;
+		}
+
+		if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			dist += 1;
 		}
 
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
@@ -6569,8 +6895,6 @@ state Ready in cACS_Sword_Array
 	
 	entry function Ready_Swords()
 	{
-		//thePlayer.ForceSetStat( BCS_Focus,  thePlayer.GetStat( BCS_Focus ) - (thePlayer.GetStat( BCS_Focus ) * 0.3) );
-
 		settings.blendIn = 0.3f;
 		settings.blendOut = 0.3f;
 
@@ -6805,7 +7129,7 @@ state Fire in cACS_Sword_Array
 	
 	entry function Swords_Fire()
 	{
-		thePlayer.ForceSetStat( BCS_Focus,  thePlayer.GetStat( BCS_Focus ) - (thePlayer.GetStat( BCS_Focus ) * 2/3 ) );
+		thePlayer.DrainFocus( thePlayer.GetStat( BCS_Focus ) * 2/3 );
 
 		settings.blendIn = 0.3f;
 		settings.blendOut = 0.3f;
@@ -7364,7 +7688,7 @@ state ACS_Bats_Summon_Engage in cACS_Bats_Summon
 
 					if( !actortarget.IsImmuneToBuff( EET_Blindness ) && !actortarget.HasBuff( EET_Blindness ) ) 
 					{ 	
-						actortarget.AddEffectDefault( EET_Blindness, actortarget, 'acs_bat_effect' ); 						
+						actortarget.AddEffectDefault( EET_Blindness, thePlayer, 'acs_bat_effect' ); 						
 					}
 				}
 				else
@@ -7376,7 +7700,7 @@ state ACS_Bats_Summon_Engage in cACS_Bats_Summon
 
 					if( !actortarget.IsImmuneToBuff( EET_Bleeding ) && !actortarget.HasBuff( EET_Bleeding ) ) 
 					{ 	
-						actortarget.AddEffectDefault( EET_Bleeding, actortarget, 'acs_bat_effect' ); 						
+						actortarget.AddEffectDefault( EET_Bleeding, thePlayer, 'acs_bat_effect' ); 						
 					}
 				}
 			}
@@ -8534,8 +8858,13 @@ function ACS_Umbral_Slash_End_Damage_Actual()
 	}
 
 	thePlayer.StopEffect('olgierd_energy_blast');
-	thePlayer.PlayEffect('hit_lightning');
-	thePlayer.StopEffect('hit_lightning');
+	
+	thePlayer.PlayEffect('olgierd_energy_blast');
+	thePlayer.PlayEffect('olgierd_energy_blast');
+	thePlayer.PlayEffect('olgierd_energy_blast');
+	thePlayer.PlayEffect('olgierd_energy_blast');
+	thePlayer.PlayEffect('olgierd_energy_blast');
+	thePlayer.StopEffect('olgierd_energy_blast');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -10517,7 +10846,7 @@ state vACS_Dagger_Summon_Engage in cACS_Dagger_Summon
 
 		dagger_1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-		"items\weapons\unique\baron_dagger.w2ent" 
+		"dlc\dlc_acs\data\entities\swords\baron_dagger.w2ent" 
 
 		//"items\quest_items\q105\q105_item__ritual_dagger.w2ent"
 			
@@ -10533,13 +10862,7 @@ state vACS_Dagger_Summon_Engage in cACS_Dagger_Summon
 		dagger_1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
 		dagger_1.AddTag('acs_dagger_1');
 
-		dagger_1.PlayEffectSingle('fire_sparks_trail');
-
-		dagger_1.PlayEffectSingle('runeword1_fire_trail');
-
-		dagger_1.PlayEffectSingle('fast_attack_buff');
-
-		dagger_1.PlayEffectSingle('fast_attack_buff_hit');
+		GetACSWatcher().AddTimer('ACS_Dagger_Summon_Delay', 0.125, false);
 	}
 	
 	event OnLeaveState( nextStateName : name ) 

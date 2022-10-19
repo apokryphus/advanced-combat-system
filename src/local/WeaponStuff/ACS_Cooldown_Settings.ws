@@ -30,19 +30,19 @@ struct ACS_Cooldown_Manager
 	
 	// Change the values below to adjust the cooldowns of specific attacks or skills.
 	
-	default light_attack_cooldown = 0.5;
+	default light_attack_cooldown = 0.4;
 	
-	default heavy_attack_cooldown = 0.5;
+	default heavy_attack_cooldown = 0.4;
 	
-	default guard_attack_cooldown = 0.5;
+	default guard_attack_cooldown = 0.4;
 	
-	default guard_doubletap_attack_cooldown = 0.5;
+	default guard_doubletap_attack_cooldown = 0.4;
 	
-	default special_attack_cooldown = 1;
+	default special_attack_cooldown = 0.8;
 	
 	default bruxa_dash_cooldown = 0.375;	
 	
-	default dodge_cooldown = 0.5;
+	default dodge_cooldown = 0.375;
 	
 	default special_dodge_cooldown = 2;	
 	
@@ -61,14 +61,7 @@ function ACS_can_perform_light_attack(): bool
 
 	property = GetACSWatcher().vACS_Cooldown_Manager;
 
-	if (thePlayer.HasTag('igni_sword_equipped') || thePlayer.HasTag('igni_secondary_sword_equipped'))
-	{
-		return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > (property.light_attack_cooldown + 0.75);
-	}
-	else
-	{
-		return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > property.light_attack_cooldown;
-	}
+	return theGame.GetEngineTimeAsSeconds() - property.last_light_attack_time > property.light_attack_cooldown;
 }
 
 function ACS_refresh_light_attack_cooldown() 
@@ -79,17 +72,7 @@ function ACS_refresh_light_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_light_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_perform_heavy_attack(): bool 
@@ -109,17 +92,7 @@ function ACS_refresh_heavy_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_heavy_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_perform_guard_attack(): bool 
@@ -139,17 +112,7 @@ function ACS_refresh_guard_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_guard_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_perform_guard_doubletap_attack(): bool 
@@ -169,17 +132,7 @@ function ACS_refresh_guard_doubletap_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_guard_doubletap_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_perform_special_attack(): bool 
@@ -199,17 +152,7 @@ function ACS_refresh_special_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_special_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_bruxa_dash(): bool 
@@ -229,17 +172,7 @@ function ACS_refresh_bruxa_dash_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_bruxa_dash_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_dodge(): bool 
@@ -259,12 +192,7 @@ function ACS_refresh_dodge_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_dodge_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_special_dodge(): bool 
@@ -284,12 +212,7 @@ function ACS_refresh_special_dodge_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_special_dodge_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_perform_beam_attack(): bool 
@@ -309,17 +232,7 @@ function ACS_refresh_beam_attack_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_beam_attack_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_shoot_bow_stationary(): bool 
@@ -339,17 +252,7 @@ function ACS_refresh_bow_stationary_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_shoot_bow_stationary_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_shoot_bow_moving(): bool 
@@ -369,17 +272,7 @@ function ACS_refresh_bow_moving_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_shoot_bow_moving_time = theGame.GetEngineTimeAsSeconds();
 
-	if (thePlayer.HasTag('ACS_Size_Adjusted'))
-	{
-		GetACSWatcher().Grow_Geralt_Immediate();
-
-		thePlayer.RemoveTag('ACS_Size_Adjusted');
-	}
-
-	if (thePlayer.HasTag('ACS_Special_Dodge'))
-	{
-		thePlayer.RemoveTag('ACS_Special_Dodge');
-	}
+	ACS_Size_Revert_And_Enable_Interrupt_();
 }
 
 function ACS_can_shoot_crossbow(): bool 
@@ -399,6 +292,11 @@ function ACS_refresh_crossbow_cooldown()
 
 	watcher.vACS_Cooldown_Manager.last_shoot_crossbow_time = theGame.GetEngineTimeAsSeconds();
 
+	ACS_Size_Revert_And_Enable_Interrupt_();
+}
+
+function ACS_Size_Revert_And_Enable_Interrupt_()
+{
 	if (thePlayer.HasTag('ACS_Size_Adjusted'))
 	{
 		GetACSWatcher().Grow_Geralt_Immediate();

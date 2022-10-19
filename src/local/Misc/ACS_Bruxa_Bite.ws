@@ -18,7 +18,7 @@ function ACS_BruxaBiteInit()
 				//&& thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ) 
 				)
 				{
-					thePlayer.ForceSetStat( BCS_Focus,  thePlayer.GetStat( BCS_Focus ) * 0 );
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
 					vBruxaBite.BruxaBite_Engage();
 				}
 				else if ( thePlayer.HasTag('blood_sucking') 

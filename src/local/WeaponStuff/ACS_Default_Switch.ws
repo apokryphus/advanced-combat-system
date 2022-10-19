@@ -110,7 +110,7 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 
 		if (thePlayer.IsInCombat())
 		{
-			//ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
+			ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
 		}
 		else
 		{
@@ -196,7 +196,6 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 				if ( 
 				ACS_GetWeaponMode() == 0
 				|| ACS_GetWeaponMode() == 1
-				|| ACS_GetWeaponMode() == 2
 				)
 				{
 					WeaponSummonAnimation();
@@ -351,20 +350,20 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 		
 		if (thePlayer.IsInCombat())
 		{
-			//ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
+			ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
 		}
 		else
 		{
 			if ( thePlayer.GetCurrentStateName() == 'Combat' ) 
 			{
-				//ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
+				ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
 			}
 			else
 			{
 				if (theInput.GetActionValue('GI_AxisLeftY') != 0
 				|| theInput.GetActionValue('GI_AxisLeftX') != 0)
 				{
-					//ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
+					ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
 				}
 				else
 				{
@@ -519,7 +518,6 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 			if ( 
 			ACS_GetWeaponMode() == 0
 			|| ACS_GetWeaponMode() == 1
-			|| ACS_GetWeaponMode() == 2
 			)
 			{
 				WeaponSummonAnimation();

@@ -716,7 +716,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			if ( 
 			ACS_GetWeaponMode() == 0
 			|| ACS_GetWeaponMode() == 1
-			|| ACS_GetWeaponMode() == 2
 			)
 			{
 				WeaponSummonAnimation();
@@ -1347,7 +1346,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -1381,7 +1380,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -1397,7 +1396,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -1431,7 +1430,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							

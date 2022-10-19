@@ -421,6 +421,234 @@ function ACSGetEquippedSword() : CEntity
 	return blade_temp_ent;
 }
 
+function ACSGetEquippedSwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		ACSGetEquippedSword().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		ACSGetEquippedSword().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		ACSGetEquippedSword().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		ACSGetEquippedSword().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		ACSGetEquippedSword().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		ACSGetEquippedSword().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	ACSGetEquippedSword().PlayEffect('rune_blast_loop');
+}
+
+function ACS_GetRuneLevel( count : int ) : name
+{
+	var runeLvl : name;
+
+	switch ( count )
+	{	
+		case 0:
+		{
+			runeLvl = 'rune_lvl0';
+			break;
+		}
+		case 1:
+		{
+			runeLvl = 'rune_lvl1';
+			break;
+		}
+		case 2:
+		{
+			runeLvl = 'rune_lvl2';
+			break;
+		}
+		case 3:
+		{
+			runeLvl = 'rune_lvl3';
+			break;
+	}
+	}
+	return runeLvl;
+}
+
+function ACS_GetRuneFxName( runeName : name ) : name
+{
+	var runeFx : name;
+	
+	switch ( runeName )
+	{	
+		case 'Rune stribog lesser':
+		case 'Rune stribog':
+		case 'Rune stribog greater':
+		{
+			runeFx = 'rune_stribog';
+			break;
+		}
+		case 'Rune dazhbog lesser':
+		case 'Rune dazhbog':
+		case 'Rune dazhbog greater':
+		{
+			runeFx = 'rune_dazhbog';
+			break;
+		}
+		case 'Rune devana lesser':
+		case 'Rune devana':
+		case 'Rune devana greater':
+		{
+			runeFx = 'rune_devana';
+			break;
+		}
+		case 'Rune zoria lesser':
+		case 'Rune zoria':
+		case 'Rune zoria greater':
+		{
+			runeFx = 'rune_zoria';
+			break;
+		}
+		case 'Rune morana lesser':
+		case 'Rune morana':
+		case 'Rune morana greater':
+		{
+			runeFx = 'rune_morana';
+			break;
+		}
+		case 'Rune triglav lesser':
+		case 'Rune triglav':
+		case 'Rune triglav greater':
+		{
+			runeFx = 'rune_triglav';
+			break;
+		}
+		case 'Rune svarog lesser':
+		case 'Rune svarog':
+		case 'Rune svarog greater':
+		{
+			runeFx = 'rune_svarog';
+			break;
+		}
+		case 'Rune veles lesser':
+		case 'Rune veles':
+		case 'Rune veles greater':
+		{
+			runeFx = 'rune_veles';
+			break;
+		}
+		case 'Rune perun lesser':
+		case 'Rune perun':
+		case 'Rune perun greater':
+		{
+			runeFx = 'rune_perun';
+			break;
+		}
+		case 'Rune elemental lesser':
+		case 'Rune elemental':
+		case 'Rune elemental greater':
+		{
+			runeFx = 'rune_elemental';
+			break;
+		}
+		case 'Rune pierog lesser':
+		case 'Rune pierog':
+		case 'Rune pierog greater':
+		{
+			runeFx = 'rune_pierog';
+			break;
+		}
+		case 'Rune tvarog lesser':
+		case 'Rune tvarog':
+		case 'Rune tvarog greater':
+		{
+			runeFx = 'rune_tvarog';
+			break;
+		}
+	}
+	return runeFx;
+}
+
+function ACS_GetEnchantmentFxName( runeName : name ) : name
+{
+	var enchantmentFx : name;
+	
+	switch ( runeName )
+	{	
+		case 'Runeword 1':
+		{
+			enchantmentFx = 'runeword_replenishment';
+			break;
+		}
+		case 'Runeword 2':
+		{
+			enchantmentFx = 'runeword_severance';
+			break;
+		}
+		case 'Runeword 4':
+		{
+			enchantmentFx = 'runeword_invigoration';
+			break;
+		}
+		case 'Runeword 5':
+		{
+			enchantmentFx = 'runeword_preservation';
+			break;
+		}
+		case 'Runeword 6':
+		{
+			enchantmentFx = 'runeword_dumplings';
+			break;
+		}
+		case 'Runeword 7':
+		{
+			enchantmentFx = 'runeword_exhaustion';
+			break;
+		}
+		case 'Runeword 8':
+		{
+			enchantmentFx = 'runeword_placation';
+			break;
+		}
+		case 'Runeword 10':
+		{
+			enchantmentFx = 'runeword_rejuvenation';
+			break;
+		}
+		case 'Runeword 11':
+		{
+			enchantmentFx = 'runeword_prolongation';
+			break;
+		}
+		case 'Runeword 12':
+		{
+			enchantmentFx = 'runeword_elation';
+			break;
+		}
+	}
+	return enchantmentFx;
+}
+
 function ACS_Vampire_Arms_1_Get() : CEntity
 {
 	var arms 			 : CEntity;
@@ -524,6 +752,8 @@ function ACSStopEquippedSwordEffects()
 	ACSGetEquippedSword().StopEffect('quen_power');
 
 	ACSGetEquippedSword().StopEffect('runeword_quen');
+
+	ACSGetEquippedSwordUpdateEnhancements();
 }
 
 function ACSGetEquippedSwordPlayEffects()
@@ -581,6 +811,8 @@ function igni_sword_summon()
 	ACSGetEquippedSword().StopEffect('fire_sparks_trail');
 
 	ACSGetEquippedSword().StopEffect('runeword1_fire_trail');
+
+	ACSGetEquippedSwordUpdateEnhancements();
 }
 
 function igni_secondary_sword_summon()
@@ -600,9 +832,111 @@ function igni_secondary_sword_summon()
 	ACSGetEquippedSword().StopEffect('fire_sparks_trail');
 
 	ACSGetEquippedSword().StopEffect('runeword1_fire_trail');
+
+	ACSGetEquippedSwordUpdateEnhancements();
 }
 
 //AXII SWORD EFFECTS//
+
+function ACSAxiiSwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		axii_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		axii_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_sword_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	axii_sword_1().PlayEffect('rune_blast_loop');
+
+	axii_sword_2().PlayEffect('rune_blast_loop');
+
+	axii_sword_3().PlayEffect('rune_blast_loop');
+
+	axii_sword_4().PlayEffect('rune_blast_loop');
+
+	axii_sword_5().PlayEffect('rune_blast_loop');
+}
 
 function axii_sword_stop_effects()
 {
@@ -611,6 +945,8 @@ function axii_sword_stop_effects()
 	axii_sword_3().StopAllEffects();
 	axii_sword_4().StopAllEffects();
 	axii_sword_5().StopAllEffects();
+
+	ACSAxiiSwordUpdateEnhancements();
 }
 
 function axii_sword_trail()
@@ -718,16 +1054,90 @@ function axii_sword_summon()
 	axii_sword_4().PlayEffectSingle('runeword1_fire_trail');
 	axii_sword_5().PlayEffectSingle('runeword1_fire_trail');
 
-	//axii_sword_stop_effects();
+	ACSAxiiSwordUpdateEnhancements();
 }
 
 //AXII SECONDARY SWORD EFFECTS//
+
+function ACSAxiiSecondarySwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		axii_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		axii_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		axii_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		axii_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		axii_secondary_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	axii_secondary_sword_1().PlayEffect('rune_blast_loop');
+
+	axii_secondary_sword_2().PlayEffect('rune_blast_loop');
+
+	axii_secondary_sword_3().PlayEffect('rune_blast_loop');
+}
 
 function axii_secondary_sword_stop_effects()
 {
 	axii_secondary_sword_1().StopAllEffects();
 	axii_secondary_sword_2().StopAllEffects();
 	axii_secondary_sword_3().StopAllEffects();
+
+	ACSAxiiSecondarySwordUpdateEnhancements();
 }
 
 function axii_secondary_sword_trail()
@@ -809,23 +1219,142 @@ function axii_secondary_sword_summon()
 	axii_secondary_sword_2().PlayEffectSingle('runeword1_fire_trail');
 	axii_secondary_sword_3().PlayEffectSingle('runeword1_fire_trail');
 
-	//axii_secondary_sword_stop_effects();
+	ACSAxiiSecondarySwordUpdateEnhancements();
 }
 
 //QUEN SWORD EFFECTS//
+
+function ACSQuenSwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		quen_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		quen_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	quen_sword_1().PlayEffect('rune_blast_loop');
+
+	quen_sword_2().PlayEffect('rune_blast_loop');
+
+	quen_sword_3().PlayEffect('rune_blast_loop');
+}
 
 function quen_sword_stop_effects()
 {
 	quen_sword_1().StopAllEffects();
 	quen_sword_2().StopAllEffects();
 	quen_sword_3().StopAllEffects();
+
+	ACSQuenSwordUpdateEnhancements();
+
+	if (quen_sword_1().HasTag('quen_sword_upgraded_1'))
+	{
+		quen_sword_1().PlayEffectSingle('special_attack');
+		quen_sword_2().PlayEffectSingle('special_attack');
+		quen_sword_3().PlayEffectSingle('special_attack');
+
+		quen_sword_1().PlayEffectSingle('special_attack_ready');
+		quen_sword_2().PlayEffectSingle('special_attack_ready');
+		quen_sword_3().PlayEffectSingle('special_attack_ready');
+	}
+	else if (quen_sword_1().HasTag('quen_sword_upgraded_2'))
+	{
+		quen_sword_1().PlayEffectSingle('special_attack');
+		quen_sword_2().PlayEffectSingle('special_attack');
+		quen_sword_3().PlayEffectSingle('special_attack');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+	}
 }
 
 function quen_sword_glow()
 {	
-	if (thePlayer.IsWeaponHeld( 'steelsword' ))
-	{
-		quen_sword_stop_effects();
+	//if (thePlayer.IsWeaponHeld( 'steelsword' ))
+	//{
+		//quen_sword_stop_effects();
+
+		quen_sword_1().StopEffect('pre_special_attack_loop');
+		quen_sword_2().StopEffect('pre_special_attack_loop');
+		quen_sword_3().StopEffect('pre_special_attack_loop');
+		
+		quen_sword_1().StopEffect('special_attack_trail');
+		quen_sword_2().StopEffect('special_attack_trail');
+		quen_sword_3().StopEffect('special_attack_trail');
 		
 		quen_sword_1().PlayEffectSingle('pre_special_attack_loop');
 		quen_sword_2().PlayEffectSingle('pre_special_attack_loop');
@@ -835,12 +1364,83 @@ function quen_sword_glow()
 		quen_sword_2().PlayEffectSingle('special_attack_trail');
 		quen_sword_3().PlayEffectSingle('special_attack_trail');
 
-		ACSGetEquippedSword().PlayEffectSingle('pre_special_attack_loop');
-		ACSGetEquippedSword().StopEffect('pre_special_attack_loop');
+		if (quen_sword_1().HasTag('quen_sword_upgraded_1'))
+		{
+			quen_sword_1().StopEffect('special_attack');
+			quen_sword_2().StopEffect('special_attack');
+			quen_sword_3().StopEffect('special_attack');
 
-		ACSGetEquippedSword().PlayEffectSingle('special_attack_trail');
-		ACSGetEquippedSword().StopEffect('special_attack_trail');
-	}
+			quen_sword_1().StopEffect('special_attack_ready');
+			quen_sword_2().StopEffect('special_attack_ready');
+			quen_sword_3().StopEffect('special_attack_ready');
+
+			quen_sword_1().PlayEffectSingle('special_attack');
+			quen_sword_2().PlayEffectSingle('special_attack');
+			quen_sword_3().PlayEffectSingle('special_attack');
+
+			quen_sword_1().PlayEffectSingle('special_attack_ready');
+			quen_sword_2().PlayEffectSingle('special_attack_ready');
+			quen_sword_3().PlayEffectSingle('special_attack_ready');
+		}
+		else if (quen_sword_1().HasTag('quen_sword_upgraded_2'))
+		{
+			quen_sword_1().StopEffect('special_attack');
+			quen_sword_2().StopEffect('special_attack');
+			quen_sword_3().StopEffect('special_attack');
+
+			quen_sword_1().StopEffect('special_attack_charged');
+			quen_sword_2().StopEffect('special_attack_charged');
+			quen_sword_3().StopEffect('special_attack_charged');
+
+			quen_sword_1().PlayEffectSingle('special_attack');
+			quen_sword_2().PlayEffectSingle('special_attack');
+			quen_sword_3().PlayEffectSingle('special_attack');
+
+			quen_sword_1().PlayEffect('special_attack_charged');
+			quen_sword_2().PlayEffect('special_attack_charged');
+			quen_sword_3().PlayEffect('special_attack_charged');
+
+			quen_sword_1().PlayEffect('special_attack_charged');
+			quen_sword_2().PlayEffect('special_attack_charged');
+			quen_sword_3().PlayEffect('special_attack_charged');
+
+			quen_sword_1().PlayEffect('special_attack_charged');
+			quen_sword_2().PlayEffect('special_attack_charged');
+			quen_sword_3().PlayEffect('special_attack_charged');
+
+			quen_sword_1().PlayEffect('special_attack_charged');
+			quen_sword_2().PlayEffect('special_attack_charged');
+			quen_sword_3().PlayEffect('special_attack_charged');
+
+			quen_sword_1().PlayEffect('special_attack_charged');
+			quen_sword_2().PlayEffect('special_attack_charged');
+			quen_sword_3().PlayEffect('special_attack_charged');
+		}
+		
+		if (ACS_GetWeaponMode() == 3)
+		{
+			thePlayer.SoundEvent('qu_item_olgierd_sabre_pre_attack_fx');
+			
+			ACSGetEquippedSword().PlayEffectSingle('pre_special_attack_loop');
+			ACSGetEquippedSword().StopEffect('pre_special_attack_loop');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack_trail');
+			ACSGetEquippedSword().StopEffect('special_attack_trail');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack');
+			ACSGetEquippedSword().StopEffect('special_attack');
+
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().StopEffect('special_attack_charged');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack_ready');
+			ACSGetEquippedSword().StopEffect('special_attack_ready');
+		}
+	//}
 }
 
 function quen_sword_trail()
@@ -922,10 +1522,156 @@ function quen_sword_summon()
 	quen_sword_2().PlayEffectSingle('runeword1_fire_trail');
 	quen_sword_3().PlayEffectSingle('runeword1_fire_trail');
 
-	//quen_sword_stop_effects();
+	ACSQuenSwordUpdateEnhancements();
+
+	if (quen_sword_1().HasTag('quen_sword_upgraded_1'))
+	{
+		quen_sword_1().PlayEffectSingle('special_attack');
+		quen_sword_2().PlayEffectSingle('special_attack');
+		quen_sword_3().PlayEffectSingle('special_attack');
+
+		quen_sword_1().PlayEffectSingle('special_attack_ready');
+		quen_sword_2().PlayEffectSingle('special_attack_ready');
+		quen_sword_3().PlayEffectSingle('special_attack_ready');
+	}
+	else if (quen_sword_1().HasTag('quen_sword_upgraded_2'))
+	{
+		quen_sword_1().PlayEffectSingle('special_attack');
+		quen_sword_2().PlayEffectSingle('special_attack');
+		quen_sword_3().PlayEffectSingle('special_attack');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+
+		quen_sword_1().PlayEffect('special_attack_charged');
+		quen_sword_2().PlayEffect('special_attack_charged');
+		quen_sword_3().PlayEffect('special_attack_charged');
+	}
 }
 
 //QUEN SECONDARY SWORD EFFECTS//
+
+function ACSQuenSecondarySwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		quen_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_6().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		quen_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_6().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		quen_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_6().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		quen_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		quen_secondary_sword_6().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	quen_secondary_sword_1().PlayEffect('rune_blast_loop');
+	quen_secondary_sword_2().PlayEffect('rune_blast_loop');
+	quen_secondary_sword_3().PlayEffect('rune_blast_loop');
+	quen_secondary_sword_4().PlayEffect('rune_blast_loop');
+	quen_secondary_sword_5().PlayEffect('rune_blast_loop');
+	quen_secondary_sword_6().PlayEffect('rune_blast_loop');
+}
 
 function quen_secondary_sword_stop_effects()
 {
@@ -935,6 +1681,8 @@ function quen_secondary_sword_stop_effects()
 	quen_secondary_sword_4().StopAllEffects();
 	quen_secondary_sword_5().StopAllEffects();
 	quen_secondary_sword_6().StopAllEffects();
+
+	ACSQuenSecondarySwordUpdateEnhancements();
 }
 
 function quen_secondary_sword_trail()
@@ -1062,10 +1810,145 @@ function quen_secondary_sword_summon()
 	quen_secondary_sword_5().PlayEffectSingle('runeword1_fire_trail');
 	quen_secondary_sword_6().PlayEffectSingle('runeword1_fire_trail');
 
-	//quen_secondary_sword_stop_effects();
+	ACSQuenSecondarySwordUpdateEnhancements();
 }
 
 //AARD SWORD EFFECTS//
+
+function ACSAardSwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		aard_blade_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_6().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_7().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_8().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_6().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_7().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_blade_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_8().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		aard_blade_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_6().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_7().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_8().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_6().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_7().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_blade_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_blade_8().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	aard_blade_1().PlayEffect('rune_blast_loop');
+	aard_blade_2().PlayEffect('rune_blast_loop');
+	aard_blade_3().PlayEffect('rune_blast_loop');
+	aard_blade_4().PlayEffect('rune_blast_loop');
+	aard_blade_5().PlayEffect('rune_blast_loop');
+	aard_blade_6().PlayEffect('rune_blast_loop');
+	aard_blade_7().PlayEffect('rune_blast_loop');
+	aard_blade_8().PlayEffect('rune_blast_loop');
+}
 
 function aard_blade_stop_effects()
 {
@@ -1077,6 +1960,8 @@ function aard_blade_stop_effects()
 	aard_blade_6().StopAllEffects();
 	aard_blade_7().StopAllEffects();
 	aard_blade_8().StopAllEffects();
+
+	ACSAardSwordUpdateEnhancements();
 }
 
 function aard_blade_trail()
@@ -1223,10 +2108,145 @@ function aard_sword_summon()
 	aard_blade_7().PlayEffectSingle('runeword1_fire_trail');
 	aard_blade_8().PlayEffectSingle('runeword1_fire_trail');
 
-	//aard_blade_stop_effects();
+	ACSAardSwordUpdateEnhancements();
 }
 
 //AARD SECONDARY SWORD EFFECTS//
+
+function ACSAardSecondarySwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		aard_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_6().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_7().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_8().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_6().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_7().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		aard_secondary_sword_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_8().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		aard_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_6().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_7().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_8().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_6().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_7().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		aard_secondary_sword_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		aard_secondary_sword_8().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	aard_secondary_sword_1().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_2().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_3().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_4().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_5().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_6().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_7().PlayEffect('rune_blast_loop');
+	aard_secondary_sword_8().PlayEffect('rune_blast_loop');
+}
 
 function aard_secondary_sword_stop_effects()
 {
@@ -1238,6 +2258,8 @@ function aard_secondary_sword_stop_effects()
 	aard_secondary_sword_6().StopAllEffects();
 	aard_secondary_sword_7().StopAllEffects();
 	aard_secondary_sword_8().StopAllEffects();
+
+	ACSAardSecondarySwordUpdateEnhancements();
 }
 
 function aard_secondary_sword_trail()
@@ -1384,10 +2406,145 @@ function aard_secondary_sword_summon()
 	aard_secondary_sword_7().PlayEffectSingle('runeword1_fire_trail');
 	aard_secondary_sword_8().PlayEffectSingle('runeword1_fire_trail');
 
-	//aard_secondary_sword_stop_effects();
+	ACSAardSecondarySwordUpdateEnhancements();
 }
 
 //YRDEN SWORD EFFECTS//
+
+function ACSYrdenSwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		yrden_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_6().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_7().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_8().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_6().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_7().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_sword_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_8().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		yrden_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_6().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_7().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_7().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_8().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_8().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_6().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_7().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_7().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_sword_8().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_sword_8().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	yrden_sword_1().PlayEffect('rune_blast_loop');
+	yrden_sword_2().PlayEffect('rune_blast_loop');
+	yrden_sword_3().PlayEffect('rune_blast_loop');
+	yrden_sword_4().PlayEffect('rune_blast_loop');
+	yrden_sword_5().PlayEffect('rune_blast_loop');
+	yrden_sword_6().PlayEffect('rune_blast_loop');
+	yrden_sword_7().PlayEffect('rune_blast_loop');
+	yrden_sword_8().PlayEffect('rune_blast_loop');
+}
 
 function yrden_sword_stop_effects()
 {
@@ -1399,6 +2556,8 @@ function yrden_sword_stop_effects()
 	yrden_sword_6().StopAllEffects();
 	yrden_sword_7().StopAllEffects();
 	yrden_sword_8().StopAllEffects();
+
+	ACSYrdenSwordUpdateEnhancements();
 }
 
 function yrden_sword_effect_small()
@@ -1700,10 +2859,119 @@ function yrden_sword_summon()
 	yrden_sword_7().PlayEffectSingle('runeword1_fire_trail');
 	yrden_sword_8().PlayEffectSingle('runeword1_fire_trail');
 
-	//yrden_sword_stop_effects();
+	ACSYrdenSwordUpdateEnhancements();
 }
 
 //YRDEN SECONDARY SWORD EFFECTS//
+
+function ACSYrdenSecondarySwordUpdateEnhancements()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		yrden_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_1().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_2().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_3().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_4().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_5().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_6().StopEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_1().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_2().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_3().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_4().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_5().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		yrden_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_6().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		yrden_secondary_sword_1().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_1().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_2().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_2().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_3().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_3().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_4().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_4().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_5().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_5().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_6().StopEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_6().StopEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_1().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_1().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_2().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_2().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_3().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_3().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_4().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_4().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_5().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_5().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		yrden_secondary_sword_6().PlayEffect( ACS_GetRuneLevel( runeCount ) );
+		yrden_secondary_sword_6().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+	}
+
+	yrden_secondary_sword_1().PlayEffect('rune_blast_loop');
+	yrden_secondary_sword_2().PlayEffect('rune_blast_loop');
+	yrden_secondary_sword_3().PlayEffect('rune_blast_loop');
+	yrden_secondary_sword_4().PlayEffect('rune_blast_loop');
+	yrden_secondary_sword_5().PlayEffect('rune_blast_loop');
+	yrden_secondary_sword_6().PlayEffect('rune_blast_loop');
+}
 
 function yrden_secondary_sword_stop_effects()
 {
@@ -1713,6 +2981,8 @@ function yrden_secondary_sword_stop_effects()
 	yrden_secondary_sword_4().StopAllEffects();
 	yrden_secondary_sword_5().StopAllEffects();
 	yrden_secondary_sword_6().StopAllEffects();
+
+	ACSYrdenSecondarySwordUpdateEnhancements();
 }
 
 function yrden_secondary_sword_trail()
@@ -1834,143 +3104,228 @@ function yrden_secondary_sword_summon()
 	yrden_secondary_sword_5().PlayEffectSingle('runeword1_fire_trail');
 	yrden_secondary_sword_6().PlayEffectSingle('runeword1_fire_trail');
 
-	//yrden_secondary_sword_stop_effects();
+	ACSYrdenSecondarySwordUpdateEnhancements();
 }
 
 function ACS_Light_Attack_Extended_Trail()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (ACS_GetWeaponMode() == 0
+	|| ACS_GetWeaponMode() == 1
+	|| ACS_GetWeaponMode() == 2)
 	{
-		axii_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		axii_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		axii_sword_3().PlayEffectSingle('light_trail_extended_fx');
-		axii_sword_4().PlayEffectSingle('light_trail_extended_fx');
-		axii_sword_5().PlayEffectSingle('light_trail_extended_fx');
+		if (thePlayer.HasTag('axii_sword_equipped'))
+		{
+			axii_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			axii_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			axii_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			axii_sword_4().PlayEffectSingle('light_trail_extended_fx');
+			axii_sword_5().PlayEffectSingle('light_trail_extended_fx');
 
-		axii_sword_1().StopEffect('light_trail_extended_fx');
-		axii_sword_2().StopEffect('light_trail_extended_fx');
-		axii_sword_3().StopEffect('light_trail_extended_fx');
-		axii_sword_4().StopEffect('light_trail_extended_fx');
-		axii_sword_5().StopEffect('light_trail_extended_fx');
-	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
-	{ 
-		axii_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		axii_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		axii_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			axii_sword_1().StopEffect('light_trail_extended_fx');
+			axii_sword_2().StopEffect('light_trail_extended_fx');
+			axii_sword_3().StopEffect('light_trail_extended_fx');
+			axii_sword_4().StopEffect('light_trail_extended_fx');
+			axii_sword_5().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+		{ 
+			axii_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			axii_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			axii_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
 
-		axii_secondary_sword_1().StopEffect('light_trail_extended_fx');
-		axii_secondary_sword_2().StopEffect('light_trail_extended_fx');
-		axii_secondary_sword_3().StopEffect('light_trail_extended_fx');
+			axii_secondary_sword_1().StopEffect('light_trail_extended_fx');
+			axii_secondary_sword_2().StopEffect('light_trail_extended_fx');
+			axii_secondary_sword_3().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('quen_sword_equipped'))
+		{
+			quen_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			quen_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			quen_sword_3().PlayEffectSingle('light_trail_extended_fx');
+
+			quen_sword_1().StopEffect('light_trail_extended_fx');
+			quen_sword_2().StopEffect('light_trail_extended_fx');
+			quen_sword_3().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+		{
+			quen_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			quen_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			quen_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			quen_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
+			quen_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
+			quen_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
+
+			quen_secondary_sword_1().StopEffect('light_trail_extended_fx');
+			quen_secondary_sword_2().StopEffect('light_trail_extended_fx');
+			quen_secondary_sword_3().StopEffect('light_trail_extended_fx');
+			quen_secondary_sword_4().StopEffect('light_trail_extended_fx');
+			quen_secondary_sword_5().StopEffect('light_trail_extended_fx');
+			quen_secondary_sword_6().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('aard_sword_equipped'))
+		{
+			aard_blade_1().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_2().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_3().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_4().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_5().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_6().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_7().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_8().PlayEffectSingle('light_trail_extended_fx');
+
+			aard_blade_1().StopEffect('light_trail_extended_fx');
+			aard_blade_2().StopEffect('light_trail_extended_fx');
+			aard_blade_3().StopEffect('light_trail_extended_fx');
+			aard_blade_4().StopEffect('light_trail_extended_fx');
+			aard_blade_5().StopEffect('light_trail_extended_fx');
+			aard_blade_6().StopEffect('light_trail_extended_fx');
+			aard_blade_7().StopEffect('light_trail_extended_fx');
+			aard_blade_8().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+		{
+			aard_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_7().PlayEffectSingle('light_trail_extended_fx');
+			aard_secondary_sword_8().PlayEffectSingle('light_trail_extended_fx');
+
+			aard_secondary_sword_1().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_2().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_3().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_4().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_5().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_6().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_7().StopEffect('light_trail_extended_fx');
+			aard_secondary_sword_8().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('yrden_sword_equipped'))
+		{
+			yrden_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_4().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_5().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_6().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_7().PlayEffectSingle('light_trail_extended_fx');
+			yrden_sword_8().PlayEffectSingle('light_trail_extended_fx');
+
+			yrden_sword_1().StopEffect('light_trail_extended_fx');
+			yrden_sword_2().StopEffect('light_trail_extended_fx');
+			yrden_sword_3().StopEffect('light_trail_extended_fx');
+			yrden_sword_4().StopEffect('light_trail_extended_fx');
+			yrden_sword_5().StopEffect('light_trail_extended_fx');
+			yrden_sword_6().StopEffect('light_trail_extended_fx');
+			yrden_sword_7().StopEffect('light_trail_extended_fx');
+			yrden_sword_8().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+		{
+			yrden_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
+			yrden_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
+			yrden_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
+			yrden_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
+			yrden_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
+			yrden_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
+
+			yrden_secondary_sword_1().StopEffect('light_trail_extended_fx');
+			yrden_secondary_sword_2().StopEffect('light_trail_extended_fx');
+			yrden_secondary_sword_3().StopEffect('light_trail_extended_fx');
+			yrden_secondary_sword_4().StopEffect('light_trail_extended_fx');
+			yrden_secondary_sword_5().StopEffect('light_trail_extended_fx');
+			yrden_secondary_sword_6().StopEffect('light_trail_extended_fx');
+		}
 	}
-	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	else
 	{
-		quen_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		quen_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		quen_sword_3().PlayEffectSingle('light_trail_extended_fx');
+		if (thePlayer.HasTag('axii_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
-		quen_sword_1().StopEffect('light_trail_extended_fx');
-		quen_sword_2().StopEffect('light_trail_extended_fx');
-		quen_sword_3().StopEffect('light_trail_extended_fx');
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+		{ 
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('quen_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('aard_sword_equipped'))
+		{
+			aard_blade_1().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_2().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_3().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_4().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_5().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_6().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_7().PlayEffectSingle('light_trail_extended_fx');
+			aard_blade_8().PlayEffectSingle('light_trail_extended_fx');
+
+			aard_blade_1().StopEffect('light_trail_extended_fx');
+			aard_blade_2().StopEffect('light_trail_extended_fx');
+			aard_blade_3().StopEffect('light_trail_extended_fx');
+			aard_blade_4().StopEffect('light_trail_extended_fx');
+			aard_blade_5().StopEffect('light_trail_extended_fx');
+			aard_blade_6().StopEffect('light_trail_extended_fx');
+			aard_blade_7().StopEffect('light_trail_extended_fx');
+			aard_blade_8().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('yrden_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
+		
+		if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+		{
+			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
+
+			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
+		}
 	}
-	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+
+	if (!thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped'))
 	{
-		quen_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		quen_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		quen_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
-		quen_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
-		quen_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
-		quen_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
+		ACS_Dagger().PlayEffectSingle('light_trail_extended_fx');
 
-		quen_secondary_sword_1().StopEffect('light_trail_extended_fx');
-		quen_secondary_sword_2().StopEffect('light_trail_extended_fx');
-		quen_secondary_sword_3().StopEffect('light_trail_extended_fx');
-		quen_secondary_sword_4().StopEffect('light_trail_extended_fx');
-		quen_secondary_sword_5().StopEffect('light_trail_extended_fx');
-		quen_secondary_sword_6().StopEffect('light_trail_extended_fx');
-	}
-	
-	if (thePlayer.HasTag('aard_sword_equipped'))
-	{
-		aard_blade_1().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_2().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_3().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_4().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_5().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_6().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_7().PlayEffectSingle('light_trail_extended_fx');
-		aard_blade_8().PlayEffectSingle('light_trail_extended_fx');
-
-		aard_blade_1().StopEffect('light_trail_extended_fx');
-		aard_blade_2().StopEffect('light_trail_extended_fx');
-		aard_blade_3().StopEffect('light_trail_extended_fx');
-		aard_blade_4().StopEffect('light_trail_extended_fx');
-		aard_blade_5().StopEffect('light_trail_extended_fx');
-		aard_blade_6().StopEffect('light_trail_extended_fx');
-		aard_blade_7().StopEffect('light_trail_extended_fx');
-		aard_blade_8().StopEffect('light_trail_extended_fx');
-	}
-	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
-	{
-		aard_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_7().PlayEffectSingle('light_trail_extended_fx');
-		aard_secondary_sword_8().PlayEffectSingle('light_trail_extended_fx');
-
-		aard_secondary_sword_1().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_2().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_3().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_4().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_5().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_6().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_7().StopEffect('light_trail_extended_fx');
-		aard_secondary_sword_8().StopEffect('light_trail_extended_fx');
-	}
-	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
-	{
-		yrden_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_3().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_4().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_5().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_6().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_7().PlayEffectSingle('light_trail_extended_fx');
-		yrden_sword_8().PlayEffectSingle('light_trail_extended_fx');
-
-		yrden_sword_1().StopEffect('light_trail_extended_fx');
-		yrden_sword_2().StopEffect('light_trail_extended_fx');
-		yrden_sword_3().StopEffect('light_trail_extended_fx');
-		yrden_sword_4().StopEffect('light_trail_extended_fx');
-		yrden_sword_5().StopEffect('light_trail_extended_fx');
-		yrden_sword_6().StopEffect('light_trail_extended_fx');
-		yrden_sword_7().StopEffect('light_trail_extended_fx');
-		yrden_sword_8().StopEffect('light_trail_extended_fx');
-	}
-	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
-	{
-		yrden_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
-		yrden_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
-		yrden_secondary_sword_3().PlayEffectSingle('light_trail_extended_fx');
-		yrden_secondary_sword_4().PlayEffectSingle('light_trail_extended_fx');
-		yrden_secondary_sword_5().PlayEffectSingle('light_trail_extended_fx');
-		yrden_secondary_sword_6().PlayEffectSingle('light_trail_extended_fx');
-
-		yrden_secondary_sword_1().StopEffect('light_trail_extended_fx');
-		yrden_secondary_sword_2().StopEffect('light_trail_extended_fx');
-		yrden_secondary_sword_3().StopEffect('light_trail_extended_fx');
-		yrden_secondary_sword_4().StopEffect('light_trail_extended_fx');
-		yrden_secondary_sword_5().StopEffect('light_trail_extended_fx');
-		yrden_secondary_sword_6().StopEffect('light_trail_extended_fx');
-	}
+		ACS_Dagger().StopEffect('light_trail_extended_fx');
+	}	
 }
 	
 function ACS_Heavy_Attack_Extended_Trail()
@@ -1989,7 +3344,8 @@ function ACS_Heavy_Attack_Extended_Trail()
 		axii_sword_4().StopEffect('heavy_trail_extended_fx');
 		axii_sword_5().StopEffect('heavy_trail_extended_fx');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+
+	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		axii_secondary_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -2106,6 +3462,13 @@ function ACS_Heavy_Attack_Extended_Trail()
 		yrden_secondary_sword_4().StopEffect('heavy_trail_extended_fx');
 		yrden_secondary_sword_5().StopEffect('heavy_trail_extended_fx');
 		yrden_secondary_sword_6().StopEffect('heavy_trail_extended_fx');
+	}
+
+	if (!thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped'))
+	{
+		ACS_Dagger().PlayEffectSingle('light_trail_extended_fx');
+
+		ACS_Dagger().StopEffect('light_trail_extended_fx');
 	}
 }
 
@@ -2243,6 +3606,10 @@ function ACS_Light_Attack_Trail()
 		yrden_secondary_sword_5().StopEffect('light_trail_fx');
 		yrden_secondary_sword_6().StopEffect('light_trail_fx');
 	}
+
+	ACS_Dagger().PlayEffectSingle('light_trail_fx');
+
+	ACS_Dagger().StopEffect('light_trail_fx');
 }
 
 function ACS_Heavy_Attack_Trail()
@@ -2261,7 +3628,8 @@ function ACS_Heavy_Attack_Trail()
 		axii_sword_4().StopEffect('heavy_trail_fx');
 		axii_sword_5().StopEffect('heavy_trail_fx');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+
+	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('heavy_trail_fx');
 		axii_secondary_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -2379,6 +3747,10 @@ function ACS_Heavy_Attack_Trail()
 		yrden_secondary_sword_5().StopEffect('heavy_trail_fx');
 		yrden_secondary_sword_6().StopEffect('heavy_trail_fx');
 	}
+
+	ACS_Dagger().PlayEffectSingle('heavy_trail_fx');
+
+	ACS_Dagger().StopEffect('heavy_trail_fx');
 }
 
 function ACS_Wraith_Attack_Trail()
@@ -2397,7 +3769,8 @@ function ACS_Wraith_Attack_Trail()
 		axii_sword_4().StopEffect('wraith_trail');
 		axii_sword_5().StopEffect('wraith_trail');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+
+	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('wraith_trail');
 		axii_secondary_sword_2().PlayEffectSingle('wraith_trail');
@@ -2515,6 +3888,10 @@ function ACS_Wraith_Attack_Trail()
 		yrden_secondary_sword_5().StopEffect('wraith_trail');
 		yrden_secondary_sword_6().StopEffect('wraith_trail');
 	}
+
+	ACS_Dagger().PlayEffectSingle('wraith_trail');
+
+	ACS_Dagger().StopEffect('wraith_trail');
 }
 
 function ACS_Fast_Attack_Buff()
@@ -2533,7 +3910,8 @@ function ACS_Fast_Attack_Buff()
 		axii_sword_4().StopEffect('fast_attack_buff');
 		axii_sword_5().StopEffect('fast_attack_buff');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+
+	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('fast_attack_buff');
 		axii_secondary_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -2651,6 +4029,10 @@ function ACS_Fast_Attack_Buff()
 		yrden_secondary_sword_5().StopEffect('fast_attack_buff');
 		yrden_secondary_sword_6().StopEffect('fast_attack_buff');
 	}
+
+	ACS_Dagger().PlayEffectSingle('fast_attack_buff');
+
+	ACS_Dagger().StopEffect('fast_attack_buff');
 }
 
 function ACS_Fast_Attack_Buff_Hit()
@@ -2669,7 +4051,8 @@ function ACS_Fast_Attack_Buff_Hit()
 		axii_sword_4().StopEffect('fast_attack_buff_hit');
 		axii_sword_5().StopEffect('fast_attack_buff_hit');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	
+	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		axii_secondary_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -2787,6 +4170,10 @@ function ACS_Fast_Attack_Buff_Hit()
 		yrden_secondary_sword_5().StopEffect('fast_attack_buff_hit');
 		yrden_secondary_sword_6().StopEffect('fast_attack_buff_hit');
 	}
+
+	ACS_Dagger().PlayEffectSingle('fast_attack_buff_hit');
+
+	ACS_Dagger().StopEffect('fast_attack_buff_hit');
 }
 
 //////////////////////////Ranged/////////////////////////

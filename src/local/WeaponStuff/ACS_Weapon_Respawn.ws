@@ -5413,8 +5413,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
+
+					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5432,41 +5432,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 0;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.025;
-							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword1.AddTag('quen_sword_1');
-					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 10;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.125;
-							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
-				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
-				{
-					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5480,43 +5446,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 10;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.125;
-							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
-					
-					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 20;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.07;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.225;
-							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword3.AddTag('quen_sword_3');
+					sword1.AddTag('quen_sword_upgraded_1');	
 				}
-				else
+				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5529,22 +5465,28 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 							
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
-					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent"
+
+					sword1.AddTag('quen_sword_upgraded_2');	
+				}
+				else
+				{
+					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+				
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
-					attach_rot.Roll = 10;
+					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
+					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.125;
+					attach_vec.Z = 0.025;
 							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
+					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.AddTag('quen_sword_1');
+
+					sword1.AddTag('quen_sword_upgraded_1');	
 				}
 			}
 			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
@@ -5553,14 +5495,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
+					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
+					attach_vec.X = 0;
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
@@ -5571,8 +5513,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
-					
+					"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
+
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
@@ -5584,28 +5526,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 							
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
-					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 10;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.125;
-							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
+
+					sword1.AddTag('quen_sword_upgraded_1');	
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
+					"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5618,44 +5546,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 							
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');	
-					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 10;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.125;
-							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
-		
-					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 20;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.07;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.225;
-							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword3.AddTag('quen_sword_3');
+
+					sword1.AddTag('quen_sword_upgraded_2');	
 				}
 				else
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
+					//"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
+
+					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5668,22 +5568,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 							
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
-					
-					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-					
-					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent"
-					
-					, true), thePlayer.GetWorldPosition() );
-					
-					attach_rot.Roll = 10;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0.025;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.1;
-							
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword2.AddTag('quen_sword_2');
+
+					sword1.AddTag('quen_sword_upgraded_1');	
 				}
 			}
 		}
@@ -5700,8 +5586,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
-			// QUEN SILVER SWORD PATH
-			"dlc\ep1\data\items\weapons\swords\unique\ghost_sabre\ghost_sabre.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
+			"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -5714,26 +5599,28 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_sword_1');
+
+			sword1.AddTag('quen_sword_upgraded_1');	
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-			// QUEN STEEL SWORD PATH
 
-			"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre_curved.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
-				
+			"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
+			
 			, true), thePlayer.GetWorldPosition() );
-				
+			
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
 			attach_rot.Yaw = 0;
 			attach_vec.X = 0;
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.025;
-						
+					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-			sword1.AddTag('quen_sword_1');
+			sword1.AddTag('quen_sword_1');	
+
+			sword1.AddTag('quen_sword_upgraded_1');	
 		}
 	}
 
@@ -6105,7 +5992,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -6139,7 +6026,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -6155,7 +6042,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -6189,7 +6076,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 							
@@ -8999,7 +8886,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9015,7 +8902,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9031,7 +8918,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9047,7 +8934,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					

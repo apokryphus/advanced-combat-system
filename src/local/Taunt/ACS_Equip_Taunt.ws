@@ -44,7 +44,13 @@ state Engage in cEquipTaunt
 		
 		ticket = movementAdjustor.CreateNewRequest( 'ACS_Equip_Taunt_Movement_Adjust' );
 
-		actor = (CActor)( thePlayer.GetTarget() );
+		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			actor = (CActor)( thePlayer.GetTarget() );	
+		else
+		{
+			thePlayer.FindMoveTarget();
+			actor = (CActor)( thePlayer.moveTarget );		
+		}
 			
 		movementAdjustor.AdjustmentDuration( ticket, 0.5 );
 

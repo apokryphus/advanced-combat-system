@@ -43,8 +43,6 @@ function ACS_CombatBehSwitch()
 				ACS_Skele_Destroy();
 
 				ACS_Revenant_Destroy();
-				
-				theGame.GetGameCamera().StopEffect( 'frost' );
 
 				thePlayer.StopEffect('drain_energy');
 
@@ -63,6 +61,8 @@ function ACS_CombatBehSwitch()
 				ACS_RemoveStabbedEntities();
 
 				NPC_Fear_Revert();
+
+				GetACSWatcher().AddTimer('ACS_DetachBehaviorTimer', 2, false);
 
 				IgniBowDestroy();
 				AxiiBowDestroy();
@@ -583,6 +583,21 @@ state BehSwitch_Engage_2 in cBehSwitch
 		if ( !theSound.SoundIsBankLoaded("magic_man_mage.bnk") )
 		{
 			theSound.SoundLoadBank( "magic_man_mage.bnk", false );
+		}
+		
+		if ( !theSound.SoundIsBankLoaded("qu_item_olgierd_sabre.bnk") )
+		{
+			theSound.SoundLoadBank( "qu_item_olgierd_sabre.bnk", false );
+		}
+
+		if ( !theSound.SoundIsBankLoaded("monster_water_mage.bnk") )
+		{
+			theSound.SoundLoadBank( "monster_water_mage.bnk", false );
+		}
+
+		if ( !theSound.SoundIsBankLoaded("monster_dracolizard.bnk") )
+		{
+			theSound.SoundLoadBank( "monster_dracolizard.bnk", false );
 		}
 
 		RestoreStuff();
@@ -6742,5 +6757,64 @@ state BehSwitch_Engage in cBehSwitch
 		}
 
 		thePlayer.ActivateBehaviors(stupidArray_swordwalk);
+	}
+}
+
+function ACS_EnemyBehDetach()
+{
+	var vACS_EnemyBehDetach : cACS_EnemyBehDetach;
+	vACS_EnemyBehDetach = new cACS_EnemyBehDetach in theGame;
+	
+	vACS_EnemyBehDetach.ACS_EnemyBehDetach_Engage();
+
+}
+
+statemachine class cACS_EnemyBehDetach
+{
+    function ACS_EnemyBehDetach_Engage()
+	{
+		this.PushState('ACS_EnemyBehDetach_Engage');
+	}
+}
+ 
+state ACS_EnemyBehDetach_Engage in cACS_EnemyBehDetach
+{
+	private var actors		    		: array<CActor>;
+	private var actor					: CActor; 
+	private var i						: int;
+	private var npc						: CNewNPC;
+	private var enemyAnimatedComponent 	: CAnimatedComponent;
+	private var settings				: SAnimatedComponentSlotAnimationSettings;
+
+	event OnEnterState(prevStateName : name)
+	{
+		if (thePlayer.IsAlive())
+		{
+			EnemyBehDetach();
+		}
+	}
+	
+	entry function EnemyBehDetach()
+	{
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer );
+
+		if( actors.Size() > 0 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				npc = (CNewNPC)actors[i];
+
+				actor = actors[i];
+				
+				if (!actor.IsAlive()
+				&& actor.HasTag('ACS_One_Hand_Swap_Stage_1'))
+				{
+					actor.DetachBehavior('sword_2handed');
+					actor.DetachBehavior('Witcher');
+					actor.DetachBehavior( 'Shield' );
+					actor.DetachBehavior( 'sword_1handed' );
+				}
+			}
+		}
 	}
 }

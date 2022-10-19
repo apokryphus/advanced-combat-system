@@ -57,7 +57,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				}
 				else
 				{
-					dist = 1.5;
+					dist = 1.6;
 					ang =	30;	
 				}
 			}
@@ -69,12 +69,12 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				|| ACS_GetWeaponMode() == 2
 				)
 				{
-					dist = 2.25;
+					dist = 2;
 					ang =	30;
 				}
 				else if ( ACS_GetWeaponMode() == 3 )
 				{ 
-					dist = 2;
+					dist = 1.75;
 					ang =	30;
 				}
 			}
@@ -142,7 +142,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			}
 			else if ( thePlayer.HasTag('quen_sword_equipped') )
 			{
-				dist = 1.5;
+				dist = 1.6;
 				ang =	30;
 			}
 			else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -184,6 +184,11 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 	else if (ACS_Player_Scale() < 1)
 	{
 		dist -= ACS_Player_Scale() * 0.5;
+	}
+
+	if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+	{
+		dist += 1;
 	}
 
 	FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
@@ -283,6 +288,21 @@ function ACS_Load_Sound()
 	if ( !theSound.SoundIsBankLoaded("magic_man_mage.bnk") )
 	{
 		theSound.SoundLoadBank( "magic_man_mage.bnk", false );
+	}
+
+	if ( !theSound.SoundIsBankLoaded("qu_item_olgierd_sabre.bnk") )
+	{
+		theSound.SoundLoadBank( "qu_item_olgierd_sabre.bnk", false );
+	}
+
+	if ( !theSound.SoundIsBankLoaded("monster_water_mage.bnk") )
+	{
+		theSound.SoundLoadBank( "monster_water_mage.bnk", false );
+	}
+
+	if ( !theSound.SoundIsBankLoaded("monster_dracolizard.bnk") )
+	{
+		theSound.SoundLoadBank( "monster_dracolizard.bnk", false );
 	}
 }
 
@@ -759,6 +779,11 @@ function ACS_Vampire_Claws_Monster_Max_Damage(): float
 function ACS_Vampire_Claws_Monster_Min_Damage(): float
 {
 	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodVampireClawsMonsterMinDamage'));
+}
+
+function ACS_Player_Fall_Damage(): float
+{
+	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodPlayerFallDamage'));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1935,6 +1960,134 @@ function ACS_DetachBehavior()
 }
 */
 
+function ACS_Teleport_End_Early_Effects()
+{
+	if (thePlayer.HasTag('ACS_wildhunt_teleport_init'))
+	{
+		ACS_wh_teleport_entity().CreateAttachment(thePlayer);
+
+		thePlayer.SoundEvent("magic_canaris_teleport_short");
+
+		ACS_wh_teleport_entity().StopEffect('disappear');
+		ACS_wh_teleport_entity().PlayEffectSingle('disappear');
+
+		ACS_wh_teleport_entity().PlayEffectSingle('appear');
+
+		ACS_wh_teleport_entity().DestroyAfter(1);
+
+		thePlayer.RemoveTag('ACS_wildhunt_teleport_init');
+	}
+
+	if (thePlayer.HasTag('ACS_Mage_Teleport'))
+	{
+		thePlayer.PlayEffectSingle('teleport_in');
+		thePlayer.StopEffect('teleport_in');
+
+		thePlayer.RemoveTag('ACS_Mage_Teleport');
+	}
+
+	if (thePlayer.HasTag('ACS_Dolphin_Teleport'))
+	{
+		ACS_dolphin_teleport_entity().StopEffect('dolphin');
+		ACS_dolphin_teleport_entity().PlayEffectSingle('dolphin');
+
+		thePlayer.SoundEvent('monster_water_mage_combat_spray');
+
+		ACS_dolphin_teleport_entity().DestroyAfter(5);
+
+		thePlayer.RemoveTag('ACS_Dolphin_Teleport');
+	}
+
+	if (thePlayer.HasTag('ACS_Iris_Teleport'))
+	{
+		thePlayer.PlayEffectSingle('ethereal_buff');
+
+		thePlayer.StopEffect('ethereal_buff');
+
+		thePlayer.StopEffect('special_attack_fx');
+
+		thePlayer.SoundEvent('magic_olgierd_tele');
+
+		if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+		&& !thePlayer.HasTag('blood_sucking')
+		)
+		{
+			ACS_Weapon_Respawn();
+
+			thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+			thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+		}
+
+		ACS_Marker_Smoke();
+
+		thePlayer.RemoveTag('ACS_Iris_Teleport');
+	}
+
+	if (thePlayer.HasTag('ACS_Explosion_Teleport'))
+	{
+		ACS_explosion_teleport_entity().CreateAttachment(thePlayer);
+
+		ACS_explosion_teleport_entity().StopEffect('smoke_explosion');
+		ACS_explosion_teleport_entity().PlayEffectSingle('smoke_explosion');
+
+		ACS_explosion_teleport_entity().DestroyAfter(2);
+
+		thePlayer.RemoveTag('ACS_Explosion_Teleport');
+	}
+
+	if (thePlayer.HasTag('ACS_Fountain_Portal_Teleport'))
+	{
+		ACS_fountain_portal_teleport_entity().StopEffect('portal');
+		ACS_fountain_portal_teleport_entity().PlayEffectSingle('portal');
+
+		thePlayer.SoundEvent('magic_geralt_teleport');
+
+		ACS_fountain_portal_teleport_entity().DestroyAfter(2);
+
+		thePlayer.RemoveTag('ACS_Fountain_Portal_Teleport');
+	}
+
+	if ( thePlayer.HasTag('ACS_Lightning_Teleport') )
+	{
+		ACS_lightning_teleport_entity().CreateAttachment(thePlayer);
+
+		ACS_Marker_Lightning();
+
+		//ACS_lightning_teleport_entity().StopEffect('lightning');
+		//ACS_lightning_teleport_entity().PlayEffectSingle('lightning');
+
+		//ACS_lightning_teleport_entity().StopEffect('pre_lightning');
+		//ACS_lightning_teleport_entity().PlayEffectSingle('pre_lightning');
+
+		ACS_Giant_Lightning_Strike_Mult();
+
+		ACS_lightning_teleport_entity().StopEffect('lighgtning');
+		ACS_lightning_teleport_entity().PlayEffectSingle('lighgtning');
+
+		thePlayer.SoundEvent('fx_other_lightning_hit');
+
+		thePlayer.PlayEffectSingle('hit_lightning');
+		thePlayer.StopEffect('hit_lightning');
+
+		ACS_lightning_teleport_entity().DestroyAfter(2);
+
+		thePlayer.RemoveTag('ACS_Lightning_Teleport');
+	}
+
+	if (thePlayer.HasTag('ACS_Fire_Teleport'))
+	{
+		ACS_Marker_Fire();
+
+		thePlayer.PlayEffectSingle( 'lugos_vision_burning' );
+		thePlayer.StopEffect( 'lugos_vision_burning' );
+
+		thePlayer.SoundEvent('monster_dracolizard_combat_fireball_hit');
+
+		thePlayer.RemoveTag('ACS_Fire_Teleport');
+	}
+}
+
 function ACS_ThingsThatShouldBeRemoved_BASE()
 {
 	if (thePlayer.HasTag('ACS_ExplorationDelayTag'))
@@ -1953,6 +2106,10 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 	}
 	*/
 
+	thePlayer.CancelHoldAttacks();
+
+	thePlayer.StopEffect('hand_special_fx');
+
 	thePlayer.StopEffect('special_attack_fx');
 
 	thePlayer.StopEffect('ethereal_debuff');
@@ -1961,6 +2118,8 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 	{
 		thePlayer.StopEffect( 'shadowdash' );
 	}
+
+	ACS_Teleport_End_Early_Effects();
 
 	ACS_RemoveStabbedEntities(); ACS_Theft_Prevention_9 ();
 
@@ -2073,6 +2232,36 @@ function ACS_RemoveStabbedEntities()
 	{
 		actors[i].BreakAttachment();
 		actors[i].RemoveTag('ACS_Stabbed');
+	}
+}
+
+function ACS_Pre_Attack( animEventName : name, animEventType : EAnimationEventType, data : CPreAttackEventData, animInfo : SAnimationEventAnimInfo  )
+{
+	var attackName     		: name;
+
+	attackName = data.attackName;
+
+	if (animEventName == 'AttackLight' || data.attackName == 'attack_light' || data.attackName == 'AttackLight')
+	{
+		ACS_Light_Attack_Trail();
+	}
+	else if (animEventName == 'AttackHeavy' || data.attackName == 'attack_heavy' || data.attackName == 'AttackHeavy' )
+	{
+		ACS_Heavy_Attack_Trail();
+	}
+
+	if(thePlayer.HasTag('quen_sword_equipped'))
+	{
+		if (data.attackName == 'attack_light' || data.attackName == 'attack_heavy')
+		{
+			//thePlayer.SoundEvent('magic_olgierd_sabre_whoosh_fast');
+		}
+	}
+
+	if( thePlayer.HasAbility('Runeword 2 _Stats', true) && thePlayer.IsInCombat() )
+	{
+		ACS_Light_Attack_Extended_Trail();
+		//ACS_Heavy_Attack_Extended_Trail();
 	}
 }
 
@@ -2516,7 +2705,7 @@ state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			}
 
-			Sleep(0.0125);
+			Sleep(0.0003125);
 		}
 
 		thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
@@ -2571,7 +2760,7 @@ state Setup_Combat_Action_Heavy_Engage in cACS_Setup_Combat_Action_Heavy
 				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			}
 
-			Sleep(0.0125);
+			Sleep(0.0003125);
 		}
 
 		thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
@@ -2707,7 +2896,9 @@ exec function aniplay1(animation_name: name)
 	sett.blendIn = 0.2f;
 	sett.blendOut = 0.5f;
 		
-	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
+	//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
+
+	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'GAMEPLAY_SLOT', sett );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4886,10 +5077,10 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_sword1h()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
 		{
@@ -4899,11 +5090,18 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 
 				actor = actors[i];
 
-				actor.ActivateAndSyncBehavior( 'sword_1handed' );
+				//actor.DetachBehavior('sword_2handed');
+				//actor.DetachBehavior('Fistfight');
+				//actor.DetachBehavior('Witcher');
+				//actor.DetachBehavior( 'Shield' );
+				//actor.DetachBehavior( 'sword_1handed' );
+
+				actor.AttachBehavior( 'sword_1handed' );
 
 				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
 				
-				enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
 	}
@@ -4928,8 +5126,8 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_sword2h()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
@@ -4943,19 +5141,32 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 
 				//actor.GetInventory().RemoveAllItems();
 
-				actor.GetInventory().AddAnItem( 'NPC Gregoire Sword', 1 );
+				//actor.GetInventory().AddAnItem( 'NPC Gregoire Sword', 1 );
 
-				sword = actor.GetInventory().GetItemId('NPC Gregoire Sword');
+				//sword = actor.GetInventory().GetItemId('NPC Gregoire Sword');
 
 				//actor.EquipItem(sword, r_weapon, true );
 
-				actor.DrawWeaponAndAttackLatent(sword);
+				//actor.DrawWeaponAndAttackLatent(sword);
 
-				actor.ActivateAndSyncBehavior( 'sword_2handed' );
+				//actor.ActivateAndSyncBehavior( 'sword_2handed' );
 
-				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
-				
-				enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.DetachBehavior('sword_2handed');
+				//actor.DetachBehavior('Fistfight');
+				//actor.DetachBehavior('Witcher');
+				//actor.DetachBehavior( 'Shield' );
+				//actor.DetachBehavior( 'sword_1handed' );
+
+				actor.AttachBehavior( 'sword_2handed' );
+
+				//actor.DrawWeaponAndAttackLatent(sword);
+
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
+
+				//actor.ActionCancelAll();
+
+				//actor.SignalGameplayEvent( 'PersonalTauntAction' );
 			}
 		}
 	}
@@ -4978,10 +5189,10 @@ state EnemyBehSwitch_Fistfight in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_fistfight()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
 		{
@@ -4991,7 +5202,13 @@ state EnemyBehSwitch_Fistfight in cACS_EnemyBehSwitch
 
 				actor = actors[i];
 
-				actor.ActivateAndSyncBehavior( 'Fistfight' );
+				//actor.DetachBehavior('sword_2handed');
+				//actor.DetachBehavior('Fistfight');
+				//actor.DetachBehavior('Witcher');
+				//actor.DetachBehavior( 'Shield' );
+				//actor.DetachBehavior( 'sword_1handed' );
+
+				actor.AttachBehavior( 'Fistfight' );
 			}
 		}
 	}
@@ -5014,10 +5231,10 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_witcher()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
 		{
@@ -5027,11 +5244,16 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 
 				actor = actors[i];
 
-				actor.ActivateAndSyncBehavior( 'Witcher' );
+				//actor.DetachBehavior('sword_2handed');
+				//actor.DetachBehavior('Fistfight');
+				//actor.DetachBehavior('Witcher');
+				//actor.DetachBehavior( 'Shield' );
+				//actor.DetachBehavior( 'sword_1handed' );
 
-				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
-				
-				enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				actor.AttachBehavior( 'Witcher' );
+
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
 	}
@@ -5054,10 +5276,10 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_shield()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
 		{
@@ -5067,11 +5289,16 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 
 				actor = actors[i];
 
-				actor.ActivateAndSyncBehavior( 'Shield' );
+				//actor.DetachBehavior('sword_2handed');
+				//actor.DetachBehavior('Fistfight');
+				//actor.DetachBehavior('Witcher');
+				//actor.DetachBehavior( 'Shield' );
+				//actor.DetachBehavior( 'sword_1handed' );
 
-				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
-				
-				enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				actor.AttachBehavior( 'Shield' );
+
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
 	}
@@ -5094,10 +5321,10 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_bow()
 	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
+		settings.blendIn = 0;
+		settings.blendOut = 0;
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
 		{
@@ -5107,11 +5334,16 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 
 				actor = actors[i];
 
-				actor.ActivateAndSyncBehavior( 'Bow' );
+				actor.DetachBehavior('sword_2handed');
+				actor.DetachBehavior('Fistfight');
+				actor.DetachBehavior('Witcher');
+				actor.DetachBehavior( 'Shield' );
+				actor.DetachBehavior( 'sword_1handed' );
 
-				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
-				
-				enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				actor.AttachBehavior( 'Bow' );
+
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
 	}
@@ -5130,13 +5362,9 @@ exec function acsfxtest(effect_name:name)
 
 	GetACSTestEnt_Array_Destroy();
 
-	thePlayer.SoundEvent("magic_man_tornado_loop_start");
-
-	thePlayer.SoundEvent("magic_man_sand_gust");
-
 	rot = thePlayer.GetWorldRotation();
 
-    pos = thePlayer.GetWorldPosition() + thePlayer.GetHeadingVector() * 1.3;
+    pos = thePlayer.GetWorldPosition();
 
 	ent = theGame.CreateEntity( (CEntityTemplate)LoadResource( 
 		//"dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent"
@@ -5146,7 +5374,25 @@ exec function acsfxtest(effect_name:name)
 		//"dlc\ep1\data\gameplay\abilities\mage\sand_trap.w2ent"
 		//"dlc\ep1\data\gameplay\abilities\mage\sand_push_cast.w2ent"
 
-		"dlc\bob\data\fx\monsters\dettlaff\dettlaff_swarm_tornado.w2ent"
+		//"dlc\bob\data\fx\monsters\dettlaff\dettlaff_swarm_tornado.w2ent"
+
+		//"dlc\bob\data\fx\cutscenes\cs704_detlaff_morphs\cs704_detlaff_force.w2ent"
+
+		//"fx\characters\eredin\eredin_shield\eredin_shield.w2ent"
+
+		//"fx\cutscenes\kaer_morhen\403_triss_spell\triss_explode_cutscene.w2ent"
+
+		//"fx\quest\q403\meteorite\fire_ground_strong.w2ent"
+
+		//"gameplay\sonar\sonar_fx.w2ent"
+
+		//"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_08_fire_01.w2ent"
+
+		//"dlc\ep1\data\fx\quest\q603\08_demo_dwarf\q603_hut_fire.w2ent"
+
+		//"dlc\ep1\data\fx\quest\q603\usm_demodwarf\q603_usm_explosion.w2ent"
+
+		"dlc\ep1\data\fx\quest\q605\waypoint\q605_grave_clue.w2ent"
 
 		//"dlc\bob\data\fx\monsters\dettlaff\dettlaff_swarm_trap.w2ent"
 
@@ -5162,9 +5408,19 @@ exec function acsfxtest(effect_name:name)
 
 		//"dlc\dlc_acs\data\fx\tornado_custom_2.w2ent"
 
+
+
+
+
+		// "dlc\bob\data\fx\cutscenes\cs704_detlaff_morphs\cs704_detlaff_force.w2ent" //smoke_explosion
+		//"dlc\ep1\data\fx\quest\q602\q602_17_wedding_finale\q602_scream.w2ent" //scream
+		//"dlc\bob\data\fx\quest\q704\q704_13_fountain\q704_fairlytale_portal.w2ent" //portal
+
 		, true ), pos, rot );
 
 	ent.AddTag('ACS_Test_Ent');
+
+	//ent.DestroyAfter(5);
 
 	//animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
 	//meshcomp = ent.GetComponentByClassName('CMeshComponent');
@@ -5176,9 +5432,11 @@ exec function acsfxtest(effect_name:name)
 
 	//animcomp.SetAnimationSpeedMultiplier( 8  ); 
 
-	ent.CreateAttachment( thePlayer, , Vector( 0, 3, -10 ), EulerAngles(0,0,0) );
+	//ent.CreateAttachment( thePlayer, , Vector( 0, 3, -10 ), EulerAngles(0,0,0) );
 
 	//ent.CreateAttachment( thePlayer, , Vector( 0, 0, 3.5 ), EulerAngles(0,0,0) );
+
+	//ent.CreateAttachment( thePlayer, , Vector( 0, 0, -10 ), EulerAngles(0,0,0) );
 
 	ent.PlayEffectSingle(effect_name);
 }
@@ -5226,8 +5484,6 @@ function GetACSTestEnt_Array_Destroy()
 	{
 		ents[i].Destroy();
 	}
-
-	thePlayer.SoundEvent("magic_man_tornado_loop_stop");
 }
 
 function GetACSTestEnt_Array_StopEffects()
