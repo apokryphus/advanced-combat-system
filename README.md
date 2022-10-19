@@ -29,24 +29,26 @@ Additionally, the mod allows for vampire combat animations and abilities while t
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
 Depending on which weapon mode option is selected through the mod's Main Settings menu, the player may choose to play the game using one of the following modes:
-- Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) and performing light/heavy attacks, which transforms the player's weapon to match the moveset applied.
-- Select in the mod menu a desired moveset for the player's steel weapon and silver weapon, in which the player's weapon will transform to match the moveset.
-- Mix and match in the mod menu different combat animations to create your own unique moveset, in which the player's weapon will transform accordingly.
-- Allow the player to only use these special movesets when certain weapons/items are equipped. 
+- Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) and performing light/heavy attacks, which transforms the player's in-hand weapon to match the moveset applied.
+- Select in the mod menu a desired moveset for the player's steel weapon and silver weapon, in which the player's in-hand weapon will transform to match the moveset.
+- Mix and match in the mod menu different combat animations to create your own unique moveset, in which the player's in-hand weapon will transform accordingly to each animation set.
+- Restrict the player to only use these special movesets when certain weapons/items are equipped.
 
 Addtionally, the mod:
 - Comes with a whole host of different offensive and defensive abilities / combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
-- Allows the player to use special movement systems available both in combat and out of combat.
+- Allows the player to use special movement systems to traverse the world of The Witcher 3, available both in combat and out of combat.
 - Incorporates a number of bugfixes not covered by other modders, such as fixing weapons not making impact sounds when applying debuffs to enemies. 
-- Interfaces with other potential weapon DLCs that you may have installed, and applies the animations to them when they are equipped.
+- Interfaces with other potential weapon DLCs (Shades of Iron, Exotic Arsenal, and more) that you may have installed, and applies the appropriate animations to certain weapons when they are equipped.
 - Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
-- Adds custom enemies into the game world with their own mechanics and systems in place.
+- Improves human enemy AI, with a dynamic behavior system that makes every encounter a potentially deadly one. 
+- Adds numerous custom enemies and bosses into the game world with their own mechanics and systems in place.
 
 ACS is:
 - Highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
 - Relatively easy to merge in terms of scripts.
 - Does not cause blurry dialogue loading screen from prolonged usage.
-- Just about compatible with almost anything you can imagine.
+- Can be installed or uninstalled at any time.
+- Is just about compatible with almost any overhaul/mod you can find.
   
 # REQUIREMENTS
 - Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
@@ -56,6 +58,8 @@ ACS is:
 ## Automatic Installation: 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
+- If your game is on Steam, then the folder path might look something like: C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3
+- If your game is on GOG, then the folder path might looking something like: C:\Program Files (x86)\GOG Galaxy\Games\The Witcher 3 Wild Hunt GOTY
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
 - Right click the script and click **Run with PowerShell**.
 
@@ -66,11 +70,13 @@ For those that prefer to install manually.
 - Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 
 ## After Installation:
-- Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. If you don't know how to use the script merger, please read through this [guide](https://aelto.github.io/tw3-notes/misc/merging/index.html) by Aeltoth. 
+- Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. 
+- If not, remember to pick and include the code from ACS.
+- If you don't know how to use the script merger, please read through this [guide](https://aelto.github.io/tw3-notes/misc/merging/index.html) by Aeltoth, author of RER. 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 
 ## Updating the mod:
-- You can use the updater script located within the `mod_ACS` folder that updates the entire mod with just one click, or run the automatic installer again if you installed the mod that way. 
+- Run the automatic installer again, or go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
 
 # PREFACE
 
@@ -101,14 +107,15 @@ For those that prefer to install manually.
 ### [5. ELEMENTAL REND SYSTEM](#5-elemental-rend-system-1)
 ### [6. PARRY SKILLS](#6-parry-skills-1)
 ### [7. TAUNT SYSTEM](#7-taunt-system-1)
-### [8. MOVEMENT SYSTEM](#8-movement-system-1)
-### [9. ARMOR SYSTEM](#9-armor-system-1)
-### [10. SPECIAL ABILITIES](#10-special-abilities-1)
-### [11. COOLDOWN ADJUSTMENT](#11-cooldown-adjustment-1)
-### [12. STAMINA](#12-stamina-1)
-### [13. COMPATIBILITY](#13-compatibility-1)
-### [14. Q&A](#14-qa-1)
-### [15. CONTACT ME](#15-contact-me-1)
+### [8. DYNAMIC ENEMY BEHAVIOR SYSTEM](#8-dynamic-enemy-behavior-system-1)
+### [9. MOVEMENT SYSTEM](#9-movement-system-1)
+### [10. ARMOR SYSTEM](#10-armor-system-1)
+### [11. SPECIAL ABILITIES](#11-special-abilities-1)
+### [12. COOLDOWN ADJUSTMENT](#12-cooldown-adjustment-1)
+### [13. STAMINA](#13-stamina-1)
+### [14. COMPATIBILITY](#14-compatibility-1)
+### [15. Q&A](#15-qa-1)
+### [16. CONTACT ME](#16-contact-me-1)
 </div>
 
 
@@ -941,8 +948,26 @@ In combat:
 ##### [Return to Index](#index)
   
   </div>
+ 
+# 8. DYNAMIC ENEMY BEHAVIOR SYSTEM
+
+https://user-images.githubusercontent.com/98017171/196608085-fd4a751c-e4dc-45ed-b67e-e35ad288053e.mp4
+
+Dynamic enemy behavior applies to non-quest human type enemies carrying one-handed weapons:
+  - Stage 1: If the enemy is hit by the player with an attack/repel leaving them with anywhere between 75% - 50% health, the enemy will swap their original 1-handed behavior to either witcher behavior or 2-handed behavior. 
+  - Stage 2: If the enemy is hit by the player with an attack/repel leaving them with anywhere lower than 50% health but between 50% - 25% health: 
+    - If the enemy had swapped to witcher behavior in Stage 1, they will now have a 75% chance to swap their behavior to 2-handed behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
+    - If the enemy had swapped to 2-handed behavior in Stage 1, they will now have a 75% chance to swap their behavior to witcher behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
+    - If the player is in a state of parrying while the enemy is swapping behavior in Stage 2, then the enemy will have a 75% chance of swapping to shielded combat behavior instead, and 25% chance of swapping to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
+    - If the enemy was originally carrying a shield, and their shield was not destroyed or dropped by the time they reach Stage 2, then they will not have a chance to switch to shielded combat behavior at all, and instead will swap to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
+ 
+  <div align="right">
   
-# 8. MOVEMENT SYSTEM
+##### [Return to Index](#index)
+  
+  </div>
+  
+# 9. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
 Out of Combat: ```Hold Sprint + Forward (W)``` or ```Hold Sprint + Doubletap Forward (W)```
 
@@ -1010,7 +1035,7 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
   
   </div>
 
-# 9. ARMOR SYSTEM
+# 10. ARMOR SYSTEM
 
  - While wielding an ACS weapon or using an ACS moveset, the player's armor is enhanced. Enemies scoring a hit on the player will have a chance to have a small percentage of that damage reflected back at them. 
  - The chances of this happening is based upon the type of armor the player is wearing:
@@ -1025,7 +1050,7 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
   
   </div>
   
-# 10. SPECIAL ABILITIES
+# 11. SPECIAL ABILITIES
   
  <div align="center">
  
@@ -1300,7 +1325,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 11. COOLDOWN ADJUSTMENT
+# 12. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1309,7 +1334,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 12. STAMINA
+# 13. STAMINA
 - Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
 - This feature can be toggled off in the Main Settings menu. 
 - In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
@@ -1321,7 +1346,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 13. COMPATIBILITY
+# 14. COMPATIBILITY
 - Most likely completely conflict free in terms of scripts.
 
  <div align="right">
@@ -1330,7 +1355,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 14. Q&A
+# 15. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1364,7 +1389,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 15. CONTACT ME
+# 16. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
