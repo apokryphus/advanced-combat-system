@@ -540,6 +540,10 @@ Depending on whether **Static Weapons** or **Evolving Weapons** are selected in 
 - **Tier III Weapon Appearance**
    - Weapon level 21+ ***AND*** weapon rarity equal to or above ``Relic``.
 
+#### - Miscellaneous Info
+- ACS moveset weapons will display the runes and enchantments of the weapon you currently have equipped in your inventory, if it is supported on the weapon.
+- The Severance enchantment increases the range of **all** attacks from ACS movesets. 
+
 # Armiger Mode Movesets
 While in Armiger Mode, selecting different signs while holding a weapon will change Geralt's moveset and grant him different weapons, depending on selected sign. 
 
