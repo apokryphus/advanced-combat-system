@@ -4,320 +4,320 @@
 ; comment lines use ; as first character
 ; all comment lines (except the two line header) will be ignored
 ;
-2112923001|        |panel_Mods|Mods
-2112923002|        |panel_acs_name|Advanced Combat System
-2112923003|        |panel_acs_main_settings|Main Settings
-2112923004|        |preset_Mods_acs_name_acs_main_settings|ACS: Main Settings
-2112923005|        |preset_Mods_combat_acs_name_acs_main_settings|ACS: Main Settings
-2112923006|        |preset_Mods_gameplay_acs_name_acs_main_settings|ACS: Main Settings
-2112923007|        |preset_Mods_miscellaneous_acs_name_acs_main_settings|ACS: Main Settings
-2112923008|        |preset_value_armiger_mode|Armiger Mode
-2112923009|        |preset_value_focus_mode|Focus Mode
-2112923010|        |preset_value_hybrid_mode|Hybrid Mode
-2112923011|        |preset_value_equip_mode|Equipment Mode
-2112923012|        |option_acs_mod_enabled|<font color="#00ff67">Mod Enabled</font>
-2112923013|        |option_acs_weapon_mode|ACS Weapon Mode
-2112923014|        |preset_value_acs_armiger_mode|Armiger Mode
-2112923015|        |preset_value_acs_focus_mode|Focus Mode
-2112923016|        |preset_value_acs_hybrid_mode|Hybrid Mode
-2112923017|        |preset_value_acs_equip_mode|Equipment Mode
-2112923018|        |option_acs_fist_mode|Fist Mode
-2112923019|        |preset_value_acs_fist|Normal Fists
-2112923020|        |preset_value_acs_vamp_claws|Vampire Claws
-2112923021|        |preset_value_acs_aard_fist|Shockwave Fists
-2112923022|        |option_acs_target_mode|Targeting Mode
-2112923023|        |preset_value_acs_auto_target|Auto-Targeting
-2112923324|        |preset_value_acs_auto_target_closest_target|Auto-Targeting: Closest Enemy
-2112923025|        |preset_value_acs_manual_target|Manual Targeting
-2112923026|        |option_acs_combo_mode|Combo Chain Mode
-2112923027|        |preset_value_acs_combo_mode_sequential|Sequential
-2112923028|        |preset_value_acs_combo_mode_random|Randomized/Distance-based
-2112923029|        |option_acs_stamina_block_action|Minimum Stamina Requirement Enabled
-2112923030|        |option_acs_on_hit_effects|Elemental Combo System Enabled
-2112923031|        |option_acs_elemental_rend|Elemental Rend Enabled
-2112923032|        |option_acs_hide_sword_sheathes|Hide All Weapons On Back For Armiger, Focus, and Hybrid Mode
-2112923033|        |option_acs_experimental_dismemberment_enabled|Experimental Dismemberment Enabled
-2112923034|        |option_acs_sword_walk_enabled|Alternate Sword-Walk Enabled (Beware: Causes Guards to Twitch)
-2112923035|        |option_acs_passive_taunt_enabled|Passive Taunt Enabled
-2112923036|        |option_acs_auto_finisher_enabled|Auto-Finisher Enabled
-2112923037|        |option_acs_vampire_sound_effects|Vampire Voice SFX Enabled
-2112923038|        |option_acs_player_scale|Set Player Size (1 = Default)
-2112923039|        |option_acs_shadows_spawn_chances_normal|Forest God Shadows Spawning Chance
-2112923040|        |option_acs_init|Advanced Combat System Initialized
-2112923041|        |option_acs_size_init|Mod Initialized
-2112923042|        |panel_acs_armiger_mode_settings|Armiger Mode Settings
-2112923043|        |preset_Mods_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
-2112923044|        |preset_Mods_combat_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
-2112923045|        |preset_Mods_gameplay_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
-2112923046|        |preset_Mods_miscellaneous_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
-2112923047|        |preset_value_acs_armiger_mode_settings_default|Default
-2112923048|        |option_acs_armiger_mode_weapon_type|Armiger Mode Weapon Type
-2112923049|        |preset_value_acs_armiger_evolving_weapons|Evolving Weapons
-2112923040|        |preset_value_acs_armiger_static_weapons|Static Weapons
-2112923051|        |option_acs_armiger_igni_sign_weapon|<font color="#ff0000">Igni</font>
-2112923052|        |preset_value_acs_armiger_mode_default_weapon|Default Weapon
-2112923053|        |preset_value_acs_armiger_mode_olgierd_weapon|Olgierd/Spear
-2112923054|        |preset_value_acs_armiger_mode_eredin_weapon|Eredin/Gregoire
-2112923055|        |preset_value_acs_armiger_mode_claw_weapon|Sword Claws/Axe
-2112923056|        |preset_value_acs_armiger_mode_imlerith_weapon|Imlerith/Giant Weapon
-2112923057|        |option_acs_armiger_quen_sign_weapon|<font color="#ffae00">Quen</font>
-2112923058|        |option_acs_armiger_axii_sign_weapon|<font color="#4daf00">Axii</font>
-2112923059|        |option_acs_armiger_aard_sign_weapon|<font color="#58eef9">Aard</font>
-2112923060|        |option_acs_armiger_yrden_sign_weapon|<font color="#aa58f9">Yrden</font>
-2112923061|        |panel_acs_focus_mode_settings|Focus Mode Settings
-2112923062|        |preset_Mods_acs_name_acs_focus_mode_settings|ACS: Focus Mode
-2112923063|        |preset_Mods_combat_acs_name_acs_focus_mode_settings|ACS: Focus Mode
-2112923064|        |preset_Mods_gameplay_acs_name_acs_focus_mode_settings|ACS: Focus Mode
-2112923065|        |preset_Mods_miscellaneous_acs_name_acs_focus_mode_settings|ACS: Focus Mode
-2112923066|        |preset_value_acs_focus_mode_settings_default|Default
-2112923067|        |option_acs_focus_mode_weapon_type|Focus Mode Weapon Type
-2112923068|        |preset_value_acs_focus_evolving_weapons|Evolving Weapons
-2112923069|        |preset_value_acs_focus_static_weapons|Static Weapons
-2112923070|        |option_acs_focus_mode_steel_weapon|Focus Mode Steel Weapon
-2112923071|        |preset_value_acs_focus_mode_default_steel_weapon|Default Geralt Steel Sword
-2112923072|        |preset_value_acs_focus_mode_olgierd_steel_weapon|Iris (Olgierd)
-2112923073|        |preset_value_acs_focus_mode_spear_steel_weapon|Spear / Staff
-2112923074|        |preset_value_acs_focus_mode_eredin_steel_weapon|Sword (Eredin) / Shield
-2112923075|        |preset_value_acs_focus_mode_greg_steel_weapon|Colossal Sword (Gorgon)
-2112923076|        |preset_value_acs_focus_mode_imlerith_steel_weapon|Caretaker / Imlerith / Scythe
-2112923077|        |preset_value_acs_focus_mode_giant_steel_weapon|Giant's Weapon
-2112923078|        |preset_value_acs_focus_mode_dettlaff_steel_weapon|Sword Claws
-2112923079|        |preset_value_acs_focus_mode_axe_steel_weapon|Axe/Warhammer
-2112923080|        |option_acs_focus_mode_silver_weapon|Focus Mode Silberwaffe
-2112923081|        |preset_value_acs_focus_mode_default_silver_weapon|Default Geralt Silver Sword
-2112923082|        |preset_value_acs_focus_mode_olgierd_silver_weapon|Ofieri Sabre
-2112923083|        |preset_value_acs_focus_mode_spear_silver_weapon|Guisarme / Staff
-2112923084|        |preset_value_acs_focus_mode_eredin_silver_weapon|Sword (Eredin) / Shield
-2112923085|        |preset_value_acs_focus_mode_greg_silver_weapon|Colossal Sword (Gorgon)
-2112923086|        |preset_value_acs_focus_mode_imlerith_silver_weapon|Caretaker / Imlerith / Scythe
-2112923087|        |preset_value_acs_focus_mode_giant_silver_weapon|Giant's Weapon
-2112923088|        |preset_value_acs_focus_mode_dettlaff_silver_weapon|Sword Claws
-2112923089|        |preset_value_acs_focus_mode_axe_silver_weapon|Axe/Warhammer
-2112923090|        |panel_acs_hybrid_mode_settings|Hybrid Mode Settings
-2112923091|        |preset_Mods_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
-2112923092|        |preset_Mods_combat_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
-2112923093|        |preset_Mods_gameplay_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
-2112923094|        |preset_Mods_miscellaneous_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
-2112923095|        |preset_value_acs_hybrid_mode_settings_default|Default
-2112923096|        |option_acs_hybrid_mode_weapon_type|Hybrid Mode Weapon Type
-2112923097|        |preset_value_acs_hybrid_evolving_weapons|Evolving Weapons
-2112923098|        |preset_value_acs_hybrid_static_weapons|Static Weapons
-2112923099|        |option_acs_hybrid_light_attack|Light Attack
-2112923100|        |preset_value_acs_hybrid_mode_default_attack|Default Attack
-2112923101|        |preset_value_acs_hybrid_mode_olgierd_attack|Olgierd
-2112923102|        |preset_value_acs_hybrid_mode_eredin_attack|Eredin/Shield
-2112923103|        |preset_value_acs_hybrid_mode_claw_attack|Sword Claws
-2112923104|        |preset_value_acs_hybrid_mode_imlerith_attack|Imlerith/Caranthir/Caretaker
-2112923105|        |preset_value_acs_hybrid_mode_spear_attack|Spear
-2112923106|        |preset_value_acs_hybrid_mode_greg_attack|Gregoire
-2112923107|        |preset_value_acs_hybrid_mode_axe_attack|Axe/Warhammer
-2112923108|        |preset_value_acs_hybrid_mode_hammer_attack|Giant's Weapon
-2112923109|        |option_acs_hybrid_forward_light_attack|W (Forward) + Light Attack
-2112923110|        |option_acs_hybrid_heavy_attack|Heavy Attack
-2112923111|        |option_acs_hybrid_forward_heavy_attack|W (Forward) + Heavy Attack
-2112923112|        |option_acs_hybrid_special_attack|Special Attack (Whirl)
-2112923113|        |option_acs_hybrid_forward_special_attack|W (Forward) + Special Attack (Whirl)
-2112923114|        |option_acs_hybrid_counter_attack|Counterattack/Parry Skill
-2112923115|        |panel_acs_taunt_settings|Taunt System Settings
-2112923116|        |preset_Mods_acs_name_acs_taunt_settings|ACS: Taunt System
-2112923117|        |preset_Mods_combat_acs_name_acs_taunt_settings|ACS: Taunt System
-2112923118|        |preset_Mods_gameplay_acs_name_acs_taunt_settings|ACS: Taunt System
-2112923119|        |preset_Mods_miscellaneous_acs_name_acs_taunt_settings|ACS: Taunt System
-2112923120|        |preset_value_acs_taunt_settings_default|Default
-2112923121|        |preset_value_acs_taunt_settings_off|Off
-2112923122|        |option_acs_taunt_system_enabled|Taunt System Enabled
-2112923123|        |option_acs_i_wanna_play_gwent_enabled|I WANNA PLAY GWENT
-2112923124|        |option_acs_combat_taunt_enabled|Abspotten aktiviert
-2112923125|        |panel_acs_movement_settings|Movement Settings
-2112923126|        |preset_Mods_acs_name_acs_movement_settings|ACS: Movement
-2112923127|        |preset_Mods_combat_acs_name_acs_movement_settings|ACS: Movement
-2112923128|        |preset_Mods_gameplay_acs_name_acs_movement_settings|ACS: Movement
-2112923129|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings|ACS: Movement
-2112923130|        |preset_value_acs_movement_settings_default|Default
-2112923131|        |preset_value_acs_movement_settings_off|Off
-2112923132|        |option_acs_jump_extend|Jump Extender Enabled
-2112923133|        |option_acs_jump_extend_effect|<font color="#ff0000">—————</font> Jump Extender Effects Enabled
-2112923134|        |option_acs_jump_extend_normal_height|<font color="#ff0000">—————</font> Normal Jump Height (Meters)
-2112923135|        |option_acs_jump_extend_normal_distance|<font color="#ff0000">—————</font> Normal Jump Distance (Meters)
-2112923136|        |option_acs_jump_extend_sprinting_height|<font color="#ff0000">—————</font> Sprinting Jump Height (Meters)
-2112923137|        |option_acs_jump_extend_sprinting_distance|<font color="#ff0000">—————</font> Sprinting Jump Distance (Meters)
-2112923138|        |option_acs_bruxa_dash|Bruxa Dash (Hold Sprint + Forward (W))
-2112923139|        |option_acs_bruxa_dash_input|<font color="#ff0000">—————</font> Bruxa Dash Input
-2112923140|        |preset_value_acs_bruxa_dash_single_tap_sprint|Single Tap Forward (W)
-2112923141|        |preset_value_acs_bruxa_dash_double_tap_sprint|Double Tap Forward (W)
-2112923142|        |option_acs_bruxa_dash_normal_distance|<font color="#ff0000">—————</font> Exploration Distance (Meters)
-2112923143|        |option_acs_bruxa_dash_combat_distance|<font color="#ff0000">—————</font> Combat Distance (Meters)
-2112923144|        |option_acs_wraith_mode|Wraith Mode (Witcher Sense + Hold Sprint + Forward (W))
-2112923145|        |option_acs_wraith_mode_input|<font color="#ff0000">—————</font> Wraith Mode Input
-2112923146|        |preset_value_acs_wraith_mode_single_tap_sprint|Single Tap Forward (W)
-2112923147|        |preset_value_acs_wraith_mode_double_tap_sprint|Double Tap Forward (W)
-2112923148|        |option_acs_bruxa_leap_attack|Bruxa Leap (No Sprint + Doubletap + Forward (W))
-2112923149|        |option_acs_bruxa_dodge_center|Bruxa Dodge Back Center (Doubletap + Back (S))
-2112923150|        |option_acs_bruxa_dodge_left|Bruxa Dodge Back Left (Doubletap + Left (A))
-2112923151|        |option_acs_bruxa_dodge_right|Bruxa Dodge Back Right (Doubletap + Right (D))
-2112923152|        |option_acs_bruxa_dodge_slide_back|Slide Back Dodge (Back (S) + Dodge)
-2112923153|        |option_acs_wild_hunt_blink|Teleport Dodge (Back (S) + Roll)
-2112923154|        |option_acs_dodge_effects|Additional Effects for Normal Dodge and Roll
-2112923155|        |panel_acs_special_abilities_settings|Special Abilities Settings
-2112923156|        |preset_Mods_acs_name_acs_special_abilities_settings|ACS: Special Abilities
-2112923157|        |preset_Mods_combat_acs_name_acs_special_abilities_settings|ACS: Special Abilities
-2112923158|        |preset_Mods_gameplay_acs_name_acs_special_abilities_settings|ACS: Special Abilities
-2112923159|        |preset_Mods_miscellaneous_acs_name_acs_special_abilities_settings|ACS: Special Abilities
-2112923160|        |preset_value_acs_special_abilities_settings_default|Default
-2112923161|        |preset_value_acs_special_abilities_settings_off|Off
-2112923162|        |option_acs_summoned_shades|Summoned Shades (Back (S) + Doubletap Parry)
-2112923163|        |option_acs_beam_attack|Aspect of the Djinn (Back (S) + Parry While Locked On)
-2112923164|        |option_acs_sword_array|Summoned Swords (Forward (W) + Doubletap Parry + Full Focus)
-2112923165|        |option_acs_shield_entity|Aspect of the Hym (Doubletap + Hold Parry + Shield)
-2112923166|        |option_acs_quen_monster_summon|Wolves/Centipede Summon (Doubletap + Hold Parry + Olgierd Weapon)
-2112923167|        |option_acs_yrden_skele_summon|Necromancy (Doubletap + Hold Parry + Imlerith Weapon)
-2112923168|        |option_acs_aard_pull|Bat Swarm (Doubletap + Hold Parry + Sword Claws)
-2112923169|        |option_acs_bruxa_camo_decoy|Bruxa Camouflage (Doubletap + Hold Parry + Vampire Claws)
-2112923170|        |option_acs_bruxa_bite|Bruxa Bite (Doubletap + Forward (W) + Full Adrenaline)
-2112923171|        |panel_acs_damage_settings|Damage Settings
-2112923172|        |preset_Mods_acs_name_acs_damage_settings|ACS: Damage
-2112923173|        |preset_Mods_combat_acs_name_acs_damage_settings|ACS: Damage
-2112923174|        |preset_Mods_gameplay_acs_name_acs_damage_settings|ACS: Damage
-2112923175|        |preset_Mods_miscellaneous_acs_name_acs_damage_settings|ACS: Damage
-2112923176|        |preset_value_acs_damage_settings_default|DEFAULT
-2112923177|        |preset_value_acs_damage_settings_default_max|<font color="#f73636">DEFAULT MAX</font>
-2112923178|        |preset_value_acs_damage_settings_max|<font color="#ff0000">GIVE ME DAMAGE</font>
-2112923179|        |option_acs_player_fall_damage|Player Fall Damage For Extreme Heights: (0 = No Damage)
-2112923180|        |option_acs_vampire_claws_human_max_damage|Vampire Claws  : <u>Human Maximum</u> Health Damage % <font color="#fadc32">( 1 = 100% )</font>
-2112923181|        |option_acs_vampire_claws_human_min_damage|<font color="#ff0000">—————</font>  : <u>Human Minimum</u> Health Damage %
-2112923182|        |option_acs_vampire_claws_monster_max_damage|<font color="#ff0000">—————</font>  : <u>Monster Maximum</u> Health Damage %
-2112923183|        |option_acs_vampire_claws_monster_min_damage|<font color="#ff0000">—————</font>  : <u>Monster Minimum</u> Health Damage %
-2112923184|        |item_name_acs_spear_1|Spear: Type A
-2112923185|        |item_desc_acs_spear_1|Never go hunting for buffalo with a dull spear. It's pointless.
-2112923186|        |item_name_acs_spear_2|Spear: Type B
-2112923187|        |item_desc_acs_spear_2|You should not disagree with my spear. It has a point.
-2112923188|        |item_name_acs_wild_hunt_spear|Wild Hunt Spear
-2112923189|        |item_desc_acs_wild_hunt_spear|A spear belonging to a warrior of the dreaded Wild Hunt.
-2112923190|        |item_name_acs_halberd_1|Halberd: Type A
-2112923191|        |item_desc_acs_halberd_1|A good mid-ranged weapon for when one is surrounded.
-2112923192|        |item_name_acs_halberd_2|Halberd: Type B
-2112923193|        |item_desc_acs_halberd_2|A good mid-ranged weapon for chopping vegetables at a distance.
-2112923194|        |item_name_acs_wild_hunt_halberd|Wild Hunt Halberd
-2112923195|        |item_desc_acs_wild_hunt_halberd|A halberd belonging to a warrior of the dreaded Wild Hunt.
-2112923196|        |item_name_acs_guisarme_1|Guisarme: Type A
-2112923197|        |item_desc_acs_guisarme_1|The barbed tips adds a nice extra flair.
-2112923198|        |item_name_acs_guisarme_2|Guisarme: Type B
-2112923199|        |item_desc_acs_guisarme_2|It's like a spear, but more stabby.
-2112923200|        |item_name_acs_long_metal_pole|Metal Pole
-2112923201|        |item_desc_acs_long_metal_pole|Perfect for bludgeoning your enemies with at mid-range distance.
-2112923202|        |item_name_acs_mace_1|Mace: Type A
-2112923203|        |item_desc_acs_mace_1|Smells a bit like pepper.
-2112923204|        |item_name_acs_mace_2|Mace: Type B
-2112923205|        |item_desc_acs_mace_2|Thieves will think twice robbing you with this in your hand.
-2112923206|        |item_name_acs_axe_1|Axe: Type A
-2112923207|        |item_desc_acs_axe_1|A sturdy axe.
-2112923208|        |item_name_acs_axe_2|Axe: Type B
-2112923209|        |item_desc_acs_axe_2|Not a body spray.
-2112923210|        |item_name_acs_great_axe_1|Greataxe: Type A
-2112923211|        |item_desc_acs_great_axe_1|Did you hear about the lumberjack who lost his job? They gave him the axe, he just couldn’t hack it.
-2112923212|        |item_name_acs_great_axe_2|Greataxe: Type B
-2112923213|        |item_desc_acs_great_axe_2|In the middle of the battle, the soldier pulled his comrade aside and said: “Just take a few minutes to rel-axe! I don’t want you to get a splitting headache!”
-2112923214|        |item_name_acs_wild_hunt_axe|Wild Hunt Axe
-2112923215|        |item_desc_acs_wild_hunt_axe|An axe belonging to a warrior of the dreaded Wild Hunt.
-2112923216|        |item_name_acs_dwarven_axe|Dwarven Axe
-2112923217|        |item_desc_acs_dwarven_axe|And my axe!
-2112923218|        |item_name_acs_dwarven_hammer|Dwarven Hammer
-2112923219|        |item_desc_acs_dwarven_hammer|And my hammer!
-2112923220|        |item_name_acs_twohanded_hammer_1|Two-Handed Hammer: Type A
-2112923221|        |item_desc_acs_twohanded_hammer_1|It's hammer time!
-2112923222|        |item_name_acs_twohanded_hammer_2|Two-Handed Hammer: Type B
-2112923223|        |item_desc_acs_twohanded_hammer_2|Hammers are the dumbest among all the tools. Probably because it isn't really the sharpest tool in the shed.
-2112923224|        |item_name_acs_wild_hunt_hammer|Wild Hunt Hammer
-2112923225|        |item_desc_acs_wild_hunt_hammer|A hammer belonging to a warrior of the dreaded Wild Hunt.
-2112923226|        |item_name_acs_hatchet|Hatchet
-2112923227|        |item_desc_acs_hatchet|My ex wife and I have decided to quit arguing and bury the hatchet. Now we just have to decide whether it should be in her chest or mine!
-2112923228|        |item_name_acs_small_blackjack|Small Blackjack
-2112923229|        |item_desc_acs_small_blackjack|I used to practice blackjack by using my bedroom wall as an opponent. I stopped when I realised the house always wins.
-2112923230|        |item_name_acs_club|Club
-2112923231|        |item_desc_acs_club|I don’t eat club sandwiches. I quit cold turkey.
-2112923232|        |item_name_acs_blackjack|Blackjack
-2112923233|        |item_desc_acs_blackjack|My dad is a blackjack dealer. He hit me until I was 21.
-2112923234|        |item_name_acs_poker|Poker
-2112923235|        |item_desc_acs_poker|Why was a vampire so nervous about the poker game he was playing? His adversary was raising the stake.
-2112923236|        |item_name_acs_staff|Staff
-2112923237|        |item_desc_acs_staff|Staff sergeant reporting for duty.
-2112923238|        |item_name_acs_lucerne_hammer|Lucerne Hammer
-2112923239|        |item_desc_acs_lucerne_hammer|I've always wondered how hammers fall down. Then one day it hit me.
-2112923240|        |item_name_acs_wand|Wand
-2112923241|        |item_desc_acs_wand|Make a wish.
-2112923242|        |item_name_acs_oar|Oar
-2112923243|        |item_desc_acs_oar|Row, row, row your boat.
-2112923244|        |item_name_acs_pickaxe|Pickaxe
-2112923245|        |item_desc_acs_pickaxe|What do you call a bent pickaxe? A miner problem.
-2112923246|        |item_name_acs_shovel|Shovel
-2112923247|        |item_desc_acs_shovel|What did the guy exclaim after inventing the shovel? "It's ground breaking!"
-2112923248|        |item_name_acs_broom|Broom
-2112923249|        |item_desc_acs_broom|Why was the broom late? It over swept.
-2112923250|        |item_name_acs_paling|Paling
-2112923251|        |item_desc_acs_paling|Why do cemeteries have paling around them? People are dying to get in.
-2112923252|        |item_name_acs_pitchfork|Pitchfork
-2112923253|        |item_desc_acs_pitchfork|Ah yes. My old enemy.
-2112923254|        |item_name_acs_rake|Rake
-2112923255|        |item_desc_acs_rake|Make it or rake it.
-2112923256|        |item_name_acs_scoop|Scoop
-2112923257|        |item_desc_acs_scoop|Where did I leave that ice cream?
-2112923258|        |item_name_acs_scythe|Scythe
-2112923259|        |item_desc_acs_scythe|What do you call a serious man with a scythe that sneaks around outside people’s windows? The grim peeper.
-2112923260|        |item_name_acs_shepherd_stick|Shepherd Stick
-2112923261|        |item_desc_acs_shepherd_stick|I used to be a shepherd, but I have no idea how many sheep I had. Kept falling asleep trying to count them.
-2112923262|        |item_name_acs_greg_sword|Colossal Sword
-2112923263|        |item_desc_acs_greg_sword|Definitely not compensating for anything.
-2112923264|        |item_name_acs_nazairi_mace|Nazairi Mace
-2112923265|        |item_desc_acs_nazairi_mace|Why is mace an assault when it's really a pepper?
-2112923266|        |item_name_acs_hakland_spear|Ofiri Spear
-2112923267|        |item_desc_acs_hakland_spear|Definitely did not steal this from that pile of weapons the Ofiri merchant has outside of his tent.
-2112923268|        |item_name_acs_imlerith_mace|Imlerith Mace
-2112923269|        |item_desc_acs_imlerith_mace|One of many replicas because Imlerith kept losing his mace.
-2112923270|        |item_name_acs_eredin_sword|Eredin Sword
-2112923271|        |item_desc_acs_eredin_sword|One of many replicas because Eredin kept losing his sword.
-2112923272|        |item_name_acs_caranthir_staff|Caranthir's Staff
-2112923273|        |item_desc_acs_caranthir_staff|One of many replicas because Caranthir kept losing his staff.
-2112923274|        |item_name_acs_wild_hunt_axe_2|Small Wild Hunt Axe
-2112923275|        |item_desc_acs_wild_hunt_axe_2|Smol axe.
-2112923276|        |item_name_acs_giant_weapon_1|Giant Anchor
-2112923277|        |item_desc_acs_giant_weapon_1|How did this get here?
-2112923278|        |item_name_acs_giant_weapon_2|Giant Stone Wheel
-2112923279|        |item_desc_acs_giant_weapon_2|How did this get here?
-2112923280|        |item_name_acs_giant_weapon_3|Cloud Giant Weapon
-2112923281|        |item_desc_acs_giant_weapon_3|How did this get here?
-2112923282|        |item_name_acs_knight_lance_1|Knight Lance: Type A
-2112923283|        |item_desc_acs_knight_lance_1|What do you call a man with a jousting pole on his head? Lance.
-2112923284|        |item_name_acs_knight_lance_2|Knight Lance: Type B
-2112923285|        |item_desc_acs_knight_lance_2|I bumped into my rival jousting opponent. We exchanged lances.
-2112923286|        |item_name_acs_zoltan_axe|Zoltan's Axe
-2112923287|        |item_desc_acs_zoltan_axe|Zoltan doesn't need to know you have this.
-2112923288|        |item_name_acs_spear_1_silver|Silver Spear: Type A 
-2112923289|        |item_name_acs_spear_2_silver|Silver Spear: Type B
-2112923290|        |item_name_acs_wild_hunt_spear_silver|Silver Wild Hunt Spear
-2112923291|        |item_name_acs_halberd_1_silver|Silver Halberd: Type A
-2112923292|        |item_name_acs_halberd_2_silver|Silver Halberd: Type B
-2112923293|        |item_name_acs_wild_hunt_halberd_silver|Silver Wild Hunt Halberd
-2112923294|        |item_name_acs_guisarme_1_silver|Silver Guisarme: Type A
-2112923295|        |item_name_acs_guisarme_2_silver|Silver Guisarme: Type B
-2112923296|        |item_name_acs_great_axe_1_silver|Silver Greataxe: Type A
-2112923297|        |item_name_acs_great_axe_2_silver|Silver Greataxe: Type B
-2112923298|        |item_name_acs_wild_hunt_axe_silver|Silver Wild Hunt Axe
-2112923299|        |item_name_acs_twohanded_hammer_1_silver|Silver Two-Handed Hammer: Type A
-2112923300|        |item_name_acs_twohanded_hammer_2_silver|Silver Two-Handed Hammer: Type B
-2112923301|        |item_name_acs_wild_hunt_hammer_silver|Silver Wild Hunt Hammer
-2112923302|        |item_name_acs_greg_sword_silver|Silver Colossal Sword
-2112923303|        |item_name_acs_hakland_spear_silver|Silver Ofiri Spear
-2112923304|        |item_name_acs_imlerith_mace_silver|Silver Imlerith Mace
-2112923305|        |item_name_acs_eredin_sword_silver|Silver Eredin Sword
-2112923306|        |item_name_acs_caranthir_staff_silver|Silver Caranthir's Staff
-2112923307|        |item_name_acs_giant_weapon_1_silver|Silver Giant Anchor
-2112923308|        |item_name_acs_giant_weapon_2_silver|Silver Giant Stone Wheel
-2112923309|        |item_name_acs_giant_weapon_3_silver|Silver Cloud Giant Weapon
-2112923310|        |item_name_acs_knight_lance_1_silver|Silver Knight Lance: Type A
-2112923311|        |item_name_acs_knight_lance_2_silver|Silver Knight Lance: Type B
-2112923312|        |item_name_acs_zoltan_axe_silver|Silver Zoltan's Axe
-2112923313|        |item_name_acs_long_metal_pole_silver|Silver Metal Pole
-2112923314|        |option_acs_player_scale|Set Player Size (1 = Default)
-2112923315|        |option_dlc_acs_name|MOD: Advanced Combat System
-2112923316|        ||Berstuk, The Forgotten Forest God
-2112923317|        ||Shadow of the Forest God
+2117035001|        |panel_Mods|Mods
+2117035002|        |panel_acs_name|Advanced Combat System
+2117035003|        |panel_acs_main_settings|Main Settings
+2117035004|        |preset_Mods_acs_name_acs_main_settings|ACS: Main Settings
+2117035005|        |preset_Mods_combat_acs_name_acs_main_settings|ACS: Main Settings
+2117035006|        |preset_Mods_gameplay_acs_name_acs_main_settings|ACS: Main Settings
+2117035007|        |preset_Mods_miscellaneous_acs_name_acs_main_settings|ACS: Main Settings
+2117035008|        |preset_value_armiger_mode|Armiger Mode
+2117035009|        |preset_value_focus_mode|Focus Mode
+2117035010|        |preset_value_hybrid_mode|Hybrid Mode
+2117035011|        |preset_value_equip_mode|Equipment Mode
+2117035012|        |option_acs_mod_enabled|<font color="#00ff67">Mod Enabled</font>
+2117035013|        |option_acs_weapon_mode|ACS Weapon Mode
+2117035014|        |preset_value_acs_armiger_mode|Armiger Mode
+2117035015|        |preset_value_acs_focus_mode|Focus Mode
+2117035016|        |preset_value_acs_hybrid_mode|Hybrid Mode
+2117035017|        |preset_value_acs_equip_mode|Equipment Mode
+2117035018|        |option_acs_fist_mode|Fist Mode
+2117035019|        |preset_value_acs_fist|Normal Fists
+2117035020|        |preset_value_acs_vamp_claws|Vampire Claws
+2117035021|        |preset_value_acs_aard_fist|Shockwave Fists
+2117035022|        |option_acs_target_mode|Targeting Mode
+2117035023|        |preset_value_acs_auto_target|Auto-Targeting
+2117035324|        |preset_value_acs_auto_target_closest_target|Auto-Targeting: Closest Enemy
+2117035025|        |preset_value_acs_manual_target|Manual Targeting
+2117035026|        |option_acs_combo_mode|Combo Chain Mode
+2117035027|        |preset_value_acs_combo_mode_sequential|Sequential
+2117035028|        |preset_value_acs_combo_mode_random|Randomized/Distance-based
+2117035029|        |option_acs_stamina_block_action|Minimum Stamina Requirement Enabled
+2117035030|        |option_acs_on_hit_effects|Elemental Combo System Enabled
+2117035031|        |option_acs_elemental_rend|Elemental Rend Enabled
+2117035032|        |option_acs_hide_sword_sheathes|Hide All Weapons On Back For Armiger, Focus, and Hybrid Mode
+2117035033|        |option_acs_experimental_dismemberment_enabled|Experimental Dismemberment Enabled
+2117035034|        |option_acs_sword_walk_enabled|Alternate Sword-Walk Enabled (Beware: Causes Guards to Twitch)
+2117035035|        |option_acs_passive_taunt_enabled|Passive Taunt Enabled
+2117035036|        |option_acs_auto_finisher_enabled|Auto-Finisher Enabled
+2117035037|        |option_acs_vampire_sound_effects|Vampire Voice SFX Enabled
+2117035038|        |option_acs_player_scale|Set Player Size (1 = Default)
+2117035039|        |option_acs_shadows_spawn_chances_normal|Forest God Shadows Spawning Chance
+2117035040|        |option_acs_init|Advanced Combat System Initialized
+2117035041|        |option_acs_size_init|Mod Initialized
+2117035042|        |panel_acs_armiger_mode_settings|Armiger Mode Settings
+2117035043|        |preset_Mods_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
+2117035044|        |preset_Mods_combat_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
+2117035045|        |preset_Mods_gameplay_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
+2117035046|        |preset_Mods_miscellaneous_acs_name_acs_armiger_mode_settings|ACS: Armiger Mode
+2117035047|        |preset_value_acs_armiger_mode_settings_default|Default
+2117035048|        |option_acs_armiger_mode_weapon_type|Armiger Mode Weapon Type
+2117035049|        |preset_value_acs_armiger_evolving_weapons|Evolving Weapons
+2117035040|        |preset_value_acs_armiger_static_weapons|Static Weapons
+2117035051|        |option_acs_armiger_igni_sign_weapon|<font color="#ff0000">Igni</font>
+2117035052|        |preset_value_acs_armiger_mode_default_weapon|Default Weapon
+2117035053|        |preset_value_acs_armiger_mode_olgierd_weapon|Olgierd/Spear
+2117035054|        |preset_value_acs_armiger_mode_eredin_weapon|Eredin/Gregoire
+2117035055|        |preset_value_acs_armiger_mode_claw_weapon|Sword Claws/Axe
+2117035056|        |preset_value_acs_armiger_mode_imlerith_weapon|Imlerith/Giant Weapon
+2117035057|        |option_acs_armiger_quen_sign_weapon|<font color="#ffae00">Quen</font>
+2117035058|        |option_acs_armiger_axii_sign_weapon|<font color="#4daf00">Axii</font>
+2117035059|        |option_acs_armiger_aard_sign_weapon|<font color="#58eef9">Aard</font>
+2117035060|        |option_acs_armiger_yrden_sign_weapon|<font color="#aa58f9">Yrden</font>
+2117035061|        |panel_acs_focus_mode_settings|Focus Mode Settings
+2117035062|        |preset_Mods_acs_name_acs_focus_mode_settings|ACS: Focus Mode
+2117035063|        |preset_Mods_combat_acs_name_acs_focus_mode_settings|ACS: Focus Mode
+2117035064|        |preset_Mods_gameplay_acs_name_acs_focus_mode_settings|ACS: Focus Mode
+2117035065|        |preset_Mods_miscellaneous_acs_name_acs_focus_mode_settings|ACS: Focus Mode
+2117035066|        |preset_value_acs_focus_mode_settings_default|Default
+2117035067|        |option_acs_focus_mode_weapon_type|Focus Mode Weapon Type
+2117035068|        |preset_value_acs_focus_evolving_weapons|Evolving Weapons
+2117035069|        |preset_value_acs_focus_static_weapons|Static Weapons
+2117035070|        |option_acs_focus_mode_steel_weapon|Focus Mode Steel Weapon
+2117035071|        |preset_value_acs_focus_mode_default_steel_weapon|Default Geralt Steel Sword
+2117035072|        |preset_value_acs_focus_mode_olgierd_steel_weapon|Iris (Olgierd)
+2117035073|        |preset_value_acs_focus_mode_spear_steel_weapon|Spear / Staff
+2117035074|        |preset_value_acs_focus_mode_eredin_steel_weapon|Sword (Eredin) / Shield
+2117035075|        |preset_value_acs_focus_mode_greg_steel_weapon|Colossal Sword (Gorgon)
+2117035076|        |preset_value_acs_focus_mode_imlerith_steel_weapon|Caretaker / Imlerith / Scythe
+2117035077|        |preset_value_acs_focus_mode_giant_steel_weapon|Giant's Weapon
+2117035078|        |preset_value_acs_focus_mode_dettlaff_steel_weapon|Sword Claws
+2117035079|        |preset_value_acs_focus_mode_axe_steel_weapon|Axe/Warhammer
+2117035080|        |option_acs_focus_mode_silver_weapon|Focus Mode Silberwaffe
+2117035081|        |preset_value_acs_focus_mode_default_silver_weapon|Default Geralt Silver Sword
+2117035082|        |preset_value_acs_focus_mode_olgierd_silver_weapon|Ofieri Sabre
+2117035083|        |preset_value_acs_focus_mode_spear_silver_weapon|Guisarme / Staff
+2117035084|        |preset_value_acs_focus_mode_eredin_silver_weapon|Sword (Eredin) / Shield
+2117035085|        |preset_value_acs_focus_mode_greg_silver_weapon|Colossal Sword (Gorgon)
+2117035086|        |preset_value_acs_focus_mode_imlerith_silver_weapon|Caretaker / Imlerith / Scythe
+2117035087|        |preset_value_acs_focus_mode_giant_silver_weapon|Giant's Weapon
+2117035088|        |preset_value_acs_focus_mode_dettlaff_silver_weapon|Sword Claws
+2117035089|        |preset_value_acs_focus_mode_axe_silver_weapon|Axe/Warhammer
+2117035090|        |panel_acs_hybrid_mode_settings|Hybrid Mode Settings
+2117035091|        |preset_Mods_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
+2117035092|        |preset_Mods_combat_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
+2117035093|        |preset_Mods_gameplay_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
+2117035094|        |preset_Mods_miscellaneous_acs_name_acs_hybrid_mode_settings|ACS: Hybrid Mode
+2117035095|        |preset_value_acs_hybrid_mode_settings_default|Default
+2117035096|        |option_acs_hybrid_mode_weapon_type|Hybrid Mode Weapon Type
+2117035097|        |preset_value_acs_hybrid_evolving_weapons|Evolving Weapons
+2117035098|        |preset_value_acs_hybrid_static_weapons|Static Weapons
+2117035099|        |option_acs_hybrid_light_attack|Light Attack
+2117035100|        |preset_value_acs_hybrid_mode_default_attack|Default Attack
+2117035101|        |preset_value_acs_hybrid_mode_olgierd_attack|Olgierd
+2117035102|        |preset_value_acs_hybrid_mode_eredin_attack|Eredin/Shield
+2117035103|        |preset_value_acs_hybrid_mode_claw_attack|Sword Claws
+2117035104|        |preset_value_acs_hybrid_mode_imlerith_attack|Imlerith/Caranthir/Caretaker
+2117035105|        |preset_value_acs_hybrid_mode_spear_attack|Spear
+2117035106|        |preset_value_acs_hybrid_mode_greg_attack|Gregoire
+2117035107|        |preset_value_acs_hybrid_mode_axe_attack|Axe/Warhammer
+2117035108|        |preset_value_acs_hybrid_mode_hammer_attack|Giant's Weapon
+2117035109|        |option_acs_hybrid_forward_light_attack|W (Forward) + Light Attack
+2117035110|        |option_acs_hybrid_heavy_attack|Heavy Attack
+2117035111|        |option_acs_hybrid_forward_heavy_attack|W (Forward) + Heavy Attack
+2117035112|        |option_acs_hybrid_special_attack|Special Attack (Whirl)
+2117035113|        |option_acs_hybrid_forward_special_attack|W (Forward) + Special Attack (Whirl)
+2117035114|        |option_acs_hybrid_counter_attack|Counterattack/Parry Skill
+2117035115|        |panel_acs_taunt_settings|Taunt System Settings
+2117035116|        |preset_Mods_acs_name_acs_taunt_settings|ACS: Taunt System
+2117035117|        |preset_Mods_combat_acs_name_acs_taunt_settings|ACS: Taunt System
+2117035118|        |preset_Mods_gameplay_acs_name_acs_taunt_settings|ACS: Taunt System
+2117035119|        |preset_Mods_miscellaneous_acs_name_acs_taunt_settings|ACS: Taunt System
+2117035120|        |preset_value_acs_taunt_settings_default|Default
+2117035121|        |preset_value_acs_taunt_settings_off|Off
+2117035122|        |option_acs_taunt_system_enabled|Taunt System Enabled
+2117035123|        |option_acs_i_wanna_play_gwent_enabled|I WANNA PLAY GWENT
+2117035124|        |option_acs_combat_taunt_enabled|Abspotten aktiviert
+2117035125|        |panel_acs_movement_settings|Movement Settings
+2117035126|        |preset_Mods_acs_name_acs_movement_settings|ACS: Movement
+2117035127|        |preset_Mods_combat_acs_name_acs_movement_settings|ACS: Movement
+2117035128|        |preset_Mods_gameplay_acs_name_acs_movement_settings|ACS: Movement
+2117035129|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings|ACS: Movement
+2117035130|        |preset_value_acs_movement_settings_default|Default
+2117035131|        |preset_value_acs_movement_settings_off|Off
+2117035132|        |option_acs_jump_extend|Jump Extender Enabled
+2117035133|        |option_acs_jump_extend_effect|<font color="#ff0000">—————</font> Jump Extender Effects Enabled
+2117035134|        |option_acs_jump_extend_normal_height|<font color="#ff0000">—————</font> Normal Jump Height (Meters)
+2117035135|        |option_acs_jump_extend_normal_distance|<font color="#ff0000">—————</font> Normal Jump Distance (Meters)
+2117035136|        |option_acs_jump_extend_sprinting_height|<font color="#ff0000">—————</font> Sprinting Jump Height (Meters)
+2117035137|        |option_acs_jump_extend_sprinting_distance|<font color="#ff0000">—————</font> Sprinting Jump Distance (Meters)
+2117035138|        |option_acs_bruxa_dash|Bruxa Dash (Hold Sprint + Forward (W))
+2117035139|        |option_acs_bruxa_dash_input|<font color="#ff0000">—————</font> Bruxa Dash Input
+2117035140|        |preset_value_acs_bruxa_dash_single_tap_sprint|Single Tap Forward (W)
+2117035141|        |preset_value_acs_bruxa_dash_double_tap_sprint|Double Tap Forward (W)
+2117035142|        |option_acs_bruxa_dash_normal_distance|<font color="#ff0000">—————</font> Exploration Distance (Meters)
+2117035143|        |option_acs_bruxa_dash_combat_distance|<font color="#ff0000">—————</font> Combat Distance (Meters)
+2117035144|        |option_acs_wraith_mode|Wraith Mode (Witcher Sense + Hold Sprint + Forward (W))
+2117035145|        |option_acs_wraith_mode_input|<font color="#ff0000">—————</font> Wraith Mode Input
+2117035146|        |preset_value_acs_wraith_mode_single_tap_sprint|Single Tap Forward (W)
+2117035147|        |preset_value_acs_wraith_mode_double_tap_sprint|Double Tap Forward (W)
+2117035148|        |option_acs_bruxa_leap_attack|Bruxa Leap (No Sprint + Doubletap + Forward (W))
+2117035149|        |option_acs_bruxa_dodge_center|Bruxa Dodge Back Center (Doubletap + Back (S))
+2117035150|        |option_acs_bruxa_dodge_left|Bruxa Dodge Back Left (Doubletap + Left (A))
+2117035151|        |option_acs_bruxa_dodge_right|Bruxa Dodge Back Right (Doubletap + Right (D))
+2117035152|        |option_acs_bruxa_dodge_slide_back|Slide Back Dodge (Back (S) + Dodge)
+2117035153|        |option_acs_wild_hunt_blink|Teleport Dodge (Back (S) + Roll)
+2117035154|        |option_acs_dodge_effects|Additional Effects for Normal Dodge and Roll
+2117035155|        |panel_acs_special_abilities_settings|Special Abilities Settings
+2117035156|        |preset_Mods_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035157|        |preset_Mods_combat_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035158|        |preset_Mods_gameplay_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035159|        |preset_Mods_miscellaneous_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035160|        |preset_value_acs_special_abilities_settings_default|Default
+2117035161|        |preset_value_acs_special_abilities_settings_off|Off
+2117035162|        |option_acs_summoned_shades|Summoned Shades (Back (S) + Doubletap Parry)
+2117035163|        |option_acs_beam_attack|Aspect of the Djinn (Back (S) + Parry While Locked On)
+2117035164|        |option_acs_sword_array|Summoned Swords (Forward (W) + Doubletap Parry + Full Focus)
+2117035165|        |option_acs_shield_entity|Aspect of the Hym (Doubletap + Hold Parry + Shield)
+2117035166|        |option_acs_quen_monster_summon|Wolves/Centipede Summon (Doubletap + Hold Parry + Olgierd Weapon)
+2117035167|        |option_acs_yrden_skele_summon|Necromancy (Doubletap + Hold Parry + Imlerith Weapon)
+2117035168|        |option_acs_aard_pull|Bat Swarm (Doubletap + Hold Parry + Sword Claws)
+2117035169|        |option_acs_bruxa_camo_decoy|Bruxa Camouflage (Doubletap + Hold Parry + Vampire Claws)
+2117035170|        |option_acs_bruxa_bite|Bruxa Bite (Doubletap + Forward (W) + Full Adrenaline)
+2117035171|        |panel_acs_damage_settings|Damage Settings
+2117035172|        |preset_Mods_acs_name_acs_damage_settings|ACS: Damage
+2117035173|        |preset_Mods_combat_acs_name_acs_damage_settings|ACS: Damage
+2117035174|        |preset_Mods_gameplay_acs_name_acs_damage_settings|ACS: Damage
+2117035175|        |preset_Mods_miscellaneous_acs_name_acs_damage_settings|ACS: Damage
+2117035176|        |preset_value_acs_damage_settings_default|DEFAULT
+2117035177|        |preset_value_acs_damage_settings_default_max|<font color="#f73636">DEFAULT MAX</font>
+2117035178|        |preset_value_acs_damage_settings_max|<font color="#ff0000">GIVE ME DAMAGE</font>
+2117035179|        |option_acs_player_fall_damage|Player Fall Damage For Extreme Heights: (0 = No Damage)
+2117035180|        |option_acs_vampire_claws_human_max_damage|Vampire Claws  : <u>Human Maximum</u> Health Damage % <font color="#fadc32">( 1 = 100% )</font>
+2117035181|        |option_acs_vampire_claws_human_min_damage|<font color="#ff0000">—————</font>  : <u>Human Minimum</u> Health Damage %
+2117035182|        |option_acs_vampire_claws_monster_max_damage|<font color="#ff0000">—————</font>  : <u>Monster Maximum</u> Health Damage %
+2117035183|        |option_acs_vampire_claws_monster_min_damage|<font color="#ff0000">—————</font>  : <u>Monster Minimum</u> Health Damage %
+2117035184|        |item_name_acs_spear_1|Spear: Type A
+2117035185|        |item_desc_acs_spear_1|Never go hunting for buffalo with a dull spear. It's pointless.
+2117035186|        |item_name_acs_spear_2|Spear: Type B
+2117035187|        |item_desc_acs_spear_2|You should not disagree with my spear. It has a point.
+2117035188|        |item_name_acs_wild_hunt_spear|Wild Hunt Spear
+2117035189|        |item_desc_acs_wild_hunt_spear|A spear belonging to a warrior of the dreaded Wild Hunt.
+2117035190|        |item_name_acs_halberd_1|Halberd: Type A
+2117035191|        |item_desc_acs_halberd_1|A good mid-ranged weapon for when one is surrounded.
+2117035192|        |item_name_acs_halberd_2|Halberd: Type B
+2117035193|        |item_desc_acs_halberd_2|A good mid-ranged weapon for chopping vegetables at a distance.
+2117035194|        |item_name_acs_wild_hunt_halberd|Wild Hunt Halberd
+2117035195|        |item_desc_acs_wild_hunt_halberd|A halberd belonging to a warrior of the dreaded Wild Hunt.
+2117035196|        |item_name_acs_guisarme_1|Guisarme: Type A
+2117035197|        |item_desc_acs_guisarme_1|The barbed tips adds a nice extra flair.
+2117035198|        |item_name_acs_guisarme_2|Guisarme: Type B
+2117035199|        |item_desc_acs_guisarme_2|It's like a spear, but more stabby.
+2117035200|        |item_name_acs_long_metal_pole|Metal Pole
+2117035201|        |item_desc_acs_long_metal_pole|Perfect for bludgeoning your enemies with at mid-range distance.
+2117035202|        |item_name_acs_mace_1|Mace: Type A
+2117035203|        |item_desc_acs_mace_1|Smells a bit like pepper.
+2117035204|        |item_name_acs_mace_2|Mace: Type B
+2117035205|        |item_desc_acs_mace_2|Thieves will think twice robbing you with this in your hand.
+2117035206|        |item_name_acs_axe_1|Axe: Type A
+2117035207|        |item_desc_acs_axe_1|A sturdy axe.
+2117035208|        |item_name_acs_axe_2|Axe: Type B
+2117035209|        |item_desc_acs_axe_2|Not a body spray.
+2117035210|        |item_name_acs_great_axe_1|Greataxe: Type A
+2117035211|        |item_desc_acs_great_axe_1|Did you hear about the lumberjack who lost his job? They gave him the axe, he just couldn’t hack it.
+2117035212|        |item_name_acs_great_axe_2|Greataxe: Type B
+2117035213|        |item_desc_acs_great_axe_2|In the middle of the battle, the soldier pulled his comrade aside and said: “Just take a few minutes to rel-axe! I don’t want you to get a splitting headache!”
+2117035214|        |item_name_acs_wild_hunt_axe|Wild Hunt Axe
+2117035215|        |item_desc_acs_wild_hunt_axe|An axe belonging to a warrior of the dreaded Wild Hunt.
+2117035216|        |item_name_acs_dwarven_axe|Dwarven Axe
+2117035217|        |item_desc_acs_dwarven_axe|And my axe!
+2117035218|        |item_name_acs_dwarven_hammer|Dwarven Hammer
+2117035219|        |item_desc_acs_dwarven_hammer|And my hammer!
+2117035220|        |item_name_acs_twohanded_hammer_1|Two-Handed Hammer: Type A
+2117035221|        |item_desc_acs_twohanded_hammer_1|It's hammer time!
+2117035222|        |item_name_acs_twohanded_hammer_2|Two-Handed Hammer: Type B
+2117035223|        |item_desc_acs_twohanded_hammer_2|Hammers are the dumbest among all the tools. Probably because it isn't really the sharpest tool in the shed.
+2117035224|        |item_name_acs_wild_hunt_hammer|Wild Hunt Hammer
+2117035225|        |item_desc_acs_wild_hunt_hammer|A hammer belonging to a warrior of the dreaded Wild Hunt.
+2117035226|        |item_name_acs_hatchet|Hatchet
+2117035227|        |item_desc_acs_hatchet|My ex wife and I have decided to quit arguing and bury the hatchet. Now we just have to decide whether it should be in her chest or mine!
+2117035228|        |item_name_acs_small_blackjack|Small Blackjack
+2117035229|        |item_desc_acs_small_blackjack|I used to practice blackjack by using my bedroom wall as an opponent. I stopped when I realised the house always wins.
+2117035230|        |item_name_acs_club|Club
+2117035231|        |item_desc_acs_club|I don’t eat club sandwiches. I quit cold turkey.
+2117035232|        |item_name_acs_blackjack|Blackjack
+2117035233|        |item_desc_acs_blackjack|My dad is a blackjack dealer. He hit me until I was 21.
+2117035234|        |item_name_acs_poker|Poker
+2117035235|        |item_desc_acs_poker|Why was a vampire so nervous about the poker game he was playing? His adversary was raising the stake.
+2117035236|        |item_name_acs_staff|Staff
+2117035237|        |item_desc_acs_staff|Staff sergeant reporting for duty.
+2117035238|        |item_name_acs_lucerne_hammer|Lucerne Hammer
+2117035239|        |item_desc_acs_lucerne_hammer|I've always wondered how hammers fall down. Then one day it hit me.
+2117035240|        |item_name_acs_wand|Wand
+2117035241|        |item_desc_acs_wand|Make a wish.
+2117035242|        |item_name_acs_oar|Oar
+2117035243|        |item_desc_acs_oar|Row, row, row your boat.
+2117035244|        |item_name_acs_pickaxe|Pickaxe
+2117035245|        |item_desc_acs_pickaxe|What do you call a bent pickaxe? A miner problem.
+2117035246|        |item_name_acs_shovel|Shovel
+2117035247|        |item_desc_acs_shovel|What did the guy exclaim after inventing the shovel? "It's ground breaking!"
+2117035248|        |item_name_acs_broom|Broom
+2117035249|        |item_desc_acs_broom|Why was the broom late? It over swept.
+2117035250|        |item_name_acs_paling|Paling
+2117035251|        |item_desc_acs_paling|Why do cemeteries have paling around them? People are dying to get in.
+2117035252|        |item_name_acs_pitchfork|Pitchfork
+2117035253|        |item_desc_acs_pitchfork|Ah yes. My old enemy.
+2117035254|        |item_name_acs_rake|Rake
+2117035255|        |item_desc_acs_rake|Make it or rake it.
+2117035256|        |item_name_acs_scoop|Scoop
+2117035257|        |item_desc_acs_scoop|Where did I leave that ice cream?
+2117035258|        |item_name_acs_scythe|Scythe
+2117035259|        |item_desc_acs_scythe|What do you call a serious man with a scythe that sneaks around outside people’s windows? The grim peeper.
+2117035260|        |item_name_acs_shepherd_stick|Shepherd Stick
+2117035261|        |item_desc_acs_shepherd_stick|I used to be a shepherd, but I have no idea how many sheep I had. Kept falling asleep trying to count them.
+2117035262|        |item_name_acs_greg_sword|Colossal Sword
+2117035263|        |item_desc_acs_greg_sword|Definitely not compensating for anything.
+2117035264|        |item_name_acs_nazairi_mace|Nazairi Mace
+2117035265|        |item_desc_acs_nazairi_mace|Why is mace an assault when it's really a pepper?
+2117035266|        |item_name_acs_hakland_spear|Ofiri Spear
+2117035267|        |item_desc_acs_hakland_spear|Definitely did not steal this from that pile of weapons the Ofiri merchant has outside of his tent.
+2117035268|        |item_name_acs_imlerith_mace|Imlerith Mace
+2117035269|        |item_desc_acs_imlerith_mace|One of many replicas because Imlerith kept losing his mace.
+2117035270|        |item_name_acs_eredin_sword|Eredin Sword
+2117035271|        |item_desc_acs_eredin_sword|One of many replicas because Eredin kept losing his sword.
+2117035272|        |item_name_acs_caranthir_staff|Caranthir's Staff
+2117035273|        |item_desc_acs_caranthir_staff|One of many replicas because Caranthir kept losing his staff.
+2117035274|        |item_name_acs_wild_hunt_axe_2|Small Wild Hunt Axe
+2117035275|        |item_desc_acs_wild_hunt_axe_2|Smol axe.
+2117035276|        |item_name_acs_giant_weapon_1|Giant Anchor
+2117035277|        |item_desc_acs_giant_weapon_1|How did this get here?
+2117035278|        |item_name_acs_giant_weapon_2|Giant Stone Wheel
+2117035279|        |item_desc_acs_giant_weapon_2|How did this get here?
+2117035280|        |item_name_acs_giant_weapon_3|Cloud Giant Weapon
+2117035281|        |item_desc_acs_giant_weapon_3|How did this get here?
+2117035282|        |item_name_acs_knight_lance_1|Knight Lance: Type A
+2117035283|        |item_desc_acs_knight_lance_1|What do you call a man with a jousting pole on his head? Lance.
+2117035284|        |item_name_acs_knight_lance_2|Knight Lance: Type B
+2117035285|        |item_desc_acs_knight_lance_2|I bumped into my rival jousting opponent. We exchanged lances.
+2117035286|        |item_name_acs_zoltan_axe|Zoltan's Axe
+2117035287|        |item_desc_acs_zoltan_axe|Zoltan doesn't need to know you have this.
+2117035288|        |item_name_acs_spear_1_silver|Silver Spear: Type A 
+2117035289|        |item_name_acs_spear_2_silver|Silver Spear: Type B
+2117035290|        |item_name_acs_wild_hunt_spear_silver|Silver Wild Hunt Spear
+2117035291|        |item_name_acs_halberd_1_silver|Silver Halberd: Type A
+2117035292|        |item_name_acs_halberd_2_silver|Silver Halberd: Type B
+2117035293|        |item_name_acs_wild_hunt_halberd_silver|Silver Wild Hunt Halberd
+2117035294|        |item_name_acs_guisarme_1_silver|Silver Guisarme: Type A
+2117035295|        |item_name_acs_guisarme_2_silver|Silver Guisarme: Type B
+2117035296|        |item_name_acs_great_axe_1_silver|Silver Greataxe: Type A
+2117035297|        |item_name_acs_great_axe_2_silver|Silver Greataxe: Type B
+2117035298|        |item_name_acs_wild_hunt_axe_silver|Silver Wild Hunt Axe
+2117035299|        |item_name_acs_twohanded_hammer_1_silver|Silver Two-Handed Hammer: Type A
+2117035300|        |item_name_acs_twohanded_hammer_2_silver|Silver Two-Handed Hammer: Type B
+2117035301|        |item_name_acs_wild_hunt_hammer_silver|Silver Wild Hunt Hammer
+2117035302|        |item_name_acs_greg_sword_silver|Silver Colossal Sword
+2117035303|        |item_name_acs_hakland_spear_silver|Silver Ofiri Spear
+2117035304|        |item_name_acs_imlerith_mace_silver|Silver Imlerith Mace
+2117035305|        |item_name_acs_eredin_sword_silver|Silver Eredin Sword
+2117035306|        |item_name_acs_caranthir_staff_silver|Silver Caranthir's Staff
+2117035307|        |item_name_acs_giant_weapon_1_silver|Silver Giant Anchor
+2117035308|        |item_name_acs_giant_weapon_2_silver|Silver Giant Stone Wheel
+2117035309|        |item_name_acs_giant_weapon_3_silver|Silver Cloud Giant Weapon
+2117035310|        |item_name_acs_knight_lance_1_silver|Silver Knight Lance: Type A
+2117035311|        |item_name_acs_knight_lance_2_silver|Silver Knight Lance: Type B
+2117035312|        |item_name_acs_zoltan_axe_silver|Silver Zoltan's Axe
+2117035313|        |item_name_acs_long_metal_pole_silver|Silver Metal Pole
+2117035314|        |option_acs_player_scale|Set Player Size (1 = Default)
+2117035315|        |option_dlc_acs_name|MOD: Advanced Combat System
+2117035316|        ||Berstuk, The Forgotten Forest God
+2117035317|        ||Shadow of the Forest God
