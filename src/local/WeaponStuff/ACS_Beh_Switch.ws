@@ -5,7 +5,8 @@ function ACS_CombatBehSwitch()
 	vBehSwitch = new cBehSwitch in theGame;
 	
 	if (!thePlayer.IsCiri() 
-	&& thePlayer.IsAlive())
+	&& thePlayer.IsAlive()
+	)
 	{
 		if (!thePlayer.IsThrowingItemWithAim()
 		&& !thePlayer.IsThrowingItem()
@@ -62,7 +63,7 @@ function ACS_CombatBehSwitch()
 
 				NPC_Fear_Revert();
 
-				GetACSWatcher().AddTimer('ACS_DetachBehaviorTimer', 2, false);
+				//GetACSWatcher().AddTimer('ACS_DetachBehaviorTimer', 2, false);
 
 				IgniBowDestroy();
 				AxiiBowDestroy();
@@ -6806,14 +6807,39 @@ state ACS_EnemyBehDetach_Engage in cACS_EnemyBehDetach
 
 				actor = actors[i];
 				
-				if (!actor.IsAlive()
-				&& actor.HasTag('ACS_One_Hand_Swap_Stage_1'))
+				if ( !actor.IsAlive() )
 				{
-					actor.DetachBehavior('sword_2handed');
-					actor.DetachBehavior('Witcher');
-					actor.DetachBehavior( 'Shield' );
-					actor.DetachBehavior( 'sword_1handed' );
+					if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
+					{
+						actor.DetachBehavior('sword_2handed');
+
+						actor.TurnOnRagdoll();
+
+						actor.RemoveTag('ACS_Swapped_To_2h_Sword');
+					}
+
+					if( actor.HasTag('ACS_Swapped_To_Witcher') )
+					{
+						actor.DetachBehavior('Witcher');
+
+						actor.TurnOnRagdoll();
+
+						actor.RemoveTag('ACS_Swapped_To_Witcher');
+					}
+
+
+					if( actor.HasTag('ACS_Swapped_To_Shield') )
+					{
+						actor.DetachBehavior( 'Shield' );
+
+						actor.TurnOnRagdoll();
+
+						actor.RemoveTag('ACS_Swapped_To_Shield');
+					}
+
+					//actor.DetachBehavior( 'sword_1handed' );
 				}
+				
 			}
 		}
 	}

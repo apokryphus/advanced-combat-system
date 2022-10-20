@@ -2084,7 +2084,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			thePlayer.UpdateDisplayTarget( true );
 
-			thePlayer.UpdateLookAtTarget();
+			//thePlayer.UpdateLookAtTarget();
 		}
 	}
 
@@ -2107,6 +2107,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			actor = (CActor)( thePlayer.GetTarget() );	
 		}
+
+		//actor.ResetAttitude( thePlayer );
 
 		theGame.GetBehTreeReactionManager().CreateReactionEvent( thePlayer, 'PlayerEvade', 1.0f, 10.0f, -1.0f, -1 );	
 
@@ -3346,7 +3348,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 			}
 
-			if ( thePlayer.IsInCombat() )
+			if ( thePlayer.IsInCombat() 
+			&& thePlayer.IsAlive())
 			{
 				SetPlayerTarget();
 			}
@@ -7248,7 +7251,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );						
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' );						
 							}
 						}		
 					}
@@ -7261,7 +7264,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );							
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' );							
 							}
 						}
 					}
@@ -7273,7 +7276,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								aard_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' );					
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' );					
 							}
 						}
 					}
@@ -7494,7 +7497,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7507,7 +7510,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7519,7 +7522,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_sword_trail();	
-								npc.AddEffectDefault( EET_Stagger, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_Stagger, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7711,7 +7714,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 
 								ACS_Passive_Weapon_Effects_Switch();	
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7724,7 +7727,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7736,7 +7739,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								yrden_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_HeavyKnockdown, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_HeavyKnockdown, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7921,7 +7924,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7934,7 +7937,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -7946,7 +7949,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -8131,7 +8134,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -8144,7 +8147,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -8156,7 +8159,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_Passive_Weapon_Effects_Switch();
 								axii_secondary_sword_trail();		
-								npc.AddEffectDefault( EET_SlowdownFrost, thePlayer, 'acs_weapon_effects' ); 							
+								npc.AddEffectDefault( EET_SlowdownFrost, npc, 'console' ); 							
 							}
 						}
 					}
@@ -8346,7 +8349,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								ACS_Passive_Weapon_Effects_Switch();
 								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8360,7 +8363,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								ACS_Passive_Weapon_Effects_Switch();
 								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8373,7 +8376,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								ACS_Passive_Weapon_Effects_Switch();
 								//quen_sword_glow();	
 								quen_sword_trail();
-								npc.AddEffectDefault( EET_Blindness, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Blindness, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8559,7 +8562,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8572,7 +8575,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8584,7 +8587,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{ 	
 								ACS_Passive_Weapon_Effects_Switch();
 								quen_secondary_sword_trail();	
-								npc.AddEffectDefault( EET_Slowdown, thePlayer, 'acs_weapon_effects' ); 						
+								npc.AddEffectDefault( EET_Slowdown, npc, 'console' ); 						
 							}
 						}
 					}
@@ -8880,6 +8883,42 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		playerVitality = thePlayer.GetStatMax( BCS_Vitality );
 		
 		heal = playerVitality * 0.025;
+
+		if ( 
+		npc.UsesVitality() && npc.GetStat( BCS_Vitality ) <= 0.1
+		)
+		{
+			if( npc.HasTag('ACS_One_Hand_Swap_Stage_1') )
+			{
+				npc.RemoveTag('ACS_One_Hand_Swap_Stage_1');
+			}
+
+			if( npc.HasTag('ACS_One_Hand_Swap_Stage_2') )
+			{
+				npc.RemoveTag('ACS_One_Hand_Swap_Stage_2');
+			}
+
+			if( npc.HasTag('ACS_Swapped_To_2h_Sword') )
+			{
+				npc.DetachBehavior('sword_2handed');
+
+				npc.RemoveTag('ACS_Swapped_To_2h_Sword');
+			}
+
+			if( npc.HasTag('ACS_Swapped_To_Witcher') )
+			{
+				npc.DetachBehavior('Witcher');
+
+				npc.RemoveTag('ACS_Swapped_To_Witcher');
+			}
+
+			if( npc.HasTag('ACS_Swapped_To_Shield') )
+			{
+				npc.DetachBehavior( 'Shield' );
+
+				npc.RemoveTag('ACS_Swapped_To_Shield');
+			}
+		}
 
 		if (playerAttacker && npc &&
 		( 
@@ -15770,7 +15809,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		theGame.GetGameLanguageName(audioLanguage,language); 
 
-		label = GetLocStringById( 2112923078 );
+		label = GetLocStringById( 2117035078 );
 
 		label_2 = GetLocStringByKey("preset_Mods_acs_name_acs_taunt_settings");
 
@@ -15793,7 +15832,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		theGame.GetGameLanguageName(audioLang,lang); 
 
-		label = GetLocStringById( 2112923078 );
+		label = GetLocStringById( 2117035078 );
 
 		label_2 = GetLocStringByKey("preset_Mods_acs_name_acs_taunt_settings");
 
@@ -17347,7 +17386,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		var label, label_2	:string; 
 
-		label = GetLocStringById( 2112923009 ); 
+		label = GetLocStringById( 2117035009 ); 
 
 		label_2 = GetLocStringByKey("preset_Mods_acs_name_acs_taunt_settings");
 
@@ -17369,7 +17408,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		theGame.GetGameLanguageName(audioLang,lang); 
 
-		label = GetLocStringById( 2112923009 );
+		label = GetLocStringById( 2117035009 );
 
 		label_2 = GetLocStringByKey("preset_value_acs_hybrid_mode_imlerith_attack");
 

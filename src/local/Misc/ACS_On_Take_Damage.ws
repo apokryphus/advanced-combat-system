@@ -155,6 +155,7 @@ function ACS_Player_Attack(action: W3DamageAction)
 		&& npc.IsHuman()
 		&& npc.IsMan()
 		&& ((CNewNPC)npc).GetNPCType() != ENGT_Quest
+		&& !npc.HasTag( 'ethereal' )
 		)
 		{
 			itemId_r = npc.GetInventory().GetItemFromSlot('r_weapon');
@@ -166,109 +167,167 @@ function ACS_Player_Attack(action: W3DamageAction)
 			npc.GetInventory().GetItemTags(itemId_l, itemTags_l);
 
 			if ( 
-			itemTags_r.Contains('sword1h') 
-			|| itemTags_r.Contains('axe1h')
-			|| itemTags_r.Contains('blunt1h')
-			|| itemTags_r.Contains('steelsword')
+			npc.GetStat( BCS_Vitality ) <= 0.1
 			)
 			{
-				if ( 
-				((npc.GetStat(BCS_Vitality) <= npc.GetStatMax(BCS_Vitality) * RandRangeF(0.75,0.5) )
-				|| (npc.GetCurrentHealth() - action.processedDmg.vitalityDamage <= npc.GetStatMax(BCS_Vitality) * RandRangeF(0.75,0.5)))
-				&& !npc.HasTag('ACS_One_Hand_Swap_Stage_1'))
+				if( npc.HasTag('ACS_One_Hand_Swap_Stage_1') )
 				{
-					if( RandF() < 0.5 ) 
-					{
-						ACS_EnemyBehSwitch_OnHit(2);
-
-						npc.AddTag('ACS_Swapped_To_2h_Sword');
-					}
-					else
-					{
-						ACS_EnemyBehSwitch_OnHit(3);
-
-						npc.AddTag('ACS_Swapped_To_Witcher');
-					}
-
-					npc.AddTag('ACS_One_Hand_Swap_Stage_1');
+					npc.RemoveTag('ACS_One_Hand_Swap_Stage_1');
 				}
-				else if ( 
-				((npc.GetStat(BCS_Vitality) < npc.GetStatMax(BCS_Vitality) * RandRangeF(0.5,0.25) )
-				|| (npc.GetCurrentHealth() - action.processedDmg.vitalityDamage < npc.GetStatMax(BCS_Vitality) * RandRangeF(0.5,0.25)))
-				&& !npc.HasTag('ACS_One_Hand_Swap_Stage_2'))
+
+				if( npc.HasTag('ACS_One_Hand_Swap_Stage_2') )
 				{
-					if( npc.HasTag('ACS_Swapped_To_Witcher') ) 
+					npc.RemoveTag('ACS_One_Hand_Swap_Stage_2');
+				}
+
+				if( npc.HasTag('ACS_Swapped_To_2h_Sword') )
+				{
+					npc.DetachBehavior('sword_2handed');
+
+					npc.RemoveTag('ACS_Swapped_To_2h_Sword');
+				}
+
+				if( npc.HasTag('ACS_Swapped_To_Witcher') )
+				{
+					npc.DetachBehavior('Witcher');
+
+					npc.RemoveTag('ACS_Swapped_To_Witcher');
+				}
+
+				if( npc.HasTag('ACS_Swapped_To_Shield') )
+				{
+					npc.DetachBehavior( 'Shield' );
+
+					npc.RemoveTag('ACS_Swapped_To_Shield');
+				}
+			}
+			else
+			{
+				if ( 
+				itemTags_r.Contains('sword1h') 
+				|| itemTags_r.Contains('axe1h')
+				|| itemTags_r.Contains('blunt1h')
+				|| itemTags_r.Contains('steelsword')
+				)
+				{
+					if ( 
+					((npc.GetStat(BCS_Vitality) <= npc.GetStatMax(BCS_Vitality) * RandRangeF(0.75,0.5) )
+					|| (npc.GetCurrentHealth() - action.processedDmg.vitalityDamage <= npc.GetStatMax(BCS_Vitality) * RandRangeF(0.75,0.5)))
+					&& !npc.HasTag('ACS_One_Hand_Swap_Stage_1'))
 					{
-						if (
-						itemTags_l.Contains('Shield') 
-						|| itemTags_l.Contains('shield') 
-						)
+						if( RandF() < 0.5 ) 
 						{
 							ACS_EnemyBehSwitch_OnHit(2);
+
+							npc.AddTag('ACS_Swapped_To_2h_Sword');
 						}
 						else
-						{
-							if (thePlayer.IsGuarded())
-							{
-								if( RandF() < 0.75 ) 
-								{
-									ACS_EnemyBehSwitch_OnHit(4);
-								}
-								else
-								{
-									ACS_EnemyBehSwitch_OnHit(2);
-								}
-							}
-							else
-							{
-								if( RandF() < 0.75 ) 
-								{
-									ACS_EnemyBehSwitch_OnHit(2);
-								}
-								else
-								{
-									ACS_EnemyBehSwitch_OnHit(4);
-								}
-							}
-						}
-					}
-					else if (npc.HasTag('ACS_Swapped_To_2h_Sword'))
-					{
-						if (
-						itemTags_l.Contains('Shield') 
-						|| itemTags_l.Contains('shield') 
-						)
 						{
 							ACS_EnemyBehSwitch_OnHit(3);
+
+							npc.AddTag('ACS_Swapped_To_Witcher');
 						}
-						else
+
+						npc.AddTag('ACS_One_Hand_Swap_Stage_1');
+					}
+					else if ( 
+					((npc.GetStat(BCS_Vitality) < npc.GetStatMax(BCS_Vitality) * RandRangeF(0.5,0.25) )
+					|| (npc.GetCurrentHealth() - action.processedDmg.vitalityDamage < npc.GetStatMax(BCS_Vitality) * RandRangeF(0.5,0.25)))
+					&& !npc.HasTag('ACS_One_Hand_Swap_Stage_2'))
+					{
+						if( npc.HasTag('ACS_Swapped_To_Witcher') ) 
 						{
-							if (thePlayer.IsGuarded())
+							if (
+							itemTags_l.Contains('Shield') 
+							|| itemTags_l.Contains('shield') 
+							)
 							{
-								if( RandF() < 0.75 ) 
-								{
-									ACS_EnemyBehSwitch_OnHit(4);
-								}
-								else
-								{
-									ACS_EnemyBehSwitch_OnHit(3);
-								}
+								ACS_EnemyBehSwitch_OnHit(2);
+
+								npc.AddTag('ACS_Swapped_To_2h_Sword');
 							}
 							else
 							{
-								if( RandF() < 0.75 ) 
+								if (thePlayer.IsGuarded())
 								{
-									ACS_EnemyBehSwitch_OnHit(3);
+									if( RandF() < 0.75 ) 
+									{
+										ACS_EnemyBehSwitch_OnHit(4);
+
+										npc.AddTag('ACS_Swapped_To_Shield');
+									}
+									else
+									{
+										ACS_EnemyBehSwitch_OnHit(2);
+
+										npc.AddTag('ACS_Swapped_To_2h_Sword');
+									}
 								}
 								else
 								{
-									ACS_EnemyBehSwitch_OnHit(4);
+									if( RandF() < 0.75 ) 
+									{
+										ACS_EnemyBehSwitch_OnHit(2);
+
+										npc.AddTag('ACS_Swapped_To_2h_Sword');
+									}
+									else
+									{
+										ACS_EnemyBehSwitch_OnHit(4);
+
+										npc.AddTag('ACS_Swapped_To_Shield');
+									}
 								}
 							}
 						}
-					}
+						else if (npc.HasTag('ACS_Swapped_To_2h_Sword'))
+						{
+							if (
+							itemTags_l.Contains('Shield') 
+							|| itemTags_l.Contains('shield') 
+							)
+							{
+								ACS_EnemyBehSwitch_OnHit(3);
 
-					npc.AddTag('ACS_One_Hand_Swap_Stage_2');
+								npc.AddTag('ACS_Swapped_To_Witcher');
+							}
+							else
+							{
+								if (thePlayer.IsGuarded())
+								{
+									if( RandF() < 0.75 ) 
+									{
+										ACS_EnemyBehSwitch_OnHit(4);
+
+										npc.AddTag('ACS_Swapped_To_Shield');
+									}
+									else
+									{
+										ACS_EnemyBehSwitch_OnHit(3);
+
+										npc.AddTag('ACS_Swapped_To_Witcher');
+									}
+								}
+								else
+								{
+									if( RandF() < 0.75 ) 
+									{
+										ACS_EnemyBehSwitch_OnHit(3);
+
+										npc.AddTag('ACS_Swapped_To_Witcher');
+									}
+									else
+									{
+										ACS_EnemyBehSwitch_OnHit(4);
+
+										npc.AddTag('ACS_Swapped_To_Shield');
+									}
+								}
+							}
+						}
+
+						npc.AddTag('ACS_One_Hand_Swap_Stage_2');
+					}
 				}
 			}
 		}
@@ -1572,17 +1631,17 @@ function ACS_Player_Guard(action: W3DamageAction)
 
 function ACS_Take_Damage(action: W3DamageAction)
 {
-    var playerAttacker, playerVictim						: CPlayer;
-	var npc, npcAttacker 									: CActor;
-	var animatedComponentA 									: CAnimatedComponent;
-	var settingsA, settingsB, settings_interrupt			: SAnimatedComponentSlotAnimationSettings;
-	var movementAdjustor									: CMovementAdjustor;
-	var ticket 												: SMovementAdjustmentRequestTicket;
-	var item												: SItemUniqueId;
-	var dmg													: W3DamageAction;
-	var damageMax, damageMin								: float;
-	var vACS_Shield_Summon 									: cACS_Shield_Summon;
-	var heal, playerVitality 																										: float;
+    var playerAttacker, playerVictim																								: CPlayer;
+	var npc, npcAttacker 																											: CActor;
+	var animatedComponentA 																											: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor																											: CMovementAdjustor;
+	var ticket 																														: SMovementAdjustmentRequestTicket;
+	var item																														: SItemUniqueId;
+	var dmg																															: W3DamageAction;
+	var damageMax, damageMin																										: float;
+	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
+	var heal, playerVitality, money 																								: float;
 	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence													: float;
 	
     npc = (CActor)action.victim;
@@ -1618,8 +1677,6 @@ function ACS_Take_Damage(action: W3DamageAction)
 
     if ( playerVictim
 	//&& !playerAttacker
-	&& !action.IsDoTDamage()
-	&& action.GetHitReactionType() != EHRT_Reflect
 	&& action.GetBuffSourceName() != "vampirism" 
 	&& action.GetBuffSourceName() != "FallingDamage" 
 	&& !thePlayer.IsCurrentlyDodging()
@@ -1629,6 +1686,7 @@ function ACS_Take_Damage(action: W3DamageAction)
 	&& !thePlayer.IsGuarded()
 	&& !GetWitcherPlayer().IsAnyQuenActive()
 	&& !thePlayer.IsInGuardedState()
+	/*
 	&& (thePlayer.HasTag('aard_sword_equipped')
 	|| thePlayer.HasTag('aard_secondary_sword_equipped')
 	|| thePlayer.HasTag('yrden_sword_equipped')
@@ -1639,331 +1697,389 @@ function ACS_Take_Damage(action: W3DamageAction)
 	|| thePlayer.HasTag('quen_sword_equipped')
 	|| thePlayer.HasTag('igni_sword_equipped')
 	|| thePlayer.HasTag('igni_secondary_sword_equipped')
-	|| ( thePlayer.HasTag('vampire_claws_equipped') && !thePlayer.HasBuff(EET_BlackBlood) ))
+	|| thePlayer.HasTag('vampire_claws_equipped') )
+	*/
 	)
 	{	
 		if (
-		(thePlayer.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.01)
+		(thePlayer.GetCurrentHealth() - action.processedDmg.vitalityDamage <= 0.1)
 		) 
 		{
-			if (!GetWitcherPlayer().IsMutationActive( EPMT_Mutation11 ) || GetWitcherPlayer().HasBuff( EET_Mutation11Debuff ) || !GetWitcherPlayer().CanUseSkill(S_Sword_s01))
+			if (((CNewNPC)npcAttacker).GetNPCType() == ENGT_Guard)
 			{
-				ACS_ThingsThatShouldBeRemoved();
+				action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage - thePlayer.GetCurrentHealth();
+       			action.processedDmg.vitalityDamage -= 1.0;
 
-				thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
+				if (thePlayer.GetStat( BCS_Focus ) != 0)
+				{
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
+				}
+				
+				money = thePlayer.GetMoney();
+				
+				switch ( theGame.GetDifficultyLevel() )
+				{
+					case EDM_Easy:		money *= 0.025;  break;
+					case EDM_Medium:	money *= 0.050;  break;
+					case EDM_Hard:		money *= 0.075;  break;
+					case EDM_Hardcore:	money *= 0.1;   break;
+					default : 			money *= 0; 	 break;
+				}
+				
+				if (money != 0)
+				{
+					thePlayer.RemoveMoney((int)money);
+					GetWitcherPlayer().DisplayHudMessage( GetLocStringByKeyExt("panel_hud_message_guards_took_money") );
+				}
+				else
+				{
+					npcAttacker.SetHealthPerc(100);
+				}
+				
+				GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
 
-				thePlayer.ClearAnimationSpeedMultipliers();
+				movementAdjustor.CancelAll();
 
-				GetACSWatcher().Grow_Geralt_Immediate();
+				ACS_Hit_Animations(action);
+			}
+			else
+			{
+				if (!GetWitcherPlayer().IsMutationActive( EPMT_Mutation11 ) || GetWitcherPlayer().HasBuff( EET_Mutation11Debuff ) || !GetWitcherPlayer().CanUseSkill(S_Sword_s01))
+				{
+					ACS_ThingsThatShouldBeRemoved();
 
-				thePlayer.SoundEvent("cmb_play_dismemberment_gore");
+					if (thePlayer.GetStat( BCS_Focus ) != 0)
+					{
+						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
+					}
 
-				thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
+					thePlayer.ClearAnimationSpeedMultipliers();
 
-				thePlayer.SoundEvent("cmb_play_hit_heavy");
+					GetACSWatcher().Grow_Geralt_Immediate();
 
-				GetACSWatcher().RemoveTimer('ACS_Death_Delay_Animation');
+					thePlayer.SoundEvent("cmb_play_dismemberment_gore");
 
-				GetACSWatcher().RemoveTimer('ACS_ResetAnimation_On_Death');
+					thePlayer.SoundEvent("monster_dettlaff_monster_vein_hit_blood");
 
-				ACS_Death_Animations(action);
+					thePlayer.SoundEvent("cmb_play_hit_heavy");
+
+					GetACSWatcher().RemoveTimer('ACS_Death_Delay_Animation');
+
+					GetACSWatcher().RemoveTimer('ACS_ResetAnimation_On_Death');
+
+					ACS_Death_Animations(action);
+				}
 			}
 		}
 		else
-		{					
-			if ( npcAttacker.HasTag('ACS_taunted') )
+		{
+			if (!action.IsDoTDamage()
+			&& action.GetHitReactionType() != EHRT_Reflect)
 			{
-				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-				GetACSWatcher().Grow_Geralt_Immediate();
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				thePlayer.SetPlayerTarget( npcAttacker );
-
-				thePlayer.SetPlayerCombatTarget( npcAttacker );
-
-				thePlayer.UpdateDisplayTarget( true );
-
-				thePlayer.UpdateLookAtTarget();
-
-				thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-				if( !playerVictim.IsImmuneToBuff( EET_Bleeding ) && !playerVictim.HasBuff( EET_Bleeding ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Knockdown ) && !playerVictim.HasBuff( EET_Knockdown ) ) 
-				{ 	
-					if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-
-					playerVictim.AddEffectDefault( EET_Knockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-
-				ACS_PlayerHitEffects();
-
-				thePlayer.PlayEffectSingle('smoke_explosion');
-				thePlayer.StopEffect('smoke_explosion');
-			}
-			else if ( thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9
-			&& thePlayer.GetStat(BCS_Stamina) >= thePlayer.GetStatMax(BCS_Stamina) * 0.5
-			&& thePlayer.GetStat(BCS_Vitality) <= thePlayer.GetStatMax(BCS_Vitality) * 0.5
-			)
-			{
-				GetACSWatcher().Grow_Geralt_Immediate();
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				thePlayer.DrainFocus( thePlayer.GetStatMax(BCS_Focus) * 0.75 );
-
-				if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) )
+				if ( npcAttacker.HasTag('ACS_taunted') )
 				{
-					if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+					ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
+					movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.CancelAll();
+					thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+					thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+					thePlayer.ResetRawPlayerHeading();
+					ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+					movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+					GetACSWatcher().Grow_Geralt_Immediate();
+
+					thePlayer.ClearAnimationSpeedMultipliers();	
+
+					movementAdjustor.RotateTowards( ticket, npcAttacker );
+
+					thePlayer.SetPlayerTarget( npcAttacker );
+
+					thePlayer.SetPlayerCombatTarget( npcAttacker );
+
+					thePlayer.UpdateDisplayTarget( true );
+
+					thePlayer.UpdateLookAtTarget();
+
+					thePlayer.RaiseEvent( 'AttackInterrupt' );
+
+					if( !playerVictim.IsImmuneToBuff( EET_Bleeding ) && !playerVictim.HasBuff( EET_Bleeding ) ) 
+					{ 	
+						playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 							
 					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
-					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.3;
+					
+					if( !playerVictim.IsImmuneToBuff( EET_Knockdown ) && !playerVictim.HasBuff( EET_Knockdown ) ) 
+					{ 	
+						if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+						playerVictim.AddEffectDefault( EET_Knockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
 					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
+					
+					if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
+					{ 	
+						playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' ); 							
+					}
+
+					ACS_PlayerHitEffects();
+
+					thePlayer.PlayEffectSingle('smoke_explosion');
+					thePlayer.StopEffect('smoke_explosion');
+				}
+				else if ( thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9
+				&& thePlayer.GetStat(BCS_Stamina) >= thePlayer.GetStatMax(BCS_Stamina) * 0.5
+				&& thePlayer.GetStat(BCS_Vitality) <= thePlayer.GetStatMax(BCS_Vitality) * 0.5
+				)
+				{
+					GetACSWatcher().Grow_Geralt_Immediate();
+
+					thePlayer.ClearAnimationSpeedMultipliers();	
+
+					thePlayer.DrainFocus( thePlayer.GetStatMax(BCS_Focus) * 0.75 );
+
+					if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) )
 					{
-						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.4;
+						if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
+						{
+							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+						}
+						else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
+						{
+							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.3;
+						}
+						else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
+						{
+							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.4;
+						}
+						else
+						{
+							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
+						}
 					}
 					else
 					{
 						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
 					}
+
+					ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
+					movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.CancelAll();
+					thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+					thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+					thePlayer.ResetRawPlayerHeading();
+					ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+					movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+					movementAdjustor.RotateTowards( ticket, npcAttacker );
+
+					ACS_PlayerHitEffects();
+
+					thePlayer.PlayEffectSingle('special_attack_break');
+					thePlayer.StopEffect('special_attack_break');
+
+					GetACSWatcher().ACS_Hit_Reaction();
 				}
 				else
 				{
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-				}
+					thePlayer.ClearAnimationSpeedMultipliers();	
 
-				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+					ACS_PlayerHitEffects();
 
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				ACS_PlayerHitEffects();
-
-				thePlayer.PlayEffectSingle('special_attack_break');
-				thePlayer.StopEffect('special_attack_break');
-
-				GetACSWatcher().ACS_Hit_Reaction();
-			}
-			else
-			{
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				ACS_PlayerHitEffects();
-
-				if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) && action.IsActionMelee() )
-				{
-					if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
+					if( thePlayer.GetInventory().GetItemEquippedOnSlot(EES_Armor, item) && action.IsActionMelee() )
 					{
-						if( ( RandF() < 0.45) || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
+						if( thePlayer.GetInventory().ItemHasTag(item, 'HeavyArmor') )
 						{
-							GetACSWatcher().Grow_Geralt_Immediate();
+							if( ( RandF() < 0.45) || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
+							{
+								GetACSWatcher().Grow_Geralt_Immediate();
 
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.325;
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.325;
 
-                            movementAdjustor.CancelAll();
+								movementAdjustor.CancelAll();
 
-                            ACS_Hit_Animations(action);
+								ACS_Hit_Animations(action);
+							}
+							else
+							{
+								thePlayer.StopEffect('armor_sparks');
+								thePlayer.PlayEffectSingle('armor_sparks');
+
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
+
+								thePlayer.SoundEvent("grunt_vo_block");
+								
+								thePlayer.SoundEvent("cmb_play_parry");
+
+								dmg = new W3DamageAction in theGame.damageMgr;
+					
+								dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+								
+								dmg.SetProcessBuffsIfNoDamage(true);
+								
+								dmg.SetHitReactionType( EHRT_Heavy, true);
+
+								if (npcAttacker.UsesVitality()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.05; 
+									
+									damageMin = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
+								} 
+								else if (npcAttacker.UsesEssence()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.05; 
+									
+									damageMin = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
+								} 
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
+									
+								theGame.damageMgr.ProcessAction( dmg );
+									
+								delete dmg;
+
+								//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.2 );
+
+								thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.2, 1, );
+
+								npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
+							}
+						}
+						else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
+						{
+							if( ( RandF() < 0.65 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
+							{
+								GetACSWatcher().Grow_Geralt_Immediate();
+
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+
+								movementAdjustor.CancelAll();
+
+								ACS_Hit_Animations(action);
+							}
+							else
+							{
+								thePlayer.StopEffect('armor_sparks');
+								thePlayer.PlayEffectSingle('armor_sparks');
+
+								thePlayer.SoundEvent("grunt_vo_block");
+
+								thePlayer.SoundEvent("cmb_play_parry");
+
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
+
+								dmg = new W3DamageAction in theGame.damageMgr;
+					
+								dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+								
+								dmg.SetProcessBuffsIfNoDamage(true);
+								
+								dmg.SetHitReactionType( EHRT_Heavy, true);
+
+								if (npcAttacker.UsesVitality()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
+									
+									damageMin = 0; 
+								} 
+								else if (npcAttacker.UsesEssence()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
+									
+									damageMin = 0; 
+								} 
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
+									
+								theGame.damageMgr.ProcessAction( dmg );
+									
+								delete dmg;
+
+								//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
+
+								thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
+
+								npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
+							}
+						}
+						else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
+						{
+							if( ( RandF() < 0.85 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
+							{
+								GetACSWatcher().Grow_Geralt_Immediate();
+
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.125;
+
+								movementAdjustor.CancelAll();
+
+								ACS_Hit_Animations(action);
+							}
+							else
+							{
+								thePlayer.StopEffect('armor_sparks');
+								thePlayer.PlayEffectSingle('armor_sparks');
+
+								thePlayer.SoundEvent("grunt_vo_block");
+
+								thePlayer.SoundEvent("cmb_play_parry");
+
+								action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+
+								dmg = new W3DamageAction in theGame.damageMgr;
+					
+								dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
+								
+								dmg.SetProcessBuffsIfNoDamage(true);
+								
+								dmg.SetHitReactionType( EHRT_Heavy, true);
+
+								if (npcAttacker.UsesVitality()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.01; 
+									
+									damageMin = 0; 
+								} 
+								else if (npcAttacker.UsesEssence()) 
+								{ 
+									damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.01; 
+									
+									damageMin = 0; 
+								} 
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
+
+								dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
+									
+								theGame.damageMgr.ProcessAction( dmg );
+									
+								delete dmg;
+
+								//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
+
+								thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
+
+								npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
+							}
 						}
 						else
 						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
+							GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
 
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
-
-							thePlayer.SoundEvent("grunt_vo_block");
-							
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.05; 
-								
-								damageMin = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.05; 
-								
-								damageMin = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.2 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.2, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'MediumArmor') )
-					{
-						if( ( RandF() < 0.65 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
-
-                            movementAdjustor.CancelAll();
-
-							ACS_Hit_Animations(action);
-						}
-						else
-						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
-
-							thePlayer.SoundEvent("grunt_vo_block");
-
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.025; 
-								
-								damageMin = 0; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.025; 
-								
-								damageMin = 0; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
-					}
-					else if( thePlayer.GetInventory().ItemHasTag(item, 'LightArmor') )
-					{
-						if( ( RandF() < 0.85 ) || thePlayer.GetStat( BCS_Stamina )  <= thePlayer.GetStatMax( BCS_Stamina ) * 0.1 ) 
-						{
-							GetACSWatcher().Grow_Geralt_Immediate();
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.125;
+							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.1;
 
 							movementAdjustor.CancelAll();
 
 							ACS_Hit_Animations(action);
 						}
-						else
-						{
-							thePlayer.StopEffect('armor_sparks');
-							thePlayer.PlayEffectSingle('armor_sparks');
-
-							thePlayer.SoundEvent("grunt_vo_block");
-
-							thePlayer.SoundEvent("cmb_play_parry");
-
-							action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
-
-							dmg = new W3DamageAction in theGame.damageMgr;
-				
-							dmg.Initialize(thePlayer, npcAttacker, NULL, thePlayer.GetName(), EHRT_Heavy, CPS_Undefined, false, false, true, false);
-							
-							dmg.SetProcessBuffsIfNoDamage(true);
-							
-							dmg.SetHitReactionType( EHRT_Heavy, true);
-
-							if (npcAttacker.UsesVitality()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Vitality ) * 0.01; 
-								
-								damageMin = 0; 
-							} 
-							else if (npcAttacker.UsesEssence()) 
-							{ 
-								damageMax = npcAttacker.GetStatMax( BCS_Essence ) * 0.01; 
-								
-								damageMin = 0; 
-							} 
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, RandRangeF(damageMax,damageMin) );
-
-							dmg.AddDamage( theGame.params.DAMAGE_NAME_SILVER, RandRangeF(damageMax,damageMin) );
-								
-							theGame.damageMgr.ProcessAction( dmg );
-								
-							delete dmg;
-
-							//thePlayer.ForceSetStat( BCS_Stamina, (thePlayer.GetStat( BCS_Stamina )) - thePlayer.GetStatMax( BCS_Stamina ) * 0.15 );
-
-							thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStatMax(BCS_Stamina) * 0.15, 1, );
-
-							npcAttacker.ForceSetStat( BCS_Morale, npcAttacker.GetStatMax( BCS_Morale ) );
-						}
 					}
 					else
 					{
 						GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
-
+						
 						action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.1;
 
 						movementAdjustor.CancelAll();
@@ -1971,17 +2087,8 @@ function ACS_Take_Damage(action: W3DamageAction)
 						ACS_Hit_Animations(action);
 					}
 				}
-				else
-				{
-					GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
-					
-					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.1;
-
-					movementAdjustor.CancelAll();
-
-					ACS_Hit_Animations(action);
-				}
-			}
+			}				
+			
 		}	
 	}
 }
@@ -2007,7 +2114,7 @@ function ACS_Death_Animations(action: W3DamageAction)
         }
         else
         {
-            thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_back_ACS', 'PLAYER_SLOT', settings_interrupt );
+           thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_death_back_ACS', 'PLAYER_SLOT', settings_interrupt );
         }
 
         GetACSWatcher().AddTimer('ACS_Death_Delay_Animation', 1.5, false);
@@ -2086,8 +2193,8 @@ function ACS_Hit_Animations(action: W3DamageAction)
 	
 	settings_interrupt.blendIn = 0.25f;
 	settings_interrupt.blendOut = 0.75f;
-
-    if ( thePlayer.HasTag('vampire_claws_equipped') || thePlayer.HasTag('aard_sword_equipped') )
+	
+    if ( ( thePlayer.HasTag('vampire_claws_equipped') && !thePlayer.HasBuff(EET_BlackBlood) ) || thePlayer.HasTag('aard_sword_equipped') )
     {
         GetACSWatcher().RemoveTimer('ACS_bruxa_tackle'); GetACSWatcher().RemoveTimer('ACS_portable_aard'); GetACSWatcher().RemoveTimer('ACS_shout');
 
