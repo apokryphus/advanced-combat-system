@@ -107,7 +107,7 @@ For those that prefer to install manually.
 ### [5. ELEMENTAL REND SYSTEM](#5-elemental-rend-system-1)
 ### [6. PARRY SKILLS](#6-parry-skills-1)
 ### [7. TAUNT SYSTEM](#7-taunt-system-1)
-### [8. DYNAMIC ENEMY BEHAVIOR SYSTEM](#8-dynamic-enemy-behavior-system-1)
+### [8. ENEMIES](#8-enemies-1)
 ### [9. MOVEMENT SYSTEM](#9-movement-system-1)
 ### [10. ARMOR SYSTEM](#10-armor-system-1)
 ### [11. SPECIAL ABILITIES](#11-special-abilities-1)
@@ -956,11 +956,13 @@ In combat:
   
   </div>
  
-# 8. DYNAMIC ENEMY BEHAVIOR SYSTEM
+# 8. ENEMIES
+
+## Dynamic Enemy Behavior System 
 
 https://user-images.githubusercontent.com/98017171/196608085-fd4a751c-e4dc-45ed-b67e-e35ad288053e.mp4
 
-Dynamic enemy behavior applies to all non-quest human type enemies carrying one-handed weapons:
+The Dynamic Enemy Behavior System applies to all non-quest human type enemies carrying one-handed weapons:
   - Stage 1: If the enemy is hit by the player with an attack/repel leaving them with anywhere between 75% - 50% health, the enemy will swap their original 1-handed behavior to either witcher behavior or 2-handed behavior. 
   - Stage 2: If the enemy is hit by the player with an attack/repel leaving them with anywhere lower than 50% health but between 50% - 25% health: 
     - If the enemy had swapped to witcher behavior in Stage 1, they will now have a 75% chance to swap their behavior to 2-handed behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
@@ -968,11 +970,49 @@ Dynamic enemy behavior applies to all non-quest human type enemies carrying one-
     - If the player is in a state of parrying while the enemy is swapping behavior in Stage 2, then the enemy will have a 75% chance of swapping to shielded combat behavior instead, and 25% chance of swapping to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
     - If the enemy was originally carrying a shield, and their shield was not destroyed or dropped by the time they reach Stage 2, then they will not have a chance to switch to shielded combat behavior at all, and instead will swap to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
  
-  <div align="right">
+ ## Guards 
+ 
+ Guards cannot kill the player / knock the player unconscious.
+  - Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.
+  - If the player has no money, the guard will heal to full health instead.
+ 
+ ## Forest God
+ 
+**Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
+
+- He can be found in all maps except for the White Orchard maps and Wyzima.
+  - Velen: Where Kernun is located.
+  - Skellige: Where the Woodland Spirit is located.
+  - Spiral: The portal of the Poison Forest.
+  - Toussaint: Trastamara Estate.
+  - Kaer Morhen: Ruined Keep.
+  - Isle of the Mists: [REDACTED]
+
+- Berstuk is extremely tough, and should be approached with caution. He is also very hostile, and will relentlessly chase the player or any other prey in his immediate surroundings. 
+- The Forest God has a number of mechanics involved, which will require skills, thinking, and some luck from the player to defeat him without cheating.
+- Upon death, Berstuk additionally drops a vast sum of crowns and assorted precious gems. 
+- If **Shades of Iron** is installed, instead of gems he will drop one random Radiant quality armor and one random Radiant quality weapon.
+- Berstuk will respawn each time the player changes maps (eg. Velen <---> Skellige).
+ 
+ ## Forest God Shadows
+
+As long as the Forest God is alive on a map, there is a 10% chance his Shadow will appear after any fight. 
+
+- The chances of a Shadow spawning can be modified in the Main Settings menu.
+- The Shadow cannot spawn more than once every 7 minutes. 
+- This chance of the Shadow appearing will ignore the value set in the Main Settings menu and increase to 30% **if the player has any items to do with leshens in their inventory**. 
+- Shadows drop emeralds and leshen mutagen upon death. 
+ 
+ ## Ice Titans
+
+Nine ice titans roam the Skellige Islands.
+
+
+<div align="right">
   
 ##### [Return to Index](#index)
   
-  </div>
+</div>
   
 # 9. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
