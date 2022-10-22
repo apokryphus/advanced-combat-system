@@ -136,7 +136,7 @@ How the mod functions as showcased in the weapon demo videos below, where select
 
 When Armiger Mode is selected in the Main Settings menu, navigate to the Armiger Mode menu to change whether you want Static Weapons or Evolving Weapons, and to optionally select the movesets/weapons for each sign.
 
-Explanation for Static Weapons and Evolving Weapons is explained in the Armed section below.
+Explanation for Static Weapons and Evolving Weapons is provided in the Armed section below.
 
 ![3](https://user-images.githubusercontent.com/98017171/170868519-7c6f5125-b008-4b8c-a59f-112cfce6004a.PNG)
 
