@@ -58,8 +58,10 @@ ACS is:
 ## Automatic Installation: 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
-- If your game is on Steam, then the folder path might look something like: C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3
-- If your game is on GOG, then the folder path might looking something like: C:\Program Files (x86)\GOG Galaxy\Games\The Witcher 3 Wild Hunt GOTY
+- If your game is on Steam, then the folder path might look something like: 
+  - **C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3**
+- If your game is on GOG, then the folder path might looking something like: 
+  - **C:\Program Files (x86)\GOG Galaxy\Games\The Witcher 3 Wild Hunt GOTY**
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
 - Right click the script and click **Run with PowerShell**.
 
