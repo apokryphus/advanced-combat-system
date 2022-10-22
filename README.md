@@ -15,7 +15,7 @@ The NPC animations are organized into 8 unique extra movesets:
 - Gregoire de Gorgon + 2-Hand Sword
 - Imlerith + Caranthir + Caretaker
 - 1-Hand Hammer + 2-Hand Hammer
-- Dettlaff + Bruxa + Alp
+- Dettlaff + Bruxa 
 - 1-Hand Axe + 2-Hand Axe
 
 Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
