@@ -1,4 +1,4 @@
-![repository_thing](https://user-images.githubusercontent.com/98017171/164876096-e23c4508-4f1d-40f8-b6a1-7c3acd130946.png)
+![snek_banner](https://user-images.githubusercontent.com/98017171/197379081-4d40c79d-095d-4948-bca9-171eca128487.png)
 
 <div align="center">
 
