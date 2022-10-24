@@ -156,6 +156,7 @@ function ACS_Player_Attack(action: W3DamageAction)
 		&& npc.IsMan()
 		&& ((CNewNPC)npc).GetNPCType() != ENGT_Quest
 		&& !npc.HasTag( 'ethereal' )
+		&& !npc.HasBuff(EET_Burning)
 		)
 		{
 			itemId_r = npc.GetInventory().GetItemFromSlot('r_weapon');
@@ -1676,16 +1677,8 @@ function ACS_Take_Damage(action: W3DamageAction)
 	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
     if ( playerVictim
-	//&& !playerAttacker
-	&& action.GetBuffSourceName() != "vampirism" 
-	&& action.GetBuffSourceName() != "FallingDamage" 
-	&& !thePlayer.IsCurrentlyDodging()
-	&& !action.WasDodged()
-	&& !thePlayer.IsPerformingFinisher()
-	&& !thePlayer.HasTag('ACS_IsPerformingFinisher')
-	&& !thePlayer.IsGuarded()
+	&& action.GetBuffSourceName() != "FallingDamage"
 	&& !GetWitcherPlayer().IsAnyQuenActive()
-	&& !thePlayer.IsInGuardedState()
 	/*
 	&& (thePlayer.HasTag('aard_sword_equipped')
 	|| thePlayer.HasTag('aard_secondary_sword_equipped')
@@ -1773,8 +1766,17 @@ function ACS_Take_Damage(action: W3DamageAction)
 		}
 		else
 		{
-			if (!action.IsDoTDamage()
-			&& action.GetHitReactionType() != EHRT_Reflect)
+			if (
+			!action.IsDoTDamage()
+			&& action.GetHitReactionType() != EHRT_Reflect
+			&& !thePlayer.IsInGuardedState()
+			&& !thePlayer.IsGuarded()
+			&& !thePlayer.IsCurrentlyDodging()
+			&& !action.WasDodged()
+			&& !thePlayer.IsPerformingFinisher()
+			&& !thePlayer.HasTag('ACS_IsPerformingFinisher')
+			&& action.GetBuffSourceName() != "vampirism" 
+			)
 			{
 				if ( npcAttacker.HasTag('ACS_taunted') )
 				{
@@ -2087,8 +2089,7 @@ function ACS_Take_Damage(action: W3DamageAction)
 						ACS_Hit_Animations(action);
 					}
 				}
-			}				
-			
+			}		
 		}	
 	}
 }
@@ -3448,13 +3449,49 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 		}
 		*/
 
-		actor.RemoveAllBuffsOfType(EET_Ragdoll);
-		actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
-		actor.RemoveAllBuffsOfType(EET_Stagger);
-		actor.RemoveAllBuffsOfType(EET_Knockdown);
-		actor.RemoveAllBuffsOfType(EET_Burning);
+		if (((CNewNPC)actor).GetNPCType() != ENGT_Quest
+		&& !actor.HasBuff(EET_Burning)
+		)
+		{
+			actor.RemoveAllBuffsOfType(EET_Ragdoll);
+			actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
+			actor.RemoveAllBuffsOfType(EET_Stagger);
+			actor.RemoveAllBuffsOfType(EET_Knockdown);
+			actor.RemoveAllBuffsOfType(EET_Burning);
 
-		actor.AttachBehavior( 'sword_1handed' );
+			actor.RemoveBuff(EET_Burning, true);
+			actor.RemoveBuff(EET_Knockdown, true);
+			actor.RemoveBuff(EET_Stagger, true);
+			actor.RemoveBuff(EET_HeavyKnockdown, true);
+			actor.RemoveBuff(EET_Ragdoll, true);
+
+			actor.CriticalStateAnimStopped(true);
+
+			if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
+			{
+				actor.DetachBehavior('sword_2handed');
+
+				actor.RemoveTag('ACS_Swapped_To_2h_Sword');
+			}
+
+			if( actor.HasTag('ACS_Swapped_To_Witcher') )
+			{
+				actor.DetachBehavior('Witcher');
+
+				actor.RemoveTag('ACS_Swapped_To_Witcher');
+			}
+
+			if( actor.HasTag('ACS_Swapped_To_Shield') )
+			{
+				actor.DetachBehavior( 'Shield' );
+
+				actor.RemoveTag('ACS_Swapped_To_Shield');
+			}
+
+			actor.AttachBehavior( 'sword_1handed' );
+
+			actor.CriticalStateAnimStopped(true);
+		}
 
 		//actor.DropItemFromSlot('r_weapon');
 
@@ -3510,13 +3547,38 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 		}
 		*/
 
-		actor.RemoveAllBuffsOfType(EET_Ragdoll);
-		actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
-		actor.RemoveAllBuffsOfType(EET_Stagger);
-		actor.RemoveAllBuffsOfType(EET_Knockdown);
-		actor.RemoveAllBuffsOfType(EET_Burning);
+		if (((CNewNPC)actor).GetNPCType() != ENGT_Quest
+		&& !actor.HasBuff(EET_Burning)
+		)
+		{
+			actor.RemoveAllBuffsOfType(EET_Ragdoll);
+			actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
+			actor.RemoveAllBuffsOfType(EET_Stagger);
+			actor.RemoveAllBuffsOfType(EET_Knockdown);
+			actor.RemoveAllBuffsOfType(EET_Burning);
 
-		actor.AttachBehavior( 'sword_2handed' );
+			actor.RemoveBuff(EET_Burning, true);
+			actor.RemoveBuff(EET_Knockdown, true);
+			actor.RemoveBuff(EET_Stagger, true);
+			actor.RemoveBuff(EET_HeavyKnockdown, true);
+			actor.RemoveBuff(EET_Ragdoll, true);
+
+			actor.CriticalStateAnimStopped(true);
+
+			if( actor.HasTag('ACS_Swapped_To_Witcher') )
+			{
+				actor.DetachBehavior('Witcher');
+			}
+
+			if( actor.HasTag('ACS_Swapped_To_Shield') )
+			{
+				actor.DetachBehavior( 'Shield' );
+			}
+
+			actor.AttachBehavior( 'sword_2handed' );
+
+			actor.CriticalStateAnimStopped(true);
+		}
 
 		//Sleep(0.5);
 
@@ -3574,13 +3636,38 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 		}
 		*/
 
-		actor.RemoveAllBuffsOfType(EET_Ragdoll);
-		actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
-		actor.RemoveAllBuffsOfType(EET_Stagger);
-		actor.RemoveAllBuffsOfType(EET_Knockdown);
-		actor.RemoveAllBuffsOfType(EET_Burning);
+		if (((CNewNPC)actor).GetNPCType() != ENGT_Quest
+		&& !actor.HasBuff(EET_Burning)
+		)
+		{
+			actor.RemoveAllBuffsOfType(EET_Ragdoll);
+			actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
+			actor.RemoveAllBuffsOfType(EET_Stagger);
+			actor.RemoveAllBuffsOfType(EET_Knockdown);
+			actor.RemoveAllBuffsOfType(EET_Burning);
 
-		actor.AttachBehavior( 'Witcher' );
+			actor.RemoveBuff(EET_Burning, true);
+			actor.RemoveBuff(EET_Knockdown, true);
+			actor.RemoveBuff(EET_Stagger, true);
+			actor.RemoveBuff(EET_HeavyKnockdown, true);
+			actor.RemoveBuff(EET_Ragdoll, true);
+
+			actor.CriticalStateAnimStopped(true);
+
+			if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
+			{
+				actor.DetachBehavior('sword_2handed');
+			}
+
+			if( actor.HasTag('ACS_Swapped_To_Shield') )
+			{
+				actor.DetachBehavior( 'Shield' );
+			}
+
+			actor.AttachBehavior( 'Witcher' );
+
+			actor.CriticalStateAnimStopped(true);
+		}
 
 		//actor.DropItemFromSlot('r_weapon');
 
@@ -3638,13 +3725,38 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 		}
 		*/
 
-		actor.RemoveAllBuffsOfType(EET_Ragdoll);
-		actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
-		actor.RemoveAllBuffsOfType(EET_Stagger);
-		actor.RemoveAllBuffsOfType(EET_Knockdown);
-		actor.RemoveAllBuffsOfType(EET_Burning);
+		if (((CNewNPC)actor).GetNPCType() != ENGT_Quest
+		&& !actor.HasBuff(EET_Burning)
+		)
+		{
+			actor.RemoveAllBuffsOfType(EET_Ragdoll);
+			actor.RemoveAllBuffsOfType(EET_HeavyKnockdown);
+			actor.RemoveAllBuffsOfType(EET_Stagger);
+			actor.RemoveAllBuffsOfType(EET_Knockdown);
+			actor.RemoveAllBuffsOfType(EET_Burning);
 
-		actor.AttachBehavior( 'Shield' );
+			actor.RemoveBuff(EET_Burning, true);
+			actor.RemoveBuff(EET_Knockdown, true);
+			actor.RemoveBuff(EET_Stagger, true);
+			actor.RemoveBuff(EET_HeavyKnockdown, true);
+			actor.RemoveBuff(EET_Ragdoll, true);
+
+			actor.CriticalStateAnimStopped(true);
+
+			if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
+			{
+				actor.DetachBehavior('sword_2handed');
+			}
+
+			if( actor.HasTag('ACS_Swapped_To_Witcher') )
+			{
+				actor.DetachBehavior('Witcher');
+			}
+
+			actor.AttachBehavior( 'Shield' );
+
+			actor.CriticalStateAnimStopped(true);
+		}
 
 		if( RandF() < 0.5 )
 		{

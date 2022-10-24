@@ -77,6 +77,8 @@ state BruxaBite_HijackForward in cBruxaBite
 
 	latent function HijackForwardLatent()
 	{
+		actors.Clear();
+
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
 
 		for( i = 0; i < actors.Size(); i += 1 )

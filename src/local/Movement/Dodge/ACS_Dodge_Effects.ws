@@ -374,6 +374,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 						
 		if( RandF() < 0.1 ) 
 		{
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 2, 20);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -437,6 +439,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 						
 		if( RandF() < 0.1 ) 
 		{
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 2, 20);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -500,6 +504,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 
 		if( RandF() < 0.1 ) 
 		{
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 2, 20);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -563,6 +569,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 						
 		if( RandF() < 0.1 ) 
 		{
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 2, 20);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -634,6 +642,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 						
 		if( RandF() < 0.1 ) 
 		{
+			actors.Clear();
+			
 			actors = GetActorsInRange(thePlayer, 2, 20);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{

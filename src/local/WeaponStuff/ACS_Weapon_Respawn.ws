@@ -417,6 +417,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			if (!ACS_HideSwordsheathes_Enabled())
 			{
+				scabbards_steel.Clear();
+
 				scabbards_steel = thePlayer.inv.GetItemsByCategory('steel_scabbards');
 
 				for ( i=0; i < scabbards_steel.Size() ; i+=1 )
@@ -429,12 +431,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		else if( thePlayer.GetInventory().IsItemHeld(silverID) )
 		{
 			silversword.SetVisible(true);
-
+			
 			silverswordentity = thePlayer.inv.GetItemEntityUnsafe(silverID);
 			silverswordentity.SetHideInGame(false); 
 
 			if (!ACS_HideSwordsheathes_Enabled())
 			{
+				scabbards_silver.Clear();
+
 				scabbards_silver = thePlayer.inv.GetItemsByCategory('silver_scabbards');
 
 				for ( i=0; i < scabbards_silver.Size() ; i+=1 )

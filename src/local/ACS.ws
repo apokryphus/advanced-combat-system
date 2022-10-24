@@ -1002,7 +1002,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	public timer function ACS_DetachBehaviorTimer ( dt : float, id : int){ ACS_EnemyBehDetach(); } 
 
-	public timer function ACS_BARADDUR ( dt : float, id : int){ ACS_BARRADUR(); } 
+	public timer function ACS_BARADDUR ( dt : float, id : int){ THE_EYE(); } 
+
+	public timer function ACS_ENFORCE_INPUTS ( dt : float, id : int){ register_extra_inputs(); } 
 
 	public timer function ACS_Shield_Spawn_Delay ( dt : float, id : int){ vACS_Shield_Summon = new cACS_Shield_Summon in this; action_interrupt(); vACS_Shield_Summon.Axii_Persistent_Shield_Summon(); } 
 
@@ -1072,6 +1074,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	public timer function ACS_npc_fear_reaction ( dt : float, id : int){ NPC_Fear_Reaction(); } 
 
+	public timer function ACS_Bruxa_Camo_Sonar_Timer ( dt : float, id : int){ ACS_Bruxa_Camo_Sonar_Timer_Actual(); } 
+
 	public timer function ACS_ShootBowMoving ( dt : float, id : int){ geraltShootBowMoving(); } 
 
 	public timer function ACS_ShootBowStationary ( dt : float, id : int){ geraltShootBowStationary(); } 
@@ -1122,8 +1126,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	public timer function ACS_INIT_TIMER( deltaTime : float , id : int)
 	{
-		register_extra_inputs();
-
 		if(!thePlayer.IsCiri())
 		{
 			ACS_Init_Attempt();
@@ -1132,102 +1134,118 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			{
 				ACS_BehSwitchINIT();
 
-				AddTimer('ACS_BARADDUR', 0.000000000000000001f, true); 
+				register_extra_inputs();
 
-				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+				AddTimer('ACS_BARADDUR', 0.00000000000000000000000000000000000000000000000000000000000000001f, true); 
 
 				AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
+
+				AddTimer('ACS_ENFORCE_INPUTS', 3, true); 
+
+				//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 			}
 		}
 	}
 
 	function register_extra_inputs()
 	{
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapW' );
+		if (!thePlayer.IsCiri())
+		{
+			if ( !theGame.IsDialogOrCutscenePlaying() 
+			&& !thePlayer.IsInNonGameplayCutscene() 
+			&& !thePlayer.IsInGameplayScene() 
+			&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+			&& !theGame.IsFading()
+			&& !theGame.IsBlackscreen()
+			)
+			{
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapW' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapS' ); 
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapS' ); 
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapA' ); 
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapA' ); 
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapD' ); 
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'MovementDoubleTapD' ); 
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Dodge' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Dodge' );
 
-		//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'WalkToggle' );
+				//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'WalkToggle' );
 
-		//theInput.RegisterListener( this, 'OnCommWalkToggle', 'WalkToggle' );
+				//theInput.RegisterListener( this, 'OnCommWalkToggle', 'WalkToggle' );
 
-		theInput.RegisterListener( this, 'OnMovementDoubleTapW', 'MovementDoubleTapW' );
+				theInput.RegisterListener( this, 'OnMovementDoubleTapW', 'MovementDoubleTapW' );
 
-		theInput.RegisterListener( this, 'OnMovementDoubleTapS', 'MovementDoubleTapS' ); 
+				theInput.RegisterListener( this, 'OnMovementDoubleTapS', 'MovementDoubleTapS' ); 
 
-		theInput.RegisterListener( this, 'OnMovementDoubleTapA', 'MovementDoubleTapA' ); 
+				theInput.RegisterListener( this, 'OnMovementDoubleTapA', 'MovementDoubleTapA' ); 
 
-		theInput.RegisterListener( this, 'OnMovementDoubleTapD', 'MovementDoubleTapD' ); 
+				theInput.RegisterListener( this, 'OnMovementDoubleTapD', 'MovementDoubleTapD' ); 
 
-		theInput.RegisterListener( this, 'OnMoveForward', 'GI_AxisLeftY' );
+				theInput.RegisterListener( this, 'OnMoveForward', 'GI_AxisLeftY' );
 
-		//theInput.RegisterListener( this, 'OnMoveBackward', 'GI_AxisRightY' );
+				//theInput.RegisterListener( this, 'OnMoveBackward', 'GI_AxisRightY' );
 
-		theInput.RegisterListener( this, 'OnMoveSide', 'GI_AxisLeftX' );
+				theInput.RegisterListener( this, 'OnMoveSide', 'GI_AxisLeftX' );
 
-		theInput.RegisterListener( this, 'OnJump', 'Jump' );
+				theInput.RegisterListener( this, 'OnJump', 'Jump' );
 
-		//theInput.RegisterListener( this, 'OnMoveSideLeft', 'GI_AxisRightX' );
+				//theInput.RegisterListener( this, 'OnMoveSideLeft', 'GI_AxisRightX' );
 
-		theInput.RegisterListener( this, 'OnCbtDodge', 'Dodge' );
+				theInput.RegisterListener( this, 'OnCbtDodge', 'Dodge' );
 
-		theInput.RegisterListener(this, 'OnBruxaBite', 'BruxaBite');
+				theInput.RegisterListener(this, 'OnBruxaBite', 'BruxaBite');
 
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackHeavy' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackHeavy' );
 
-		theInput.RegisterListener( this, 'OnCbtAttackHeavy', 'AttackHeavy' );
+				theInput.RegisterListener( this, 'OnCbtAttackHeavy', 'AttackHeavy' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackWithAlternateLight' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackWithAlternateLight' );
 
-		theInput.RegisterListener( this, 'OnCbtAttackWithAlternateLight', 'AttackWithAlternateLight' );
+				theInput.RegisterListener( this, 'OnCbtAttackWithAlternateLight', 'AttackWithAlternateLight' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackWithAlternateHeavy' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackWithAlternateHeavy' );
 
-		theInput.RegisterListener( this, 'OnCbtAttackWithAlternateHeavy', 'AttackWithAlternateHeavy' );
+				theInput.RegisterListener( this, 'OnCbtAttackWithAlternateHeavy', 'AttackWithAlternateHeavy' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackLight' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'AttackLight' );
 
-		theInput.RegisterListener( this, 'OnCbtAttackLight', 'AttackLight' );
+				theInput.RegisterListener( this, 'OnCbtAttackLight', 'AttackLight' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackLight' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackLight' );
 
-		theInput.RegisterListener( this, 'OnCbtSpecialAttackLight', 'SpecialAttackLight' );
+				theInput.RegisterListener( this, 'OnCbtSpecialAttackLight', 'SpecialAttackLight' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackWithAlternateLight' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackWithAlternateLight' );
 
-		theInput.RegisterListener( this, 'OnCbtSpecialAttackWithAlternateLight', 'SpecialAttackWithAlternateLight' );
+				theInput.RegisterListener( this, 'OnCbtSpecialAttackWithAlternateLight', 'SpecialAttackWithAlternateLight' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackWithAlternateHeavy' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackWithAlternateHeavy' );
 
-		theInput.RegisterListener( this, 'OnCbtSpecialAttackWithAlternateHeavy', 'SpecialAttackWithAlternateHeavy' );
+				theInput.RegisterListener( this, 'OnCbtSpecialAttackWithAlternateHeavy', 'SpecialAttackWithAlternateHeavy' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'ToggleSigns' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'ToggleSigns' );
 
-		theInput.RegisterListener( this, 'OnToggleSigns', 'ToggleSigns' );
+				theInput.RegisterListener( this, 'OnToggleSigns', 'ToggleSigns' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackHeavy' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'SpecialAttackHeavy' );
 
-		theInput.RegisterListener( this, 'OnCbtSpecialAttackHeavy', 'SpecialAttackHeavy' );
+				theInput.RegisterListener( this, 'OnCbtSpecialAttackHeavy', 'SpecialAttackHeavy' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'CbtRoll' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'CbtRoll' );
 
-		theInput.RegisterListener( this, 'OnCbtRoll', 'CbtRoll' );
+				theInput.RegisterListener( this, 'OnCbtRoll', 'CbtRoll' );
 
-		theInput.UnregisterListener( thePlayer.GetInputHandler(), 'LockAndGuard' );
+				theInput.UnregisterListener( thePlayer.GetInputHandler(), 'LockAndGuard' );
 
-		theInput.RegisterListener( this, 'OnCbtLockAndGuard', 'LockAndGuard' );
+				theInput.RegisterListener( this, 'OnCbtLockAndGuard', 'LockAndGuard' );
 
-		//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Guard' );
+				//theInput.UnregisterListener( thePlayer.GetInputHandler(), 'Guard' );
 
-		//theInput.RegisterListener( this, 'OnCommGuard', 'Guard' );
+				//theInput.RegisterListener( this, 'OnCommGuard', 'Guard' );
+			}
+		}
 	}
 	
 	event OnCbtAttackWithAlternateLight( action : SInputAction )
@@ -1835,7 +1853,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				if 
 				(
 				(theInput.GetActionValue('Sprint') > 0.85 
-				&& theInput.GetActionValue('Jump') == 0 
+				//&& theInput.GetActionValue('Jump') == 0 
 				&& !thePlayer.IsInCombat() 
 				&& ACS_CombatToExplorationCheck()
 				//&& thePlayer.substateManager.GetStateCur() != 'Vault'
@@ -1958,6 +1976,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				action_interrupt_on_jump(); //ACS
 
 				thePlayer.substateManager.QueueStateExternal('Jump');
+
+				ACS_ExplorationDelayHack();
 			}
 			else
 			{
@@ -2009,6 +2029,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 						action_interrupt_on_jump(); //ACS
 
 						thePlayer.substateManager.QueueStateExternal('Jump');
+
+						ACS_ExplorationDelayHack();
 					}
 					else
 					{
@@ -2064,19 +2086,28 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		if (ACS_GetTargetMode() == 1)
 		{
 			if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			{
 				actor = (CActor)( thePlayer.GetTarget() );	
+			}
 			else
 			{
 				thePlayer.FindMoveTarget();
-				actor = (CActor)( thePlayer.moveTarget );		
+
+				if ( thePlayer.moveTarget )
+				{
+					actor = (CActor)( thePlayer.moveTarget );	
+				}	
 			}
 		}
 		else
 		{
-			actor = (CActor)( thePlayer.GetTarget() );	
+			if ( thePlayer.GetTarget() )
+			{
+				actor = (CActor)( thePlayer.GetTarget() );	
+			}
 		}
 	
-		if( ACS_AttitudeCheck ( actor ) )
+		if( actor && ACS_AttitudeCheck ( actor ) )
 		{
 			thePlayer.SetPlayerTarget( actor );
 
@@ -2097,22 +2128,24 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		if (ACS_GetTargetMode() == 1)
 		{
 			if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
+			{
 				actor = (CActor)( thePlayer.GetTarget() );	
+			}
 			else
 			{
-				actor = (CActor)( thePlayer.moveTarget );		
+				if ( thePlayer.moveTarget )
+				{
+					actor = (CActor)( thePlayer.moveTarget );	
+				}	
 			}
 		}
 		else
 		{
-			actor = (CActor)( thePlayer.GetTarget() );	
+			if ( thePlayer.GetTarget() )
+			{
+				actor = (CActor)( thePlayer.GetTarget() );	
+			}
 		}
-
-		//actor.ResetAttitude( thePlayer );
-
-		theGame.GetBehTreeReactionManager().CreateReactionEvent( thePlayer, 'PlayerEvade', 1.0f, 10.0f, -1.0f, -1 );	
-
-		actor.SignalGameplayEventParamInt('Time2DodgeFast', (int)EDT_Attack_Light );
 
 		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
 
@@ -2137,31 +2170,36 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		ticket = movementAdjustor.CreateNewRequest( 'ACS_Movement_Adjust' );
 		
-		if (thePlayer.HasTag('acs_bow_active') || thePlayer.HasTag('acs_crossbow_active'))
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
-			movementAdjustor.AdjustmentDuration( ticket, 0.01 );
-		}
-		else
-		{
-			if( targetDistance <= 1.5*1.5 ) 
+			if (thePlayer.HasTag('acs_bow_active') || thePlayer.HasTag('acs_crossbow_active'))
 			{
 				movementAdjustor.AdjustmentDuration( ticket, 0.01 );
 			}
-			else if( targetDistance > 1.5 * 1.5 && targetDistance <= 2 * 2 ) 
-			{
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-			}
 			else
 			{
-				movementAdjustor.AdjustmentDuration( ticket, 0.5 );
+				if( targetDistance <= 1.5*1.5 ) 
+				{
+					movementAdjustor.AdjustmentDuration( ticket, 0.01 );
+				}
+				else if( targetDistance > 1.5 * 1.5 && targetDistance <= 2 * 2 ) 
+				{
+					movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+				}
+				else
+				{
+					movementAdjustor.AdjustmentDuration( ticket, 0.5 );
+				}
 			}
+		}
+		else
+		{
+			movementAdjustor.AdjustmentDuration( ticket, 0.5 );
 		}
 		
 		movementAdjustor.ShouldStartAt(ticket, thePlayer.GetWorldPosition());
 		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
-
-		thePlayer.SendAttackReactionEvent();
 
 		if (ACS_Player_Scale() > 1)
 		{
@@ -2200,6 +2238,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function MovementAdjustBruxaDash()
 	{
 		ACS_INIT();
+
+		if (thePlayer.IsSwimming())
+		{
+			movementAdjustor.AdjustLocationVertically( ticket, true );
+			movementAdjustor.ScaleAnimationLocationVertically( ticket, true );
+		}
 
 		movementAdjustor.AdjustmentDuration( ticket, 0.5 );
 
@@ -2399,7 +2443,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
 			movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
 
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{	
 				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
@@ -2496,7 +2540,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );  
 		}
@@ -2550,7 +2594,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		combatTarget = thePlayer.GetTarget();
 		
-		finisherDist = 1.5f;
+		finisherDist = 1.75f;
 
 		if (ACS_Player_Scale() > 1)
 		{
@@ -2677,7 +2721,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ccompEnabled = ccomp.IsEnabled();
 
-		finisherDist = 1.5f;
+		finisherDist = 1.75f;
 
 		if (ACS_Player_Scale() > 1)
 		{
@@ -2832,6 +2876,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					thePlayer.PlayEffectSingle('blood_effect_claws_test');
 					thePlayer.StopEffect('blood_effect_claws_test');
 				}
+
+				if ( ((CNewNPC)npc).GetNPCType() != ENGT_Quest )
+				{
+					npc.DestroyAfter(10);
+				}
 			}
 			else if ( npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0 )
 			{	
@@ -2873,6 +2922,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					thePlayer.PlayEffectSingle('blood_effect_claws_test');
 					thePlayer.StopEffect('blood_effect_claws_test');
+				}
+
+				if ( ((CNewNPC)npc).GetNPCType() != ENGT_Quest )
+				{
+					npc.DestroyAfter(10);
 				}
 			}
 		}
@@ -2921,6 +2975,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					thePlayer.PlayEffectSingle('blood_effect_claws_test');
 					thePlayer.StopEffect('blood_effect_claws_test');
 				}
+
+				if ( ((CNewNPC)npc).GetNPCType() != ENGT_Quest )
+				{
+					npc.DestroyAfter(10);
+				}
 			}
 			else if ( npc.UsesEssence() && npc.GetStat( BCS_Essence ) <= 0 )
 			{	
@@ -2964,6 +3023,11 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				{
 					thePlayer.PlayEffectSingle('blood_effect_claws_test');
 					thePlayer.StopEffect('blood_effect_claws_test');
+				}
+
+				if ( ((CNewNPC)npc).GetNPCType() != ENGT_Quest )
+				{
+					npc.DestroyAfter(10);
 				}
 			}
 		}	
@@ -3063,6 +3127,12 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			&& !thePlayer.HasTag('in_wraith') 
 			&& !thePlayer.HasTag('ACS_Camo_Active') 
 			&& !thePlayer.HasTag('vampire_claws_equipped') 
+			&& !theGame.IsDialogOrCutscenePlaying() 
+			&& !thePlayer.IsInNonGameplayCutscene() 
+			&& !thePlayer.IsInGameplayScene() 
+			&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+			&& !theGame.IsFading()
+			&& !theGame.IsBlackscreen()
 			)
 			{
 				thePlayer.PlayEffectSingle('embers_indicator');
@@ -3091,267 +3161,256 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
 		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
 
-		if ( !theGame.IsDialogOrCutscenePlaying() 
-		&& !thePlayer.IsInNonGameplayCutscene() 
-		&& !thePlayer.IsInGameplayScene() )
+		if ( !thePlayer.IsAnyWeaponHeld() || thePlayer.IsWeaponHeld('fist') )
 		{
-			if ( !thePlayer.IsAnyWeaponHeld() || thePlayer.IsWeaponHeld('fist') )
+			if (thePlayer.HasTag('vampire_claws_equipped'))
 			{
-				if (thePlayer.HasTag('vampire_claws_equipped'))
-				{
-					thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Steel );
-					thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Steel );
-				}
-				else if (thePlayer.IsWeaponHeld('fist') && !thePlayer.HasTag('vampire_claws_equipped'))
-				{
-					thePlayer.SetBehaviorVariable( 'isHoldingWeaponR', 0.0, true );
+				thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Steel );
+				thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Steel );
+			}
+			else if (thePlayer.IsWeaponHeld('fist') && !thePlayer.HasTag('vampire_claws_equipped'))
+			{
+				thePlayer.SetBehaviorVariable( 'isHoldingWeaponR', 0.0, true );
 
-					thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Fists );
-					thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Fists );
-				}
-				else
-				{
-					thePlayer.SetBehaviorVariable( 'isHoldingWeaponR', 0.0, true );
-
-					thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_None );
-					thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_None );
-				}
-
-				/*
-				if ( thePlayer.HasTag('vampire_claws_equipped') )
-				{
-					if ( thePlayer.GetIsSprinting() && !thePlayer.HasTag('ACS_Vampire_Claws_Despawn_Sprinting') )
-					{
-						ClawDestroy_NOTAG();
-
-						thePlayer.RemoveTag('ACS_Vampire_Claws_Equip_Not_Sprinting');
-
-						thePlayer.AddTag('ACS_Vampire_Claws_Despawn_Sprinting');
-					}
-					else if ( !thePlayer.GetIsSprinting() && thePlayer.HasTag('ACS_Vampire_Claws_Despawn_Sprinting') && !thePlayer.HasTag('ACS_Vampire_Claws_Equip_Not_Sprinting'))
-					{
-						ACS_ClawEquip_OnDodge();
-
-						thePlayer.RemoveTag('ACS_Vampire_Claws_Despawn_Sprinting');
-
-						thePlayer.AddTag('ACS_Vampire_Claws_Equip_Not_Sprinting');
-					}
-				}
-				*/
-
-				//if (thePlayer.HasTag('quen_sword_equipped'))
-				//{
-					QuenSwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('axii_sword_equipped'))
-				//{
-					AxiiSwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('aard_sword_equipped'))
-				//{
-					AardSwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('yrden_sword_equipped'))
-				//{
-					YrdenSwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
-				//{
-					QuenSecondarySwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
-				//{
-					AxiiSecondarySwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
-				//{
-					AardSecondarySwordDestroyIMMEDIATE();
-				//}
-				//else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
-				//{
-					YrdenSecondarySwordDestroyIMMEDIATE();
-				//}
-
-					IgniBowDestroyIMMEDIATE();
-
-					AxiiBowDestroyIMMEDIATE();
-
-					AardBowDestroyIMMEDIATE();
-
-					YrdenBowDestroyIMMEDIATE();
-
-					QuenBowDestroyIMMEDIATE();
-
-					IgniCrossbowDestroyIMMEDIATE();
-
-					AxiiCrossbowDestroyIMMEDIATE();
-
-					AardCrossbowDestroyIMMEDIATE();
-
-					YrdenCrossbowDestroyIMMEDIATE();
-
-					QuenCrossbowDestroyIMMEDIATE();
-
-				if (thePlayer.HasTag('ACS_Holster_Sword_Effect'))
-				{
-					thePlayer.RemoveTag('ACS_Holster_Sword_Effect');
-				}
+				thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Fists );
+				thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Fists );
 			}
 			else
 			{
-				if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+				thePlayer.SetBehaviorVariable( 'isHoldingWeaponR', 0.0, true );
+
+				thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_None );
+				thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_None );
+			}
+
+			/*
+			if ( thePlayer.HasTag('vampire_claws_equipped') )
+			{
+				if ( thePlayer.GetIsSprinting() && !thePlayer.HasTag('ACS_Vampire_Claws_Despawn_Sprinting') )
 				{
-					thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Steel );
-					thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Steel );
+					ClawDestroy_NOTAG();
+
+					thePlayer.RemoveTag('ACS_Vampire_Claws_Equip_Not_Sprinting');
+
+					thePlayer.AddTag('ACS_Vampire_Claws_Despawn_Sprinting');
 				}
-				else if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+				else if ( !thePlayer.GetIsSprinting() && thePlayer.HasTag('ACS_Vampire_Claws_Despawn_Sprinting') && !thePlayer.HasTag('ACS_Vampire_Claws_Equip_Not_Sprinting'))
 				{
-					thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Silver );
-					thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Silver );
+					ACS_ClawEquip_OnDodge();
+
+					thePlayer.RemoveTag('ACS_Vampire_Claws_Despawn_Sprinting');
+
+					thePlayer.AddTag('ACS_Vampire_Claws_Equip_Not_Sprinting');
+				}
+			}
+			*/
+
+			//if (thePlayer.HasTag('quen_sword_equipped'))
+			//{
+				QuenSwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('axii_sword_equipped'))
+			//{
+				AxiiSwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('aard_sword_equipped'))
+			//{
+				AardSwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('yrden_sword_equipped'))
+			//{
+				YrdenSwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+			//{
+				QuenSecondarySwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+			//{
+				AxiiSecondarySwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+			//{
+				AardSecondarySwordDestroyIMMEDIATE();
+			//}
+			//else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+			//{
+				YrdenSecondarySwordDestroyIMMEDIATE();
+			//}
+
+				IgniBowDestroyIMMEDIATE();
+
+				AxiiBowDestroyIMMEDIATE();
+
+				AardBowDestroyIMMEDIATE();
+
+				YrdenBowDestroyIMMEDIATE();
+
+				QuenBowDestroyIMMEDIATE();
+
+				IgniCrossbowDestroyIMMEDIATE();
+
+				AxiiCrossbowDestroyIMMEDIATE();
+
+				AardCrossbowDestroyIMMEDIATE();
+
+				YrdenCrossbowDestroyIMMEDIATE();
+
+				QuenCrossbowDestroyIMMEDIATE();
+
+			if (thePlayer.HasTag('ACS_Holster_Sword_Effect'))
+			{
+				thePlayer.RemoveTag('ACS_Holster_Sword_Effect');
+			}
+		}
+		else
+		{
+			if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			{
+				thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Steel );
+				thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Steel );
+			}
+			else if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			{
+				thePlayer.SetBehaviorVariable( 'playerWeapon', (int) PW_Silver );
+				thePlayer.SetBehaviorVariable( 'playerWeaponForOverlay', (int) PW_Silver );
+			}
+
+			if (!thePlayer.HasTag('quen_sword_equipped'))
+			{
+				QuenSwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('axii_sword_equipped'))
+			{
+				AxiiSwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('aard_sword_equipped'))
+			{
+				AardSwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('yrden_sword_equipped'))
+			{
+				YrdenSwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('quen_secondary_sword_equipped'))
+			{
+				QuenSecondarySwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('axii_secondary_sword_equipped'))
+			{
+				AxiiSecondarySwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('aard_secondary_sword_equipped'))
+			{
+				AardSecondarySwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('yrden_secondary_sword_equipped'))
+			{
+				YrdenSecondarySwordDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('igni_bow_equipped'))
+			{
+				IgniBowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('axii_bow_equipped'))
+			{
+				AxiiBowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('aard_bow_equipped'))
+			{
+				AardBowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('yrden_bow_equipped'))
+			{
+				YrdenBowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('quen_bow_equipped'))
+			{
+				QuenBowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('igni_crossbow_equipped'))
+			{
+				IgniCrossbowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('axii_crossbow_equipped'))
+			{
+				AxiiCrossbowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('aard_crossbow_equipped'))
+			{
+				AardCrossbowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('yrden_crossbow_equipped'))
+			{
+				YrdenCrossbowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('quen_crossbow_equipped'))
+			{
+				QuenCrossbowDestroyIMMEDIATE();
+			}
+			else if (!thePlayer.HasTag('vampire_claws_equipped'))
+			{
+				//ClawDestroy();
+			}
+
+			if (thePlayer.HasTag('ACS_Holster_Sword_Effect'))
+			{
+				thePlayer.RemoveTag('ACS_Holster_Sword_Effect');
+			}
+		}
+
+		if ( thePlayer.IsPerformingFinisher()
+		|| thePlayer.HasTag('ACS_IsPerformingFinisher')
+		)
+		{
+			if (ACS_Player_Scale() != 1)
+			{
+				if (thePlayer.HasTag('ACS_Player_Scale_Revert'))
+				{
+					thePlayer.RemoveTag('ACS_Player_Scale_Revert');
 				}
 
-				if (!thePlayer.HasTag('quen_sword_equipped'))
+				if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
 				{
-					QuenSwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('axii_sword_equipped'))
-				{
-					AxiiSwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('aard_sword_equipped'))
-				{
-					AardSwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('yrden_sword_equipped'))
-				{
-					YrdenSwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('quen_secondary_sword_equipped'))
-				{
-					QuenSecondarySwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('axii_secondary_sword_equipped'))
-				{
-					AxiiSecondarySwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('aard_secondary_sword_equipped'))
-				{
-					AardSecondarySwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('yrden_secondary_sword_equipped'))
-				{
-					YrdenSecondarySwordDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('igni_bow_equipped'))
-				{
-					IgniBowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('axii_bow_equipped'))
-				{
-					AxiiBowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('aard_bow_equipped'))
-				{
-					AardBowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('yrden_bow_equipped'))
-				{
-					YrdenBowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('quen_bow_equipped'))
-				{
-					QuenBowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('igni_crossbow_equipped'))
-				{
-					IgniCrossbowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('axii_crossbow_equipped'))
-				{
-					AxiiCrossbowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('aard_crossbow_equipped'))
-				{
-					AardCrossbowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('yrden_crossbow_equipped'))
-				{
-					YrdenCrossbowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('quen_crossbow_equipped'))
-				{
-					QuenCrossbowDestroyIMMEDIATE();
-				}
-				else if (!thePlayer.HasTag('vampire_claws_equipped'))
-				{
-					//ClawDestroy();
-				}
+					//RemoveTimer('ACS_Embers_Timer');
 
-				if (thePlayer.HasTag('ACS_Holster_Sword_Effect'))
-				{
-					thePlayer.RemoveTag('ACS_Holster_Sword_Effect');
+					thePlayer.StopAllEffects();
+
+					thePlayer.PlayEffectSingle('ethereal_appear');
+					thePlayer.StopEffect('ethereal_appear');
+
+					thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+					thePlayer.StopEffect('special_attack_only_black_fx');
+
+					thePlayer.AddTag('ACS_Player_Scale_Force_Changed');
 				}
 			}
 
-			if ( thePlayer.IsPerformingFinisher()
-			|| thePlayer.HasTag('ACS_IsPerformingFinisher')
-			)
+			playerAnimcomp.SetScale(Vector(ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale()));
+		}
+		else
+		{
+			if (ACS_Player_Scale() != 1)
 			{
-				if (ACS_Player_Scale() != 1)
+				if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
 				{
-					if (thePlayer.HasTag('ACS_Player_Scale_Revert'))
-					{
-						thePlayer.RemoveTag('ACS_Player_Scale_Revert');
-					}
-
-					if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
-					{
-						RemoveTimer('ACS_Embers_Timer');
-
-						thePlayer.StopAllEffects();
-
-						thePlayer.PlayEffectSingle('ethereal_appear');
-						thePlayer.StopEffect('ethereal_appear');
-
-						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
-						thePlayer.StopEffect('special_attack_only_black_fx');
-
-						thePlayer.AddTag('ACS_Player_Scale_Force_Changed');
-					}
+					thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
 				}
 
-				playerAnimcomp.SetScale(Vector(ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale()));
-			}
-			else
-			{
-				if (ACS_Player_Scale() != 1)
+				if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
 				{
-					if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
-					{
-						thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
-					}
+					thePlayer.StopAllEffects();
+					
+					thePlayer.PlayEffectSingle('ethereal_appear');
+					thePlayer.StopEffect('ethereal_appear');
 
-					if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
-					{
-						thePlayer.StopAllEffects();
-						
-						thePlayer.PlayEffectSingle('ethereal_appear');
-						thePlayer.StopEffect('ethereal_appear');
+					thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+					thePlayer.StopEffect('special_attack_only_black_fx');
 
-						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
-						thePlayer.StopEffect('special_attack_only_black_fx');
+					//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 
-						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
-
-						thePlayer.AddTag('ACS_Player_Scale_Revert');
-					}
+					thePlayer.AddTag('ACS_Player_Scale_Revert');
 				}
-			}
-
-			if ( thePlayer.IsInCombat() 
-			&& thePlayer.IsAlive())
-			{
-				SetPlayerTarget();
 			}
 		}
 	}
@@ -3381,7 +3440,9 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			if (thePlayer.IsUsingHorse()
 			|| thePlayer.IsUsingVehicle()
-			|| !ACS_Enabled())
+			|| !ACS_Enabled()
+			//|| !thePlayer.HasTag('ACS_ExplorationDelayTag')
+			)
 			{
 				ClawDestroy();
 
@@ -3747,13 +3808,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function Player_In_Combat()
 	{
-		if (thePlayer.IsInCombat())
+		if (thePlayer.IsInCombat()
+		&& thePlayer.IsAlive())
 		{
-			if(thePlayer.HasTag('ACS_Shielded_Entity'))
-			{
-				//thePlayer.StopEffect('third_teleport_out');
-				//thePlayer.PlayEffectSingle('third_teleport_out');
-			}
+			SetPlayerTarget();
 
 			if(thePlayer.HasTag('ACS_Camo_Active'))
 			{
@@ -3763,7 +3821,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 				else
 				{
-					thePlayer.DrainVitality( thePlayer.GetStat( BCS_Vitality ) * 0.0005 );
+					thePlayer.DrainVitality( thePlayer.GetStat( BCS_Vitality ) * 0.00025 );
 				}
 			}
 
@@ -3778,31 +3836,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					AardPull_Deactivate();
 				}	
 			}
-		}
-		else
-		{
-			if (thePlayer.HasTag ('summoned_shades'))
-			{
-				thePlayer.RemoveTag('summoned_shades');
-			}
-			
-			if (thePlayer.HasTag ('ethereal_shout'))
-			{
-				thePlayer.RemoveTag('ethereal_shout');
-			}
-			
-			if (thePlayer.HasTag('Swords_Ready'))
-			{
-				thePlayer.RemoveTag('Swords_Ready');
-			}
-			
-			theGame.GetGameCamera().StopEffect( 'frost' );
-
-			thePlayer.StopEffect('drain_energy');
-
-			Remove_On_Hit_Tags();
-
-			BerserkMarkDestroy();
 		}
 	}
 
@@ -3859,30 +3892,34 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 	}
 	
-	function ACS_BARRADUR()
+	function THE_EYE()
 	{
-		register_extra_inputs();
-
-		Sword_Hold_Forcer();
-
-		Critical_Low_Health_Fix();
-
-		Sword_Persistent_Effects();
-
-		Scabbard_Thing();
-
-		Shield_Manager();
-
-		Player_In_Combat();
-
-		FUCKING_SECOND_LIFE_HACK();
-
-		/*
-		if (!ACS_Forest_God().IsAlive())
+		if (theGame.IsActive())		
 		{
-			ACS_Forest_God_Secondary().Destroy();
+			if (!thePlayer.IsCiri())
+			{
+				Scabbard_Thing();
+
+				if ( !theGame.IsDialogOrCutscenePlaying() 
+				&& !thePlayer.IsInNonGameplayCutscene() 
+				&& !thePlayer.IsInGameplayScene() 
+				&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+				&& !theGame.IsFading()
+				&& !theGame.IsBlackscreen()
+				)
+				{
+					Sword_Hold_Forcer();
+
+					Critical_Low_Health_Fix();
+
+					Sword_Persistent_Effects();
+
+					Player_In_Combat();
+
+					FUCKING_SECOND_LIFE_HACK();
+				}
+			}
 		}
-		*/
 	}
 
 	function NPC_Fear_Reaction_Geralt()
@@ -3891,6 +3928,21 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		{
 			ACS_Bats_Summon();
 		}	
+	}
+
+	function ACS_Bruxa_Camo_Sonar_Timer_Actual()
+	{
+		ACS_Bruxa_Camo_Sonar().DestroyEffect('fx_sonar');
+
+		ACS_Bruxa_Camo_Sonar().PlayEffect('fx_sonar');
+		ACS_Bruxa_Camo_Sonar().PlayEffect('fx_sonar');
+		ACS_Bruxa_Camo_Sonar().PlayEffect('fx_sonar');
+		ACS_Bruxa_Camo_Sonar().PlayEffect('fx_sonar');
+		ACS_Bruxa_Camo_Sonar().PlayEffect('fx_sonar');
+
+		ACS_Bruxa_Camo_Sonar().StopEffect('fx_sonar');
+
+		ACS_Bruxa_Camo_Sonar_NPC_Play_Effect();
 	}
 
 	function NPC_Fear_Reaction()
@@ -4254,7 +4306,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 															
 		AddTimer('ACS_ResetAnimation', 0.5  , false);
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -4306,7 +4358,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 															
 		AddTimer('ACS_ResetAnimation', 0.5  , false);
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -4754,80 +4806,86 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function ACS_Set_Player_Scale_Actual()
 	{
-		RemoveTimer('Grow_Geralt_Immediate_Repeat');
-		RemoveTimer('Grow_Geralt_Repeat');
-		
-		playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
-		playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
-
-		if ( theGame.IsDialogOrCutscenePlaying() 
-		|| thePlayer.IsInNonGameplayCutscene() 
-		|| thePlayer.IsInGameplayScene()
-		|| thePlayer.IsUsingHorse() 
-		|| thePlayer.IsUsingVehicle()
-		|| thePlayer.IsPerformingFinisher()
-		|| thePlayer.HasTag('ACS_IsPerformingFinisher')
-		//|| thePlayer.IsInsideInteraction()
-		//|| thePlayer.IsInsideHorseInteraction()
-		)
+		if (!thePlayer.IsCiri())
 		{
-			if (ACS_Player_Scale() != 1)
-			{
-				if (thePlayer.HasTag('ACS_Player_Scale_Revert'))
-				{
-					thePlayer.RemoveTag('ACS_Player_Scale_Revert');
-				}
+			RemoveTimer('Grow_Geralt_Immediate_Repeat');
+			RemoveTimer('Grow_Geralt_Repeat');
+			
+			playerAnimcomp = thePlayer.GetComponentByClassName('CAnimatedComponent');
+			playerMeshcomp = thePlayer.GetComponentByClassName('CMeshComponent');
 
-				if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
-				{
-					RemoveTimer('ACS_Embers_Timer');
-
-					//thePlayer.StopAllEffects();
-
-					thePlayer.PlayEffectSingle('ethereal_appear');
-					thePlayer.StopEffect('ethereal_appear');
-
-					thePlayer.PlayEffectSingle('special_attack_only_black_fx');
-					thePlayer.StopEffect('special_attack_only_black_fx');
-
-					thePlayer.AddTag('ACS_Player_Scale_Force_Changed');
-				}
-			}
-
-			playerAnimcomp.SetScale(Vector(ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale(),ACS_Player_Scale()/ACS_Player_Scale()));
-		}
-		else
-		{
-			if (thePlayer.HasTag('in_wraith'))
-			{
-				playerAnimcomp.SetScale(Vector(1,1,1,0));
-			}
-			else
+			if ( theGame.IsDialogOrCutscenePlaying() 
+			|| thePlayer.IsInNonGameplayCutscene() 
+			|| thePlayer.IsInGameplayScene()
+			|| thePlayer.IsUsingHorse() 
+			|| thePlayer.IsUsingVehicle()
+			|| thePlayer.IsPerformingFinisher()
+			|| thePlayer.HasTag('ACS_IsPerformingFinisher')
+			|| theGame.IsCurrentlyPlayingNonGameplayScene()
+			|| theGame.IsFading()
+			|| theGame.IsBlackscreen()
+			//|| thePlayer.IsInsideInteraction()
+			//|| thePlayer.IsInsideHorseInteraction()
+			)
 			{
 				if (ACS_Player_Scale() != 1)
 				{
-					if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
+					if (thePlayer.HasTag('ACS_Player_Scale_Revert'))
 					{
-						thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
+						thePlayer.RemoveTag('ACS_Player_Scale_Revert');
 					}
 
-					if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
+					if (!thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
 					{
+						//RemoveTimer('ACS_Embers_Timer');
+
 						//thePlayer.StopAllEffects();
-						
+
 						thePlayer.PlayEffectSingle('ethereal_appear');
 						thePlayer.StopEffect('ethereal_appear');
 
 						thePlayer.PlayEffectSingle('special_attack_only_black_fx');
 						thePlayer.StopEffect('special_attack_only_black_fx');
 
-						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
-
-						thePlayer.AddTag('ACS_Player_Scale_Revert');
+						thePlayer.AddTag('ACS_Player_Scale_Force_Changed');
 					}
 				}
 
-				playerAnimcomp.SetScale(Vector(ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale()));
+				playerAnimcomp.SetScale(Vector(1,1,1,0));
+			}
+			else
+			{
+				if (thePlayer.HasTag('in_wraith'))
+				{
+					playerAnimcomp.SetScale(Vector(1,1,1,0));
+				}
+				else
+				{
+					if (ACS_Player_Scale() != 1)
+					{
+						if (thePlayer.HasTag('ACS_Player_Scale_Force_Changed'))
+						{
+							thePlayer.RemoveTag('ACS_Player_Scale_Force_Changed');
+						}
+
+						if (!thePlayer.HasTag('ACS_Player_Scale_Revert'))
+						{
+							//thePlayer.StopAllEffects();
+							
+							thePlayer.PlayEffectSingle('ethereal_appear');
+							thePlayer.StopEffect('ethereal_appear');
+
+							thePlayer.PlayEffectSingle('special_attack_only_black_fx');
+							thePlayer.StopEffect('special_attack_only_black_fx');
+
+							//AddTimer('ACS_Embers_Timer', 0.01f, true); 
+
+							thePlayer.AddTag('ACS_Player_Scale_Revert');
+						}
+					}
+
+					playerAnimcomp.SetScale(Vector(ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale(),ACS_Player_Scale()));
+				}
 			}
 		}
 	}
@@ -9512,8 +9570,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_light_attack())
+				&& HitAnimCheck())
 				{
 					VampClawLightAttack();
 				}
@@ -9542,8 +9599,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_light_attack())
+				&& HitAnimCheck())
 				{
 					VampClawLightAttack();
 				}
@@ -9572,8 +9628,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_light_attack())
+				&& HitAnimCheck())
 				{
 					VampClawLightAttack();
 				}
@@ -9596,8 +9651,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_light_attack())
+				&& HitAnimCheck())
 				{
 					VampClawLightAttack();
 				}
@@ -9640,8 +9694,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_heavy_attack())
+				&& HitAnimCheck())
 				{
 					VampClawHeavyAttack();
 				}
@@ -9670,8 +9723,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_heavy_attack())
+				&& HitAnimCheck())
 				{
 					VampClawHeavyAttack();
 				}
@@ -9700,8 +9752,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_heavy_attack())
+				&& HitAnimCheck())
 				{
 					VampClawHeavyAttack();
 				}
@@ -9724,8 +9775,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				&& FinisherCheck()
 				&& WraithModeCheck() 
 				&& BruxaBiteCheck()
-				&& HitAnimCheck()
-				&& ACS_can_perform_light_attack())
+				&& HitAnimCheck())
 				{
 					VampClawHeavyAttack();
 				}
@@ -10060,6 +10110,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											vACS_Shield_Summon.BruxaCamoDecoy();
 
 											AddTimer('ACS_npc_fear_reaction', 0.875, true);
+											AddTimer('ACS_Bruxa_Camo_Sonar_Timer', 2.5, true);
 										}
 										else if (thePlayer.HasTag('quen_secondary_sword_equipped')
 										|| thePlayer.HasTag('axii_secondary_sword_equipped')
@@ -10340,6 +10391,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											vACS_Shield_Summon.BruxaCamoDecoy();
 
 											AddTimer('ACS_npc_fear_reaction', 0.875, true);
+											AddTimer('ACS_Bruxa_Camo_Sonar_Timer', 2.5, true);
 										}
 										else if (thePlayer.HasTag('quen_secondary_sword_equipped')
 										|| thePlayer.HasTag('axii_secondary_sword_equipped')
@@ -10599,6 +10651,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											vACS_Shield_Summon.BruxaCamoDecoy();
 
 											AddTimer('ACS_npc_fear_reaction', 0.875, true);
+											AddTimer('ACS_Bruxa_Camo_Sonar_Timer', 2.5, true);
 										}
 										else if (thePlayer.HasTag('quen_secondary_sword_equipped')
 										|| thePlayer.HasTag('axii_secondary_sword_equipped')
@@ -10854,6 +10907,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 											vACS_Shield_Summon.BruxaCamoDecoy();
 
 											AddTimer('ACS_npc_fear_reaction', 0.875, true);
+											AddTimer('ACS_Bruxa_Camo_Sonar_Timer', 2.5, true);
 										}
 										else if (thePlayer.HasTag('quen_secondary_sword_equipped')
 										|| thePlayer.HasTag('axii_secondary_sword_equipped')
@@ -10939,6 +10993,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		DeactivateThings();
 
 		ACS_ThingsThatShouldBeRemoved();
+
+		thePlayer.SendAttackReactionEvent();
 
 		if ( !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
 		{
@@ -11602,6 +11658,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	function HeavyAttackSwitch()
 	{
 		DeactivateThings();
+
+		thePlayer.SendAttackReactionEvent();
 		/*
 		if (!thePlayer.HasTag('vampire_claws_equipped') || !thePlayer.IsWeaponHeld( 'fist' ) ) 
 		{
@@ -12106,6 +12164,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		ACS_ExplorationDelayHack();
 
 		ACS_Finisher_PreAction();
+
+		thePlayer.SendAttackReactionEvent();
 
 		if ( thePlayer.IsActionAllowed(EIAB_SpecialAttackLight) )
 		{
@@ -13242,154 +13302,160 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 	function VampClawLightAttack()
 	{
-		ACS_ExplorationDelayHack();
-
-		if (ACS_StaminaBlockAction_Enabled() 
-		&& VampireClawsStaminaCheck()
-		)
-		{					 
-			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
-		}
-		else
+		if (ACS_can_perform_light_attack())
 		{
-			ACS_refresh_light_attack_cooldown();
+			ACS_ExplorationDelayHack();
 
-			ACS_PrimaryWeaponSwitch();
-
-			ACS_ClawEquipStandalone();
-
-			/*								
-			if (
-			ccompEnabled
-			&& ACS_AttitudeCheck (actor)
-			&& actor.IsHuman()
-			&& FinisherDistanceCheck()
+			if (ACS_StaminaBlockAction_Enabled() 
+			&& VampireClawsStaminaCheck()
 			)
-			{
-				if ( actor.HasBuff( EET_HeavyKnockdown )  
-				|| actor.HasBuff( EET_Knockdown ) 
-				|| actor.HasBuff( EET_Ragdoll ) )
-				{
-					ACS_Setup_Combat_Action_Light();
-				}
-				else
-				{
-					//ACS_Dodge();
-					action_interrupt();
-					thePlayer.SetPlayerTarget( actor );cancel_npc_animation(); ACS_PerformFinisher();
-				}
+			{					 
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else
 			{
-				*/
-				if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-				{
-					if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort_Big();}						
+				ACS_refresh_light_attack_cooldown();
 
-					if (thePlayer.GetIsSprinting())
+				ACS_PrimaryWeaponSwitch();
+
+				ACS_ClawEquipStandalone();
+
+				/*								
+				if (
+				ccompEnabled
+				&& ACS_AttitudeCheck (actor)
+				&& actor.IsHuman()
+				&& FinisherDistanceCheck()
+				)
+				{
+					if ( actor.HasBuff( EET_HeavyKnockdown )  
+					|| actor.HasBuff( EET_Knockdown ) 
+					|| actor.HasBuff( EET_Ragdoll ) )
 					{
-						geraltClawSprintingAttack();
+						ACS_Setup_Combat_Action_Light();
 					}
 					else
 					{
-						geraltRandomClawComboAttack();
-					}
-				}
-				else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
-				&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
-				{
-					Bruxa_Scream();
-
-					if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
-					&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
-					{	
-						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
-					}
-					else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
-					&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
-					{	
-						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
-					}
-					else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
-					{
-						thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
+						//ACS_Dodge();
+						action_interrupt();
+						thePlayer.SetPlayerTarget( actor );cancel_npc_animation(); ACS_PerformFinisher();
 					}
 				}
 				else
 				{
-					if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort();}
+					*/
+					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+					{
+						if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort_Big();}						
 
-					geraltRandomClawFistAttack();
-				}
-			//}
+						if (thePlayer.GetIsSprinting())
+						{
+							geraltClawSprintingAttack();
+						}
+						else
+						{
+							geraltRandomClawComboAttack();
+						}
+					}
+					else if (theInput.GetActionValue('GI_AxisLeftY') < -0.5
+					&& thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 1/3 )
+					{
+						Bruxa_Scream();
+
+						if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus )/3
+						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus ) * 2/3) 
+						{	
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
+						}
+						else if( thePlayer.GetStat( BCS_Focus ) >= thePlayer.GetStatMax( BCS_Focus ) * 2/3
+						&& thePlayer.GetStat( BCS_Focus ) < thePlayer.GetStatMax( BCS_Focus )) 
+						{	
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
+						}
+						else if( thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax(BCS_Focus) ) 
+						{
+							thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 1/3);
+						}
+					}
+					else
+					{
+						if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort();}
+
+						geraltRandomClawFistAttack();
+					}
+				//}
+			}
 		}
 	}
 
 	function VampClawHeavyAttack()
 	{
-		if (ACS_StaminaBlockAction_Enabled() 
-		&& VampireClawsStaminaCheck()
-		)
+		if (ACS_can_perform_heavy_attack())
 		{
-			if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
-		}
-		else
-		{
-			ACS_refresh_heavy_attack_cooldown();
-										
-			ACS_PrimaryWeaponSwitch();
-
-			ACS_ClawEquipStandalone();
-
-			/*					
-			if (
-			ccompEnabled
-			&& ACS_AttitudeCheck (actor) 
-			&& actor.IsHuman()
-			&& FinisherDistanceCheck()
+			if (ACS_StaminaBlockAction_Enabled() 
+			&& VampireClawsStaminaCheck()
 			)
 			{
-				if ( actor.HasBuff( EET_HeavyKnockdown )  
-				|| actor.HasBuff( EET_Knockdown ) 
-				|| actor.HasBuff( EET_Ragdoll ) )
-				{
-					ACS_Setup_Combat_Action_Heavy();	
-				}
-				else
-				{
-					//ACS_Dodge();
-					action_interrupt();
-					thePlayer.SetPlayerTarget( actor );cancel_npc_animation(); ACS_PerformFinisher();
-				}
+				if(thePlayer.IsInCombat()){thePlayer.RaiseEvent( 'CombatTaunt' );} thePlayer.SoundEvent("gui_no_stamina");
 			}
 			else
 			{
-				*/
-				if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				ACS_refresh_heavy_attack_cooldown();
+											
+				ACS_PrimaryWeaponSwitch();
+
+				ACS_ClawEquipStandalone();
+
+				/*					
+				if (
+				ccompEnabled
+				&& ACS_AttitudeCheck (actor) 
+				&& actor.IsHuman()
+				&& FinisherDistanceCheck()
+				)
 				{
-					if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Monster();}
-
-					geraltRandomClawAttackSpecialDash();
-
-					//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
-
-					//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
-
-					//AddTimer('ACS_ResetAnimation', 0.75  , false);
+					if ( actor.HasBuff( EET_HeavyKnockdown )  
+					|| actor.HasBuff( EET_Knockdown ) 
+					|| actor.HasBuff( EET_Ragdoll ) )
+					{
+						ACS_Setup_Combat_Action_Heavy();	
+					}
+					else
+					{
+						//ACS_Dodge();
+						action_interrupt();
+						thePlayer.SetPlayerTarget( actor );cancel_npc_animation(); ACS_PerformFinisher();
+					}
 				}
 				else
 				{
-					if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort_Big();}
+					*/
+					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+					{
+						if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Monster();}
 
-					geraltRandomHeavyClawAttack();
+						geraltRandomClawAttackSpecialDash();
 
-					if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+						//if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
-					if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
+						//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
 
-					AddTimer('ACS_ResetAnimation', 0.5  , false);
-				}
-			//}
+						//AddTimer('ACS_ResetAnimation', 0.75  , false);
+					}
+					else
+					{
+						if (ACS_VampireSoundEffects_Enabled()) {VampVoiceEffects_Effort_Big();}
+
+						geraltRandomHeavyClawAttack();
+
+						if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
+						if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier(1.5  ); }	
+
+						AddTimer('ACS_ResetAnimation', 0.5  , false);
+					}
+				//}
+			}
 		}
 	}
 
@@ -19408,7 +19474,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	
 	function dodge_timer_actual() 
 	{
-		ACS_Vampire_Back_Claw_Teleport();
+		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		{
+			ACS_Vampire_Back_Claw_Teleport();
+		}
 
 		thePlayer.StopEffect('dive_shape');
 
@@ -19760,7 +19829,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && !thePlayer.IsPerformingFinisher())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && !thePlayer.IsPerformingFinisher())
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );  
 		}
@@ -19813,7 +19882,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
 		}
 
-		ACS_Vampire_Back_Claw_Reattach();
+		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		{
+			ACS_Vampire_Back_Claw_Reattach();
+		}
 
 		if ( thePlayer.HasTag('ACS_wildhunt_teleport_init') )
 		{
@@ -19964,7 +20036,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			thePlayer.SoundEvent("monster_dettlaff_monster_construct_whoosh_claws_large");
 			
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat()) 
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat()) 
 			{ 
 				movementAdjustor.RotateTowards( ticket, actor );  
 				
@@ -20015,7 +20087,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		playerRot = thePlayer.GetWorldRotation();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			thePlayer.AddTag('blood_sucking');
 
@@ -20420,7 +20492,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 						}
 
-						npc.StopEffect('focus_sound_red_fx');
+						//npc.StopEffect('focus_sound_red_fx');
 					}
 				}
 				else
@@ -20675,7 +20747,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			thePlayer.AddTag('ACS_Shadow_Dash_Empowered');
 
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
 				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
@@ -20828,7 +20900,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				AddTimer('ACS_ResetAnimation', 0.5  , false);
 			}
 
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
 				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
@@ -20896,7 +20968,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			
 			AddTimer('ACS_ResetAnimation', 0.5  , false);
 
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
 				if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 				{
@@ -20978,7 +21050,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 			quen_sword_glow();	
 
-			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+			if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 			{
 				movementAdjustor.RotateTowards( ticket, actor );
 
@@ -21046,7 +21118,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		dodge_timer_attack_actual();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -21204,7 +21276,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{	
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );  
 			
@@ -21637,7 +21709,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 						thePlayer.RemoveTag('in_wraith');
 
-						AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+						//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 					}
 
 					if (!thePlayer.HasTag('ACS_Camo_Active')
@@ -21661,7 +21733,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 					bruxa_dash();
 
-					DeactivateThings_BruxaDash();				
+					ACS_ExplorationDelayHack();
+
+					DeactivateThings_BruxaDash();
+
+					if (ACS_Bruxa_Camo_Trail())
+					{
+						ACS_Bruxa_Camo_Trail().StopEffect('smoke');
+						ACS_Bruxa_Camo_Trail().PlayEffect('smoke');
+					}				
 				}
 			}
 		}
@@ -21712,7 +21792,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				thePlayer.RemoveTag('in_wraith');
 
-				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+				//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 			}
 
 			if (ACS_Enabled())
@@ -21807,7 +21887,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									//"dlc\bob\data\fx\cutscenes\cs702_vision\vision_env.env"
 									"dlc\dlc_acs\data\env\q605_hell_red_blockout.env"
 									, true);
-								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 1.f );
+								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 0.25f );
 								theGame.SetEnvironmentID(envID);
 
 								camera = (CCustomCamera)theCamera.GetTopmostCameraObject();
@@ -21841,7 +21921,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										
 								thePlayer.StopAllEffects();
 
-								RemoveTimer('ACS_Embers_Timer');
+								//RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
@@ -21923,7 +22003,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 							thePlayer.RemoveTag('in_wraith');
 
-							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+							//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 						}
 
 						if (!thePlayer.HasTag('ACS_Camo_Active')
@@ -21997,7 +22077,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 									//"dlc\bob\data\fx\cutscenes\cs702_vision\vision_env.env"
 									"dlc\dlc_acs\data\env\q605_hell_red_blockout.env"
 									, true);
-								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 1.f );
+								envID = ActivateEnvironmentDefinition( environment, 1000, 1, 0.25f );
 								theGame.SetEnvironmentID(envID);
 
 								thePlayer.BlockAction( EIAB_Crossbow, 			'ACS_Wraith');
@@ -22021,7 +22101,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 										
 								thePlayer.StopAllEffects();
 
-								RemoveTimer('ACS_Embers_Timer');
+								//RemoveTimer('ACS_Embers_Timer');
 									
 								thePlayer.StopEffect('special_attack_short_fx');
 								thePlayer.PlayEffectSingle('special_attack_short_fx');
@@ -22103,7 +22183,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 							thePlayer.RemoveTag('in_wraith');
 
-							AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true); 
+							//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 						}
 
 						if (!thePlayer.HasTag('ACS_Camo_Active')
@@ -22178,7 +22258,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		MovementAdjustBruxaDash();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -22318,7 +22398,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -22500,7 +22580,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ACS_Combo_Mode_Reset_Hard();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -22536,7 +22616,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -22798,7 +22878,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -23363,7 +23443,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -23810,7 +23890,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -23925,7 +24005,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
 		}
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24036,7 +24116,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		ACS_Dagger_Summon();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24154,7 +24234,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 			AddTimer('ACS_Shield_Spawn_Delay', 0.5, false);
 		}
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24233,7 +24313,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		//ACS_Giant_Lightning_Strike_Single();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24303,7 +24383,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		VampVoiceEffects_Monster();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24411,7 +24491,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24617,7 +24697,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24823,7 +24903,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -24995,7 +25075,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -25131,7 +25211,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		AddTimer( 'ACS_alive_check', 1, false );
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -25266,7 +25346,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -25380,7 +25460,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -25490,7 +25570,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{		
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -25924,7 +26004,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{		
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -26060,7 +26140,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		thePlayer.BreakAttachment();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if( targetDistance <= 2.5*2.5 ) 
 			{
@@ -26188,7 +26268,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		ACS_Rock_Pillar();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );  
 
@@ -26246,7 +26326,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		thePlayer.SetIsCurrentlyDodging(true);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{		
 			if( targetDistance <= 2.5*2.5 ) 
 			{
@@ -26421,7 +26501,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		thePlayer.SetIsCurrentlyDodging(true);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{		
 			if( targetDistance <= 2.5*2.5 ) 
 			{
@@ -26590,7 +26670,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
 			if( targetDistance <= 3.5 * 3.5 ) 
 			{
@@ -26699,7 +26779,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -27051,7 +27131,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -27381,7 +27461,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		thePlayer.SetIsCurrentlyDodging(true);
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if( targetDistance <= 2.5*2.5 ) 
 			{
@@ -27539,7 +27619,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
 			if( targetDistance <= 3.5 * 3.5 ) 
 			{
@@ -27652,7 +27732,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck (actor) )
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() )
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -28144,7 +28224,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{	
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -28574,7 +28654,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		quen_sword_glow();	
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
 			if( targetDistance <= 3.25*3.25 ) 
 			{
@@ -28807,7 +28887,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		quen_sword_glow();	
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{			
 			RemoveTimer('ACS_dodge_timer_end');
 
@@ -28859,7 +28939,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -29403,7 +29483,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{			
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -29575,7 +29655,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{			
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -29805,7 +29885,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{	
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -30129,7 +30209,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -30465,7 +30545,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		thePlayer.SetIsCurrentlyDodging(true);
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if( targetDistance <= 3.25*3.25 ) 
 			{
@@ -30658,7 +30738,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -30870,7 +30950,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31113,7 +31193,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31274,7 +31354,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31389,7 +31469,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{		
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31501,7 +31581,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31648,7 +31728,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31760,7 +31840,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -31909,7 +31989,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32021,7 +32101,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32105,7 +32185,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32540,7 +32620,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32819,7 +32899,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32858,7 +32938,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -32978,7 +33058,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -33146,7 +33226,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -33486,7 +33566,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -33628,7 +33708,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -33873,7 +33953,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -33911,7 +33991,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -34033,7 +34113,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -34793,7 +34873,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -35147,7 +35227,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -35291,7 +35371,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -35553,7 +35633,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -35921,7 +36001,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -36155,7 +36235,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{	
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -36429,7 +36509,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -36949,7 +37029,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -37207,7 +37287,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -37581,7 +37661,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -37895,7 +37975,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38061,7 +38141,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38281,7 +38361,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38414,7 +38494,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38547,7 +38627,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38680,7 +38760,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -38845,7 +38925,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -39259,7 +39339,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -39467,7 +39547,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -39621,7 +39701,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -39775,7 +39855,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -39905,7 +39985,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40035,7 +40115,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40195,7 +40275,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{			
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40307,7 +40387,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40539,7 +40619,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40773,7 +40853,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -40933,7 +41013,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41067,7 +41147,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{	
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41201,7 +41281,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41361,7 +41441,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41470,7 +41550,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41583,7 +41663,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -41930,7 +42010,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{	
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -42337,7 +42417,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -42493,7 +42573,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -42675,7 +42755,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43033,7 +43113,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43189,7 +43269,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43221,7 +43301,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43261,7 +43341,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43299,7 +43379,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43335,7 +43415,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43369,7 +43449,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 	{
 		MovementAdjust();
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43595,7 +43675,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		
 		movementAdjustor.ScaleAnimation( ticket, true, false, true );
 		
-		movementAdjustor.MatchMoveRotation( ticket );
+		//movementAdjustor.MatchMoveRotation( ticket );
 		
 		settingsWraith.blendIn = 0.15;
 		settingsWraith.blendOut = 1.0f;
@@ -43701,7 +43781,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 					
 				thePlayer.RemoveTag('in_wraith');
 
-				AddTimer('ACS_Embers_Timer', 0.000000000000000001f, true);
+				//AddTimer('ACS_Embers_Timer', 0.01f, true);
 
 				thePlayer.UnblockAction( EIAB_Crossbow, 			'ACS_Wraith');
 				thePlayer.UnblockAction( EIAB_CallHorse,			'ACS_Wraith');
@@ -43763,7 +43843,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		AddTimer('ACS_ResetAnimation', 0.25  , false);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -43830,7 +43910,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		AddTimer('ACS_ResetAnimation', 1 , false);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -44035,7 +44115,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -44089,7 +44169,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -44161,7 +44241,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -44208,7 +44288,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		AddTimer('ACS_ResetAnimation', 1 , false);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{
@@ -44307,7 +44387,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		AddTimer('ACS_ResetAnimation', 0.5 , false);
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
+		if( actor && ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat())
 		{
 			if ( ACS_GetTargetMode() == 0 || ACS_GetTargetMode() == 1 )
 			{

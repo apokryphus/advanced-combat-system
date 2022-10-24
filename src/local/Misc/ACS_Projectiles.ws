@@ -2046,41 +2046,29 @@ class SwordProjectileGiant extends W3AdvancedProjectile
 			}
 	
 			delete attAction;
-			
-			//this.SoundEvent("cmb_wildhunt_boss_weapon_swoosh");
-			
-			collidedEntities.PushBack(victim);
+		}
+	}
+
+	function DealDamageProj()
+	{
+		var entities	 		: array<CGameplayEntity>;
+		var i					: int;
+		
+		FindGameplayEntitiesInSphere( entities, GetWorldPosition(), 3, 100 );
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			DealDamageToTarget( entities[i], effType, crit );
 		}
 	}
 		
 	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
 	{	
-		if(collidingComponent)
-		{
-			victim = (CGameplayEntity)collidingComponent.GetEntity();
-		}
-		
-		if( collidingComponent && !hitCollisionsGroups.Contains( 'Static' ) )
-		{		
-			if ( victim 
-			&& !collidedEntities.Contains(victim) 
-			&& victim != thePlayer 
-			&& ( GetAttitudeBetween( victim, thePlayer ) == AIA_Hostile) 
-			&& victim.IsAlive() )
-			{
-				actor = (CActor)victim;
-				
-				collidedEntities.PushBack(victim);
-				
-				DealDamageToTarget( victim, effType, crit );
-			}
-		}
-		else
 		if ( ( hitCollisionsGroups.Contains( 'Terrain' ) 
 		|| hitCollisionsGroups.Contains( 'Static' ) 
 		|| hitCollisionsGroups.Contains( 'Foliage' ) ) 
 		&& !stopped )
 		{
+			DealDamageProj();
 			StopProjectile();
 			AddTimer('sword_destroy', 2);
 			

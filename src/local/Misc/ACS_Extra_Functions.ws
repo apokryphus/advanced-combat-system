@@ -164,31 +164,31 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				ang = 30;
 			}
 		}
+
+		if ( thePlayer.GetTarget() == ACS_Big_Boi() )
+		{
+			dist += 0.75;
+			ang += 15;
+		}
+
+		if (ACS_Player_Scale() > 1)
+		{
+			dist += ACS_Player_Scale() * 0.75;
+		}
+		else if (ACS_Player_Scale() < 1)
+		{
+			dist -= ACS_Player_Scale() * 0.5;
+		}
+
+		if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
+		{
+			dist += 1;
+		}
 	}
 	else 
 	{
 		dist = 1;
 		ang = 30;
-	}
-
-	if ( thePlayer.GetTarget() == ACS_Big_Boi() )
-	{
-		dist += 0.75;
-		ang += 15;
-	}
-
-	if (ACS_Player_Scale() > 1)
-	{
-		dist += ACS_Player_Scale() * 0.75;
-	}
-	else if (ACS_Player_Scale() < 1)
-	{
-		dist -= ACS_Player_Scale() * 0.5;
-	}
-
-	if( thePlayer.HasAbility('Runeword 2 _Stats', true) && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') )
-	{
-		dist += 1;
 	}
 
 	FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
@@ -303,6 +303,16 @@ function ACS_Load_Sound()
 	if ( !theSound.SoundIsBankLoaded("monster_dracolizard.bnk") )
 	{
 		theSound.SoundLoadBank( "monster_dracolizard.bnk", false );
+	}
+
+	if ( !theSound.SoundIsBankLoaded("monster_bies.bnk") )
+	{
+		theSound.SoundLoadBank( "monster_bies.bnk", false );
+	}
+
+	if ( !theSound.SoundIsBankLoaded("monster_him.bnk") )
+	{
+		theSound.SoundLoadBank( "monster_him.bnk", false );
 	}
 }
 
@@ -1891,6 +1901,8 @@ function ACS_CloakEquippedCheck() : bool
 	var equippedItemsId 		: array<SItemUniqueId>;
 	var i 						: int;
 	
+	equippedItemsId.Clear();
+
 	equippedItemsId = GetWitcherPlayer().GetEquippedItems();
 
 	for ( i=0; i < equippedItemsId.Size() ; i+=1 ) 
@@ -2134,6 +2146,7 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 	GetACSWatcher().RemoveTimer('ACS_HeadbuttDamage'); 
 
 	GetACSWatcher().RemoveTimer('ACS_ExplorationDelay');
+	GetACSWatcher().AddTimer('ACS_ExplorationDelay', 2 , false);
 
 	GetACSWatcher().RemoveTimer('ACS_shout'); 
 
@@ -2225,6 +2238,8 @@ function ACS_RemoveStabbedEntities()
 {
 	var actors		    							: array<CActor>;
 	var i											: int;
+
+	actors.Clear();
 
 	actors = GetActorsInRange(thePlayer, 10, 10, 'ACS_Stabbed');
 		
@@ -2398,6 +2413,8 @@ function ACS_NoticeboardCheck (radius_check: float): bool
 {
     var entities: array<CGameplayEntity>;
 
+	entities.Clear();
+
     FindGameplayEntitiesInRange(entities, thePlayer, radius_check, 1, , FLAG_ExcludePlayer, , 'W3NoticeBoard');
 
     return entities.Size()>0;
@@ -2406,8 +2423,9 @@ function ACS_NoticeboardCheck (radius_check: float): bool
 function ACS_GuardCheck (radius_check: float): bool 
 {
 	var entities: array<CGameplayEntity>;
-
     var i: int;
+
+	entities.Clear();
 
     FindGameplayEntitiesInRange(entities, thePlayer, radius_check, 100, , FLAG_ExcludePlayer, , 'CNewNPC');
 
@@ -2621,6 +2639,11 @@ function ACS_ExplorationDelayHack()
 {
 	if( !thePlayer.IsInCombat() )
 	{
+		if (!thePlayer.HasTag('ACS_ExplorationDelayTag'))
+		{
+			thePlayer.AddTag('ACS_ExplorationDelayTag');
+		}
+
 		if ( thePlayer.GetCurrentStateName() != 'Combat' )
 		{
 			thePlayer.GotoState('Combat');
@@ -4739,6 +4762,8 @@ function ACS_Ice_Titan_Destroy()
 	var titan 											: array<CActor>;
 	var i												: int;
 	
+	titan.Clear();
+
 	theGame.GetActorsByTag( 'ACS_Ice_Titan', titan );	
 	
 	for( i = 0; i < titan.Size(); i += 1 )
@@ -4941,6 +4966,8 @@ exec function fallup()
 	settings.blendIn = 0.3f;
 	settings.blendOut = 0.3f;
 
+	actors.Clear();
+
 	actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_OnlyAliveActors);
 
 	if( actors.Size() > 0 )
@@ -5080,6 +5107,8 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 		settings.blendIn = 0;
 		settings.blendOut = 0;
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -5128,6 +5157,8 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 	{
 		settings.blendIn = 0;
 		settings.blendOut = 0;
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
@@ -5192,6 +5223,8 @@ state EnemyBehSwitch_Fistfight in cACS_EnemyBehSwitch
 		settings.blendIn = 0;
 		settings.blendOut = 0;
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -5233,6 +5266,8 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 	{
 		settings.blendIn = 0;
 		settings.blendOut = 0;
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
@@ -5279,6 +5314,8 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 		settings.blendIn = 0;
 		settings.blendOut = 0;
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -5323,6 +5360,8 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 	{
 		settings.blendIn = 0;
 		settings.blendOut = 0;
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
 
@@ -5478,6 +5517,8 @@ function GetACSTestEnt_Array_Destroy()
 	var i												: int;
 	var ents 											: array<CEntity>;
 
+	ents.Clear();
+
 	theGame.GetEntitiesByTag( 'ACS_Test_Ent', ents );	
 	
 	for( i = 0; i < ents.Size(); i += 1 )
@@ -5490,6 +5531,8 @@ function GetACSTestEnt_Array_StopEffects()
 {	
 	var i												: int;
 	var ents 											: array<CEntity>;
+
+	ents.Clear();
 
 	theGame.GetEntitiesByTag( 'ACS_Test_Ent', ents );	
 	

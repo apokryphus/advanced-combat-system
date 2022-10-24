@@ -277,6 +277,8 @@ function ACS_HideSword()
 		steelswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
 		steelswordentity.SetHideInGame(true); 
 
+		scabbards_steel.Clear();
+
 		scabbards_steel = thePlayer.GetInventory().GetItemsByCategory('steel_scabbards');
 
 		for ( i=0; i < scabbards_steel.Size() ; i+=1 )
@@ -292,6 +294,8 @@ function ACS_HideSword()
 
 			silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
 			silverswordentity.SetHideInGame(true); 
+
+			scabbards_silver.Clear();
 
 			scabbards_silver = thePlayer.GetInventory().GetItemsByCategory('silver_scabbards');
 
@@ -316,6 +320,8 @@ function ACS_HideSword()
 		silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
 		silverswordentity.SetHideInGame(true); 
 
+		scabbards_silver.Clear();
+
 		scabbards_silver = thePlayer.GetInventory().GetItemsByCategory('silver_scabbards');
 
 		for ( i=0; i < scabbards_silver.Size() ; i+=1 )
@@ -331,6 +337,8 @@ function ACS_HideSword()
 
 			steelswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
 			steelswordentity.SetHideInGame(true); 
+
+			scabbards_steel.Clear();
 
 			scabbards_steel = thePlayer.GetInventory().GetItemsByCategory('steel_scabbards');
 
@@ -746,6 +754,8 @@ state ClawDestroy_WITH_EFFECT_Engage in cClawDestroy_WITH_EFFECT
 		{
 			theGame.GetInGameConfigWrapper().SetVarValue('Gameplay', 'DisableAutomaticSwordSheathe', true);
 		}
+
+		components.Clear();
 
 		components =  thePlayer.GetComponentsByClassName ( 'CDrawableComponent' );
 			

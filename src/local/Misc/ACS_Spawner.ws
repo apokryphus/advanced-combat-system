@@ -402,6 +402,7 @@ state Giant_Lightning_Strike_Mult_Engage in cACS_Giant_Lightning_Strike_Mult
 	latent function Strike_Mult()
 	{
 		//actors = GetActorsInRange(thePlayer, 55, 20);
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 55, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -524,6 +525,8 @@ state ACS_Yrden_Lightning_LVL_1_Engage in cACS_Yrden_Lightning_LVL_1
 	{
 		//actors = GetActorsInRange(thePlayer, 2.5, 3);
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 5, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		for( i = 0; i < actors.Size(); i += 1 )
@@ -603,6 +606,8 @@ state ACS_Yrden_Lightning_LVL_2_Engage in cACS_Yrden_Lightning_LVL_2
 	{
 		//actors = GetActorsInRange(thePlayer, 5, 20);
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		for( i = 0; i < actors.Size(); i += 1 )
@@ -681,6 +686,8 @@ state ACS_Yrden_Lightning_LVL_3_Engage in cACS_Yrden_Lightning_LVL_3
 	latent function Yrden_Lightning_Activate()
 	{
 		//actors = GetActorsInRange(thePlayer, 10, 20);
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -858,6 +865,8 @@ state ACS_Rock_Pillar_Engage in cACS_Rock_Pillar
 		{
 			//actors = GetActorsInRange(actor, 6, 20);
 
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInRange( 6, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -934,6 +943,8 @@ state AOE_Ice_Spear_LVL_1_Engage in cAOE_Ice_Spear_LVL_1
 	
 	latent function Ice_Spear_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1006,6 +1017,8 @@ state AOE_Ice_Spear_LVL_2_Engage in cAOE_Ice_Spear_LVL_2
 	
 	latent function Ice_Spear_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1078,6 +1091,8 @@ state AOE_Ice_Spear_LVL_3_Engage in cAOE_Ice_Spear_LVL_3
 	
 	latent function Ice_Spear_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1149,6 +1164,8 @@ state ACS_AOE_Freeze_LVL_1_Engage in cACS_AOE_Freeze_LVL_1
 	
 	latent function Freeze_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1209,6 +1226,8 @@ state ACS_AOE_Freeze_LVL_2_Engage in cACS_AOE_Freeze_LVL_2
 	
 	latent function Freeze_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1269,6 +1288,8 @@ state ACS_AOE_Freeze_LVL_3_Engage in cACS_AOE_Freeze_LVL_3
 	
 	latent function Freeze_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1329,6 +1350,8 @@ state ACS_AOE_Sandstorm_LVL_1_Engage in cACS_AOE_Sandstorm_LVL_1
 	
 	latent function Sandstorm_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1405,6 +1428,8 @@ state ACS_AOE_Sandstorm_LVL_2_Engage in cACS_AOE_Sandstorm_LVL_2
 	
 	latent function Sandstorm_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1481,6 +1506,8 @@ state ACS_AOE_Sandstorm_LVL_3_Engage in cACS_AOE_Sandstorm_LVL_3
 	
 	latent function Sandstorm_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1557,6 +1584,8 @@ state ACS_AOE_Sandpillar_LVL_1_Engage in cACS_AOE_Sandpillar_LVL_1
 	
 	latent function Sandpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1622,6 +1651,8 @@ state ACS_AOE_Sandpillar_LVL_2_Engage in cACS_AOE_Sandpillar_LVL_2
 	
 	latent function Sandpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1687,6 +1718,8 @@ state ACS_AOE_Sandpillar_LVL_3_Engage in cACS_AOE_Sandpillar_LVL_3
 	
 	latent function Sandpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1752,6 +1785,8 @@ state ACS_AOE_Waterarc_LVL_1_Engage in cACS_AOE_Waterarc_LVL_1
 	
 	latent function Waterarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1828,6 +1863,8 @@ state ACS_AOE_Waterarc_LVL_2_Engage in cACS_AOE_Waterarc_LVL_2
 	
 	latent function Waterarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1904,6 +1941,8 @@ state ACS_AOE_Waterarc_LVL_3_Engage in cACS_AOE_Waterarc_LVL_3
 	
 	latent function Waterarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -1981,6 +2020,8 @@ state ACS_AOE_Waterpillar_LVL_1_Engage in cACS_AOE_Waterpillar_LVL_1
 	
 	latent function Waterpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2059,6 +2100,8 @@ state ACS_AOE_Waterpillar_LVL_2_Engage in cACS_AOE_Waterpillar_LVL_2
 	
 	latent function Waterpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2137,6 +2180,8 @@ state ACS_AOE_Waterpillar_LVL_3_Engage in cACS_AOE_Waterpillar_LVL_3
 	
 	latent function Waterpillar_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2215,6 +2260,8 @@ state ACS_AOE_Bloodarc_LVL_1_Engage in cACS_AOE_Bloodarc_LVL_1
 	
 	latent function Bloodarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2225,35 +2272,35 @@ state ACS_AOE_Bloodarc_LVL_1_Engage in cACS_AOE_Bloodarc_LVL_1
 
 			markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\water_mage\sand_gusts_bob.w2ent", true ), targetPositionNPC, actortarget.GetWorldRotation() );
 			
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 			
 			markerNPC.DestroyAfter(3);
 		}
@@ -2316,6 +2363,8 @@ state ACS_AOE_Bloodarc_LVL_2_Engage in cACS_AOE_Bloodarc_LVL_2
 	
 	latent function Bloodarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2326,35 +2375,35 @@ state ACS_AOE_Bloodarc_LVL_2_Engage in cACS_AOE_Bloodarc_LVL_2
 
 			markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\water_mage\sand_gusts_bob.w2ent", true ), targetPositionNPC, actortarget.GetWorldRotation() );
 			
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 			
 			markerNPC.DestroyAfter(3);
 		}
@@ -2409,6 +2458,8 @@ state ACS_AOE_Bloodarc_LVL_3_Engage in cACS_AOE_Bloodarc_LVL_3
 	
 	latent function Bloodarc_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2419,35 +2470,35 @@ state ACS_AOE_Bloodarc_LVL_3_Engage in cACS_AOE_Bloodarc_LVL_3
 
 			markerNPC = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\water_mage\sand_gusts_bob.w2ent", true ), targetPositionNPC, actortarget.GetWorldRotation() );
 			
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_right');
+			markerNPC.PlayEffect('blood_diagonal_up_right');
 
-			markerNPC.PlayEffectSingle('blood_diagonal_up_left');
+			markerNPC.PlayEffect('blood_diagonal_up_left');
 
-			markerNPC.PlayEffectSingle('blood_up');
+			markerNPC.PlayEffect('blood_up');
 			
 			markerNPC.DestroyAfter(3);
 		}
@@ -2510,6 +2561,8 @@ state ACS_AOE_Igni_Blast_LVL_1_Engage in cACS_AOE_Igni_Blast_LVL_1
 	
 	latent function Igni_Blast_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{	
@@ -2571,6 +2624,8 @@ state ACS_AOE_Igni_Blast_LVL_2_Engage in cACS_AOE_Igni_Blast_LVL_2
 	
 	latent function Igni_Blast_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{	
@@ -2632,6 +2687,8 @@ state ACS_AOE_Igni_Blast_LVL_3_Engage in cACS_AOE_Igni_Blast_LVL_3
 	
 	latent function Igni_Blast_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{	
@@ -2693,6 +2750,8 @@ state ACS_AOE_Magic_Missiles_LVL_1_Engage in cACS_AOE_Magic_Missiles_LVL_1
 	
 	latent function Magic_Missiles_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2765,6 +2824,8 @@ state ACS_AOE_Magic_Missiles_LVL_2_Engage in cACS_AOE_Magic_Missiles_LVL_2
 	
 	latent function Magic_Missiles_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2838,6 +2899,8 @@ state ACS_AOE_Magic_Missiles_LVL_3_Engage in cACS_AOE_Magic_Missiles_LVL_3
 	
 	latent function Magic_Missiles_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -2963,6 +3026,8 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
 
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 20, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -2997,6 +3062,8 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 		else if (thePlayer.HasTag('eredin_frost_proj_begin') && thePlayer.HasTag('eredin_frost_proj_1st'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
+
+			actors.Clear();
 
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 40, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3044,6 +3111,8 @@ state ACS_Eredin_Frost_Projectile_Engage in cACS_Eredin_Frost_Projectile
 		else if (thePlayer.HasTag('eredin_frost_proj_begin') && thePlayer.HasTag('eredin_frost_proj_2nd'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
+
+			actors.Clear();
 
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3318,6 +3387,8 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
 
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 20, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -3344,6 +3415,8 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 		else if (thePlayer.HasTag('golem_stone_proj_begin') && thePlayer.HasTag('golem_stone_proj_1st'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
+
+			actors.Clear();
 
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 40, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3383,6 +3456,8 @@ state ACS_Golem_Stone_Projectile_Engage in cACS_Golem_Stone_Projectile
 		else if (thePlayer.HasTag('golem_stone_proj_begin') && thePlayer.HasTag('golem_stone_proj_2nd'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
+
+			actors.Clear();
 
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 80, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3623,6 +3698,8 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
 
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 20, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -3646,6 +3723,8 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 			thePlayer.AddTag('giant_shockwave_proj_begin');
 			thePlayer.AddTag('giant_shockwave_proj_1st');
 
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 10, 10, 'ACS_Stabbed', true);
 		
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3657,6 +3736,8 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 		else if (thePlayer.HasTag('giant_shockwave_proj_begin') && thePlayer.HasTag('giant_shockwave_proj_1st'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
+
+			actors.Clear();
 
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 40, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3693,6 +3774,8 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 			thePlayer.RemoveTag('giant_shockwave_proj_1st');
 			thePlayer.AddTag('giant_shockwave_proj_2nd');
 
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 10, 10, 'ACS_Stabbed', true);
 		
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -3704,7 +3787,9 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 		else if (thePlayer.HasTag('giant_shockwave_proj_begin') && thePlayer.HasTag('giant_shockwave_proj_2nd'))
 		{
 			Sleep(0.25 / thePlayer.GetAnimationTimeMultiplier() );
-			
+
+			actors.Clear();
+
 			actors = thePlayer.GetNPCsAndPlayersInCone(30, VecHeading(thePlayer.GetHeadingVector()), 80, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -3752,6 +3837,8 @@ state ACS_Giant_Shockwave_Mult_Engage in cACS_Giant_Shockwave_Mult
 			thePlayer.RemoveTag('giant_shockwave_proj_begin');
 			thePlayer.RemoveTag('giant_shockwave_proj_1st');
 			thePlayer.RemoveTag('giant_shockwave_proj_2nd');
+
+			actors.Clear();
 
 			actors = GetActorsInRange(thePlayer, 10, 10, 'ACS_Stabbed', true);
 		
@@ -3834,6 +3921,8 @@ state ACS_Giant_Shockwave_Engage in cACS_Giant_Shockwave
 		position = thePlayer.GetWorldPosition() + (thePlayer.GetWorldForward() * 1.1) + thePlayer.GetHeadingVector() * 1.1;
 		
 		targetPosition_1 = position + thePlayer.GetHeadingVector() * 30;
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInCone(5, VecHeading(thePlayer.GetHeadingVector()), 60, 20, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 			
@@ -4149,7 +4238,9 @@ state ACS_Beam_Attack_Engage in cACS_Beam_Attack
 			if( VecDistance2D( actor.GetWorldPosition(), thePlayer.GetWorldPosition() ) <= 3.5 ) 
 			{
 				while (true) 
-				{			
+				{
+					actors.Clear();
+
 					actors = thePlayer.GetNPCsAndPlayersInCone( 3.5, VecHeading(thePlayer.GetHeadingVector()), 20, 20, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 					for( i = 0; i < actors.Size(); i += 1 )
 					{
@@ -4199,6 +4290,8 @@ state ACS_Beam_Attack_Engage in cACS_Beam_Attack
 					movementAdjustor1.RotateTowards( ticket1, actor );
 				
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInCone( VecDistance2D( actor.GetWorldPosition(), thePlayer.GetWorldPosition() ) , VecHeading(thePlayer.GetHeadingVector()), 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors  );
 					for( i = 0; i < actors.Size(); i += 1 )
@@ -4275,6 +4368,8 @@ state ACS_Beam_Attack_Engage in cACS_Beam_Attack
 				while (true)
 				{	
 					//actors = GetActorsInRange(thePlayer, 20, 5);
+
+					actors.Clear();
 
 					actors = thePlayer.GetNPCsAndPlayersInRange( 20, 5, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -4360,16 +4455,16 @@ statemachine class cACS_Detonation_Weapon_Effects_Switch
 
 state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effects_Switch
 {
-	private var weaponEntity, vfxEnt, vfxEnt_2		: CEntity;
-	private var weaponSlotMatrix 					: Matrix;
-	private var fxPos 								: Vector;
-	private var fxRot 								: EulerAngles;
-	private var targets 							: array<CGameplayEntity>;
-	private var dist, ang							: float;
-	private var pos, targetPos						: Vector;
-	private var targetRot 							: EulerAngles;
-	private var i									: int;
-	private var npc 								: CNewNPC;
+	private var weaponEntity, vfxEnt, vfxEnt_2, vfxEnt3		: CEntity;
+	private var weaponSlotMatrix 							: Matrix;
+	private var fxPos 										: Vector;
+	private var fxRot 										: EulerAngles;
+	private var targets 									: array<CGameplayEntity>;
+	private var dist, ang									: float;
+	private var pos, targetPos								: Vector;
+	private var targetRot 									: EulerAngles;
+	private var i											: int;
+	private var npc 										: CNewNPC;
 	
 	event OnEnterState(prevStateName : name)
 	{
@@ -4610,6 +4705,8 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			dist += 1;
 		}
 
+		targets.Clear();
+
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
 		pos = thePlayer.GetWorldPosition();
 		pos.Z += 0.8;
@@ -4720,18 +4817,18 @@ statemachine class cACS_Passive_Weapon_Effects_Switch
 
 state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Switch
 {
-	private var weaponEntity, vfxEnt, vfxEnt2, vfxEnt3			: CEntity;
-	private var weaponSlotMatrix 								: Matrix;
-	private var fxPos 											: Vector;
-	private var fxRot 											: EulerAngles;
-	private var targets 										: array<CGameplayEntity>;
-	private var dist, ang										: float;
-	private var pos, targetPos									: Vector;
-	private var targetRot 										: EulerAngles;
-	private var i												: int;
-	private var npc     										: CNewNPC;
-	private var maxAdrenaline									: float;
-	private var curAdrenaline									: float;
+	private var weaponEntity, vfxEnt, vfxEnt2, vfxEnt3, vfxEnt4			: CEntity;
+	private var weaponSlotMatrix 										: Matrix;
+	private var fxPos 													: Vector;
+	private var fxRot 													: EulerAngles;
+	private var targets 												: array<CGameplayEntity>;
+	private var dist, ang												: float;
+	private var pos, targetPos											: Vector;
+	private var targetRot 												: EulerAngles;
+	private var i														: int;
+	private var npc     												: CNewNPC;
+	private var maxAdrenaline											: float;
+	private var curAdrenaline											: float;
 	
 	event OnEnterState(prevStateName : name)
 	{
@@ -4940,6 +5037,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			dist += 1;
 		}
 
+		targets.Clear();
+
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
 		pos = thePlayer.GetWorldPosition();
 		pos.Z += 0.8;
@@ -4992,9 +5091,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-										//vfxEnt.PlayEffectSingle('hit');
-										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffect('blood_explode');
 										vfxEnt.DestroyAfter(1.5);
 									}
 								}
@@ -5023,9 +5121,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-										//vfxEnt.PlayEffectSingle('hit');
-										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffect('blood_explode');
 										vfxEnt.DestroyAfter(1.5);
 									}
 								}
@@ -5054,9 +5151,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-										//vfxEnt.PlayEffectSingle('hit');
-										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffect('blood_explode');
 										vfxEnt.DestroyAfter(1.5);
 									}
 								}
@@ -5085,9 +5181,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-										//vfxEnt.PlayEffectSingle('hit');
-										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffect('blood_explode');
 										vfxEnt.DestroyAfter(1.5);
 									}
 								}
@@ -5116,9 +5211,8 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-										//vfxEnt.PlayEffectSingle('hit');
-										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffect('blood_explode');
 										vfxEnt.DestroyAfter(1.5);
 									}
 								}
@@ -5130,73 +5224,29 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 								vfxEnt.PlayEffectSingle('hit_refraction');
 								vfxEnt.DestroyAfter(1.5);
 
+								vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync('finisher_blood', true), targetPos, targetRot);
+								vfxEnt2.PlayEffect('crawl_blood');
+								vfxEnt2.DestroyAfter(1.5);
+
+								/*
+								vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+								vfxEnt3.PlayEffect('blood_explode');
+								vfxEnt3.DestroyAfter(1.5);
+								*/
+
 								if (thePlayer.HasBuff(EET_BlackBlood))
 								{
-									/*
-									vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\lynx_rock_witch\lynx_rock_witch_slashes.w2ent", true ), targetPos, targetRot );
-								
-									if( RandF() < 0.5 ) 
-									{
-										if( RandF() < 0.5 ) 
-										{
-											if( RandF() < 0.5 ) 
-											{
-												vfxEnt2.PlayEffectSingle('diagonal_up_left');
-											}
-											else
-											{
-												vfxEnt2.PlayEffectSingle('diagonal_down_left');
-											}
-										}
-										else
-										{
-											if( RandF() < 0.5 ) 
-											{
-												vfxEnt2.PlayEffectSingle('down');
-											}
-											else
-											{
-												vfxEnt2.PlayEffectSingle('up');
-											}
-										}
-									}
-									else
-									{
-										if( RandF() < 0.5 ) 
-										{
-											if( RandF() < 0.5 ) 
-											{
-												vfxEnt2.PlayEffectSingle('diagonal_up_right');
-											}
-											else
-											{
-												vfxEnt2.PlayEffectSingle('diagonal_down_right');
-											}
-										}
-										else
-										{
-											if( RandF() < 0.5 ) 
-											{
-												vfxEnt2.PlayEffectSingle('right');
-											}
-											else
-											{
-												vfxEnt2.PlayEffectSingle('left');
-											}
-										}
-									}
-									*/
 									targetPos.Z += RandRangeF( 0.5, -0.4 );
-
+								
 									targetPos.Y += RandRangeF( 0.4, -0.4 );
 									
 									targetRot.Roll = RandRange( 360, 0 );
 
-									vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
+									vfxEnt4 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
 
-									vfxEnt2.PlayEffectSingle('sword_slash_red_medium');
-									
-									vfxEnt2.DestroyAfter(1);
+									vfxEnt4.PlayEffectSingle('sword_slash_red_medium');
+
+									vfxEnt4.DestroyAfter(1);
 								}
 							}	
 						}
@@ -5989,74 +6039,29 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									vfxEnt.PlayEffectSingle('hit_refraction');
 									vfxEnt.DestroyAfter(1.5);
 
+									vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync('finisher_blood', true), targetPos, targetRot);
+									vfxEnt2.PlayEffect('crawl_blood');
+									vfxEnt2.DestroyAfter(1.5);
+
+									/*
+									vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+									vfxEnt3.PlayEffect('blood_explode');
+									vfxEnt3.DestroyAfter(1.5);
+									*/
+
 									if (thePlayer.HasBuff(EET_BlackBlood))
 									{
-										/*
-										vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\lynx_rock_witch\lynx_rock_witch_slashes.w2ent", true ), targetPos, targetRot );
-									
-										if( RandF() < 0.5 ) 
-										{
-											if( RandF() < 0.5 ) 
-											{
-												if( RandF() < 0.5 ) 
-												{
-													vfxEnt2.PlayEffectSingle('diagonal_up_left');
-												}
-												else
-												{
-													vfxEnt2.PlayEffectSingle('diagonal_down_left');
-												}
-											}
-											else
-											{
-												if( RandF() < 0.5 ) 
-												{
-													vfxEnt2.PlayEffectSingle('down');
-												}
-												else
-												{
-													vfxEnt2.PlayEffectSingle('up');
-												}
-											}
-										}
-										else
-										{
-											if( RandF() < 0.5 ) 
-											{
-												if( RandF() < 0.5 ) 
-												{
-													vfxEnt2.PlayEffectSingle('diagonal_up_right');
-												}
-												else
-												{
-													vfxEnt2.PlayEffectSingle('diagonal_down_right');
-												}
-											}
-											else
-											{
-												if( RandF() < 0.5 ) 
-												{
-													vfxEnt2.PlayEffectSingle('right');
-												}
-												else
-												{
-													vfxEnt2.PlayEffectSingle('left');
-												}
-											}
-										}
-										*/
-
 										targetPos.Z += RandRangeF( 0.5, -0.4 );
 									
 										targetPos.Y += RandRangeF( 0.4, -0.4 );
 										
 										targetRot.Roll = RandRange( 360, 0 );
 
-										vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
+										vfxEnt4 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
 
-										vfxEnt2.PlayEffectSingle('sword_slash_red_medium');
+										vfxEnt4.PlayEffectSingle('sword_slash_red_medium');
 
-										vfxEnt2.DestroyAfter(1);
+										vfxEnt4.DestroyAfter(1);
 									}
 								}
 							}
@@ -6071,74 +6076,29 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 							vfxEnt.PlayEffectSingle('hit_refraction');
 							vfxEnt.DestroyAfter(1.5);
 
+							vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync('finisher_blood', true), targetPos, targetRot);
+							vfxEnt2.PlayEffect('crawl_blood');
+							vfxEnt2.DestroyAfter(1.5);
+
+							/*
+							vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+							vfxEnt3.PlayEffect('blood_explode');
+							vfxEnt3.DestroyAfter(1.5);
+							*/
+
 							if (thePlayer.HasBuff(EET_BlackBlood))
 							{
-								/*
-								vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\gameplay\abilities\lynx_rock_witch\lynx_rock_witch_slashes.w2ent", true ), targetPos, targetRot );
-							
-								if( RandF() < 0.5 ) 
-								{
-									if( RandF() < 0.5 ) 
-									{
-										if( RandF() < 0.5 ) 
-										{
-											vfxEnt2.PlayEffectSingle('diagonal_up_left');
-										}
-										else
-										{
-											vfxEnt2.PlayEffectSingle('diagonal_down_left');
-										}
-									}
-									else
-									{
-										if( RandF() < 0.5 ) 
-										{
-											vfxEnt2.PlayEffectSingle('down');
-										}
-										else
-										{
-											vfxEnt2.PlayEffectSingle('up');
-										}
-									}
-								}
-								else
-								{
-									if( RandF() < 0.5 ) 
-									{
-										if( RandF() < 0.5 ) 
-										{
-											vfxEnt2.PlayEffectSingle('diagonal_up_right');
-										}
-										else
-										{
-											vfxEnt2.PlayEffectSingle('diagonal_down_right');
-										}
-									}
-									else
-									{
-										if( RandF() < 0.5 ) 
-										{
-											vfxEnt2.PlayEffectSingle('right');
-										}
-										else
-										{
-											vfxEnt2.PlayEffectSingle('left');
-										}
-									}
-								}
-								*/
-
 								targetPos.Z += RandRangeF( 0.5, -0.4 );
-									
+							
 								targetPos.Y += RandRangeF( 0.4, -0.4 );
 								
 								targetRot.Roll = RandRange( 360, 0 );
 
-								vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
+								vfxEnt4 = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_sword_slashes.w2ent", true ), targetPos, targetRot );
 
-								vfxEnt2.PlayEffectSingle('sword_slash_red_medium');
-								
-								vfxEnt2.DestroyAfter(1);
+								vfxEnt4.PlayEffectSingle('sword_slash_red_medium');
+
+								vfxEnt4.DestroyAfter(1);
 							}
 						}
 					}
@@ -6259,6 +6219,8 @@ state ACS_Caretaker_Drain_Energy_Engage in cACS_Caretaker_Drain_Energy
 			dist += 1;
 		}
 
+		targets.Clear();
+
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
 		pos = thePlayer.GetWorldPosition();
 		pos.Z += 0.8;
@@ -6362,6 +6324,8 @@ state ACS_Drain_Energy_Engage in cACS_Drain_Energy
 		pos = thePlayer.GetWorldPosition();
 
 		pos.Z += 0.8;
+
+		actors.Clear();
 
 		for( i = actors.Size()-1; i >= 0; i -= 1 ) 
 		{	
@@ -6632,6 +6596,8 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 		{
 			dist += 1;
 		}
+
+		targets.Clear();
 
 		FindGameplayEntitiesInCone( targets, thePlayer.GetWorldPosition(), VecHeading( thePlayer.GetWorldForward() ), ang, dist, 999 );
 		pos = thePlayer.GetWorldPosition();
@@ -7564,6 +7530,8 @@ function ACS_Bat_Damage()
 
 	//actors = GetActorsInRange(thePlayer, 7, 100, ,true);
 
+	actors.Clear();
+
 	actors = thePlayer.GetNPCsAndPlayersInRange( 7, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 	//thePlayer.DrainStamina( ESAT_FixedValue, 0.046875 );
@@ -7653,6 +7621,8 @@ state ACS_Bats_Summon_Engage in cACS_Bats_Summon
 	latent function BlindOrBleed()
 	{
 		//actors = GetActorsInRange(thePlayer, 10, 100, ,true);
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 10, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
@@ -7832,6 +7802,8 @@ state ACS_bruxa_blood_resource_Engage in cACS_bruxa_blood_resource
 	
 	latent function ACS_bruxa_blood_resource_LATENT()
 	{
+		actors.Clear();
+
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
 
 		for( i = 0; i < actors.Size(); i += 1 )
@@ -7916,6 +7888,8 @@ state ACS_Hijack_Marker_Create_Engage in cACS_Hijack_Marker_Create
 	
 	latent function ACS_Hijack_Marker_Create_LATENT()
 	{
+		actors.Clear();
+
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
 
 		ACS_Hijack_Marker_2_Destroy();
@@ -8339,6 +8313,8 @@ state ACS_Shoot_Bow_Stationary_Engage in cACS_Shoot_Bow_Stationary
 	
 	latent function Ice_Spear_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 2.5, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -8942,6 +8918,8 @@ state ACS_Umbral_Slash_End_Engage in cACS_Umbral_Slash_End
 
 		ent.DestroyAfter(5);
 
+
+		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 50, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
@@ -9610,6 +9588,8 @@ state ACS_Sparagmos_Damage_Engage in cACS_Sparagmos
 	{
 		//fill_lightning_array();
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInCone(10, VecHeading(thePlayer.GetHeadingVector()), 60, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 		if( actors.Size() > 0 )
@@ -9838,6 +9818,8 @@ function ACS_Bruxa_Scream_Release()
 	var actors    																																						: array<CActor>;
 	var i         																																						: int;
 	var damageMax, maxTargetVitality, maxTargetEssence																													: float;
+
+	actors.Clear();
 
 	actors = thePlayer.GetNPCsAndPlayersInCone(10, VecHeading(thePlayer.GetHeadingVector()), 60, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
@@ -10101,6 +10083,8 @@ state ACS_Water_Aard_Release_Engage in cACS_Water_Aard
 
 		ent.DestroyAfter(3);
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInCone(10, VecHeading(thePlayer.GetHeadingVector()), 60, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 		if( actors.Size() > 0 )
@@ -10247,6 +10231,8 @@ state ACS_Giant_Stomp_Engage in cACS_Giant_Stomp
 
 		ent_2.DestroyAfter(1);
 
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 5, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -10378,6 +10364,8 @@ state ACS_Storm_Spear_Damage_Engage in cACS_Storm_Spear
 	
 	latent function Storm_Spear_Damage_Activate()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInCone(10, VecHeading(thePlayer.GetHeadingVector()), 30, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors );
 
 		if( actors.Size() > 0 )
@@ -10659,8 +10647,10 @@ function ACS_Storm_Spear_Array_Destroy_Immediate()
 	var i												: int;
 	var ents 											: array<CEntity>;
 
+	ents.Clear();
+
 	theGame.GetEntitiesByTag( 'ACS_Tornado_Effect', ents );	
-	
+
 	for( i = 0; i < ents.Size(); i += 1 )
 	{
 		ents[i].Destroy();
@@ -10673,6 +10663,8 @@ function ACS_Storm_Spear_Array_Destroy()
 {	
 	var i												: int;
 	var ents 											: array<CEntity>;
+
+	ents.Clear();
 
 	theGame.GetEntitiesByTag( 'ACS_Tornado_Effect', ents );	
 	
@@ -10692,6 +10684,8 @@ function ACS_Storm_Spear_Array_Stop_Effects()
 {	
 	var i												: int;
 	var ents 											: array<CEntity>;
+
+	ents.Clear();
 
 	theGame.GetEntitiesByTag( 'ACS_Tornado_Effect', ents );	
 	

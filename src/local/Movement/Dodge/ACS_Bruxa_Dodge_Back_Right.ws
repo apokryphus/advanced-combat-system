@@ -203,6 +203,8 @@ state BruxaDodgeBackRight_HijackRight in cBruxaDodgeBackRight
 
 	latent function HijackRightLatent()
 	{
+		actors.Clear();
+		
 		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
 
 		for( i = 0; i < actors.Size(); i += 1 )

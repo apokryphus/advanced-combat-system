@@ -90,6 +90,12 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 		//GetACSWatcher().ACS_Combo_Mode_Reset_Hard();
 
+		if (ACS_Bruxa_Camo_Trail())
+		{
+			ACS_Bruxa_Camo_Trail().StopEffect('smoke');
+			ACS_Bruxa_Camo_Trail().PlayEffect('smoke');
+		}
+
 		if ( ACS_StaminaBlockAction_Enabled() 
 		&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
 		)
@@ -253,6 +259,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 	latent function DodgePunishment()
 	{
+		actors.Clear();
+
 		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
@@ -348,8 +356,11 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			//Sleep ( 0.45 / thePlayer.GetAnimationTimeMultiplier() );
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_wildhunt', 0.45 / thePlayer.GetAnimationTimeMultiplier() , false);
-			
+
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 55, 20);
+
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
 				npc = (CNewNPC)actors[i];
@@ -427,6 +438,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_fire', 0.45 / thePlayer.GetAnimationTimeMultiplier() , false);
 			
+			actors.Clear();
+
 			actors = GetActorsInRange(thePlayer, 55, 2);
 
 			for( i = 0; i < actors.Size(); i += 1 )
@@ -2876,6 +2889,8 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 	latent function DodgePunishment()
 	{
+		actors.Clear();
+		
 		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )

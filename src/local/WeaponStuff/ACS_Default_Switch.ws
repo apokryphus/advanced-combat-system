@@ -387,6 +387,10 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 		steelsword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
 		silversword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
 
+		scabbards_steel.Clear();
+
+		scabbards_silver.Clear();
+
 		scabbards_steel = thePlayer.GetInventory().GetItemsByCategory('steel_scabbards');
 
 		scabbards_silver = thePlayer.GetInventory().GetItemsByCategory('silver_scabbards');

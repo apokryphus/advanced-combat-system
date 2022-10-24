@@ -215,6 +215,8 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 	{
 		//actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
 
+		actors.Clear();
+		
 		theGame.GetActorsByTag( 'bruxa_bite_victim', actors );
 
 		for( i = 0; i < actors.Size(); i += 1 )

@@ -192,9 +192,13 @@ state BruxaCamoDecoy in cACS_Shield_Summon
 	private var envID 										: int;
 	private var i 											: int;
 	private var npc     									: CNewNPC;
+	private var npcActor     								: CActor;
 	private var actors										: array< CActor >;
 	private var animatedComponentA 							: CAnimatedComponent;
 	private var settingsA									: SAnimatedComponentSlotAnimationSettings;
+	private var attach_vec									: Vector;
+	private var attach_rot									: EulerAngles;
+	private var vfxEnt_1, vfxEnt_2, vfxEnt_3				: CEntity;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -209,10 +213,13 @@ state BruxaCamoDecoy in cACS_Shield_Summon
 
 	latent function BruxaCamo_Latent()
 	{	
+		thePlayer.StopAllEffects();
 		thePlayer.StopEffect('shadowdash');
 		thePlayer.PlayEffectSingle('shadowdash');
 
 		thePlayer.SoundEvent("monster_bruxa_combat_disappear");
+
+		thePlayer.SoundEvent( "expl_focus_start" );
 
 		/*
 		ACS_Vampire_Arms_1_Get().Destroy();
@@ -236,56 +243,286 @@ state BruxaCamoDecoy in cACS_Shield_Summon
 		ACS_Vampire_Claw_Anchor_Get().Destroy();
 		*/
 
-		ACS_Blood_Armor_Destroy();
+		//ACS_Blood_Armor_Destroy();
+
+		GetACSWatcher().ACS_Vampire_Back_Claw_Teleport();
 
 		thePlayer.AddTag('ACS_Camo_Active');
+
 		environment = (CEnvironmentDefinition)LoadResource(
 			"dlc\dlc_acs\data\env\env_bies_hypnotize.env", true
 			);
 
-    	envID = ActivateEnvironmentDefinition( environment, 1000, 1, 1.f );
+    	envID = ActivateEnvironmentDefinition( environment, 1000, 1, 0 );
     	theGame.SetEnvironmentID(envID);
 
 		NPC_Fear_Start();
 
-		EnableCatViewFx( 1.0f );
-		SetTintColorsCatViewFx(Vector(0.1f,0.12f,0.13f,0.6f),Vector(0.075f,0.1f,0.11f,0.6f),0.1f);
-		SetBrightnessCatViewFx(350.0f);
+		EnableCatViewFx( 1.5 );
+		SetTintColorsCatViewFx(Vector(0.1f,0.12f,0.13f,0.6f),Vector(0.075f,0.1f,0.11f,0.6f),1.25);
+		SetBrightnessCatViewFx(100.0f);
 		SetViewRangeCatViewFx(500.0f);
-		//SetPositionCatViewFx( Vector(0,0,0,0) , true );	
-		//SetHightlightCatViewFx( Vector(0.5f,0.2f,0.2f,1.f),0.05f,1.5f);
-		SetFogDensityCatViewFx( 0.5 , 0.5 );
+		SetPositionCatViewFx( Vector(0,0,0,0) , true );	
+		SetHightlightCatViewFx( Vector(0.5f,0.2f,0.2f,1.f),0.05f,10);
+		SetFogDensityCatViewFx( 0.25 );
+
+		ACS_Bruxa_Camo_Trail().Destroy();
+
+		ACS_Bruxa_Camo_Sonar().Destroy();
+
+		vfxEnt_1 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
+			"dlc\dlc_acs\data\fx\acs_sonar.w2ent"
+			, true ), thePlayer.GetWorldPosition(), thePlayer.GetWorldRotation() );
+
+		vfxEnt_1.CreateAttachment( thePlayer, , Vector( 0, 0, 0.5 ), EulerAngles(0,0,0) );
+
+		vfxEnt_1.AddTag('ACS_Bruxa_Camo_Sonar');
+
+
+		vfxEnt_2 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
+			//"dlc\bob\data\fx\monsters\bruxa\alp_teleport_trail.w2ent"
+			"dlc\bob\data\fx\cutscenes\cs704_detalff_destroyed\trasnform_smoke_body.w2ent"
+			, true ), thePlayer.GetWorldPosition(), thePlayer.GetWorldRotation() );
+
+		vfxEnt_2.CreateAttachment( thePlayer, , Vector( 0, 0, 1 ), EulerAngles(0,0,0) );
+
+		vfxEnt_2.AddTag('ACS_Bruxa_Camo_Trail');
+	}
+
+	latent function HighlightEnemies()
+	{
+		var ents : array<CGameplayEntity>;
+		var i : int;
+		var catComponent : CGameplayEffectsComponent;
+
+		FindGameplayEntitiesInSphere(ents, thePlayer.GetWorldPosition(), 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
+		
+		for(i=0; i<ents.Size(); i+=1)
+		{
+			if(IsRequiredAttitudeBetween(thePlayer, ents[i], true))
+			{
+				catComponent = GetGameplayEffectsComponent(ents[i]);
+
+				if(catComponent)
+				{
+					catComponent.SetGameplayEffectFlag(EGEF_CatViewHiglight, true);
+				}
+
+				ents[i].AddTag('ACS_Bruxa_Camo_Highlighted_Enemies');
+			}
+		}
 	}
 
 	latent function NPC_Fear_Start()
 	{
-		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
+		actors.Clear();
+
+		//ACS_Focus_Sound_Red_Destroy();
+
+		ACS_Bruxa_Camo_Sonar_NPC_Destroy();
+
+		HighlightEnemies();
+
+		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
 			npc = (CNewNPC)actors[i];
+
+			npcActor = (CActor)actors[i];
 				
-			animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
+			animatedComponentA = (CAnimatedComponent)npcActor.GetComponentByClassName( 'CAnimatedComponent' );	
 				
 			settingsA.blendIn = 1;
 			settingsA.blendOut = 1;
 				
-			if( actors.Size() > 0 
-			&& npc.IsAlive()
-			&& !theGame.IsDialogOrCutscenePlaying()
-			&& !thePlayer.IsUsingHorse() 
-			&& !thePlayer.IsUsingVehicle()
-			&& npc.IsHuman()
-			)
-			{				
-				npc.RemoveTag('fear_end');
+			if( actors.Size() > 0 )
+			{
+				if (npcActor.IsAlive()
+				&& !theGame.IsDialogOrCutscenePlaying()
+				&& !thePlayer.IsUsingHorse() 
+				&& !thePlayer.IsUsingVehicle()
+				&& npcActor.IsHuman()
+				)
+				{				
+					npcActor.RemoveTag('fear_end');
 
-				npc.StopEffect('focus_sound_red_fx');
-				npc.PlayEffectSingle('focus_sound_red_fx');
+					attach_rot.Roll = 0;
+					attach_rot.Pitch = 0;
+					attach_rot.Yaw = 0;
 
-				animatedComponentA.PlaySlotAnimationAsync ( '', 'NPC_ANIM_SLOT', settingsA);	
+					attach_vec.X = 0;
+					attach_vec.Y = 0;
+
+					if (((CMovingPhysicalAgentComponent)(npcActor.GetMovingAgentComponent())).GetCapsuleHeight() > 2.25
+					|| npcActor.GetRadius() > 0.7
+					)
+					{
+						attach_vec.Z = 1.75;
+					}
+					else
+					{
+						attach_vec.Z = 1;
+					}
+
+					/*
+					vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\fx\acs_red_focus.w2ent", true ), npc.GetWorldPosition(), npc.GetWorldRotation() );
+
+					vfxEnt.CreateAttachment( npc, , attach_vec, attach_rot );
+
+					vfxEnt.PlayEffect('focus_sound_red_fx');
+					vfxEnt.PlayEffect('focus_sound_red_fx');
+					vfxEnt.PlayEffect('focus_sound_red_fx');
+					vfxEnt.PlayEffect('focus_sound_red_fx');
+					vfxEnt.PlayEffect('focus_sound_red_fx');
+
+					vfxEnt.AddTag('ACS_Focus_Sound_Red');
+					*/
+
+					vfxEnt_3 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
+						//"dlc\dlc_acs\data\fx\acs_sonar.w2ent"
+
+						"dlc\bob\data\fx\monsters\sharley\detection\detection_player_fx.w2ent"
+
+						, true ), thePlayer.GetWorldPosition(), thePlayer.GetWorldRotation() );
+
+					vfxEnt_3.CreateAttachment( npc, , Vector( 0, 0, 0 ), EulerAngles(0,0,0) );
+
+					vfxEnt_3.AddTag('ACS_Bruxa_Camo_Sonar_NPC');
+
+					animatedComponentA.PlaySlotAnimationAsync ( '', 'NPC_ANIM_SLOT', settingsA);	
+				}
 			}
 		}
 	}
+}
+
+function ACS_Bruxa_Camo_Trail() : CEntity
+{
+	var ent 			 : CEntity;
+	
+	ent = (CEntity)theGame.GetEntityByTag( 'ACS_Bruxa_Camo_Trail' );
+
+	return ent;
+}
+
+function ACS_Bruxa_Camo_Sonar_NPC_Play_Effect()
+{	
+	var ents 											: array<CEntity>;
+	var i												: int;
+	
+	ents.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Bruxa_Camo_Sonar_NPC', ents );	
+	
+	for( i = 0; i < ents.Size(); i += 1 )
+	{
+		/*
+		ents[i].DestroyEffect('fx_sonar');
+
+		ents[i].PlayEffect('fx_sonar');
+		ents[i].PlayEffect('fx_sonar');
+		ents[i].PlayEffect('fx_sonar');
+		ents[i].PlayEffect('fx_sonar');
+		ents[i].PlayEffect('fx_sonar');
+
+		ents[i].StopEffect('fx_sonar');
+		*/
+
+		ents[i].DestroyEffect('detection');
+
+		ents[i].PlayEffect('detection');
+		ents[i].PlayEffect('detection');
+		ents[i].PlayEffect('detection');
+		ents[i].PlayEffect('detection');
+
+		ents[i].StopEffect('detection');
+	}
+
+	thePlayer.SoundEvent("expl_focus_start");
+
+	theSound.SoundEvent( 'expl_focus_start' ); 
+
+	thePlayer.SoundEvent("expl_focus_stop_sfx");
+
+	theSound.SoundEvent( 'expl_focus_stop_sfx' ); 
+}
+
+function ACS_Bruxa_Camo_Highlighted_Enemies_Remove_Highlight()
+{	
+	var ents 											: array<CEntity>;
+	var i												: int;
+	
+	ents.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Bruxa_Camo_Highlighted_Enemies', ents );	
+	
+	for( i = 0; i < ents.Size(); i += 1 )
+	{
+		ents[i].AddTimer( 'EnemyHighlightOff', 0, false, , , , true );
+	}
+}
+
+function ACS_Bruxa_Camo_Sonar_NPC_Destroy()
+{	
+	var ents 											: array<CEntity>;
+	var i												: int;
+	
+	ents.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Bruxa_Camo_Sonar_NPC', ents );	
+	
+	for( i = 0; i < ents.Size(); i += 1 )
+	{
+		ents[i].Destroy();
+	}
+}
+
+function ACS_Bruxa_Camo_Sonar_Destroy()
+{	
+	var ents 											: array<CEntity>;
+	var i												: int;
+	
+	ents.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Bruxa_Camo_Sonar', ents );	
+	
+	for( i = 0; i < ents.Size(); i += 1 )
+	{
+		ents[i].Destroy();
+	}
+}
+
+function ACS_Bruxa_Camo_Sonar() : CEntity
+{
+	var ent 			 : CEntity;
+	
+	ent = (CEntity)theGame.GetEntityByTag( 'ACS_Bruxa_Camo_Sonar' );
+
+	return ent;
+}
+
+function ACS_Focus_Sound_Red_Destroy()
+{	
+	var ents 											: array<CEntity>;
+	var i												: int;
+	
+	ents.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Focus_Sound_Red', ents );	
+	
+	for( i = 0; i < ents.Size(); i += 1 )
+	{
+		ents[i].Destroy();
+	}
+}
+
+function ACS_Focus_Sound_Red() : CEntity
+{
+	var ent 			 : CEntity;
+	
+	ent = (CEntity)theGame.GetEntityByTag( 'ACS_Focus_Sound_Red' );
+
+	return ent;
 }
 
 state Yrden_Revive_Normal in cACS_Shield_Summon
@@ -319,6 +556,8 @@ state Yrden_Revive_Normal in cACS_Shield_Summon
 
 	latent function Revive_Latent()
 	{
+		entities.Clear();
+
 		FindGameplayEntitiesInRange( entities, thePlayer, 10, 10,, FLAG_ExcludePlayer,,'CNewNPC' );
 
 		for (i = 0; i < entities.Size(); i += 1) 
@@ -510,6 +749,8 @@ state Yrden_Skele_Summon_Normal in cACS_Shield_Summon
 
 	latent function Skele_Summon_Actual()
 	{
+		entities.Clear();
+
 		FindGameplayEntitiesInRange( entities, thePlayer, 20, 15,, FLAG_ExcludePlayer,,'CNewNPC' );
 
 		for (i = 0; i < entities.Size(); i += 1) 
@@ -1061,7 +1302,7 @@ state Axii_Shield_Entity in cACS_Shield_Summon
 	latent function shield_entity_destroy_pre()
 	{	
 		actors.Clear();
-			
+
 		theGame.GetActorsByTag( 'ACS_Shield_Entity', actors );
 		actor = (CActor)actors[i];
 			
@@ -1237,19 +1478,34 @@ function Bruxa_Camo_Decoy_Deactivate()
 
 		thePlayer.SoundEvent("monster_bruxa_combat_appear");
 
+		thePlayer.SoundEvent( "expl_focus_stop" ); 
+
 		NPC_Fear_Revert();
 
-		DisableCatViewFx( 1.0f );
-
+		DisableCatViewFx( 0 );
+		
 		for (i = 0; i < 10000; i+=1) 
 		{
-       		DeactivateEnvironment(i, 1);
+       		DeactivateEnvironment(i, 0.25f);
     	}
 
 		GetACSWatcher().RemoveTimer('ACS_npc_fear_reaction');
+
+		GetACSWatcher().RemoveTimer('ACS_Bruxa_Camo_Sonar_Timer');
+
 		thePlayer.RemoveTag('ACS_Camo_Active');
 
-		vBruxa_Camo_Decoy_DeactivateClawEquip.Bruxa_Camo_Decoy_Deactivate_Claw_Equip_Standalone_Engage();	
+		//vBruxa_Camo_Decoy_DeactivateClawEquip.Bruxa_Camo_Decoy_Deactivate_Claw_Equip_Standalone_Engage();
+
+		GetACSWatcher().ACS_Vampire_Back_Claw_Reattach();
+
+		ACS_Bruxa_Camo_Sonar().Destroy();
+
+		ACS_Bruxa_Camo_Trail().Destroy();
+
+		ACS_Bruxa_Camo_Sonar_NPC_Destroy();
+
+		ACS_Bruxa_Camo_Highlighted_Enemies_Remove_Highlight();
 	}
 }
 
@@ -1538,6 +1794,10 @@ function NPC_Fear_Revert()
 	var animatedComponentA 		: CAnimatedComponent;
 	var settingsA				: SAnimatedComponentSlotAnimationSettings;
 
+	//ACS_Focus_Sound_Red_Destroy();
+
+	actors.Clear();
+
 	actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 		
 	for( i = 0; i < actors.Size(); i += 1 )
@@ -1559,8 +1819,6 @@ function NPC_Fear_Revert()
 		&& npc.IsHuman()
 		)
 		{				
-			npc.StopEffect('focus_sound_red_fx');
-
 			animatedComponentA.PlaySlotAnimationAsync ( ' ', 'NPC_ANIM_SLOT', settingsA);
 
 			((CNewNPC)npc).ForgetActor(thePlayer);
@@ -1579,6 +1837,8 @@ function ACS_Revenant_Destroy()
 	var revenantMovementAdjustor							: CMovementAdjustor; 
 	var revenantTicket 										: SMovementAdjustmentRequestTicket; 
 	
+	revenant.Clear();
+
 	theGame.GetActorsByTag( 'ACS_Revenant', revenant );	
 	
 	for( i = 0; i < revenant.Size(); i += 1 )
@@ -1622,6 +1882,8 @@ function ACS_Skele_Destroy()
 	var skeleMovementAdjustor								: CMovementAdjustor; 
 	var skeleTicket 										: SMovementAdjustmentRequestTicket; 
 	
+	skeleton.Clear();
+
 	theGame.GetActorsByTag( 'ACS_Summoned_Skeleton', skeleton );	
 	
 	for( i = 0; i < skeleton.Size(); i += 1 )
@@ -1662,6 +1924,8 @@ function ACS_Centipede_Destroy()
 	var centipedeAnimatedComponent 							: CAnimatedComponent;
 	var centipedeAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	
+	centipedes.Clear();
+
 	theGame.GetActorsByTag( 'ACS_Summoned_Centipede', centipedes );	
 	
 	for( i = 0; i < centipedes.Size(); i += 1 )
@@ -1697,6 +1961,8 @@ function ACS_Wolf_Destroy()
 	var wolfAnimatedComponent 							: CAnimatedComponent;
 	var wolfAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	
+	wolves.Clear();
+
 	theGame.GetActorsByTag( 'ACS_Summoned_Wolf', wolves );	
 	
 	for( i = 0; i < wolves.Size(); i += 1 )

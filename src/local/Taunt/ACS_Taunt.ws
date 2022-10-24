@@ -849,6 +849,8 @@ state Engage in cTaunt
 
 	latent function NPC_Taunt_EnemyBoost()
 	{	
+		actors.Clear();
+		
 		if (thePlayer.IsAlive())
 		{
 			Sleep(0.75);

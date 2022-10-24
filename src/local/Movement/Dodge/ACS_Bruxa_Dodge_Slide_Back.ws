@@ -90,6 +90,12 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 		thePlayer.RaiseEvent( 'Dodge' );
 
+		if (ACS_Bruxa_Camo_Trail())
+		{
+			ACS_Bruxa_Camo_Trail().StopEffect('smoke');
+			ACS_Bruxa_Camo_Trail().PlayEffect('smoke');
+		}
+
 		if ( !theSound.SoundIsBankLoaded("monster_dettlaff_monster.bnk") )
 		{
 			theSound.SoundLoadBank( "monster_dettlaff_monster.bnk", false );
@@ -985,6 +991,8 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 	latent function DodgePunishment()
 	{
+		actors.Clear();
+		
 		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
 		if( actors.Size() > 0 )
