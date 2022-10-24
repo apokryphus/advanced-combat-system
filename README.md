@@ -18,15 +18,24 @@ The NPC animations are organized into 8 unique extra movesets:
 - Dettlaff + Bruxa 
 - 1-Hand Axe + 2-Hand Axe
 
-Geralt's default moveset/animations are available for use at any time. ACS allows compatibility with other mods that alter it. 
+Geralt's default moveset/behavior/animations are available for use at any time.
+ACS does not edit them in any way, and allows for full compatibility with other mods that alter them.
 
 Each ACS moveset comes with:
 - Its own unique combos, abilities, counter-attacks, and weapon arts. 
-- Its own set of dodges, rolls, hit animations, death animations, and weapon-holding/passive behavior animations.
+- Its own set of dodges, rolls, hit animations, parry animations, death animations, and weapon-holding/passive behavior animations.
 
-Additionally, the mod allows for vampire combat animations and abilities while the player is unarmed. Can be toggled on or off. 
+Additionally, the mod allows for higher vampire claw combat and abilities while the player is unarmed.
+Can be toggled on or off in the mod menu, or set to apply only when the player has certain items equipped.
 
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
+
+All extra animations included within ACS allow for animation canceling, meaning you can start another dodge/roll/evade/attack before the current one finishes.
+This is by design, since some NPC animations are too long in duration to be used properly by humans without this feature, and I see no need to append the animations when they can be canceled. This does not mean, however, that the animations were completely suited for human use, and to that end I had to modify them somewhat. 
+
+That being said, the animations are still quite complex and require a bit of timing as well as practice to use them effectively, especially for certain movesets.
+
+Easy to perform, hard to master.
 
 Depending on which weapon mode option is selected through the mod's Main Settings menu, the player may choose to play the game using one of the following modes:
 - Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) and performing light/heavy attacks, which transforms the player's in-hand weapon to match the moveset applied.
@@ -80,24 +89,6 @@ For those that prefer to install manually.
 ## Updating the mod:
 - Run the automatic installer again, or go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
 
-# PREFACE
-
-  A lot of videos on this page. Give them a moment to load, or else right click the video and open in new tab to load it faster. 
-  
-  The best way to enjoy this mod to its fullest extent is to install every mod you can find that increases difficulty in The Witcher 3. This mod does some things that help with this, like the taunt system. 
-  
-  [Aeltoth's Random Encounters Reworked](https://github.com/Aelto/tw3-random-encounters-reworked) is a good place to start. 
-  
-  All extra NPC animations and abilities included within this mod are able to cancel each other out. 
-  
-  This is by design, since some NPC animations are way too long to be properly used in combat without this feature.
-  
-  It is highly encouraged to use this feature as much as you can. 
-  
-  It is also highly encouraged to alternate between light and heavy attacks, as well as switch signs often, since there are systems built around this way of playing. 
-  
-  Of course, you are more than welcome to disregard whatever I just said and play the game however you want. 
-  
 <div align="center">
   
 # INDEX
