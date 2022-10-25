@@ -1,4 +1,4 @@
-![snek_red_doom_new](https://user-images.githubusercontent.com/98017171/197834544-282eb2b8-794e-4846-a69f-dd4e5c257a66.png)
+![snek_red_witcher](https://user-images.githubusercontent.com/98017171/197894019-9940f820-884c-4168-bbae-3a10b9e8aa01.png)
 
 <div align="center">
 
