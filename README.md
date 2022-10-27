@@ -1041,17 +1041,10 @@ https://user-images.githubusercontent.com/98017171/160714014-cfb75b10-6d9d-48cd-
 
 https://user-images.githubusercontent.com/98017171/160714180-15b2173a-3a95-4d3c-8846-c6b6e4a2edd3.mp4
 
-```Doubletap Forward (W) in combat while not holding sprint key```
+```Doubletap Forward (W) in combat while not holding sprint key``` OR ``` Doubletap Dodge + Forward (W) in combat```
 - Can only be used in combat.
 - Leaps at your targeted enemy, dealing damage.
 - Bruxa leap attack is capable of targeting airborn enemies.
-
-### || Bruxa Leap Attack (Air) ||
-
-https://user-images.githubusercontent.com/98017171/160728891-9edba35f-b10d-424d-a1e3-3e750a9cdc4c.mp4
-
-- Leaping from the air onto enemies will send out a ``shockwave around the enemy``, erupting ``stone pillars`` and blasting enemies back in a 6-meter radius around the player.
-- Leaping from the air onto enemies during certain ``weather conditions`` will additionally call down ``lighting strikes`` upon enemies, and leave an ``electrical field`` that burns enemies in a 6-meter radius around the player.
 
 ### || Dodge Slide ||
 ```S key + Dodge```
