@@ -981,7 +981,7 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 **Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
 
 - He can be found in all maps except for the White Orchard maps and Wyzima.
-  - Velen: Where Kernun is located.
+  - Velen: On a remote island, south of Oxenfurt.
   - Skellige: Where the Woodland Spirit is located.
   - Spiral: The portal of the Poison Forest.
   - Toussaint: Trastamara Estate.
