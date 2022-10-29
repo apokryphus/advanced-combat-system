@@ -31,7 +31,10 @@ Can be toggled on or off in the mod menu, or set to apply only when the player h
 Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
 
 All extra animations included within ACS allow for animation canceling, meaning you can start another dodge/roll/evade/attack before the current one finishes.
-This is by design, since some NPC animations are too long in duration to be used properly by humans without this feature, and I see no need to append the animations when they can be canceled. This does not mean, however, that the animations were completely suited for human use, and to that end I had to modify them somewhat. 
+
+This is by design, since some NPC animations are too long in duration to be used properly by humans without this feature, and I see no need to append the animations when they can be canceled. 
+
+This does not mean, however, that the animations were completely suited for human use, and to that end I had to modify them somewhat. 
 
 That being said, the animations are still quite complex and require a bit of timing as well as practice to use them effectively, especially for certain movesets.
 
