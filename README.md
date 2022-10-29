@@ -101,7 +101,7 @@ For those that prefer to install manually.
 # INDEX
 
 ### [1. MENU](#1-menu-1)
-### [2. FISTS](#2-fists-1)
+### [2. UNARMED](#2-unarmed-1)
 ### [3. ARMED](#3-armed-1)
 ### [4. ELEMENTAL COMBO SYSTEM](#4-elemental-combo-system-1)
 ### [5. ELEMENTAL REND SYSTEM](#5-elemental-rend-system-1)
@@ -466,8 +466,8 @@ Lethal Baguettes:
   
   </div>
   
-# 2. FISTS
-When Armiger Mode, Focus Mode, or Hybrid Mode is selected, there are three options for fists, available for selection in the Main Settings menu:
+# 2. UNARMED
+When Armiger Mode, Focus Mode, or Hybrid Mode is selected, there are three options for unarmed combat, available for selection in the Main Settings menu:
 - Normal fists
 - Vampire claws
 - Shockwave fists
