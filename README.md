@@ -66,7 +66,7 @@ ACS is:
 
 ## Automatic Installation: 
 Easy installer script that downloads and installs the mod automatically.
-- Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **The Witcher 3 installation folder**. 
+- Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **installation folder for The Witcher 3**. 
 - If your game is on Steam, then the folder path might look something like: 
   - **C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3**
 - If your game is on GOG, then the folder path might looking something like: 
@@ -1038,14 +1038,14 @@ https://user-images.githubusercontent.com/98017171/160714014-cfb75b10-6d9d-48cd-
 - Press jump or perform a bruxa dash to exit wraith mode.
 - Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game. 
 
-### || Bruxa Leap Attack ||
+### || Leap Attack ||
 
 https://user-images.githubusercontent.com/98017171/160714180-15b2173a-3a95-4d3c-8846-c6b6e4a2edd3.mp4
 
-```Doubletap Forward (W) in combat while not holding sprint key``` OR ``` Doubletap Dodge + Forward (W) in combat```
+```Doubletap Forward (W) in combat while not holding sprint key while adrenaline is not full``` OR ``` Doubletap Dodge + Forward (W) in combat```
 - Can only be used in combat.
 - Leaps at your targeted enemy, dealing damage.
-- Bruxa leap attack is capable of targeting airborn enemies.
+- Leap attack is capable of targeting airborn enemies.
 
 ### || Dodge Slide ||
 ```S key + Dodge```
@@ -1156,7 +1156,7 @@ https://user-images.githubusercontent.com/98017171/160717152-306eca70-803e-4426-
 ```Doubletap W``` while locked on a target will perform a bruxa bite attack. It's that thing where bruxae jump on Geralt and suck his blood. 
 - Bruxa bite deals ```10% - 20%``` percentage health damage and heals for `10%` the player's max health. 
 - Executes the enemy if they are below 10% health. 
-- ```Doubletap sprint (Bruxa Dash)``` to release victim.
+- ```Bruxa Dash```, `leap attack`, `dodge`, or `roll` to release victim.
 - Requires full stamina and full adrenaline. Resets adrenaline to 0 after use. 
 
 ### || Hijack ||
