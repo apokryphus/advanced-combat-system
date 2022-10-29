@@ -531,6 +531,7 @@ Depending on whether **Static Weapons** or **Evolving Weapons** are selected in 
 - For **EVOLVING WEAPONS**: 
    - Weapon level and/or rarity will change how each of the weapons look. 
    - There are different silver and steel versions of each weapon, dependent upon if Geralt is holding a silver or steel weapon. 
+   - Evolving weapons will change their appearance if Shades of Iron is installed.
 
 #### - Weapon Tier Appearance System For Evolving Weapons
 - **Tier I Weapon Appearance**
