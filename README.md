@@ -1345,7 +1345,7 @@ https://user-images.githubusercontent.com/98017171/190557909-351a5141-65ea-4e91-
  - Consumes all adrenaline on use.
  - Deals enemy missing health damage. The lower the enemy's health is, the greater the damage.
  
-Imlerith weapon: Crescent Caress
+#### Imlerith weapon: Crescent Caress
 
 https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-8884-af1717607a5e.mp4
 
@@ -1353,7 +1353,7 @@ https://user-images.githubusercontent.com/98017171/185811996-6547834a-74e7-4c7d-
  - Consumes 1/3 of the adrenlaine bar on each use.
  - Pulls enemy towards player location. 
  
-Giant weapon: Earthshaker
+#### Giant weapon: Earthshaker
 
 https://user-images.githubusercontent.com/98017171/190557982-9509906b-fe52-40a8-b732-f3c620bb312e.mp4
 
@@ -1361,7 +1361,7 @@ https://user-images.githubusercontent.com/98017171/190557982-9509906b-fe52-40a8-
  - Consumes 1/3 of the adrenlaine bar on each use.
  - First and second stomp staggers enemies. Third stomp knocks enemies down.
  
-Sword Claw weapon: Flying Rabies
+#### Sword Claw weapon: Flying Rabies
 
 https://user-images.githubusercontent.com/98017171/190557713-88edbb03-fb76-41a1-be3e-f90fdaa0ac79.mp4
 
@@ -1369,7 +1369,7 @@ https://user-images.githubusercontent.com/98017171/190557713-88edbb03-fb76-41a1-
  - Consumes all adrenaline on use.
  - Deals enemy missing health damage. The lower the enemy's health is, the greater the damage.
  
-Axe weapon: Waterpulse
+#### Axe weapon: Waterpulse
 
 https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-b072-75cacb056f5e.mp4
 
