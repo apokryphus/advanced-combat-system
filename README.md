@@ -496,6 +496,9 @@ Vampire Claw Parries:
 - Drains 5% of the player's stamina on each block.
 - Drains 50% of the player's stamina if the player takes lethal damage. Will block full damage.
 
+Black Blood:
+- Using black blood while vampire claws are equipped causes further mutations to the player.
+
  ### Shockwave Fists
  - Every punch releases a shock wave in front of the player.
  
