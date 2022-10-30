@@ -114,11 +114,12 @@ For those that prefer to install manually.
 ### [9. MOVEMENT SYSTEM](#9-movement-system-1)
 ### [10. ARMOR SYSTEM](#10-armor-system-1)
 ### [11. SPECIAL ABILITIES](#11-special-abilities-1)
-### [12. COOLDOWN ADJUSTMENT](#12-cooldown-adjustment-1)
-### [13. STAMINA](#13-stamina-1)
-### [14. COMPATIBILITY](#14-compatibility-1)
-### [15. Q&A](#15-qa-1)
-### [16. CONTACT ME](#16-contact-me-1)
+### [12. WEAPON ARTS](#12-weapon-arts-1)
+### [13. COOLDOWN ADJUSTMENT](#13-cooldown-adjustment-1)
+### [14. STAMINA](#14-stamina-1)
+### [15. COMPATIBILITY](#15-compatibility-1)
+### [16. Q&A](#16-qa-1)
+### [17. CONTACT ME](#17-contact-me-1)
 </div>
 
 
@@ -1121,7 +1122,6 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
 #### [Phantom Swords](#-phantom-swords-)
 #### [Necromancy](#-necromancy-)
 #### [Bat Swarm](#-bat-swarm-)
-#### [Weapon Arts](#-weapon-arts-)
 #### [Bow](#-bow-)
   </div>
 
@@ -1300,7 +1300,32 @@ https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-
 - Surrounding enemies will be `pulled` towards the player, be continuously damaged for a tiny percentage of their health, have a large chance to be affected by `bleeding`, and a very small chance to be affected by `blindness`. 
 - Swarm executes when the enemy health drops below 5%. 
 
-### || Weapon Arts ||
+### || Bow ||
+Bows are attached to heavy attack weapons in Armiger Mode. While in armiger mode and in combat with the heavy attack weapon equipped, double tap and hold down parry, then perform heavy attacks to use bow. 
+
+#### Stationary Shot
+https://user-images.githubusercontent.com/98017171/185868442-1f3cdaae-f00c-4c22-99c4-65d14f9870f6.mp4
+
+- Firing arrows while stationary takes longer to wind-up, but will deal the full damage of your equipped weapon. Additionally, if the player is outdoors, it will unleash a rain of arrows at the enemy location if the arrow hits an enemy. Drains 3x the amount of stamina for a heavy attack for each arrow.
+
+#### Movement Shot
+
+https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-bea1-a7b6ac684e58.mp4
+
+- Firing arrows while any movement key is held down will quick fire arrows that deal only a small percentage of the enemy's max health. Every third arrow fired this way is twice the speed of the first two arrows, deals true damage, and applies a debuff for 1 second specific to the sign the player currently has selected. Drains the amount of stamina for a light attack for each arrow.
+- Igni: Burns
+- Axii: Freezes
+- Aard: Knockdown
+- Quen: Paralyze
+- Yrden: Slowdown
+
+<div align="right">
+ 
+##### [Return to Index](#index)
+  
+  </div>
+ 
+# 12. WEAPON ARTS
 `Back (S key) + light attack` activates Weapon Arts for all movesets.
 
 #### Vampire claws: Sonic Scream
@@ -1376,33 +1401,14 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
  - Can only be activated if the player has at least 1/3 of the adrenaline bar. 
  - Consumes 1/3 of the adrenlaine bar on each use.
  - Landing all three waves will knock enemies down.
- 
-### || Bow ||
-Bows are attached to heavy attack weapons in Armiger Mode. While in armiger mode and in combat with the heavy attack weapon equipped, double tap and hold down parry, then perform heavy attacks to use bow. 
-
-#### Stationary Shot
-https://user-images.githubusercontent.com/98017171/185868442-1f3cdaae-f00c-4c22-99c4-65d14f9870f6.mp4
-
-- Firing arrows while stationary takes longer to wind-up, but will deal the full damage of your equipped weapon. Additionally, if the player is outdoors, it will unleash a rain of arrows at the enemy location if the arrow hits an enemy. Drains 3x the amount of stamina for a heavy attack for each arrow.
-
-#### Movement Shot
-
-https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-bea1-a7b6ac684e58.mp4
-
-- Firing arrows while any movement key is held down will quick fire arrows that deal only a small percentage of the enemy's max health. Every third arrow fired this way is twice the speed of the first two arrows, deals true damage, and applies a debuff for 1 second specific to the sign the player currently has selected. Drains the amount of stamina for a light attack for each arrow.
-- Igni: Burns
-- Axii: Freezes
-- Aard: Knockdown
-- Quen: Paralyze
-- Yrden: Slowdown
 
 <div align="right">
- 
+  
 ##### [Return to Index](#index)
   
-  </div>
-  
-# 12. COOLDOWN ADJUSTMENT
+</div>
+ 
+# 13. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1411,7 +1417,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 13. STAMINA
+# 14. STAMINA
 - Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
 - This feature can be toggled off in the Main Settings menu. 
 - In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
@@ -1423,7 +1429,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 14. COMPATIBILITY
+# 15. COMPATIBILITY
 - Most likely completely conflict free in terms of scripts.
 
  <div align="right">
@@ -1432,7 +1438,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 15. Q&A
+# 16. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1466,7 +1472,7 @@ https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-
   
   </div>
   
-# 16. CONTACT ME
+# 17. CONTACT ME
 - Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
