@@ -1473,7 +1473,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   </div>
   
 # 17. CONTACT ME
-- Don't. If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
+- If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
 
