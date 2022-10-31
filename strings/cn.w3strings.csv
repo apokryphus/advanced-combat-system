@@ -127,7 +127,7 @@
 2117035121|        |preset_value_acs_taunt_settings_off|Off
 2117035122|        |option_acs_taunt_system_enabled|Taunt System Enabled
 2117035123|        |option_acs_i_wanna_play_gwent_enabled|I WANNA PLAY GWENT
-2117035124|        |option_acs_combat_taunt_enabled|Abspotten aktiviert
+2117035124|        |option_acs_combat_taunt_enabled|Combat Taunt Enabled
 2117035125|        |panel_acs_movement_settings|Movement Settings
 2117035126|        |preset_Mods_acs_name_acs_movement_settings|ACS: Movement
 2117035127|        |preset_Mods_combat_acs_name_acs_movement_settings|ACS: Movement
@@ -141,7 +141,7 @@
 2117035135|        |option_acs_jump_extend_normal_distance|<font color="#ff0000">—————</font> Normal Jump Distance (Meters)
 2117035136|        |option_acs_jump_extend_sprinting_height|<font color="#ff0000">—————</font> Sprinting Jump Height (Meters)
 2117035137|        |option_acs_jump_extend_sprinting_distance|<font color="#ff0000">—————</font> Sprinting Jump Distance (Meters)
-2117035138|        |option_acs_bruxa_dash|Bruxa Dash (Hold Sprint + Forward (W))
+2117035138|        |option_acs_bruxa_dash|Bruxa Dash (Hold Sprint + Forward (W) OR Doubletap + Dodge)
 2117035139|        |option_acs_bruxa_dash_input|<font color="#ff0000">—————</font> Bruxa Dash Input
 2117035140|        |preset_value_acs_bruxa_dash_single_tap_sprint|Single Tap Forward (W)
 2117035141|        |preset_value_acs_bruxa_dash_double_tap_sprint|Double Tap Forward (W)
@@ -151,7 +151,7 @@
 2117035145|        |option_acs_wraith_mode_input|<font color="#ff0000">—————</font> Wraith Mode Input
 2117035146|        |preset_value_acs_wraith_mode_single_tap_sprint|Single Tap Forward (W)
 2117035147|        |preset_value_acs_wraith_mode_double_tap_sprint|Double Tap Forward (W)
-2117035148|        |option_acs_bruxa_leap_attack|Bruxa Leap (No Sprint + Doubletap + Forward (W))
+2117035148|        |option_acs_bruxa_leap_attack|Bruxa Leap (Doubletap + Dodge + Forward (W))
 2117035149|        |option_acs_bruxa_dodge_center|Bruxa Dodge Back Center (Doubletap + Back (S))
 2117035150|        |option_acs_bruxa_dodge_left|Bruxa Dodge Back Left (Doubletap + Left (A))
 2117035151|        |option_acs_bruxa_dodge_right|Bruxa Dodge Back Right (Doubletap + Right (D))
