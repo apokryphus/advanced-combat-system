@@ -2732,7 +2732,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -2741,7 +2741,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -2759,7 +2759,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -2768,7 +2768,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -2890,7 +2890,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -2899,7 +2899,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -2917,7 +2917,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -2926,7 +2926,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -2985,7 +2985,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -2994,7 +2994,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3012,7 +3012,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3021,7 +3021,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3142,7 +3142,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3151,7 +3151,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3169,7 +3169,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3178,7 +3178,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3267,7 +3267,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3276,7 +3276,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3294,7 +3294,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3303,7 +3303,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3422,7 +3422,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3431,7 +3431,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3449,7 +3449,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3458,7 +3458,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3517,7 +3517,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3526,7 +3526,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3544,7 +3544,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3553,7 +3553,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3674,7 +3674,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3683,7 +3683,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3701,7 +3701,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -3710,7 +3710,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -3786,7 +3786,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
@@ -3795,25 +3795,25 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
@@ -3822,20 +3822,20 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
-				attach_rot.Pitch = 90;
+				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );		
 			}
@@ -3968,7 +3968,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3977,7 +3977,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -3995,7 +3995,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -4004,7 +4004,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -4063,7 +4063,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -4072,7 +4072,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -4090,7 +4090,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -4099,7 +4099,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
@@ -4232,7 +4232,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -4241,7 +4241,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
@@ -4259,7 +4259,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = 0.0325;
+				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
@@ -4268,7 +4268,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_rot.Yaw = 10;
 				attach_vec.X = -0.15;
 				attach_vec.Y = -0.15;
-				attach_vec.Z = -0.0375;
+				attach_vec.Z = -0.05;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}

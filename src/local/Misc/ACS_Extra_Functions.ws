@@ -364,7 +364,7 @@ function ACS_DisplayWelcomeMessage()
 
 	WelcomeTitle = "Advanced Combat System";
 
-	WelcomeMessage = "Thank you for installing " + GetLocStringByKey("advanced_combat_system_title") + "!<br/> <br/>Settings have been initialized, and can be further customized in the " + GetLocStringByKey("advanced_combat_system_title") + " mods menu.<br/> <br/>For detailed explanations of abilities, please read through the Github page for more information, or reach out to me in the " + GetLocStringByKey("wolven_workshop") + ". <br/> <br/>I may or may not reply.";
+	WelcomeMessage = "Thank you for installing Advanced Combat System" + "!<br/> <br/>Settings have been initialized, and can be further customized in the " + "Advanced Combat System mod menu.<br/> <br/>For detailed explanations of abilities, please read through the Github page for more information, or reach out to me in my Wolven Workshop Discord channel" + ". <br/> <br/>I may or may not reply.";
 
 	msg = new W3TutorialPopupData in thePlayer;
 
@@ -427,7 +427,7 @@ function ACS_InitializeSettings()
 
 	theGame.GetInGameConfigWrapper().ApplyGroupPreset('ACSmodHybridModeSettings', 0);
 	
-	theGame.GetInGameConfigWrapper().ApplyGroupPreset('ACSmodTauntSettings', 0);
+	theGame.GetInGameConfigWrapper().ApplyGroupPreset('ACSmodTauntSettings', 1);
 
 	theGame.GetInGameConfigWrapper().ApplyGroupPreset('ACSmodSpecialAbilitiesSettings', 0);
 
@@ -2126,6 +2126,8 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 
 	thePlayer.StopEffect('ethereal_debuff');
 
+	thePlayer.StopEffect('shout');
+
 	if (!thePlayer.HasTag('ACS_Camo_Active'))
 	{
 		thePlayer.StopEffect( 'shadowdash' );
@@ -2688,10 +2690,12 @@ function ACS_CombatToExplorationCheck() : bool
 
 function ACS_Setup_Combat_Action_Light()
 {
-	var vACS_Setup_Combat_Action_Light : cACS_Setup_Combat_Action_Light;
-	vACS_Setup_Combat_Action_Light = new cACS_Setup_Combat_Action_Light in theGame;
+	//var vACS_Setup_Combat_Action_Light : cACS_Setup_Combat_Action_Light;
+	//vACS_Setup_Combat_Action_Light = new cACS_Setup_Combat_Action_Light in theGame;
 
-	vACS_Setup_Combat_Action_Light.Setup_Combat_Action_Light_Engage();
+	//vACS_Setup_Combat_Action_Light.Setup_Combat_Action_Light_Engage();
+
+	thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
 }
 
 statemachine class cACS_Setup_Combat_Action_Light
@@ -2725,10 +2729,10 @@ state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 		{
 			if (thePlayer.IsAlive())
 			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			}
 
-			Sleep(0.0003125);
+			//Sleep(0.0003125);
 		}
 
 		thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
@@ -2743,10 +2747,11 @@ state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 
 function ACS_Setup_Combat_Action_Heavy()
 {
-	var vACS_Setup_Combat_Action_Heavy : cACS_Setup_Combat_Action_Heavy;
-	vACS_Setup_Combat_Action_Heavy = new cACS_Setup_Combat_Action_Heavy in theGame;
+	//var vACS_Setup_Combat_Action_Heavy : cACS_Setup_Combat_Action_Heavy;
+	//vACS_Setup_Combat_Action_Heavy = new cACS_Setup_Combat_Action_Heavy in theGame;
 
-	vACS_Setup_Combat_Action_Heavy.Setup_Combat_Action_Heavy_Engage();
+	//vACS_Setup_Combat_Action_Heavy.Setup_Combat_Action_Heavy_Engage();
+	thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
 }
 
 statemachine class cACS_Setup_Combat_Action_Heavy
@@ -2780,10 +2785,10 @@ state Setup_Combat_Action_Heavy_Engage in cACS_Setup_Combat_Action_Heavy
 		{
 			if (thePlayer.IsAlive())
 			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 			}
 
-			Sleep(0.0003125);
+			//Sleep(0.0003125);
 		}
 
 		thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
@@ -2907,12 +2912,12 @@ function ACS_Watcher_Summon()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-exec function aniplay(animation_name: name)
+exec function ACS_aniplay(animation_name: name)
 {
 	thePlayer.ActionPlaySlotAnimationAsync('PLAYER_SLOT',animation_name, 0.1, 1, false);
 }
 
-exec function aniplay1(animation_name: name)
+exec function ACS_aniplay1(animation_name: name)
 {
 	var sett 									: SAnimatedComponentSlotAnimationSettings;
 	
@@ -2926,7 +2931,7 @@ exec function aniplay1(animation_name: name)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-exec function acsspawn( entity_name: name)
+exec function ACS_spawn( entity_name: name)
 {
 	if (entity_name == 'forest_god')
 	{
@@ -3816,7 +3821,9 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 		if ((currWorld.GetDepotPath() == "levels\novigrad\novigrad.w2w"))
 		{
-			spawnPos = Vector(240.237564, 1508.216187, 19.352640, 1);
+			//spawnPos = Vector(240.237564, 1508.216187, 19.352640, 1);
+
+			spawnPos = Vector(2222.130859, 65.340538, 3.541907, 1);
 
 			ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
 
@@ -4458,7 +4465,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_1.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_1.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4491,7 +4498,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_2.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_2.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4524,7 +4531,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_3.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_3.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4557,7 +4564,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_4.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_4.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4590,7 +4597,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_5.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_5.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4623,7 +4630,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_6.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_6.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4656,7 +4663,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_7.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_7.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4689,7 +4696,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_8.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_8.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4722,7 +4729,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			animcomp = (CAnimatedComponent)ent_9.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent_9.GetComponentByClassName('CMeshComponent');
-			h = 1.75;
+			h = 2;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
@@ -4946,14 +4953,14 @@ state ACS_ToxicGasSpawner_Engage in cACS_ToxicGasSpawner
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-exec function acspeffect(enam : CName)
+exec function ACS_peffect(enam : CName)
 {
 	thePlayer.PlayEffectSingle(enam);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-exec function fallup()
+exec function ACS_fallup()
 {
 	var sett 							: SAnimatedComponentSlotAnimationSettings;
 	var actor							: CActor; 
@@ -4990,7 +4997,7 @@ exec function fallup()
 	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_idle_sign_aard_light', 'PLAYER_SLOT', sett );
 }
 
-exec function eforceani(animation_name: name)
+exec function ACS_eforceani(animation_name: name)
 {
 	var actor							: CActor; 
 	var enemyAnimatedComponent 			: CAnimatedComponent;
@@ -5005,7 +5012,7 @@ exec function eforceani(animation_name: name)
 	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', settings);
 }
 
-exec function eforcebeh(i: int)
+exec function ACS_eforcebeh(i: int)
 {
 	var vACS_EnemyBehSwitch : cACS_EnemyBehSwitch;
 	vACS_EnemyBehSwitch = new cACS_EnemyBehSwitch in theGame;
@@ -5388,7 +5395,7 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 	}
 }
 
-exec function acsfxtest(effect_name:name)
+exec function ACS_acsfxtest(effect_name:name)
 {
 	var ent, ent_1, ent_2, ent_3, ent_4, ent_5, ent_6, ent_7            : CEntity;
 	var rot, attach_rot                        						 	: EulerAngles;
@@ -5480,17 +5487,17 @@ exec function acsfxtest(effect_name:name)
 	ent.PlayEffectSingle(effect_name);
 }
 
-exec function acseffecttest2()
+exec function ACS_effecttest2()
 {
 	ACS_Umbral_Slash_End_Effect();
 }
 
-exec function acsfxteststop()
+exec function ACS_fxteststop()
 {
 	GetACSTestEnt_Array_StopEffects();
 }
 
-exec function acssoundtest(str:string)
+exec function ACS_soundtest(str:string)
 {
 	thePlayer.SoundEvent(str);
 }

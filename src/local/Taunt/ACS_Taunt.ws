@@ -3,7 +3,13 @@ function ACS_TauntInit()
 	var vTaunt : cTaunt;
 	vTaunt = new cTaunt in theGame;
 
-	if (!thePlayer.IsPerformingFinisher() && !thePlayer.IsCrossbowHeld() && !thePlayer.IsInHitAnim() && !thePlayer.HasTag('blood_sucking') && !thePlayer.HasTag('in_wraith') )		
+	if (!thePlayer.IsPerformingFinisher() 
+	&& !thePlayer.IsCrossbowHeld() 
+	&& !thePlayer.IsInHitAnim() 
+	&& !thePlayer.HasTag('blood_sucking') 
+	&& !thePlayer.HasTag('in_wraith')
+	&& !thePlayer.IsInAir()
+	)		
 	{
 		ACS_ThingsThatShouldBeRemoved();
 		vTaunt.Engage();

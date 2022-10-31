@@ -37,6 +37,9 @@ function ACS_WeaponDestroyInit()
 	YrdenCrossbowDestroy();
 	QuenCrossbowDestroy();
 
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	ACS_Yrden_Sidearm_Destroy();
+
 	ACS_Bow_Arrow().Destroy();
 }
 
@@ -79,6 +82,9 @@ function ACS_WeaponDestroyIMMEDIATEInit()
 	YrdenCrossbowDestroyIMMEDIATE();
 	QuenCrossbowDestroyIMMEDIATE();
 
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
+
 	ACS_Bow_Arrow().Destroy();
 }
 
@@ -111,6 +117,9 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
 	AardCrossbowDestroy();
 	YrdenCrossbowDestroy();
 	QuenCrossbowDestroy();
+
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	ACS_Yrden_Sidearm_Destroy();
 }
 
 function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
@@ -142,6 +151,9 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
 	AardCrossbowDestroyIMMEDIATE();
 	YrdenCrossbowDestroyIMMEDIATE();
 	QuenCrossbowDestroyIMMEDIATE();
+
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
 }
 
 function ACS_Weapon_Invisible()

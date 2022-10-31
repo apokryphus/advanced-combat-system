@@ -30,6 +30,7 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 	{
 		super.OnEnterState(prevStateName);
 		DefaultSwitch_PrimaryWeaponSwitch();
+		UpdateBehGraph();
 	}
 
 	function GetCurrentMeleeWeapon() : EPlayerWeapon
@@ -191,8 +192,6 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 					thePlayer.GotoState( 'Combat' );
 				}
 
-				UpdateBehGraph();
-
 				if ( 
 				ACS_GetWeaponMode() == 0
 				|| ACS_GetWeaponMode() == 1
@@ -270,6 +269,7 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 	{
 		ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE();
 		DefaultSwitch_2_PrimaryWeaponSwitch();
+		UpdateBehGraph();
 	}
 
 	function GetCurrentMeleeWeapon() : EPlayerWeapon
@@ -516,8 +516,6 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 			{
 				thePlayer.GotoState( 'Combat' );
 			}
-
-			UpdateBehGraph();
 
 			if ( 
 			ACS_GetWeaponMode() == 0

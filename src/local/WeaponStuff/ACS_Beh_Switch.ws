@@ -401,7 +401,7 @@ state BehSwitch_Engage_2 in cBehSwitch
 	event OnEnterState(prevStateName : name)
 	{
 		defaultBehSwitchEntry();
-		//UpdateBehGraph();
+		UpdateBehGraph();
 	}
 
 	function GetCurrentMeleeWeapon() : EPlayerWeapon
@@ -917,7 +917,7 @@ state BehSwitch_Engage in cBehSwitch
 	{
 		Beh_Switch_Entry();
 		
-		//UpdateBehGraph();
+		UpdateBehGraph();
 	}
 
 	function GetCurrentMeleeWeapon() : EPlayerWeapon

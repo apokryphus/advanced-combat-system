@@ -270,14 +270,24 @@ state BruxaCamoDecoy in cACS_Shield_Summon
 
 		ACS_Bruxa_Camo_Sonar().Destroy();
 
+		ACS_Bruxa_Camo_Sonar_2().Destroy();
+
+		vfxEnt_1 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
+			//"dlc\dlc_acs\data\fx\acs_sonar.w2ent"
+			"dlc\bob\data\fx\gameplay\mutation\mutation_7\mutation_7.w2ent"
+			, true ), thePlayer.GetWorldPosition(), thePlayer.GetWorldRotation() );
+
+		vfxEnt_1.CreateAttachment( thePlayer, , Vector( 0, 0, -1 ), EulerAngles(0,0,0) );
+
+		vfxEnt_1.AddTag('ACS_Bruxa_Camo_Sonar');
+
 		vfxEnt_1 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
 			"dlc\dlc_acs\data\fx\acs_sonar.w2ent"
 			, true ), thePlayer.GetWorldPosition(), thePlayer.GetWorldRotation() );
 
 		vfxEnt_1.CreateAttachment( thePlayer, , Vector( 0, 0, 0.5 ), EulerAngles(0,0,0) );
 
-		vfxEnt_1.AddTag('ACS_Bruxa_Camo_Sonar');
-
+		vfxEnt_1.AddTag('ACS_Bruxa_Camo_Sonar_2');
 
 		vfxEnt_2 = theGame.CreateEntity( (CEntityTemplate)LoadResource(
 			//"dlc\bob\data\fx\monsters\bruxa\alp_teleport_trail.w2ent"
@@ -497,6 +507,15 @@ function ACS_Bruxa_Camo_Sonar() : CEntity
 	var ent 			 : CEntity;
 	
 	ent = (CEntity)theGame.GetEntityByTag( 'ACS_Bruxa_Camo_Sonar' );
+
+	return ent;
+}
+
+function ACS_Bruxa_Camo_Sonar_2() : CEntity
+{
+	var ent 			 : CEntity;
+	
+	ent = (CEntity)theGame.GetEntityByTag( 'ACS_Bruxa_Camo_Sonar_2' );
 
 	return ent;
 }
@@ -1500,6 +1519,8 @@ function Bruxa_Camo_Decoy_Deactivate()
 		GetACSWatcher().ACS_Vampire_Back_Claw_Reattach();
 
 		ACS_Bruxa_Camo_Sonar().Destroy();
+
+		ACS_Bruxa_Camo_Sonar_2().Destroy();
 
 		ACS_Bruxa_Camo_Trail().Destroy();
 

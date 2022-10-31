@@ -15,6 +15,7 @@ function ACS_BruxaBiteInit()
 				&& ACS_BruxaBite_Enabled()
 				&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax( BCS_Focus ) 
 				&& theInput.GetActionValue('Sprint') == 0
+				//&& (ACS_BruxaDash_Enabled() || ACS_BruxaLeapAttack_Enabled())
 				//&& thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ) 
 				)
 				{
@@ -29,12 +30,40 @@ function ACS_BruxaBiteInit()
 				}
 				else
 				{
-					GetACSWatcher().JumpAttackCombat();
+					if (thePlayer.IsInCombat())
+					{
+						if (ACS_BruxaLeapAttack_Enabled())
+						{
+							GetACSWatcher().JumpAttackCombat();
+						}
+						else
+						{
+							ACS_BruxaDodgeSlideBackInit();
+						}
+					}
+					else
+					{
+						ACS_BruxaDodgeSlideBackInit();
+					}
 				}
 			}
 			else
 			{
-				GetACSWatcher().JumpAttackCombat();
+				if (thePlayer.IsInCombat())
+				{
+					if (ACS_BruxaLeapAttack_Enabled())
+					{
+						GetACSWatcher().JumpAttackCombat();
+					}
+					else
+					{
+						ACS_BruxaDodgeSlideBackInit();
+					}
+				}
+				else
+				{
+					ACS_BruxaDodgeSlideBackInit();
+				}
 			}
 		}
 	}

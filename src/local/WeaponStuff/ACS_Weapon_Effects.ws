@@ -3325,7 +3325,28 @@ function ACS_Light_Attack_Extended_Trail()
 		ACS_Dagger().PlayEffectSingle('light_trail_extended_fx');
 
 		ACS_Dagger().StopEffect('light_trail_extended_fx');
-	}	
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('light_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_1().StopEffect('light_trail_extended_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('light_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_2().StopEffect('light_trail_extended_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('light_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_3().StopEffect('light_trail_extended_fx');
+	}
 }
 	
 function ACS_Heavy_Attack_Extended_Trail()
@@ -3466,9 +3487,30 @@ function ACS_Heavy_Attack_Extended_Trail()
 
 	if (!thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped'))
 	{
-		ACS_Dagger().PlayEffectSingle('light_trail_extended_fx');
+		ACS_Dagger().PlayEffectSingle('heavy_trail_extended_fx');
 
-		ACS_Dagger().StopEffect('light_trail_extended_fx');
+		ACS_Dagger().StopEffect('heavy_trail_extended_fx');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('heavy_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_1().StopEffect('heavy_trail_extended_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('heavy_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_2().StopEffect('heavy_trail_extended_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('heavy_trail_extended_fx');
+
+		ACS_Yrden_Sidearm_3().StopEffect('heavy_trail_extended_fx');
 	}
 }
 
@@ -3607,9 +3649,33 @@ function ACS_Light_Attack_Trail()
 		yrden_secondary_sword_6().StopEffect('light_trail_fx');
 	}
 
-	ACS_Dagger().PlayEffectSingle('light_trail_fx');
+	if (ACS_Dagger())
+	{
+		ACS_Dagger().PlayEffectSingle('light_trail_fx');
 
-	ACS_Dagger().StopEffect('light_trail_fx');
+		ACS_Dagger().StopEffect('light_trail_fx');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('light_trail_fx');
+
+		ACS_Yrden_Sidearm_1().StopEffect('light_trail_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('light_trail_fx');
+
+		ACS_Yrden_Sidearm_2().StopEffect('light_trail_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('light_trail_fx');
+
+		ACS_Yrden_Sidearm_3().StopEffect('light_trail_fx');
+	}
 }
 
 function ACS_Heavy_Attack_Trail()
@@ -3748,9 +3814,33 @@ function ACS_Heavy_Attack_Trail()
 		yrden_secondary_sword_6().StopEffect('heavy_trail_fx');
 	}
 
-	ACS_Dagger().PlayEffectSingle('heavy_trail_fx');
+	if (ACS_Dagger())
+	{
+		ACS_Dagger().PlayEffectSingle('heavy_trail_fx');
 
-	ACS_Dagger().StopEffect('heavy_trail_fx');
+		ACS_Dagger().StopEffect('heavy_trail_fx');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('heavy_trail_fx');
+
+		ACS_Yrden_Sidearm_1().StopEffect('heavy_trail_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('heavy_trail_fx');
+
+		ACS_Yrden_Sidearm_2().StopEffect('heavy_trail_fx');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('heavy_trail_fx');
+
+		ACS_Yrden_Sidearm_3().StopEffect('heavy_trail_fx');
+	}
 }
 
 function ACS_Wraith_Attack_Trail()
@@ -3889,9 +3979,33 @@ function ACS_Wraith_Attack_Trail()
 		yrden_secondary_sword_6().StopEffect('wraith_trail');
 	}
 
-	ACS_Dagger().PlayEffectSingle('wraith_trail');
+	if (ACS_Dagger())
+	{
+		ACS_Dagger().PlayEffectSingle('wraith_trail');
 
-	ACS_Dagger().StopEffect('wraith_trail');
+		ACS_Dagger().StopEffect('wraith_trail');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('wraith_trail');
+
+		ACS_Yrden_Sidearm_1().StopEffect('wraith_trail');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('wraith_trail');
+
+		ACS_Yrden_Sidearm_2().StopEffect('wraith_trail');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('wraith_trail');
+
+		ACS_Yrden_Sidearm_3().StopEffect('wraith_trail');
+	}
 }
 
 function ACS_Fast_Attack_Buff()
@@ -4030,9 +4144,33 @@ function ACS_Fast_Attack_Buff()
 		yrden_secondary_sword_6().StopEffect('fast_attack_buff');
 	}
 
-	ACS_Dagger().PlayEffectSingle('fast_attack_buff');
+	if (ACS_Dagger())
+	{
+		ACS_Dagger().PlayEffectSingle('fast_attack_buff');
 
-	ACS_Dagger().StopEffect('fast_attack_buff');
+		ACS_Dagger().StopEffect('fast_attack_buff');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('fast_attack_buff');
+
+		ACS_Yrden_Sidearm_1().StopEffect('fast_attack_buff');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('fast_attack_buff');
+
+		ACS_Yrden_Sidearm_2().StopEffect('fast_attack_buff');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('fast_attack_buff');
+
+		ACS_Yrden_Sidearm_3().StopEffect('fast_attack_buff');
+	}
 }
 
 function ACS_Fast_Attack_Buff_Hit()
@@ -4171,9 +4309,33 @@ function ACS_Fast_Attack_Buff_Hit()
 		yrden_secondary_sword_6().StopEffect('fast_attack_buff_hit');
 	}
 
-	ACS_Dagger().PlayEffectSingle('fast_attack_buff_hit');
+	if (ACS_Dagger())
+	{
+		ACS_Dagger().PlayEffectSingle('fast_attack_buff_hit');
 
-	ACS_Dagger().StopEffect('fast_attack_buff_hit');
+		ACS_Dagger().StopEffect('fast_attack_buff_hit');
+	}
+
+	if (ACS_Yrden_Sidearm_1())
+	{
+		ACS_Yrden_Sidearm_1().PlayEffectSingle('fast_attack_buff_hit');
+
+		ACS_Yrden_Sidearm_1().StopEffect('fast_attack_buff_hit');
+	}
+	
+	if (ACS_Yrden_Sidearm_2())
+	{
+		ACS_Yrden_Sidearm_2().PlayEffectSingle('fast_attack_buff_hit');
+
+		ACS_Yrden_Sidearm_2().StopEffect('fast_attack_buff_hit');
+	}
+	
+	if (ACS_Yrden_Sidearm_3())
+	{
+		ACS_Yrden_Sidearm_3().PlayEffectSingle('fast_attack_buff_hit');
+
+		ACS_Yrden_Sidearm_3().StopEffect('fast_attack_buff_hit');
+	}
 }
 
 //////////////////////////Ranged/////////////////////////

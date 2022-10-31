@@ -61,6 +61,7 @@ state ACS_JumpExtendState in cACS_JumpExtend
 	private var movementAdjustor											: CMovementAdjustor;
 	private var slideDuration												: float;
 	private var settings_interrupt											: SAnimatedComponentSlotAnimationSettings;
+	private var mass, velocity, momentum 									: float;
 	
 	event OnEnterState(prevStateName : name)
 	{
@@ -76,6 +77,10 @@ state ACS_JumpExtendState in cACS_JumpExtend
 	{
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
+
+		mass = ((CMovingPhysicalAgentComponent)thePlayer.GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectMass();
+		velocity = VecLength( ((CMovingPhysicalAgentComponent)thePlayer.GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectLinearVelocity() );
+		momentum = mass * velocity;
 		
 		if (!thePlayer.HasTag('in_wraith')
 		&& ACS_JumpExtend_Effect_Enabled())
@@ -122,7 +127,7 @@ state ACS_JumpExtendState in cACS_JumpExtend
 		
 		if (thePlayer.GetIsSprinting())
 		{
-			dest = thePlayer.PredictWorldPosition(1.0) + (thePlayer.GetHeadingVector() * (ACS_Sprinting_JumpExtend_GetDistance()));
+			dest = thePlayer.PredictWorldPosition(1.0) + (thePlayer.GetHeadingVector() * (ACS_Sprinting_JumpExtend_GetDistance()  ));
 			
 			dest.Z += ACS_Sprinting_JumpExtend_GetHeight();
 			
