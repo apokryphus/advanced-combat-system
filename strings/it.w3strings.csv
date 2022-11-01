@@ -156,7 +156,7 @@
 2117035150|        |option_acs_bruxa_dodge_left|Bruxa Dodge Back Left (Doubletap + Left (A))
 2117035151|        |option_acs_bruxa_dodge_right|Bruxa Dodge Back Right (Doubletap + Right (D))
 2117035152|        |option_acs_bruxa_dodge_slide_back|Slide Back Dodge (Back (S) + Dodge)
-2117035153|        |option_acs_wild_hunt_blink|Teleport Dodge (Back (S) + Roll)
+2117035153|        |option_acs_wild_hunt_blink|Teleport Dodge (Doubletap + Roll)
 2117035154|        |option_acs_dodge_effects|Additional Effects for Normal Dodge and Roll
 2117035155|        |panel_acs_special_abilities_settings|Special Abilities Settings
 2117035156|        |preset_Mods_acs_name_acs_special_abilities_settings|ACS: Special Abilities
