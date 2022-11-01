@@ -42,23 +42,47 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			{
 				dist = 1.5;
 				ang =	30;
+
+				if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+				{
+					if(  thePlayer.IsDoingSpecialAttack( false ) )
+					{
+						dist += 1.1;
+						ang +=	330;
+					}
+					else if(  thePlayer.IsDoingSpecialAttack( true ) )
+					{
+						dist += 1.9;
+					}
+				}
 			}
 			else if ( thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
 			{
 				dist = 1.5;
 				ang =	30;
+
+				if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+				{
+					if(  thePlayer.IsDoingSpecialAttack( false ) )
+					{
+						dist += 1.1;
+						ang +=	330;
+					}
+					else if(  thePlayer.IsDoingSpecialAttack( true ) )
+					{
+						dist += 1.9;
+					}
+				}
 			}
 			else if ( thePlayer.HasTag('axii_sword_equipped') )
 			{
+				dist = 1.6;
+				ang =	30;	
+
 				if (thePlayer.HasTag('ACS_Sparagmos_Active'))
 				{
-					dist = 10;
-					ang =	60;
-				}
-				else
-				{
-					dist = 1.6;
-					ang =	30;	
+					dist += 10;
+					ang +=	30;
 				}
 			}
 			else if ( thePlayer.HasTag('axii_secondary_sword_equipped') )
@@ -2695,6 +2719,16 @@ function ACS_Setup_Combat_Action_Light()
 
 	//vACS_Setup_Combat_Action_Light.Setup_Combat_Action_Light_Engage();
 
+	if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+	{
+		thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+	}
+	
+	if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+	{
+		thePlayer.AddTag('igni_sword_equipped_TAG');	
+	}
+	
 	thePlayer.SetupCombatAction( EBAT_LightAttack, BS_Pressed );
 }
 
@@ -2751,6 +2785,17 @@ function ACS_Setup_Combat_Action_Heavy()
 	//vACS_Setup_Combat_Action_Heavy = new cACS_Setup_Combat_Action_Heavy in theGame;
 
 	//vACS_Setup_Combat_Action_Heavy.Setup_Combat_Action_Heavy_Engage();
+
+	if (thePlayer.HasTag('igni_sword_equipped_TAG'))
+	{
+		thePlayer.RemoveTag('igni_sword_equipped_TAG');	
+	}
+	
+	if (!thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+	{
+		thePlayer.AddTag('igni_secondary_sword_equipped_TAG');	
+	}
+
 	thePlayer.SetupCombatAction( EBAT_HeavyAttack, BS_Released );
 }
 
@@ -4933,6 +4978,10 @@ state ACS_ToxicGasSpawner_Engage in cACS_ToxicGasSpawner
 		temp = (CEntityTemplate)LoadResourceAsync( "dlc\dlc_acs\data\entities\other\toxic_gas_7m.w2ent", true );
 
 		pos = ACS_Forest_God().GetWorldPosition();
+
+		ACS_Toxic_Gas_Destroy();
+
+		ACS_Get_Toxic_Gas().Destroy();
 			
 		gasEntity = (W3ToxicCloud)theGame.CreateEntity(temp, spawnPos, ACS_Forest_God().GetWorldRotation());
 
@@ -4948,6 +4997,29 @@ state ACS_ToxicGasSpawner_Engage in cACS_ToxicGasSpawner
 	event OnLeaveState( nextStateName : name ) 
 	{
 		super.OnLeaveState(nextStateName);
+	}
+}
+
+function ACS_Get_Toxic_Gas() : W3ToxicCloud
+{
+	var gas 			 : W3ToxicCloud;
+	
+	gas = (W3ToxicCloud)theGame.GetEntityByTag( 'ACS_Toxic_Gas' );
+	return gas;
+}
+
+function ACS_Toxic_Gas_Destroy()
+{	
+	var gas 											: array<CEntity>;
+	var i												: int;
+	
+	gas.Clear();
+
+	theGame.GetEntitiesByTag( 'ACS_Toxic_Gas', gas );	
+	
+	for( i = 0; i < gas.Size(); i += 1 )
+	{
+		gas[i].Destroy();
 	}
 }
 

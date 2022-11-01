@@ -37,13 +37,10 @@ function ACS_CombatBehSwitch()
 					thePlayer.StopEffect('claws_effect');
 				}
 				*/
-				
-				if (thePlayer.HasTag('Swords_Ready'))
-				{
-					thePlayer.RemoveTag('Swords_Ready');
-				}
 
 				ACS_Skele_Destroy();
+
+				ACS_Sword_Array_Fire_Override();
 
 				ACS_Revenant_Destroy();
 

@@ -3,6 +3,8 @@ function ACS_RandomWeaponEquipInit()
 	if ( ACS_Enabled() )
 	{	
 		ACS_ThingsThatShouldBeRemoved();
+
+		GetACSWatcher().register_extra_inputs();
 		
 		if ( ACS_GetWeaponMode() == 0 )
 		{

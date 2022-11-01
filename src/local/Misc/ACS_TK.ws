@@ -4,6 +4,7 @@ function ACS_TKInit()
 	vACS_TK = new cACS_TK in theGame;
 			
 	vACS_TK.ACS_TK_Engage();
+	ACS_Yrden_Sidearm_Summon();
 }
 
 statemachine class cACS_TK

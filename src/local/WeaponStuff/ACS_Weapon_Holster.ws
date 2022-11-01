@@ -17,6 +17,8 @@ function ACS_WeaponHolsterInit()
 	}
 	*/
 
+	GetACSWatcher().register_extra_inputs();
+
 	if (thePlayer.HasAbility('ForceFinisher'))
 	{
 		thePlayer.RemoveAbility('ForceFinisher');

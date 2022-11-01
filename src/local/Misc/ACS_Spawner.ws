@@ -4287,7 +4287,7 @@ state ACS_Beam_Attack_Engage in cACS_Beam_Attack
 					ticket1 = movementAdjustor1.CreateNewRequest( 'turn' );
 					movementAdjustor1.AdjustmentDuration( ticket1, 0.1 );
 						
-					movementAdjustor1.RotateTowards( ticket1, actor );
+					if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor1.RotateTowards( ticket1, actor );}  
 				
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
 
@@ -6781,6 +6781,14 @@ function ACS_Sword_Array()
 	vACS_Sword_Array.Switch();
 }
 
+function ACS_Sword_Array_Fire_Override()
+{
+	var vACS_Sword_Array : cACS_Sword_Array;
+	vACS_Sword_Array = new cACS_Sword_Array in theGame;
+			
+	vACS_Sword_Array.Swords_Fire_Override();
+}
+
 function ACS_Sword_Array_Destroy()
 {
 	var sword_torso_anchor_1, static_torso_sword_1, static_torso_sword_2, static_torso_sword_3, static_torso_sword_4, static_torso_sword_5 : CEntity;	
@@ -6839,6 +6847,16 @@ statemachine class cACS_Sword_Array
 			thePlayer.RemoveTag('Swords_Ready');
 		}
 	}
+
+	function Swords_Fire_Override()
+	{
+		if ( thePlayer.HasTag('Swords_Ready') )
+		{
+			this.PushState('Fire');
+
+			thePlayer.RemoveTag('Swords_Ready');
+		}
+	}
 }
 
 state Ready in cACS_Sword_Array
@@ -6884,54 +6902,25 @@ state Ready in cACS_Sword_Array
 		
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
-		{	
-			if (!theGame.IsDialogOrCutscenePlaying() 
-			&& !thePlayer.IsInNonGameplayCutscene() 
-			&& !thePlayer.IsInGameplayScene()
-			&& !thePlayer.IsUsingHorse()
-			&& !thePlayer.IsUsingVehicle()
-			)
-			{
+		GetACSWatcher().RemoveTimer('ACS_Shout');
+
+		if (!theGame.IsDialogOrCutscenePlaying() 
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !thePlayer.IsUsingHorse()
+		&& !thePlayer.IsUsingVehicle()
+		)
+		{
+			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
+			{	
 				movementAdjustor.RotateTowards( ticket, actor );
-			}
-			
-			if ( thePlayer.GetEquippedSign() == ST_Aard)
-			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
 			}
 			else
 			{
-				if (thePlayer.IsAnyWeaponHeld())
-				{
-					if (thePlayer.IsWeaponHeld( 'fist' ))
-					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-					}
-					else
-					{
-						if (RandRange(10) < 5) 
-						{
-							if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_f_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-							else
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_b_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-						}
-						else
-						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-						}
-					}
-				}
-				else
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-				}
+				movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			}
+
+			GetACSWatcher().PlayerPlayAnimationInterrupt( '' );
 		}
 
 		ACS_Sword_Array_Destroy();
@@ -7097,6 +7086,8 @@ state Fire in cACS_Sword_Array
 	{
 		thePlayer.DrainFocus( thePlayer.GetStat( BCS_Focus ) * 2/3 );
 
+		GetACSWatcher().RemoveTimer('ACS_Shout');
+
 		settings.blendIn = 0.3f;
 		settings.blendOut = 0.3f;
 
@@ -7120,93 +7111,23 @@ state Fire in cACS_Sword_Array
 		
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
 
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
-		{	
-			if (!theGame.IsDialogOrCutscenePlaying() 
-			&& !thePlayer.IsInNonGameplayCutscene() 
-			&& !thePlayer.IsInGameplayScene()
-			&& !thePlayer.IsUsingHorse()
-			&& !thePlayer.IsUsingVehicle()
-			)
-			{
+		if (!theGame.IsDialogOrCutscenePlaying() 
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !thePlayer.IsUsingHorse()
+		&& !thePlayer.IsUsingVehicle()
+		)
+		{
+			if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
+			{	
 				movementAdjustor.RotateTowards( ticket, actor );
 			}
-			
-			if ( thePlayer.GetEquippedSign() == ST_Aard)
-			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-			}
 			else
 			{
-				if (thePlayer.IsAnyWeaponHeld())
-				{
-					if (thePlayer.IsWeaponHeld( 'fist' ))
-					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-					}
-					else
-					{
-						if (RandRange(10) < 5) 
-						{
-							if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_f_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-							else
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_b_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-						}
-						else
-						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-						}
-					}
-				}
-				else
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-				}
+				movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 			}
-		}
-		else
-		{
-			if ( thePlayer.GetEquippedSign() == ST_Aard)
-			{
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-			}
-			else
-			{
-				if (thePlayer.IsAnyWeaponHeld())
-				{
-					if (thePlayer.IsWeaponHeld( 'fist' ))
-					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-					}
-					else
-					{
-						if (RandRange(10) < 5) 
-						{
-							if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_f_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-							else
-							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'strafe_walk_b_loop_ACS', 'PLAYER_SLOT', settings);
-							}
-						}
-						else
-						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-						}
-					}
-				}
-				else
-				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
-				}
-			}
+
+			GetACSWatcher().PlayerPlayAnimationInterrupt( '' );
 		}
 
 		ACS_Sword_Array_Destroy();

@@ -1157,7 +1157,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 				AddTimer( 'ACS_Set_Player_Scale', 0.01, true );
 
-				AddTimer('ACS_ENFORCE_INPUTS', 3, true); 
+				AddTimer('ACS_ENFORCE_INPUTS', 3, false); 
 
 				//AddTimer('ACS_Embers_Timer', 0.01f, true); 
 			}
@@ -11260,9 +11260,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{
 								ACS_PrimaryWeaponSwitch();
 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');	
-
 								ACS_Setup_Combat_Action_Light();
 							}
 							else if (ACS_Armiger_Quen_Set_Sign_Weapon_Type() == 1)
@@ -11287,9 +11284,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if (ACS_Armiger_Aard_Set_Sign_Weapon_Type() == 0)
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 														
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11315,9 +11309,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if (ACS_Armiger_Axii_Set_Sign_Weapon_Type() == 0)
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 														
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11343,9 +11334,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if (ACS_Armiger_Yrden_Set_Sign_Weapon_Type() == 0)
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 														
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11371,9 +11359,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if (ACS_Armiger_Igni_Set_Sign_Weapon_Type() == 0)
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 														
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11404,9 +11389,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if ( ACS_GetFocusModeSilverWeapon() == 0 )
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 															
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11448,9 +11430,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if ( ACS_GetFocusModeSteelWeapon() == 0 )
 							{
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 															
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11497,9 +11476,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								if (!thePlayer.HasTag('HybridDefaultWeaponTicket')){thePlayer.AddTag('HybridDefaultWeaponTicket');}
 
 								ACS_PrimaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
 															
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -11701,9 +11677,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 								ACS_PrimaryWeaponSwitch();
 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
-															
 								ACS_Setup_Combat_Action_Light();
 							}
 							else if ( ACS_GetHybridModeLightAttack() == 1 )
@@ -11800,9 +11773,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							{	
 								ACS_DefaultSwitch();		
 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
-
 								ACS_Setup_Combat_Action_Light();
 							}
 						}
@@ -11846,10 +11816,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else
 							{	
-								ACS_DefaultSwitch();		
-
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+								ACS_DefaultSwitch();
 
 								ACS_Setup_Combat_Action_Light();
 							}
@@ -12039,9 +12006,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if ( ACS_GetFocusModeSilverWeapon() == 0 )
 							{
 								ACS_SecondaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
 																
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12083,9 +12047,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							if ( ACS_GetFocusModeSteelWeapon() == 0 )
 							{
 								ACS_SecondaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
 																
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12134,9 +12095,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								if (!thePlayer.HasTag('HybridDefaultSecondaryWeaponTicket')){thePlayer.AddTag('HybridDefaultSecondaryWeaponTicket');}
 
 								ACS_SecondaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
 																
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12196,9 +12154,6 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								if (!thePlayer.HasTag('HybridDefaultSecondaryWeaponTicket')){thePlayer.AddTag('HybridDefaultSecondaryWeaponTicket');}
 
 								ACS_SecondaryWeaponSwitch();
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
 																
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12294,10 +12249,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else
 							{	
-								ACS_DefaultSwitch();		
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
+								ACS_DefaultSwitch();
 
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12342,10 +12294,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 							}
 							else
 							{	
-								ACS_DefaultSwitch();		
-
-								thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-								thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
+								ACS_DefaultSwitch();
 
 								ACS_Setup_Combat_Action_Heavy();
 							}
@@ -12410,8 +12359,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12441,8 +12398,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12472,8 +12437,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12503,8 +12476,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12534,8 +12515,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12570,8 +12559,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12617,8 +12614,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								action_interrupt();
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12671,8 +12676,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								if (!thePlayer.HasTag('HybridDefaultWeaponTicket')){thePlayer.AddTag('HybridDefaultWeaponTicket');}
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12736,8 +12749,16 @@ statemachine abstract class W3ACSWatcher extends CEntity
 								if (!thePlayer.HasTag('HybridDefaultWeaponTicket')){thePlayer.AddTag('HybridDefaultWeaponTicket');}
 
 								ACS_PrimaryWeaponSwitch(); 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12839,8 +12860,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 								action_interrupt();
 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 								
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12891,8 +12919,15 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 								action_interrupt();
 
-								thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
-								thePlayer.AddTag('igni_sword_equipped_TAG');
+								if (thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
+								{
+									thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');	
+								}
+								
+								if (!thePlayer.HasTag('igni_sword_equipped_TAG'))
+								{
+									thePlayer.AddTag('igni_sword_equipped_TAG');	
+								}
 
 								thePlayer.PrepareToAttack();
 								thePlayer.SetPlayedSpecialAttackMissingResourceSound(false);
@@ -12951,7 +12986,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		}
 		else
 		{
-			if (ACS_can_perform_guard_doubletap_attack() && thePlayer.IsInCombat())
+			if (ACS_can_perform_guard_doubletap_attack())
 			{
 				ACS_refresh_guard_doubletap_attack_cooldown();
 
@@ -12963,6 +12998,8 @@ statemachine abstract class W3ACSWatcher extends CEntity
 				}
 																
 				geraltRandomKick();
+
+				RemoveTimer('ACS_Shout');
 
 				AddTimer('ACS_KickDamage', 0.4, false);
 											
@@ -14158,10 +14195,7 @@ statemachine abstract class W3ACSWatcher extends CEntity
 		else if ( !thePlayer.HasTag('acs_bow_active') && !thePlayer.HasTag('acs_crossbow_active') )
 		{
 			ACS_SecondaryWeaponSwitch();
-
-			thePlayer.RemoveTag('igni_sword_equipped_TAG');	
-			thePlayer.AddTag('igni_secondary_sword_equipped_TAG');
-										
+						
 			ACS_Setup_Combat_Action_Heavy();
 		}
 	}
@@ -16105,8 +16139,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if ( lang != "DE" 
 		&& lang != "FR" 
+		&& lang != "TR" 
 		&& audioLang != "DE" 
-		&& audioLang != "FR" )
+		&& audioLang != "FR"
+		&& audioLang != "TR" )
 		{
 			if (label != "Sword Claws"
 			|| label_2 != "ACS: Taunt System")
@@ -17681,8 +17717,10 @@ statemachine abstract class W3ACSWatcher extends CEntity
 
 		if ( lang != "DE" 
 		&& lang != "FR" 
+		&& lang != "TR" 
 		&& audioLang != "DE" 
-		&& audioLang != "FR" )
+		&& audioLang != "FR"
+		&& audioLang != "TR" )
 		{
 			if (
 			label != "Focus Mode" 
