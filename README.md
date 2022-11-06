@@ -1008,7 +1008,7 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
 
 - The chances of a Shadow spawning can be modified in the Main Settings menu.
 - The Shadow cannot spawn more than once every 7 minutes. 
-- This chance of the Shadow appearing will ignore the value set in the Main Settings menu and increase to 30% **if the player has any items to do with leshens in their inventory**. 
+- This chance of the Shadow appearing will ignore the value set in the Main Settings menu and increase to 50% **if the player has any items to do with leshens in their inventory**. 
 - Shadows drop emeralds and leshen mutagen upon death. 
  
  ## Ice Titans
