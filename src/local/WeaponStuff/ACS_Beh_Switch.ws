@@ -89,10 +89,23 @@ function ACS_CombatBehSwitch()
 					|| thePlayer.inv.HasItem('Leshy mutagen')
 					)
 					{
-						if( ACS_can_spawn_forest_god_shadows() ) 
+						if( RandF() < 0.5 ) 
 						{
-							ACS_refresh_forest_god_shadows_cooldown();
-							ACS_Forest_God_Shadows_Spawner();
+							if( ACS_can_spawn_forest_god_shadows() ) 
+							{
+								ACS_refresh_forest_god_shadows_cooldown();
+
+								if( RandF() < 0.5 ) 
+								{
+									GetWitcherPlayer().DisplayHudMessage( "LESHEN ITEMS DETECTED IN INVENTORY. YOU SHALL NOT ESCAPE ME." );
+								}
+								else
+								{
+									GetWitcherPlayer().DisplayHudMessage( "LESHEN ITEMS DETECTED IN INVENTORY. I WILL FIND YOU." );
+								}
+
+								ACS_Forest_God_Shadows_Spawner();
+							}
 						}
 					}
 					else
@@ -102,6 +115,16 @@ function ACS_CombatBehSwitch()
 							if( ACS_can_spawn_forest_god_shadows() ) 
 							{
 								ACS_refresh_forest_god_shadows_cooldown();
+
+								if( RandF() < 0.5 ) 
+								{
+									GetWitcherPlayer().DisplayHudMessage( "I SMELL YOUR FEAR, WITCHER. IT DELIGHTS ME." );
+								}
+								else
+								{
+									GetWitcherPlayer().DisplayHudMessage( "TELL ME, WITCHER. DO YOU FEAR DEATH?" );
+								}
+
 								ACS_Forest_God_Shadows_Spawner();
 							}
 						}

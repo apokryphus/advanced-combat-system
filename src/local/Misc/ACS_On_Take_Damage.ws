@@ -135,12 +135,16 @@ function ACS_Player_Attack(action: W3DamageAction)
 			{
 				ACS_Forest_God_Adds_1_Spawner();
 
+				GetWitcherPlayer().DisplayHudMessage( "DID YOU THINK IT WAS THAT EASY?" );
+
 				npc.AddTag('ACS_Spawn_Adds_1');
 			}
 			else if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.25 )
 			&& !npc.HasTag('ACS_Spawn_Adds_2'))
 			{
 				ACS_Forest_God_Adds_2_Spawner();
+
+				GetWitcherPlayer().DisplayHudMessage( "DEATH AND DESTRUCTION TO ALL" );
 
 				npc.AddTag('ACS_Spawn_Adds_2');
 			} 
@@ -3544,93 +3548,106 @@ function ACS_Forest_God_Attack(action: W3DamageAction)
 	&& !action.IsDoTDamage()
 	)
 	{	
-		if (action.IsActionMelee())
+		if (playerVictim)
 		{
-			if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
+			if (action.IsActionMelee())
 			{
-				if (thePlayer.IsGuarded()
-				&& thePlayer.IsInGuardedState())
+				if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
 				{
-					if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded')
-					&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded')
-					)
+					if (thePlayer.IsGuarded()
+					&& thePlayer.IsInGuardedState())
 					{
-						npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
-
-						npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
-
-						if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
+						if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded')
+						&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded')
+						)
 						{
-							GetWitcherPlayer().FinishQuen(false);
+							npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
 						}
+						else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Guarded'))
+						{
+							npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Guarded');
 
-						if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-						playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-					}
-				}
-				else
-				{
-					if (!playerVictim)
-					{
-						npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.10 );
+							npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
+						}
+						else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Guarded'))
+						{
+							npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Guarded');
+
+							if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
+							{
+								GetWitcherPlayer().FinishQuen(false);
+							}
+
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+							GetWitcherPlayer().DisplayHudMessage( "I SHALL FEAST UPON YOUR FRAGILITY" );
+
+							playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
+						}
 					}
 					else
 					{
 						npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.05 );
-					}
-					
-					if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded')
-					&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded')
-					)
-					{
-						if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
 
-						playerVictim.AddEffectDefault( EET_Stagger, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-						npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
-
-						if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-						playerVictim.AddEffectDefault( EET_Stagger, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-						npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
-					}
-					else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded'))
-					{
-						npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
-
-						if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
+						if (!npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded')
+						&& !npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded')
+						)
 						{
-							GetWitcherPlayer().FinishQuen(false);
-						}
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}			
 
-						if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-						playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
+							npcAttacker.AddTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
+						}
+						else if (npcAttacker.HasTag('ACS_Forest_God_1st_Hit_Melee_Unguarded'))
+						{
+							npcAttacker.RemoveTag('ACS_Forest_God_1st_Hit_Melee_Unguarded');
+
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+							playerVictim.AddEffectDefault( EET_Stagger, npcAttacker, 'acs_HIT_REACTION' );				
+
+							npcAttacker.AddTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
+						}
+						else if (npcAttacker.HasTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded'))
+						{
+							npcAttacker.RemoveTag('ACS_Forest_God_2nd_Hit_Melee_Unguarded');
+
+							if ( playerVictim && GetWitcherPlayer().IsAnyQuenActive())
+							{
+								GetWitcherPlayer().FinishQuen(false);
+							}
+
+							GetWitcherPlayer().DisplayHudMessage( "I CRAVE THE ESSENCE OF YOUR FLESH" );
+
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+							playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
+						}
 					}
 				}
+			}
+			else
+			{
+				if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
+				{
+					if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+					if( RandF() < 0.5 ) 
+					{
+						GetWitcherPlayer().DisplayHudMessage( "NONE LEAVE THE SLAUGHTERHOUSE. NOT ALIVE." );
+					}
+					else
+					{
+						GetWitcherPlayer().DisplayHudMessage( "YOUR FEAR IS DELICIOUS. I WANT MORE." );
+					}
+
+					playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
+
+					playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 		
+				}					
 			}
 		}
 		else
 		{
-			if (!action.WasDodged() && !thePlayer.IsCurrentlyDodging())
-			{
-				if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-
-				playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-
-				playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 		
-			}					
+			npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.10 );
 		}
 	}
 }

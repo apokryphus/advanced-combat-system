@@ -5623,3 +5623,8 @@ function GetACSTestEnt_Array_StopEffects()
 
 	thePlayer.SoundEvent("magic_man_tornado_loop_stop");
 }
+
+exec function acsmessagetest()
+{
+	GetWitcherPlayer().DisplayHudMessage( "LESHEN ITEMS DETECTED IN INVENTORY. YOU SHALL NOT ESCAPE ME." );
+}
