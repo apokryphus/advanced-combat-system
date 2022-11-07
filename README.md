@@ -972,6 +972,7 @@ https://user-images.githubusercontent.com/98017171/196608085-fd4a751c-e4dc-45ed-
 
 The Dynamic Enemy Behavior System applies to all non-quest human type enemies carrying one-handed weapons:
   - Stage 1: If the enemy is hit by the player with an attack/repel leaving them with anywhere between 75% - 50% health, the enemy will swap their original 1-handed behavior to either witcher behavior or 2-handed behavior. 
+    - The enemy is now also immune to knockdowns after this point. 
   - Stage 2: If the enemy is hit by the player with an attack/repel leaving them with anywhere lower than 50% health but between 50% - 25% health: 
     - If the enemy had swapped to witcher behavior in Stage 1, they will now have a 75% chance to swap their behavior to 2-handed behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
     - If the enemy had swapped to 2-handed behavior in Stage 1, they will now have a 75% chance to swap their behavior to witcher behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
