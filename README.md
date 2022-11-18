@@ -1099,6 +1099,7 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
 # 10. ARMOR SYSTEM
 
  - While wielding an ACS weapon or using an ACS moveset, the player's armor is enhanced. Enemies scoring a hit on the player will have a chance to have a small percentage of that damage reflected back at them. 
+ - If the player is performing an ACS animation during which the armor system activates, the player's action will NOT be interrupted.
  - The chances of this happening is based upon the type of armor the player is wearing:
     - Heavy armor: 55% chance
     - Medium armor: 35% chance
