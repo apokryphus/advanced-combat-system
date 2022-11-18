@@ -914,9 +914,6 @@ https://user-images.githubusercontent.com/98017171/194233600-262900f1-0647-41c2-
 
 https://user-images.githubusercontent.com/98017171/194233815-f599b193-e645-4262-8b68-836b0cd0bcb6.mp4
 
-#### || Gregoire Weapon ||
-```W key + Parry/Counterattack``` = Hilt Bash
-
 #### || Giant Weapon ||
 ```W key + Parry/Counterattack``` = AOE Strike + Lightning
 
