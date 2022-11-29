@@ -73,6 +73,8 @@ function ACS_refresh_light_attack_cooldown()
 	watcher.vACS_Cooldown_Manager.last_light_attack_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_perform_heavy_attack(): bool 
@@ -93,6 +95,8 @@ function ACS_refresh_heavy_attack_cooldown()
 	watcher.vACS_Cooldown_Manager.last_heavy_attack_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_perform_guard_attack(): bool 
@@ -153,6 +157,8 @@ function ACS_refresh_special_attack_cooldown()
 	watcher.vACS_Cooldown_Manager.last_special_attack_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_bruxa_dash(): bool 
@@ -173,6 +179,8 @@ function ACS_refresh_bruxa_dash_cooldown()
 	watcher.vACS_Cooldown_Manager.last_bruxa_dash_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_dodge(): bool 
@@ -193,6 +201,8 @@ function ACS_refresh_dodge_cooldown()
 	watcher.vACS_Cooldown_Manager.last_dodge_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_special_dodge(): bool 
@@ -213,6 +223,8 @@ function ACS_refresh_special_dodge_cooldown()
 	watcher.vACS_Cooldown_Manager.last_special_dodge_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_perform_beam_attack(): bool 
@@ -233,6 +245,8 @@ function ACS_refresh_beam_attack_cooldown()
 	watcher.vACS_Cooldown_Manager.last_beam_attack_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_shoot_bow_stationary(): bool 
@@ -253,6 +267,8 @@ function ACS_refresh_bow_stationary_cooldown()
 	watcher.vACS_Cooldown_Manager.last_shoot_bow_stationary_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_shoot_bow_moving(): bool 
@@ -273,6 +289,8 @@ function ACS_refresh_bow_moving_cooldown()
 	watcher.vACS_Cooldown_Manager.last_shoot_bow_moving_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_can_shoot_crossbow(): bool 
@@ -293,6 +311,8 @@ function ACS_refresh_crossbow_cooldown()
 	watcher.vACS_Cooldown_Manager.last_shoot_crossbow_time = theGame.GetEngineTimeAsSeconds();
 
 	ACS_Size_Revert_And_Enable_Interrupt_();
+
+	ACS_EventHack();
 }
 
 function ACS_Size_Revert_And_Enable_Interrupt_()

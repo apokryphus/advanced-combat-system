@@ -25,6 +25,10 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 	private var inv 															: CInventoryComponent;
 	private var tags 															: array<name>;
 	private var settings														: SAnimatedComponentSlotAnimationSettings;
+	private var trail_temp														: CEntityTemplate;
+	private var sword_trail_1, sword_trail_2, sword_trail_3 					: CEntity;
+	private var attach_rot														: EulerAngles;
+	private var attach_vec														: Vector;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -144,6 +148,44 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 		{
 			ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE();
 
+			trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+			sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+			sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+			sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+			attach_rot.Roll = 0;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0;
+
+			sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword_trail_1.AddTag('acs_sword_trail_1');
+
+			attach_rot.Roll = 0;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.2;
+
+			sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword_trail_2.AddTag('acs_sword_trail_2');
+
+			attach_rot.Roll = 0;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.4;
+
+			sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword_trail_3.AddTag('acs_sword_trail_3');
+
 			thePlayer.AddTag('igni_sword_equipped');
 			thePlayer.AddTag('igni_secondary_sword_equipped');	
 
@@ -253,17 +295,20 @@ statemachine class cACS_DefaultSwitch_2
  
 state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 {
-	private var weapontype 														: EPlayerWeapon;
-	private var item 															: SItemUniqueId;
-	private var res 															: bool;
-	private var inv 															: CInventoryComponent;
-	private var tags 															: array<name>;
-	private var settings														: SAnimatedComponentSlotAnimationSettings;
-	private var steelsword, silversword, scabbard_steel, scabbard_silver		: CDrawableComponent;
-	private var i 																: int;
-	private var scabbards_steel, scabbards_silver 								: array<SItemUniqueId>;
-	private var steelID, silverID, rangedID 									: SItemUniqueId;
-	private var steelswordentity, silverswordentity, crossbowentity 			: CEntity;
+	private var weapontype 																											: EPlayerWeapon;
+	private var item 																												: SItemUniqueId;
+	private var res 																												: bool;
+	private var inv 																												: CInventoryComponent;
+	private var tags 																												: array<name>;
+	private var settings																											: SAnimatedComponentSlotAnimationSettings;
+	private var steelsword, silversword, scabbard_steel, scabbard_silver															: CDrawableComponent;
+	private var i 																													: int;
+	private var scabbards_steel, scabbards_silver 																					: array<SItemUniqueId>;
+	private var steelID, silverID, rangedID 																						: SItemUniqueId;
+	private var steelswordentity, silverswordentity, crossbowentity, sword_trail_1, sword_trail_2, sword_trail_3 					: CEntity; 
+	private var trail_temp																											: CEntityTemplate;
+	private var attach_rot																											: EulerAngles;
+	private var attach_vec																											: Vector;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -400,6 +445,44 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 		silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
 
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( thePlayer.GetInventory().IsItemHeld(steelID) )
 		{

@@ -1003,11 +1003,22 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 
 				actor = actors[i];
 
-				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.05 );  
 
-				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-					
-				npc.GainStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.1 );
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.05 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.05 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
 			}
 		}
 	}

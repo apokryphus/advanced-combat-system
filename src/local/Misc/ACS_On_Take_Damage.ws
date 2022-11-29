@@ -15,6 +15,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 
     ACS_Forest_God_Attack(action);
 
+	ACS_Forest_God_Shadows_Attack(action);
+
     ACS_Ice_Titan_Attack(action);
 }
 
@@ -85,7 +87,11 @@ function ACS_Player_Attack(action: W3DamageAction)
 	var heal, playerVitality 																										: float;
 	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist										: float;
 	var itemId_r, itemId_l 																											: SItemUniqueId;
-	var itemTags_r, itemTags_l 																										: array<name>;
+	var itemTags_r, itemTags_l, acs_npc_blood_fx 																					: array<name>;
+	var tmpName 																													: name;
+	var tmpBool 																													: bool;
+	var mc 																															: EMonsterCategory;
+	var blood 																														: EBloodType;
 	
     npc = (CActor)action.victim;
 	
@@ -152,7 +158,7 @@ function ACS_Player_Attack(action: W3DamageAction)
 			//thePlayer.StopEffect('critical_poison');
 			//thePlayer.PlayEffectSingle('critical_poison');
 		}
-
+			
 		if(!theGame.IsDialogOrCutscenePlaying()
 		&& !thePlayer.IsUsingHorse() 
 		&& !thePlayer.IsUsingVehicle()
@@ -161,6 +167,53 @@ function ACS_Player_Attack(action: W3DamageAction)
 		&& ((CNewNPC)npc).GetNPCType() != ENGT_Quest
 		&& !npc.HasTag( 'ethereal' )
 		&& !npc.HasBuff(EET_Burning)
+
+		&& !StrContains( npc.I_GetDisplayName(), "Bandit" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "Cannibal" )
+		&& !StrContains( npc.I_GetDisplayName(), "Thug" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Cannibale" )
+		&& !StrContains( npc.I_GetDisplayName(), "Voyou" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Bandito" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "Delinquente" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Kannibale" )
+		&& !StrContains( npc.I_GetDisplayName(), "Schurke" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Bandido" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "Caníbal" )
+		&& !StrContains( npc.I_GetDisplayName(), "Matón" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "قاطع طريق" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "آكلي لحوم البشر" )
+		&& !StrContains( npc.I_GetDisplayName(), "سفاح" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Bandita" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "Kanibal" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Kannibál" )
+		&& !StrContains( npc.I_GetDisplayName(), "Orgyilkos" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "山賊" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "人食い人種" )
+		&& !StrContains( npc.I_GetDisplayName(), "ちんぴら" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "적기" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "식인종" )
+		&& !StrContains( npc.I_GetDisplayName(), "자객" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Bandyta" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Canibal" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "Бандит" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "Каннибал" )
+		&& !StrContains( npc.I_GetDisplayName(), "бандит" )
+
+		&& !StrContains( npc.I_GetDisplayName(), "土匪" ) 
+		&& !StrContains( npc.I_GetDisplayName(), "食人族" )
+		&& !StrContains( npc.I_GetDisplayName(), "暴徒" )
 		)
 		{
 			itemId_r = npc.GetInventory().GetItemFromSlot('r_weapon');
@@ -305,14 +358,10 @@ function ACS_Player_Attack(action: W3DamageAction)
 							if( RandF() < 0.5 ) 
 							{
 								ACS_EnemyBehSwitch_OnHit(1);
-
-								npc.AddTag('ACS_Swapped_To_1h_Sword');
 							}
 							else
 							{
 								ACS_EnemyBehSwitch_OnHit(3);
-
-								npc.AddTag('ACS_Swapped_To_Witcher');
 							}
 						}
 						else if ( npc.GetBehaviorGraphInstanceName() == 'sword_1handed' )
@@ -322,14 +371,10 @@ function ACS_Player_Attack(action: W3DamageAction)
 							if( RandF() < 0.5 ) 
 							{
 								ACS_EnemyBehSwitch_OnHit(2);
-
-								npc.AddTag('ACS_Swapped_To_2h_Sword');
 							}
 							else
 							{
 								ACS_EnemyBehSwitch_OnHit(3);
-
-								npc.AddTag('ACS_Swapped_To_Witcher');
 							}
 						}
 						else if ( npc.GetBehaviorGraphInstanceName() == 'Shield' )
@@ -339,14 +384,10 @@ function ACS_Player_Attack(action: W3DamageAction)
 							if( RandF() < 0.5 ) 
 							{
 								ACS_EnemyBehSwitch_OnHit(2);
-
-								npc.AddTag('ACS_Swapped_To_2h_Sword');
 							}
 							else
 							{
 								ACS_EnemyBehSwitch_OnHit(3);
-
-								npc.AddTag('ACS_Swapped_To_Witcher');
 							}
 						}
 						else if ( npc.GetBehaviorGraphInstanceName() == 'Witcher' )
@@ -356,14 +397,10 @@ function ACS_Player_Attack(action: W3DamageAction)
 							if( RandF() < 0.5 ) 
 							{
 								ACS_EnemyBehSwitch_OnHit(1);
-
-								npc.AddTag('ACS_Swapped_To_1h_Sword');
 							}
 							else
 							{
 								ACS_EnemyBehSwitch_OnHit(2);
-
-								npc.AddTag('ACS_Swapped_To_2h_Sword');
 							}
 						}
 
@@ -390,28 +427,20 @@ function ACS_Player_Attack(action: W3DamageAction)
 								if( npc.HasTag('ACS_sword1h_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(2);
-
-									npc.AddTag('ACS_Swapped_To_2h_Sword');
 								}
 								else if( npc.HasTag('ACS_sword2h_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(1);
-
-									npc.AddTag('ACS_Swapped_To_1h_Sword');
 								}
 								else
 								{
 									if( RandF() < 0.25 ) 
 									{
 										ACS_EnemyBehSwitch_OnHit(1);
-
-										npc.AddTag('ACS_Swapped_To_1h_Sword');
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(2);
-
-										npc.AddTag('ACS_Swapped_To_2h_Sword');
 									}
 								}
 								
@@ -422,38 +451,27 @@ function ACS_Player_Attack(action: W3DamageAction)
 								{
 									if( RandF() < 0.75 ) 
 									{
-
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 									else
 									{
 										if( npc.HasTag('ACS_sword1h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(2);
-
-											npc.AddTag('ACS_Swapped_To_2h_Sword');
 										}
 										else if( npc.HasTag('ACS_sword2h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(1);
-
-											npc.AddTag('ACS_Swapped_To_1h_Sword');
 										}
 										else
 										{
 											if( RandF() < 0.25 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(1);
-
-												npc.AddTag('ACS_Swapped_To_1h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(2);
-
-												npc.AddTag('ACS_Swapped_To_2h_Sword');
 											}
 										}
 									}
@@ -465,36 +483,26 @@ function ACS_Player_Attack(action: W3DamageAction)
 										if( npc.HasTag('ACS_sword1h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(2);
-
-											npc.AddTag('ACS_Swapped_To_2h_Sword');
 										}
 										else if( npc.HasTag('ACS_sword2h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(1);
-
-											npc.AddTag('ACS_Swapped_To_1h_Sword');
 										}
 										else
 										{
 											if( RandF() < 0.25 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(1);
-
-												npc.AddTag('ACS_Swapped_To_1h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(2);
-
-												npc.AddTag('ACS_Swapped_To_2h_Sword');
 											}
 										}
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 								}
 							}
@@ -509,28 +517,20 @@ function ACS_Player_Attack(action: W3DamageAction)
 								if( npc.HasTag('ACS_sword1h_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(3);
-
-									npc.AddTag('ACS_Swapped_To_Witcher');
 								}
 								else if( npc.HasTag('ACS_witcher_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(1);
-
-									npc.AddTag('ACS_Swapped_To_1h_Sword');
 								}
 								else
 								{
 									if( RandF() < 0.25 ) 
 									{
 										ACS_EnemyBehSwitch_OnHit(1);
-
-										npc.AddTag('ACS_Swapped_To_1h_Sword');
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(3);
-
-										npc.AddTag('ACS_Swapped_To_Witcher');
 									}
 								}
 							}
@@ -541,36 +541,26 @@ function ACS_Player_Attack(action: W3DamageAction)
 									if( RandF() < 0.75 ) 
 									{
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 									else
 									{
 										if( npc.HasTag('ACS_sword1h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(3);
-
-											npc.AddTag('ACS_Swapped_To_Witcher');
 										}
 										else if( npc.HasTag('ACS_witcher_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(1);
-
-											npc.AddTag('ACS_Swapped_To_1h_Sword');
 										}
 										else
 										{
 											if( RandF() < 0.25 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(1);
-
-												npc.AddTag('ACS_Swapped_To_1h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(3);
-
-												npc.AddTag('ACS_Swapped_To_Witcher');
 											}
 										}
 									}
@@ -582,36 +572,26 @@ function ACS_Player_Attack(action: W3DamageAction)
 										if( npc.HasTag('ACS_sword1h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(3);
-
-											npc.AddTag('ACS_Swapped_To_Witcher');
 										}
 										else if( npc.HasTag('ACS_witcher_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(1);
-
-											npc.AddTag('ACS_Swapped_To_1h_Sword');
 										}
 										else
 										{
 											if( RandF() < 0.25 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(1);
-
-												npc.AddTag('ACS_Swapped_To_1h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(3);
-
-												npc.AddTag('ACS_Swapped_To_Witcher');
 											}
 										}
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 								}
 							}
@@ -626,28 +606,20 @@ function ACS_Player_Attack(action: W3DamageAction)
 								if( npc.HasTag('ACS_witcher_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(2);
-
-									npc.AddTag('ACS_Swapped_To_2h_Sword');
 								}
 								else if( npc.HasTag('ACS_sword2h_npc') )
 								{
 									ACS_EnemyBehSwitch_OnHit(3);
-
-									npc.AddTag('ACS_Swapped_To_Witcher');
 								}
 								else
 								{
 									if( RandF() < 0.5 ) 
 									{
 										ACS_EnemyBehSwitch_OnHit(2);
-
-										npc.AddTag('ACS_Swapped_To_2h_Sword');
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(3);
-
-										npc.AddTag('ACS_Swapped_To_Witcher');
 									}
 								}	
 							}
@@ -658,36 +630,26 @@ function ACS_Player_Attack(action: W3DamageAction)
 									if( RandF() < 0.75 ) 
 									{
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 									else
 									{
 										if( npc.HasTag('ACS_witcher_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(2);
-
-											npc.AddTag('ACS_Swapped_To_2h_Sword');
 										}
 										else if( npc.HasTag('ACS_sword2h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(3);
-
-											npc.AddTag('ACS_Swapped_To_Witcher');
 										}
 										else
 										{
 											if( RandF() < 0.5 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(2);
-
-												npc.AddTag('ACS_Swapped_To_2h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(3);
-
-												npc.AddTag('ACS_Swapped_To_Witcher');
 											}
 										}
 									}
@@ -699,36 +661,26 @@ function ACS_Player_Attack(action: W3DamageAction)
 										if( npc.HasTag('ACS_witcher_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(2);
-
-											npc.AddTag('ACS_Swapped_To_2h_Sword');
 										}
 										else if( npc.HasTag('ACS_sword2h_npc') )
 										{
 											ACS_EnemyBehSwitch_OnHit(3);
-
-											npc.AddTag('ACS_Swapped_To_Witcher');
 										}
 										else
 										{
 											if( RandF() < 0.5 ) 
 											{
 												ACS_EnemyBehSwitch_OnHit(2);
-
-												npc.AddTag('ACS_Swapped_To_2h_Sword');
 											}
 											else
 											{
 												ACS_EnemyBehSwitch_OnHit(3);
-
-												npc.AddTag('ACS_Swapped_To_Witcher');
 											}
 										}
 									}
 									else
 									{
 										ACS_EnemyBehSwitch_OnHit(4);
-
-										npc.AddTag('ACS_Swapped_To_Shield');
 									}
 								}
 							}
@@ -750,7 +702,120 @@ function ACS_Player_Attack(action: W3DamageAction)
 			{
 				if ( !thePlayer.HasTag('ACS_Storm_Spear_Active') && !thePlayer.HasTag('ACS_Sparagmos_Active') )
 				{
-					GetACSWatcher().weapon_blood_fx();
+					theGame.GetMonsterParamsForActor(npc, mc, tmpName, tmpBool, tmpBool, tmpBool);
+
+					if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+					{
+						if (npc.HasAbility('mon_lessog_base')
+						|| npc.HasAbility('mon_sprigan_base')
+						)
+						{						
+							GetACSWatcher().black_weapon_blood_fx();
+						} 
+						else 
+						{
+							GetACSWatcher().weapon_blood_fx();
+						}
+					}
+					else if( ((CNewNPC)npc).GetBloodType() == BT_Green) 
+					{
+						if (npc.HasAbility('mon_kikimore_base')
+						|| npc.HasAbility('mon_black_spider_base')
+						|| npc.HasAbility('mon_black_spider_ep2_base')
+						)
+						{						
+							GetACSWatcher().black_weapon_blood_fx();
+						} 
+						else 
+						{
+							GetACSWatcher().green_weapon_blood_fx();
+						}
+					}
+					else if( ((CNewNPC)npc).GetBloodType() == BT_Yellow) 
+					{
+						if (npc.HasAbility('mon_archespor_base'))
+						{
+							GetACSWatcher().yellow_weapon_blood_fx();
+						} 
+						else 
+						{
+							GetACSWatcher().weapon_blood_fx();
+						}
+					}
+					else if	( ((CNewNPC)npc).GetBloodType() == BT_Black) 
+					{
+						if ( mc == MC_Vampire ) 
+						{
+							GetACSWatcher().weapon_blood_fx();
+						}
+						else if ( mc == MC_Magicals ) 
+						{
+							if (npc.HasAbility('mon_golem_base')
+							|| npc.HasAbility('mon_djinn')
+							|| npc.HasAbility('mon_gargoyle')
+							)
+							{
+								GetACSWatcher().black_weapon_blood_fx();
+							}
+							else
+							{
+								GetACSWatcher().weapon_blood_fx();
+							}
+						}
+						else
+						{
+							GetACSWatcher().black_weapon_blood_fx();
+						}
+					}
+					else
+					{
+						GetACSWatcher().weapon_blood_fx();
+					}
+
+					npc.PlayEffect('blood');
+					npc.StopEffect('blood');
+
+					npc.PlayEffect('death_blood');
+					npc.StopEffect('death_blood');
+
+					npc.PlayEffect('heavy_hit');
+					npc.StopEffect('heavy_hit');
+
+					npc.PlayEffect('light_hit');
+					npc.StopEffect('light_hit');
+
+					npc.PlayEffect('blood_spill');
+					npc.StopEffect('blood_spill');
+
+					acs_npc_blood_fx.Clear();
+
+					acs_npc_blood_fx.PushBack('fistfight_heavy_hit');
+					acs_npc_blood_fx.PushBack('heavy_hit_horseriding');
+					acs_npc_blood_fx.PushBack('fistfight_hit');
+					acs_npc_blood_fx.PushBack('critical hit');
+					acs_npc_blood_fx.PushBack('death_hit');
+					acs_npc_blood_fx.PushBack('blood_throat_cut');
+					acs_npc_blood_fx.PushBack('hit_back');
+					acs_npc_blood_fx.PushBack('standard_hit');
+					acs_npc_blood_fx.PushBack('critical_bleeding'); 
+					acs_npc_blood_fx.PushBack('fistfight_hit_back'); 
+					acs_npc_blood_fx.PushBack('heavy_hit_back'); 
+					acs_npc_blood_fx.PushBack('light_hit_back'); 
+					
+					npc.PlayEffectSingle(acs_npc_blood_fx[RandRange(acs_npc_blood_fx.Size())]);
+
+					npc.StopEffect('light_hit_back');
+					npc.StopEffect('heavy_hit_back');
+					npc.StopEffect('fistfight_heavy_hit');
+					npc.StopEffect('heavy_hit_horseriding');
+					npc.StopEffect('fistfight_hit');
+					npc.StopEffect('critical hit');
+					npc.StopEffect('death_hit');
+					npc.StopEffect('blood_throat_cut');
+					npc.StopEffect('hit_back');
+					npc.StopEffect('standard_hit');
+					npc.StopEffect('critical_bleeding');
+					npc.StopEffect('fistfight_hit_back');
 				}
 
 				if ( action.GetHitReactionType() == EHRT_Light )
@@ -791,13 +856,24 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 			ACS_Caretaker_Drain_Energy();
 
-			if (thePlayer.CanUseSkill(S_Sword_s01) && action.GetHitReactionType() != EHRT_Reflect)
+			if (action.GetHitReactionType() != EHRT_Reflect)
 			{
-				npc.ForceSetStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.05 );  
 
-				npc.ForceSetStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.05 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.05 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
 
-				npc.ForceSetStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.5 );
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
 			}
 			
 			if ( action.HasAnyCriticalEffect() 
@@ -816,6 +892,11 @@ function ACS_Player_Attack(action: W3DamageAction)
 			if (npc.HasAbility( 'ForceHiltFinisher' ))
 			{
 				npc.RemoveAbility('ForceHiltFinisher');
+			}
+
+			if (npc.HasTag('ACS_Swapped_To_Shield'))
+			{
+				action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
 			}
 
 			if (
@@ -923,12 +1004,6 @@ function ACS_Player_Attack(action: W3DamageAction)
 					&& npc.HasTag('ACS_taunted')
 					)
 					{
-						npc.PlayEffectSingle('pee');	
-						npc.StopEffect('pee');
-							
-						npc.StopEffect('puke');
-						npc.PlayEffectSingle('puke');
-						
 						if (!npc.HasTag('ACS_mettle'))
 						{
 							if( RandF() < 0.5 ) 
@@ -1158,12 +1233,6 @@ function ACS_Player_Attack(action: W3DamageAction)
 					&& npc.HasTag('ACS_taunted')
 					)
 					{	
-						npc.PlayEffectSingle('pee');	
-						npc.StopEffect('pee');
-							
-						npc.StopEffect('puke');
-						npc.PlayEffectSingle('puke');
-						
 						if (!npc.HasTag('ACS_mettle'))
 						{
 							if( RandF() < 0.5 ) 
@@ -1310,13 +1379,7 @@ function ACS_Player_Attack(action: W3DamageAction)
 					(npc.GetStat( BCS_Vitality ) <= npc.GetStatMax( BCS_Vitality ) * 0.25)
 					&& npc.HasTag('ACS_taunted')
 					)
-					{	
-						npc.PlayEffectSingle('pee');	
-						npc.StopEffect('pee');
-							
-						npc.StopEffect('puke');
-						npc.PlayEffectSingle('puke');
-						
+					{
 						if (!npc.HasTag('ACS_mettle'))
 						{
 							if( RandF() < 0.5 ) 
@@ -1609,6 +1672,34 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 				return;
 			}		
+		}
+		else
+		{
+			if (npc.IsHuman() )
+			{
+				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+
+				if (
+				npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ) 
+				&& npc.GetBehaviorGraphInstanceName() != 'Shield'
+				)	
+				{
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}	
+			}
+			else
+			{
+				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+					
+				if (npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ))	
+				{
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
+			}
 		}
 	}
 }
@@ -2179,6 +2270,60 @@ function ACS_Take_Damage(action: W3DamageAction)
 		else
 		{
 			if (
+			npcAttacker.HasTag('ACS_Perilous_Attacker') 
+			&& !npcAttacker.HasTag('ACS_Forest_God')
+			)
+			{
+				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
+				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
+				movementAdjustor.CancelAll();
+				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+				thePlayer.ResetRawPlayerHeading();
+				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
+				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+				GetACSWatcher().Grow_Geralt_Immediate();
+
+				thePlayer.ClearAnimationSpeedMultipliers();	
+
+				movementAdjustor.RotateTowards( ticket, npcAttacker );
+
+				thePlayer.SetPlayerTarget( npcAttacker );
+
+				thePlayer.SetPlayerCombatTarget( npcAttacker );
+
+				thePlayer.UpdateDisplayTarget( true );
+
+				thePlayer.UpdateLookAtTarget();
+
+				thePlayer.RaiseEvent( 'AttackInterrupt' );
+
+				if( !playerVictim.IsImmuneToBuff( EET_Bleeding ) && !playerVictim.HasBuff( EET_Bleeding ) ) 
+				{ 	
+					playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 							
+				}
+				
+				if( !playerVictim.IsImmuneToBuff( EET_Knockdown ) && !playerVictim.HasBuff( EET_Knockdown ) ) 
+				{ 	
+					if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+					playerVictim.AddEffectDefault( EET_Knockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
+				}
+				
+				if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
+				{ 	
+					playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' ); 							
+				}
+
+				ACS_PlayerHitEffects();
+
+				thePlayer.PlayEffectSingle('mutation_7_adrenaline_drop');
+				thePlayer.StopEffect('mutation_7_adrenaline_drop');
+			}
+
+			if (
 			!action.IsDoTDamage()
 			&& action.GetHitReactionType() != EHRT_Reflect
 			&& !thePlayer.IsInGuardedState()
@@ -2191,6 +2336,8 @@ function ACS_Take_Damage(action: W3DamageAction)
 			&& !thePlayer.HasTag('igni_secondary_sword_equipped')
 			&& !thePlayer.HasTag('igni_sword_equipped_TAG')
 			&& !thePlayer.HasTag('igni_secondary_sword_equipped_TAG')
+			&& !thePlayer.HasTag('yrden_sword_equipped')
+			&& !thePlayer.HasTag('yrden_secondary_sword_equipped')
 			)
 			{
 				if ( npcAttacker.HasTag('ACS_taunted') )
@@ -2240,8 +2387,8 @@ function ACS_Take_Damage(action: W3DamageAction)
 
 					ACS_PlayerHitEffects();
 
-					thePlayer.PlayEffectSingle('smoke_explosion');
-					thePlayer.StopEffect('smoke_explosion');
+					thePlayer.PlayEffectSingle('mutation_7_adrenaline_drop');
+					thePlayer.StopEffect('mutation_7_adrenaline_drop');
 				}
 				else if ( thePlayer.GetStat(BCS_Focus) >= thePlayer.GetStatMax(BCS_Focus) * 0.9
 				&& thePlayer.GetStat(BCS_Stamina) >= thePlayer.GetStatMax(BCS_Stamina) * 0.5
@@ -2907,7 +3054,7 @@ function ACS_Hit_Animations(action: W3DamageAction)
             }
         }    
     }
-    else if( thePlayer.HasTag('quen_secondary_sword_equipped') || thePlayer.HasTag('yrden_secondary_sword_equipped') || thePlayer.HasTag('yrden_sword_equipped') || thePlayer.HasTag('aard_secondary_sword_equipped') )
+    else if( thePlayer.HasTag('quen_secondary_sword_equipped') || thePlayer.HasTag('aard_secondary_sword_equipped') )
     {
         if (thePlayer.IsEnemyInCone( npcAttacker, thePlayer.GetHeadingVector(), 50, 145, npcAttacker ))
         {
@@ -3652,6 +3799,84 @@ function ACS_Forest_God_Attack(action: W3DamageAction)
 	}
 }
 
+function ACS_Forest_God_Shadows_Attack(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim						: CPlayer;
+	var npc, npcAttacker 									: CActor;
+	var animatedComponentA 									: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt			: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor									: CMovementAdjustor;
+	var ticket 												: SMovementAdjustmentRequestTicket;
+	var item												: SItemUniqueId;
+	var dmg													: W3DamageAction;
+	var damageMax, damageMin								: float;
+	var vACS_Shield_Summon 									: cACS_Shield_Summon;
+	var heal, playerVitality 																										: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence													: float;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
+
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+    if ( npcAttacker
+	&& npcAttacker.HasTag('ACS_Forest_God_Shadows')
+	&& !action.IsDoTDamage()
+	)
+	{	
+		if (playerVictim)
+		{
+			if (action.IsActionMelee())
+			{
+				npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.05 );
+
+				npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.25 );
+			}
+		}
+		else
+		{
+			npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.25 );
+
+			npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.5 );
+
+			if (npc.UsesEssence())
+			{
+				npc.DrainEssence(npc.GetStatMax(BCS_Essence) * 0.25 );
+			}
+			else if (npc.UsesVitality())
+			{
+				npc.DrainVitality(npc.GetStatMax(BCS_Vitality) * 0.25 );
+			}
+		}
+	}
+}
+
 function ACS_Ice_Titan_Attack(action: W3DamageAction)
 {
     var playerAttacker, playerVictim						: CPlayer;
@@ -3851,6 +4076,7 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 {
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
+	private var behGraphNames 			: array< name >;	
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -3860,7 +4086,7 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 	
 	entry function EnemyBehSwitch_sword1h()
 	{
-		actor = thePlayer.GetTarget();
+		actor = (CActor)(thePlayer.GetDisplayTarget());
 
 		/*
 		if( RandF() < 0.5 )
@@ -3910,14 +4136,45 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 				}
 				*/
 
+				behGraphNames.Clear();
+
+				behGraphNames.PushBack( 'sword_1handed' );
+		
+				actor.ActivateAndSyncBehaviors( behGraphNames );
+
 				actor.AttachBehavior( 'sword_1handed' );
+
+				actor.AttachBehaviorSync( 'sword_1handed' );
 
 				actor.SignalGameplayEvent( 'InterruptChargeAttack' );
 
 				actor.SignalGameplayEvent('DamageTaken');
 
-				actor.SetGuarded(true);
-				actor.SetParryEnabled( true );
+				actor.SignalGameplayEvent('SendBattleCry');
+
+				actor.SignalGameplayEvent('WasHit');
+
+				actor.SetBehaviorVariable( 'AttackEnd', 1.0, true );
+
+				actor.RaiseEvent('AnimEndAUX');
+
+				((CNewNPC)actor).RaiseForceEvent( 'ForceIdle' );
+
+				((CActor)actor).AddBuffImmunity(EET_Knockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_HeavyKnockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_Ragdoll, 'ACS_Beh_Switch_Buff', true);
+
+				ACS_ForceAni(actor, '');
+
+				Sleep(0.0625);
+
+				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+
+				actor.SetAnimationSpeedMultiplier(1);
+
+				actor.AddTag('ACS_Swapped_To_1h_Sword');
 			}
 		}
 
@@ -3931,6 +4188,7 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 {
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
+	private var behGraphNames 			: array< name >;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -3940,7 +4198,7 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 	
 	entry function EnemyBehSwitch_sword2h()
 	{
-		actor = thePlayer.GetTarget();
+		actor = (CActor)(thePlayer.GetDisplayTarget());
 
 		/*
 		if( RandF() < 0.5 )
@@ -3985,26 +4243,52 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 			|| actor.HasTag('ACS_shield_npc')
 			)
 			{
-				/*
 				if( actor.HasTag('ACS_Swapped_To_Witcher') )
 				{
 					actor.DetachBehavior('Witcher');
+
+					actor.RemoveTag('ACS_Swapped_To_Witcher');
 				}
 
-				if( actor.HasTag('ACS_Swapped_To_Shield') )
-				{
-					actor.DetachBehavior( 'Shield' );
-				}
-				*/
+				behGraphNames.Clear();
+
+				behGraphNames.PushBack( 'sword_2handed' );
+		
+				actor.ActivateAndSyncBehaviors( behGraphNames );
 
 				actor.AttachBehavior( 'sword_2handed' );
+
+				actor.AttachBehaviorSync( 'sword_2handed' );
 
 				actor.SignalGameplayEvent( 'InterruptChargeAttack' );
 
 				actor.SignalGameplayEvent('DamageTaken');
 
-				actor.SetGuarded(true);
-				actor.SetParryEnabled( true );
+				actor.SignalGameplayEvent('SendBattleCry');
+
+				actor.SignalGameplayEvent('WasHit');
+
+				actor.SetBehaviorVariable( 'AttackEnd', 1.0, true );
+
+				actor.RaiseEvent('AnimEndAUX');
+
+				((CNewNPC)actor).RaiseForceEvent( 'ForceIdle' );
+
+				((CActor)actor).AddBuffImmunity(EET_Knockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_HeavyKnockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_Ragdoll, 'ACS_Beh_Switch_Buff', true);
+
+				ACS_ForceAni(actor, '');
+
+				Sleep(0.0625);
+
+				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+
+				actor.SetAnimationSpeedMultiplier(1.15);
+
+				actor.AddTag('ACS_Swapped_To_2h_Sword');
 			}
 		}
 
@@ -4020,6 +4304,7 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 {
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
+	private var behGraphNames 			: array< name >;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4029,7 +4314,7 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 	
 	entry function EnemyBehSwitch_witcher()
 	{
-		actor = thePlayer.GetTarget();
+		actor = (CActor)(thePlayer.GetDisplayTarget());
 
 		/*
 		if( RandF() < 0.5 )
@@ -4074,26 +4359,52 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 			|| actor.HasTag('ACS_shield_npc')
 			)
 			{
-				/*
 				if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
 				{
 					actor.DetachBehavior('sword_2handed');
+
+					actor.RemoveTag('ACS_Swapped_To_2h_Sword');
 				}
 
-				if( actor.HasTag('ACS_Swapped_To_Shield') )
-				{
-					actor.DetachBehavior( 'Shield' );
-				}
-				*/
+				behGraphNames.Clear();
+				
+				behGraphNames.PushBack( 'Witcher' );
+		
+				actor.ActivateAndSyncBehaviors( behGraphNames );
 
 				actor.AttachBehavior( 'Witcher' );
+
+				actor.AttachBehaviorSync( 'Witcher' );
 
 				actor.SignalGameplayEvent( 'InterruptChargeAttack' );
 
 				actor.SignalGameplayEvent('DamageTaken');
 
-				actor.SetGuarded(true);
-				actor.SetParryEnabled( true );
+				actor.SignalGameplayEvent('SendBattleCry');
+
+				actor.SignalGameplayEvent('WasHit');
+
+				actor.SetBehaviorVariable( 'AttackEnd', 1.0, true );
+
+				actor.RaiseEvent('AnimEndAUX');
+
+				((CNewNPC)actor).RaiseForceEvent( 'ForceIdle' );
+
+				((CActor)actor).AddBuffImmunity(EET_Knockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_HeavyKnockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_Ragdoll, 'ACS_Beh_Switch_Buff', true);
+
+				ACS_ForceAni(actor, '');
+
+				Sleep(0.0625);
+
+				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+
+				actor.SetAnimationSpeedMultiplier(0.875);
+
+				actor.AddTag('ACS_Swapped_To_Witcher');
 			}
 		}
 
@@ -4109,6 +4420,7 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 	private var sword															: SItemUniqueId;
 	private var shield_temp														: CEntityTemplate;
 	private var shield															: CEntity;
+	private var behGraphNames 													: array< name >;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4118,7 +4430,7 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 	
 	entry function EnemyBehSwitch_shield()
 	{
-		actor = thePlayer.GetTarget();
+		actor = (CActor)(thePlayer.GetDisplayTarget());
 
 		/*
 		if( RandF() < 0.5 )
@@ -4163,75 +4475,108 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 			|| actor.HasTag('ACS_shield_npc')
 			)
 			{
-				/*
 				if( actor.HasTag('ACS_Swapped_To_2h_Sword') )
 				{
 					actor.DetachBehavior('sword_2handed');
+
+					actor.RemoveTag('ACS_Swapped_To_2h_Sword');
 				}
 
 				if( actor.HasTag('ACS_Swapped_To_Witcher') )
 				{
 					actor.DetachBehavior('Witcher');
+
+					actor.RemoveTag('ACS_Swapped_To_Witcher');
 				}
-				*/
+				
+				behGraphNames.Clear();
+
+				behGraphNames.PushBack( 'Shield' );
+		
+				actor.ActivateAndSyncBehaviors( behGraphNames );
 
 				actor.AttachBehavior( 'Shield' );
+
+				actor.AttachBehaviorSync( 'Shield' );
 
 				actor.SignalGameplayEvent( 'InterruptChargeAttack' );
 
 				actor.SignalGameplayEvent('DamageTaken');
 
-				actor.SetGuarded(true);
-				actor.SetParryEnabled( true );
+				actor.SignalGameplayEvent('SendBattleCry');
+
+				actor.SignalGameplayEvent('WasHit');
+
+				actor.SetBehaviorVariable( 'AttackEnd', 1.0, true );
+
+				actor.RaiseEvent('AnimEndAUX');
+
+				((CNewNPC)actor).RaiseForceEvent( 'ForceIdle' );
+
+				((CActor)actor).AddBuffImmunity(EET_Knockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_HeavyKnockdown, 'ACS_Beh_Switch_Buff', true);
+
+				((CActor)actor).AddBuffImmunity(EET_Ragdoll, 'ACS_Beh_Switch_Buff', true);
+
+				ACS_ForceAni(actor, '');
+
+				Sleep(0.0625);
+
+				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+
+				actor.SetAnimationSpeedMultiplier(1.25);
+
+				actor.AddTag('ACS_Swapped_To_Shield');
+
+				if( RandF() < 0.5 )
+				{
+					if( RandF() < 0.5 )
+					{
+						shield_temp = (CEntityTemplate)LoadResource( 
+
+						"items\weapons\shields\bandit_shield_01.w2ent"
+						
+						, true );
+					}
+					else
+					{
+						shield_temp = (CEntityTemplate)LoadResource( 
+
+						"items\weapons\shields\bandit_shield_02.w2ent"
+						
+						, true );
+					}	
+				}
+				else
+				{
+					if( RandF() < 0.5 )
+					{
+						shield_temp = (CEntityTemplate)LoadResource( 
+				
+						"items\weapons\shields\bandit_shield_03.w2ent"
+						
+						, true );
+					}
+					else
+					{
+						shield_temp = (CEntityTemplate)LoadResource( 
+			
+						"items\weapons\shields\bandit_shield_04.w2ent"
+						
+						, true );
+					}
+				}
+
+				shield = (CEntity)theGame.CreateEntity( shield_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				shield.CreateAttachment( actor, 'l_weapon', Vector(0,0,0), EulerAngles(0,0,0) );
+
+				shield.AddTag('ACS_Enemy_Shield');
+
+				shield.DestroyAfter(120);
 			}
 		}
-
-		if( RandF() < 0.5 )
-		{
-			if( RandF() < 0.5 )
-			{
-				shield_temp = (CEntityTemplate)LoadResource( 
-
-				"items\weapons\shields\bandit_shield_01.w2ent"
-				
-				, true );
-			}
-			else
-			{
-				shield_temp = (CEntityTemplate)LoadResource( 
-
-				"items\weapons\shields\bandit_shield_02.w2ent"
-				
-				, true );
-			}	
-		}
-		else
-		{
-			if( RandF() < 0.5 )
-			{
-				shield_temp = (CEntityTemplate)LoadResource( 
-		
-				"items\weapons\shields\bandit_shield_03.w2ent"
-				
-				, true );
-			}
-			else
-			{
-				shield_temp = (CEntityTemplate)LoadResource( 
-	
-				"items\weapons\shields\bandit_shield_04.w2ent"
-				
-				, true );
-			}
-		}
-
-		shield = (CEntity)theGame.CreateEntity( shield_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-
-		shield.CreateAttachment( actor, 'l_weapon', Vector(0,0,0), EulerAngles(0,0,0) );
-
-		shield.AddTag('ACS_Enemy_Shield');
-
-		shield.DestroyAfter(120);
 
 		//actor.DropItemFromSlot('r_weapon'); 
 

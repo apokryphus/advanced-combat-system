@@ -279,6 +279,31 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			}
 		}
 	}
+
+	function TeleportBlockAction()
+	{
+		thePlayer.BlockAction( EIAB_Crossbow, 			'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_CallHorse,			'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Signs, 				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_DrawWeapon, 		'ACS_Teleport_Dodge'); 
+		thePlayer.BlockAction( EIAB_FastTravel, 		'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Fists, 				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_InteractionAction, 	'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_UsableItem,			'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_ThrowBomb,			'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_SwordAttack,		'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Jump,				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_LightAttacks,		'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_HeavyAttacks,		'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_SpecialAttackLight,	'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_SpecialAttackHeavy,	'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Dodge,				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Roll,				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_Parry,				'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_MeditationWaiting,	'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_OpenMeditation,		'ACS_Teleport_Dodge');
+		thePlayer.BlockAction( EIAB_RadialMenu,			'ACS_Teleport_Dodge');
+	}
 	
 	latent function wild_hunt_blink()
 	{	
@@ -354,6 +379,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( thePlayer.GetWorldPosition() ), 1.f, 15, 2.f, 25.f, 0);
 
 			//Sleep ( 0.45 / thePlayer.GetAnimationTimeMultiplier() );
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_wildhunt', 0.45 / thePlayer.GetAnimationTimeMultiplier() , false);
 
@@ -435,6 +462,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			thePlayer.SoundEvent('monster_dracolizard_combat_fireball_flyby');
 
 			//Sleep ( 0.45 / thePlayer.GetAnimationTimeMultiplier() );
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_fire', 0.45 / thePlayer.GetAnimationTimeMultiplier() , false);
 			
@@ -529,6 +558,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			}
 
 			thePlayer.AddTag('ACS_Bruxa_Jump_Init');
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_wildhunt', 0.65  , false);
 		}
@@ -586,6 +617,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			//thePlayer.PlayEffectSingle('teleport_out');
 			//thePlayer.StopEffect('teleport_out');
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_mage', 0.65  , false);
 		}
@@ -659,6 +692,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
 			}
 			
+			TeleportBlockAction();
+
 			GetACSWatcher().AddTimer('ACS_dodge_timer_mage', 0.65  , false);
 		}
 	}
@@ -736,6 +771,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
 			}
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_dolphin', 0.65  , false);
 		}
@@ -825,6 +862,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
 			}
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_lightning', 0.65  , false);
 		}
@@ -897,6 +936,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 			}
 
 			ACS_Marker_Smoke();
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_iris', 0.65  , false);
 		}
@@ -980,6 +1021,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
 			}
+
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_explosion', 0.65  , false);
 		}
@@ -1065,6 +1108,8 @@ state WildHuntBlink_Engage in cWildHuntBlink
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
 			}
+			
+			TeleportBlockAction();
 			
 			GetACSWatcher().AddTimer('ACS_dodge_timer_fountain_portal', 0.65  , false);
 		}
@@ -2901,11 +2946,22 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 				actor = actors[i];
 
-				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.05 );  
 
-				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-					
-				npc.GainStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.1 );
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.05 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.05 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
 			}
 		}
 	}

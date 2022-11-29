@@ -41,14 +41,14 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			if ( thePlayer.HasTag('igni_sword_equipped_TAG') )
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
 
 				if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
 				{
 					if(  thePlayer.IsDoingSpecialAttack( false ) )
 					{
 						dist += 1.1;
-						ang +=	330;
+						ang +=	315;
 					}
 					else if(  thePlayer.IsDoingSpecialAttack( true ) )
 					{
@@ -59,14 +59,14 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			else if ( thePlayer.HasTag('igni_secondary_sword_equipped_TAG') )
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
 
 				if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
 				{
 					if(  thePlayer.IsDoingSpecialAttack( false ) )
 					{
 						dist += 1.1;
-						ang +=	330;
+						ang +=	315;
 					}
 					else if(  thePlayer.IsDoingSpecialAttack( true ) )
 					{
@@ -77,7 +77,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			else if ( thePlayer.HasTag('axii_sword_equipped') )
 			{
 				dist = 1.6;
-				ang =	30;	
+				ang =	45;	
 
 				if (thePlayer.HasTag('ACS_Sparagmos_Active'))
 				{
@@ -94,12 +94,12 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				)
 				{
 					dist = 2;
-					ang =	30;
+					ang =	45;
 				}
 				else if ( ACS_GetWeaponMode() == 3 )
 				{ 
 					dist = 1.75;
-					ang =	30;
+					ang =	45;
 				}
 			}
 			else if ( thePlayer.HasTag('aard_sword_equipped') )
@@ -110,7 +110,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			else if ( thePlayer.HasTag('aard_secondary_sword_equipped') )
 			{
 				dist = 2;
-				ang = 30;
+				ang = 45;
 			}
 			else if ( thePlayer.HasTag('yrden_sword_equipped') )
 			{
@@ -167,7 +167,12 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 			else if ( thePlayer.HasTag('quen_sword_equipped') )
 			{
 				dist = 1.6;
-				ang =	30;
+				ang =	45;
+
+				if (thePlayer.HasTag('ACS_Shadow_Dash_Empowered'))
+				{
+					ang +=	320;
+				}
 			}
 			else if ( thePlayer.HasTag('quen_secondary_sword_equipped') )
 			{
@@ -179,7 +184,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				else
 				{
 					dist = 2.25;
-					ang =	40;
+					ang =	45;
 				}
 			}
 			else 
@@ -208,6 +213,13 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 		{
 			dist += 1;
 		}
+
+		if (thePlayer.IsUsingHorse()) 
+		{
+			dist += 1.5;
+
+			ang += 270;
+		}  
 	}
 	else 
 	{
@@ -844,12 +856,42 @@ function ACS_Warglaives_Enabled(): bool
 
 function ACS_SCAAR_Installed(): bool
 {
-	return theGame.GetDLCManager().IsDLCAvailable('dlc_scaar');	
+	return theGame.GetDLCManager().IsDLCAvailable('scaaraiov_dlc');	
 }
 
 function ACS_SCAAR_Enabled(): bool
 {
-	return theGame.GetDLCManager().IsDLCEnabled('dlc_scaar');		
+	return theGame.GetDLCManager().IsDLCEnabled('scaaraiov_dlc');		
+}
+
+function ACS_W3EE_Installed(): bool
+{
+	return theGame.GetDLCManager().IsDLCAvailable('w3ee_dlc');	
+}
+
+function ACS_W3EE_Enabled(): bool
+{
+	return theGame.GetDLCManager().IsDLCEnabled('w3ee_dlc');		
+}
+
+function ACS_W3EE_Redux_Installed(): bool
+{
+	return theGame.GetDLCManager().IsDLCAvailable('reduxw3ee_dlc');	
+}
+
+function ACS_W3EE_Redux_Enabled(): bool
+{
+	return theGame.GetDLCManager().IsDLCEnabled('reduxw3ee_dlc');		
+}
+
+function ACS_MS_Installed(): bool
+{
+	return theGame.GetDLCManager().IsDLCAvailable('magicspells_rev');	
+}
+
+function ACS_MS_Enabled(): bool
+{
+	return theGame.GetDLCManager().IsDLCEnabled('magicspells_rev');		
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1849,6 +1891,36 @@ function ACS_GetItem_One_Hand_Axe_Silver(): CEntity
 	return sword;
 }
 
+/*
+function ACS_GetItem_Aerondight(): CEntity
+{
+	var sword_id 		: SItemUniqueId;
+	var sword 			: CEntity;
+
+	if( 
+	//thePlayer.GetInventory().GetItemName( thePlayer.GetInventory().GetCurrentlyHeldSword() ) == 'Aerondight EP2'
+	thePlayer.GetInventory().ItemHasTag( thePlayer.GetInventory().GetCurrentlyHeldSword(), 'Aerondight' )
+	)
+	{
+		sword = thePlayer.GetInventory().GetItemEntityUnsafe(sword_id);
+	}
+
+	return sword;
+}
+*/
+
+function ACS_GetItem_Aerondight(): bool
+{
+	if( thePlayer.GetInventory().ItemHasTag( thePlayer.GetInventory().GetCurrentlyHeldSword(), 'Aerondight' ))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 function ACS_GetItem_VampClaw(): bool
 {
 	if ( GetWitcherPlayer().IsItemEquippedByName( 'q702_vampire_gloves')
@@ -2176,6 +2248,8 @@ function ACS_ThingsThatShouldBeRemoved_BASE()
 
 	GetACSWatcher().RemoveTimer('ACS_shout'); 
 
+	GetACSWatcher().RemoveTimer('ACS_Blood_Spray'); 
+
 	GetACSWatcher().RemoveTimer('ACS_ResetAnimation');
 
 	GetACSWatcher().RemoveTimer('ACS_dodge_timer_attack');
@@ -2293,16 +2367,24 @@ function ACS_Pre_Attack( animEventName : name, animEventType : EAnimationEventTy
 
 	if(thePlayer.HasTag('quen_sword_equipped'))
 	{
-		if (data.attackName == 'attack_light' || data.attackName == 'attack_heavy')
-		{
-			//thePlayer.SoundEvent('magic_olgierd_sabre_whoosh_fast');
-		}
+		//thePlayer.SoundEvent('g_clothes_step_hard');
+		//thePlayer.SoundEvent('grunt_vo_attack_medium');
+	}
+
+	if (ACS_GetItem_Aerondight())
+	{
+		GetACSWatcher().aerondight_sword_trail();
 	}
 
 	if( thePlayer.HasAbility('Runeword 2 _Stats', true) && thePlayer.IsInCombat() )
 	{
 		ACS_Light_Attack_Extended_Trail();
 		//ACS_Heavy_Attack_Extended_Trail();
+	}
+
+	if(thePlayer.HasTag('aard_sword_equipped'))
+	{
+		ACSGetEquippedSword().StopAllEffects();
 	}
 }
 
@@ -2971,7 +3053,7 @@ exec function ACS_aniplay1(animation_name: name)
 		
 	//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
 
-	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'GAMEPLAY_SLOT', sett );
+	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2989,6 +3071,10 @@ exec function ACS_spawn( entity_name: name)
 	else if (entity_name == 'shadows')
 	{
 		ACS_Forest_God_Shadows_Spawner();
+	}
+	else if (entity_name == 'turret')
+	{
+		ACS_Forest_God_Adds_1_Spawner();
 	}
 }
 
@@ -3035,7 +3121,24 @@ function ACS_Forest_God_Shadows_Spawner()
 	var vACS_Forest_God_Spawner : cACS_Forest_God_Spawner;
 	vACS_Forest_God_Spawner = new cACS_Forest_God_Spawner in theGame;
 	
+	ACS_Forest_God_Shadows_Destroy();
+
 	vACS_Forest_God_Spawner.ACS_Forest_God_Shadows_Spawner_Engage();
+}
+
+function ACS_Forest_God_Shadows_Destroy()
+{	
+	var shadows 										: array<CActor>;
+	var i												: int;
+	
+	shadows.Clear();
+
+	theGame.GetActorsByTag( 'ACS_Forest_God_Shadows', shadows );	
+	
+	for( i = 0; i < shadows.Size(); i += 1 )
+	{
+		shadows[i].Destroy();
+	}
 }
 
 statemachine class cACS_Forest_God_Spawner
@@ -3101,8 +3204,25 @@ state ACS_Forest_God_Shadows_Spawner_Engage in cACS_Forest_God_Spawner
 		, true );
 
 		playerPos = thePlayer.GetWorldPosition();
-		
-		count = 1;
+
+		if( thePlayer.GetStat( BCS_Vitality ) >= thePlayer.GetStatMax( BCS_Vitality )/3
+		&& thePlayer.GetStat( BCS_Vitality ) < thePlayer.GetStatMax( BCS_Vitality ) * 2/3) 
+		{		
+			count = 1;
+		}
+		else if( thePlayer.GetStat( BCS_Vitality ) >= thePlayer.GetStatMax( BCS_Vitality ) * 2/3
+		&& thePlayer.GetStat( BCS_Vitality ) < thePlayer.GetStatMax( BCS_Vitality )) 
+		{	
+			count = 2;
+		}
+		else if( thePlayer.GetStat( BCS_Vitality ) == thePlayer.GetStatMax(BCS_Vitality) ) 
+		{
+			count = 3;
+		}
+		else
+		{
+			count = 1;
+		}
 			
 		for( i = 0; i < count; i += 1 )
 		{
@@ -3117,17 +3237,32 @@ state ACS_Forest_God_Shadows_Spawner_Engage in cACS_Forest_God_Spawner
 
 			animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
 			meshcomp = ent.GetComponentByClassName('CMeshComponent');
-			h = 0.75;
+			h = 0.65;
 			animcomp.SetScale(Vector(h,h,h,1));
 			meshcomp.SetScale(Vector(h,h,h,1));	
 
 			((CActor)ent).GetInventory().AddAnItem( 'Emerald flawless', 3 );
+
 			((CActor)ent).GetInventory().AddAnItem( 'Leshy mutagen', 1 );
 
 			((CNewNPC)ent).SetLevel( thePlayer.GetLevel() / 2 );
+
 			((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
-			((CActor)ent).SetAnimationSpeedMultiplier(1.25);
+
+			((CActor)ent).SetAnimationSpeedMultiplier(1.5);
+
+			((CActor)ent).AddBuffImmunity_AllNegative('ACS_Forest_God_Shadows', true);
+
+			((CActor)ent).AddBuffImmunity_AllCritical('ACS_Forest_God_Shadows', true);
+
+			((CActor)ent).EnableCharacterCollisions(false);
+
+			((CActor)ent).SetUnpushableTarget(thePlayer);
+
+			((CActor)ent).PlayEffect('demonic_possession');
+
 			ent.AddTag( 'ACS_Forest_God_Shadows' );
 		}
 	}
@@ -5027,6 +5162,7 @@ function ACS_Toxic_Gas_Destroy()
 
 exec function ACS_peffect(enam : CName)
 {
+	thePlayer.StopAllEffects();
 	thePlayer.PlayEffectSingle(enam);
 }
 
@@ -5078,6 +5214,18 @@ exec function ACS_eforceani(animation_name: name)
 	actor = (CActor)( thePlayer.GetDisplayTarget() );
 	
 	enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
+	settings.blendIn = 0.3f;
+	settings.blendOut = 0.3f;
+	
+	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', settings);
+}
+
+function ACS_ForceAni(npc: CActor, animation_name: name)
+{
+	var enemyAnimatedComponent 			: CAnimatedComponent;
+	var settings						: SAnimatedComponentSlotAnimationSettings;
+	
+	enemyAnimatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );		
 	settings.blendIn = 0.3f;
 	settings.blendOut = 0.3f;
 	
@@ -5550,7 +5698,7 @@ exec function ACS_acsfxtest(effect_name:name)
 
 	//animcomp.SetAnimationSpeedMultiplier( 8  ); 
 
-	//ent.CreateAttachment( thePlayer, , Vector( 0, 3, -10 ), EulerAngles(0,0,0) );
+	ent.CreateAttachment( thePlayer, , Vector( 0, 3, -10 ), EulerAngles(0,0,0) );
 
 	//ent.CreateAttachment( thePlayer, , Vector( 0, 0, 3.5 ), EulerAngles(0,0,0) );
 
@@ -5627,4 +5775,98 @@ function GetACSTestEnt_Array_StopEffects()
 exec function acsmessagetest()
 {
 	GetWitcherPlayer().DisplayHudMessage( "LESHEN ITEMS DETECTED IN INVENTORY. YOU SHALL NOT ESCAPE ME." );
+}
+
+exec function acshighlighttest()
+{
+	DisableCatViewFx( 0 );
+	EnableCatViewFx( 1.5 );
+	SetTintColorsCatViewFx(Vector(0.1f,0.12f,0.13f,0.6f),Vector(0.075f,0.1f,0.11f,0.6f),0);
+	SetBrightnessCatViewFx(0.0f);
+	SetViewRangeCatViewFx(1000.0f);
+	SetPositionCatViewFx( Vector(0,0,0,0) , true );	
+	SetHightlightCatViewFx( Vector(0.5f,0.2f,0.2f,1.f),0.05f,10);
+	SetFogDensityCatViewFx( 0.25 );
+
+	ACS_HighlightObjects();
+	
+	theGame.GetFocusModeController().EnableVisuals( true, 0.0f, 0.15f );
+}
+
+function ACS_HighlightObjects()
+{
+	var ents : array<CGameplayEntity>;
+	var i : int;
+
+	FindGameplayEntitiesInSphere(ents, thePlayer.GetWorldPosition(), 100, 100, , FLAG_ExcludePlayer);
+	
+	for(i=0; i<ents.Size(); i+=1)
+	{
+		ents[i].SetHighlighted( true );
+		ents[i].PlayEffect( 'medalion_detection_fx' );
+
+		ents[i].SetFocusModeVisibility( FMV_Interactive, true );
+	}
+}
+
+function ACS_HighlightObjects_2()
+{
+	var ents : array<CGameplayEntity>;
+	var i : int;
+	var catComponent : CGameplayEffectsComponent;
+
+	FindGameplayEntitiesInSphere(ents, thePlayer.GetWorldPosition(), 100, 100, , FLAG_ExcludePlayer);
+	
+	for(i=0; i<ents.Size(); i+=1)
+	{
+		catComponent = GetGameplayEffectsComponent(ents[i]);
+
+		if(catComponent)
+		{
+			catComponent.SetGameplayEffectFlag(EGEF_CatViewHiglight, true);
+		}
+	}
+}
+
+function ACS_EventHack()
+{
+	thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_Dodge );
+	thePlayer.RaiseForceEvent	 	( 'CombatAction' );
+}
+
+exec function ACS_EventHack_Test()
+{
+	thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_Dodge );
+	thePlayer.RaiseForceEvent	 	( 'CombatAction' );
+}
+
+exec function testthing(effect_name:name)
+{
+	var ent, ent_1, ent_2, ent_3, ent_4, ent_5, ent_6, ent_7            : CEntity;
+	var rot, attach_rot                        						 	: EulerAngles;
+    var pos, attach_vec													: Vector;
+	var meshcomp														: CComponent;
+	var animcomp 														: CAnimatedComponent;
+	var h 																: float;
+
+	//GetACSTestEnt.Destroy();
+
+	GetACSTestEnt_Array_Destroy();
+
+	rot = thePlayer.GetWorldRotation();
+
+    pos = thePlayer.GetWorldPosition();
+
+	ent = theGame.CreateEntity( (CEntityTemplate)LoadResource( 
+
+		//"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
+		"dlc\dlc_acs\data\fx\acs_sword_trail.w2ent"
+
+		, true ), pos, rot );
+
+	ent.AddTag('ACS_Test_Ent');
+
+	ent.CreateAttachment( thePlayer, 'r_weapon' );
+
+	ent.PlayEffectSingle(effect_name);
 }

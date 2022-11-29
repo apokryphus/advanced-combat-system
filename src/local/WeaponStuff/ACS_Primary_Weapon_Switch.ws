@@ -24,8 +24,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 	private var scabbards_steel, scabbards_silver 																																																																																: array<SItemUniqueId>;
 	private var attach_vec, bone_vec																																																																																			: Vector;
 	private var attach_rot, bone_rot																																																																																			: EulerAngles;
-	private var anchor_temp, blade_temp, claw_temp, extra_arms_temp_r, extra_arms_temp_l, extra_arms_anchor_temp, head_temp, back_claw_temp 																																																									: CEntityTemplate;
+	private var anchor_temp, blade_temp, claw_temp, extra_arms_temp_r, extra_arms_temp_l, extra_arms_anchor_temp, head_temp, back_claw_temp, trail_temp																																																							: CEntityTemplate;
 	private var r_blade1, r_blade2, r_blade3, r_blade4, l_blade1, l_blade2, l_blade3, l_blade4, r_anchor, l_anchor, sword1, sword2, sword3, sword4, sword5, sword6, sword7, sword8, blade_temp_ent, extra_arms_anchor_r, extra_arms_anchor_l, extra_arms_1, extra_arms_2, extra_arms_3, extra_arms_4, vampire_head_anchor, vampire_head, back_claw, vampire_claw_anchor			: CEntity;
+	private var sword_trail_1, sword_trail_2, sword_trail_3, sword_trail_4, sword_trail_5, sword_trail_6, sword_trail_7, sword_trail_8 																																																											: CEntity;
 	private var p_actor 																																																																																						: CActor;
 	private var p_comp, meshcompHead																																																																																			: CComponent;
 	private var weapontype 																																																																																						: EPlayerWeapon;
@@ -596,7 +597,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		}
 		
 		else if ( ACS_GetWeaponMode() == 3 )
-		{	
+		{
 			if 
 			(
 				ACS_GetItem_Eredin_Silver() && thePlayer.IsWeaponHeld( 'silversword' ) && !thePlayer.HasTag('axii_sword_equipped') 
@@ -604,6 +605,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			)
 			{
 				ACS_WeaponDestroyInit();
+
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
 
 				thePlayer.AddTag('axii_sword_equipped');
 
@@ -632,6 +671,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			)
 			{
 				ACS_WeaponDestroyInit();
+				
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
 
 				thePlayer.AddTag('yrden_sword_equipped');
 
@@ -645,6 +722,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			)
 			{
 				ACS_WeaponDestroyInit();
+
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
 
 				thePlayer.AddTag('quen_sword_equipped');
 
@@ -889,26 +1004,40 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh' );
+					}
 				}
 			}
 
@@ -933,13 +1062,27 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_PassiveTaunt_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_passive_taunt' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_SCAAR_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_SCAAR' );
+				}
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh' );
+				}
 			}
 
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
@@ -962,27 +1105,41 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingHorse()
 		&& !thePlayer.IsUsingVehicle()
 		)
-		{	
-			if (ACS_SwordWalk_Enabled())
+		{
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh' );
+					}
 				}
 			}
 
@@ -1008,26 +1165,40 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh' );
+					}
 				}
 			}
 					
@@ -1049,6 +1220,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		//ACS_WeaponDestroyInit();
 		//ACS_StopAerondightEffectInit();
 
+		ACS_Sword_Trail_1().Destroy();
+		ACS_Sword_Trail_2().Destroy();
+		ACS_Sword_Trail_3().Destroy();
+		ACS_Sword_Trail_4().Destroy();
+		ACS_Sword_Trail_5().Destroy();
+		ACS_Sword_Trail_6().Destroy();
+		ACS_Sword_Trail_7().Destroy();
+		ACS_Sword_Trail_8().Destroy();
+
 		ACS_Vampire_Arms_1_Get().Destroy();
 
 		ACS_Vampire_Arms_2_Get().Destroy();
@@ -1068,6 +1248,25 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		stupidArray_extra_arms.PushBack( 'Cutscene' );
 
 		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0.5;
+		attach_vec.Z = -0.4;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		sword_trail_2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
 		
 		if (!ACS_GetItem_VampClaw_Shades())
 		{
@@ -1360,6 +1559,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 		
 		if ( thePlayer.GetInventory().IsItemHeld(steelID) )
 		{
@@ -1452,6 +1689,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -2378,6 +2653,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -2503,6 +2816,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
+		ACS_WeaponDestroyInit();
+
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
@@ -2513,8 +2828,6 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
 		
 		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
-		
-		ACS_WeaponDestroyInit();
 		
 		ACS_StopAerondightEffectInit();
 
@@ -2540,6 +2853,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					
 		r_blade4 = (CEntity)theGame.CreateEntity( (CEntityTemplate)LoadResource(blade_temp_ent.GetReadableName(), true ), Vector( 0, 0, -20 ) );
 		l_blade4 = (CEntity)theGame.CreateEntity( (CEntityTemplate)LoadResource(blade_temp_ent.GetReadableName(), true ), Vector( 0, 0, -20 ) );
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
 		attach_rot.Roll = 90;
 		attach_rot.Pitch = 270;
@@ -2549,6 +2873,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = 0.1025;
 					
 		l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+		sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2560,6 +2886,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = 0.0325;
 					
 		l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+		sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2571,6 +2899,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = -0.0375;
 				
 		l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+		sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2582,6 +2912,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = -0.1025;
 					
 		l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+		sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2593,6 +2925,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = 0.1025;
 					
 		r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+		sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2604,6 +2938,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = 0.0325;
 					
 		r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+		sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2615,6 +2951,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		attach_vec.Z = -0.0375;
 				
 		r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+		sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 		//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -2627,6 +2965,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					
 		r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 
+		sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
 		r_blade1.AddTag('aard_blade_1');
 		l_blade1.AddTag('aard_blade_2');
 		r_blade2.AddTag('aard_blade_3');
@@ -2637,6 +2977,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_blade4.AddTag('aard_blade_8');
 		r_anchor.AddTag('r_hand_anchor_1');
 		l_anchor.AddTag('l_hand_anchor_1');
+
+		sword_trail_1.AddTag('acs_sword_trail_1');
+		sword_trail_2.AddTag('acs_sword_trail_2');
+		sword_trail_3.AddTag('acs_sword_trail_3');
+		sword_trail_4.AddTag('acs_sword_trail_4');
+		sword_trail_5.AddTag('acs_sword_trail_5');
+		sword_trail_6.AddTag('acs_sword_trail_6');
+		sword_trail_7.AddTag('acs_sword_trail_7');
+		sword_trail_8.AddTag('acs_sword_trail_8');
 
 		thePlayer.AddTag('aard_sword_equipped');
 	}
@@ -2678,6 +3027,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
@@ -2695,6 +3049,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2704,6 +3060,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 			{
@@ -2717,6 +3075,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2726,6 +3089,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2735,6 +3100,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2744,6 +3111,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2753,6 +3122,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2762,6 +3133,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2770,7 +3143,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
@@ -2790,6 +3165,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2799,6 +3181,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2808,6 +3192,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -2817,6 +3203,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -2826,6 +3214,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2835,6 +3225,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2844,6 +3236,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -2853,6 +3247,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -2861,7 +3257,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.05;
 				attach_vec.Z = -0.1025;
 				
-				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{
@@ -2875,6 +3273,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2884,6 +3287,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2893,6 +3298,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2902,6 +3309,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2911,6 +3320,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2920,6 +3331,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2928,7 +3341,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
@@ -2948,6 +3363,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2957,6 +3374,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 			{
@@ -2970,6 +3389,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2979,6 +3403,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2988,6 +3414,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2997,6 +3425,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3006,6 +3436,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3015,6 +3447,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3023,7 +3457,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
@@ -3042,6 +3478,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3051,6 +3494,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3060,6 +3505,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3069,6 +3516,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3078,6 +3527,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3087,6 +3538,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3096,6 +3549,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3105,6 +3560,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3114,6 +3571,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{			
@@ -3127,6 +3586,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3136,6 +3600,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3145,6 +3611,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3154,6 +3622,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3163,6 +3633,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3172,6 +3644,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3180,7 +3654,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 
@@ -3194,6 +3670,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_blade4.AddTag('aard_blade_8');
 		r_anchor.AddTag('r_hand_anchor_1');
 		l_anchor.AddTag('l_hand_anchor_1');
+
+		sword_trail_1.AddTag('acs_sword_trail_1');
+		sword_trail_2.AddTag('acs_sword_trail_2');
+		sword_trail_3.AddTag('acs_sword_trail_3');
+		sword_trail_4.AddTag('acs_sword_trail_4');
+		sword_trail_5.AddTag('acs_sword_trail_5');
+		sword_trail_6.AddTag('acs_sword_trail_6');
+		sword_trail_7.AddTag('acs_sword_trail_7');
+		sword_trail_8.AddTag('acs_sword_trail_8');
 	}
 
 	latent function SOI_AardSword()
@@ -3213,6 +3698,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
@@ -3230,6 +3720,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3239,6 +3731,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 			{
@@ -3252,6 +3746,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3261,6 +3760,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3270,6 +3771,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3279,6 +3782,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3288,6 +3793,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3298,6 +3805,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
@@ -3305,7 +3814,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
@@ -3322,6 +3833,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3331,6 +3849,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3340,6 +3860,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3349,6 +3871,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3358,6 +3882,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3367,6 +3893,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3376,6 +3904,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3385,6 +3915,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3394,6 +3926,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{
@@ -3407,6 +3941,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3416,6 +3955,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3425,6 +3966,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3434,6 +3977,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3443,6 +3988,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3453,6 +4000,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
 				attach_rot.Yaw = 10;
@@ -3460,7 +4009,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
@@ -3480,6 +4031,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3489,6 +4042,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 			{
@@ -3502,6 +4057,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3511,6 +4071,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3520,6 +4082,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3529,6 +4093,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3538,6 +4104,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3547,6 +4115,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3555,7 +4125,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
@@ -3574,6 +4146,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3583,6 +4162,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3592,6 +4173,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3601,6 +4184,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3610,6 +4195,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3619,6 +4206,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3628,6 +4217,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3637,6 +4228,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3646,6 +4239,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{			
@@ -3659,6 +4254,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3668,6 +4268,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3677,6 +4279,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3686,6 +4290,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3695,6 +4301,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3704,6 +4312,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3712,7 +4322,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 
@@ -3726,6 +4338,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_blade4.AddTag('aard_blade_8');
 		r_anchor.AddTag('r_hand_anchor_1');
 		l_anchor.AddTag('l_hand_anchor_1');
+
+		sword_trail_1.AddTag('acs_sword_trail_1');
+		sword_trail_2.AddTag('acs_sword_trail_2');
+		sword_trail_3.AddTag('acs_sword_trail_3');
+		sword_trail_4.AddTag('acs_sword_trail_4');
+		sword_trail_5.AddTag('acs_sword_trail_5');
+		sword_trail_6.AddTag('acs_sword_trail_6');
+		sword_trail_7.AddTag('acs_sword_trail_7');
+		sword_trail_8.AddTag('acs_sword_trail_8');
 	}
 
 	latent function Normal_AardSword()
@@ -3745,6 +4366,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
@@ -3762,6 +4388,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -3771,6 +4399,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 			{	
@@ -3784,6 +4414,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3793,6 +4428,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3802,6 +4439,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3811,6 +4450,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3820,6 +4461,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3829,6 +4472,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3837,7 +4482,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );		
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
@@ -3854,6 +4501,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -3863,6 +4517,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3874,6 +4530,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3885,6 +4543,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3896,6 +4556,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3907,6 +4569,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3918,6 +4582,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3929,6 +4595,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -3940,6 +4608,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{
@@ -3953,6 +4623,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3962,6 +4637,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3971,6 +4648,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3980,6 +4659,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3989,6 +4670,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3998,6 +4681,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4006,7 +4691,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
@@ -4026,6 +4713,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4035,6 +4724,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 			{
@@ -4048,6 +4739,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4057,6 +4753,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4066,6 +4764,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4075,6 +4775,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4084,6 +4786,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4093,6 +4797,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4101,7 +4807,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
@@ -4118,6 +4826,13 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4127,6 +4842,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4138,6 +4855,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4149,6 +4868,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4160,6 +4881,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4171,6 +4894,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4182,6 +4907,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4193,6 +4920,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -4204,6 +4933,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else
 			{			
@@ -4217,6 +4948,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				
 				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4226,6 +4962,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4235,6 +4973,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4244,6 +4984,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.05;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4253,6 +4995,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.005;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4262,6 +5006,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.045;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4270,7 +5016,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.15;
 				attach_vec.Z = -0.05;
 				
-				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 
@@ -4284,6 +5032,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_blade4.AddTag('aard_blade_8');
 		r_anchor.AddTag('r_hand_anchor_1');
 		l_anchor.AddTag('l_hand_anchor_1');
+
+		sword_trail_1.AddTag('acs_sword_trail_1');
+		sword_trail_2.AddTag('acs_sword_trail_2');
+		sword_trail_3.AddTag('acs_sword_trail_3');
+		sword_trail_4.AddTag('acs_sword_trail_4');
+		sword_trail_5.AddTag('acs_sword_trail_5');
+		sword_trail_6.AddTag('acs_sword_trail_6');
+		sword_trail_7.AddTag('acs_sword_trail_7');
+		sword_trail_8.AddTag('acs_sword_trail_8');
 	}
 
 	latent function AardSwordStatic()
@@ -4307,7 +5064,18 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
 
-		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_6 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_7 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_8 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() && ACS_Warglaives_Installed() && ACS_Warglaives_Enabled() )
 		{
 			if (thePlayer.IsWeaponHeld( 'silversword' ))
 			{
@@ -4336,6 +5104,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4345,6 +5115,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -4354,6 +5126,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -4363,6 +5137,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4372,6 +5148,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4381,6 +5159,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -4390,6 +5170,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 270;
 				attach_rot.Pitch = 90;
@@ -4398,7 +5180,9 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Y = -0.05;
 				attach_vec.Z = -0.1025;
 				
-				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
+				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if (thePlayer.IsWeaponHeld( 'steelsword' ))
 			{
@@ -4426,6 +5210,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4435,6 +5221,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4444,6 +5232,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4453,6 +5243,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4462,6 +5254,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4471,6 +5265,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 				
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4480,6 +5276,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -4489,6 +5287,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 		else
@@ -4517,6 +5317,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 					
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4528,6 +5330,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 					
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4539,6 +5343,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 					
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4550,6 +5356,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 					
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4561,6 +5369,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 					
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4572,6 +5382,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 					
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4583,6 +5395,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 					
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4594,6 +5408,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 					
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
 			{
@@ -4619,6 +5435,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 					
 				l_blade1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_1.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4630,6 +5448,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 					
 				l_blade2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_2.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4641,6 +5461,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				l_blade3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_3.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4652,6 +5474,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 					
 				l_blade4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
+
+				sword_trail_4.CreateAttachment( l_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4663,6 +5487,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.1025;
 					
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_5.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4674,6 +5500,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = 0.0325;
 					
 				r_blade2.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_6.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 				
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4685,6 +5513,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.0375;
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_7.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 					
 				//////////////////////////////////////////////////////////////////////////////////////////
 					
@@ -4696,6 +5526,8 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				attach_vec.Z = -0.1025;
 					
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
+
+				sword_trail_8.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
 		}
 
@@ -4709,6 +5541,15 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		l_blade4.AddTag('aard_blade_8');
 		r_anchor.AddTag('r_hand_anchor_1');
 		l_anchor.AddTag('l_hand_anchor_1');
+
+		sword_trail_1.AddTag('acs_sword_trail_1');
+		sword_trail_2.AddTag('acs_sword_trail_2');
+		sword_trail_3.AddTag('acs_sword_trail_3');
+		sword_trail_4.AddTag('acs_sword_trail_4');
+		sword_trail_5.AddTag('acs_sword_trail_5');
+		sword_trail_6.AddTag('acs_sword_trail_6');
+		sword_trail_7.AddTag('acs_sword_trail_7');
+		sword_trail_8.AddTag('acs_sword_trail_8');
 	}
 	
 	latent function ArmigerModeYrdenSword()
@@ -4762,6 +5603,12 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
 			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
@@ -4798,6 +5645,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4814,7 +5665,11 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword3.AddTag('yrden_sword_3');	
+
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+
+					sword3.AddTag('yrden_sword_3');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
@@ -4830,10 +5685,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -4864,6 +5725,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4880,6 +5745,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4896,6 +5765,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4912,10 +5785,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -4946,6 +5826,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4962,6 +5846,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4978,6 +5866,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.8;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.AddTag('acs_sword_trail_5');
+
 					sword4.AddTag('yrden_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -4994,6 +5886,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5010,10 +5906,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -5044,6 +5946,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5060,6 +5966,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5076,6 +5986,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5092,6 +6006,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
@@ -5129,6 +6047,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5145,6 +6067,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');	
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5161,10 +6087,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5195,6 +6127,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5211,6 +6147,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5227,6 +6167,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5243,10 +6187,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5277,6 +6228,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5293,6 +6248,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5309,6 +6268,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.8;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.AddTag('acs_sword_trail_5');
+
 					sword4.AddTag('yrden_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5325,6 +6288,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5341,10 +6308,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5375,6 +6348,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5391,6 +6368,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5407,6 +6388,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5423,6 +6408,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
@@ -5463,6 +6452,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5479,6 +6472,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');	
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5495,10 +6492,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5529,6 +6532,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5545,6 +6552,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5561,6 +6572,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5577,10 +6592,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5611,6 +6633,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5627,6 +6653,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5643,6 +6673,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.8;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.AddTag('acs_sword_trail_5');
+
 					sword4.AddTag('yrden_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5659,6 +6693,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5675,10 +6713,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_01.w2ent"
@@ -5709,6 +6753,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5725,6 +6773,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5741,6 +6793,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5757,6 +6813,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
@@ -5794,6 +6854,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5810,6 +6874,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');	
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5826,10 +6894,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -5860,6 +6934,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5876,6 +6954,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5892,6 +6974,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5908,10 +6994,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -5942,6 +7035,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5958,6 +7055,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5974,6 +7075,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.8;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.AddTag('acs_sword_trail_5');
+
 					sword4.AddTag('yrden_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -5990,6 +7095,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -6006,10 +7115,16 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"items\weapons\polearms\spear_02.w2ent"
@@ -6040,6 +7155,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
+					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.AddTag('acs_sword_trail_1');
+
 					sword2.AddTag('yrden_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -6056,6 +7175,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 0.7;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.AddTag('acs_sword_trail_2');
+					
 					sword3.AddTag('yrden_sword_3');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -6072,6 +7195,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.0;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.AddTag('acs_sword_trail_4');
+
 					sword5.AddTag('yrden_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -6088,6 +7215,10 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 					attach_vec.Z = 1.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					
+					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.AddTag('acs_sword_trail_3');
+
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
@@ -6102,6 +7233,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
@@ -6121,6 +7290,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			attach_vec.Z = -0.1;
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
 			sword1.AddTag('yrden_sword_1');
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
@@ -6141,6 +7311,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			attach_vec.Z = -0.1;
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+
 			sword1.AddTag('yrden_sword_1');
 		}
 	}
@@ -6195,6 +7366,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -6655,6 +7864,44 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -6746,6 +7993,8 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 	private var h 																																											: float;
 	private var manual_sword_check																																							: int;
 	private var watcher																																										: W3ACSWatcher;
+	private var sword_trail_1, sword_trail_2, sword_trail_3, sword_trail_4, sword_trail_5, sword_trail_6, sword_trail_7, sword_trail_8 														: CEntity;
+	private var trail_temp																																									: CEntityTemplate;
 	
 	event OnEnterState(prevStateName : name)
 	{
@@ -6762,6 +8011,15 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 	{
 		settings.blendIn = 0;
 		settings.blendOut = 1;
+
+		ACS_Sword_Trail_1().Destroy();
+		ACS_Sword_Trail_2().Destroy();
+		ACS_Sword_Trail_3().Destroy();
+		ACS_Sword_Trail_4().Destroy();
+		ACS_Sword_Trail_5().Destroy();
+		ACS_Sword_Trail_6().Destroy();
+		ACS_Sword_Trail_7().Destroy();
+		ACS_Sword_Trail_8().Destroy();
 
 		ACS_Vampire_Arms_1_Get().Destroy();
 
@@ -6782,6 +8040,25 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 		stupidArray_extra_arms.PushBack( 'Cutscene' );
 
 		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0.5;
+		attach_vec.Z = -0.4;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		sword_trail_2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
 
 		if (!ACS_GetItem_VampClaw_Shades())
 		{

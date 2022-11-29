@@ -60,7 +60,7 @@ state Engage in cEquipTaunt
 
 		if( actor.GetAttitude(thePlayer) == AIA_Hostile && actor.IsAlive() )
 		{	
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 		}
 
 		if 

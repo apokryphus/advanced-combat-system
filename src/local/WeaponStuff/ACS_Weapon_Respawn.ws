@@ -23,8 +23,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 	private var steelsword, silversword, scabbard_steel, scabbard_silver																																	: CDrawableComponent;
 	private var attach_vec, bone_vec																																										: Vector;
 	private var attach_rot, bone_rot																																										: EulerAngles;
-	private var anchor_temp, blade_temp, claw_temp, head_temp 																																				: CEntityTemplate;
+	private var anchor_temp, blade_temp, claw_temp, head_temp, trail_temp 																																	: CEntityTemplate;
 	private var r_blade1, r_blade2, r_blade3, r_blade4, l_blade1, l_blade2, l_blade3, l_blade4, r_anchor, l_anchor, sword1, sword2, sword3, sword4, sword5, sword6, sword7, sword8, blade_temp_ent			: CEntity;
+	private var sword_trail_1, sword_trail_2, sword_trail_3, sword_trail_4, sword_trail_5, sword_trail_6, sword_trail_7, sword_trail_8 																		: CEntity;
 	private var p_comp 																																														: CComponent;
 	private var p_actor 																																													: CActor;
 	private var steelswordentity, silverswordentity 																																						: CEntity;

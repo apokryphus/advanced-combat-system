@@ -3,8 +3,6 @@ function ACS_RandomWeaponEquipInit()
 	if ( ACS_Enabled() )
 	{	
 		ACS_ThingsThatShouldBeRemoved();
-
-		GetACSWatcher().register_extra_inputs();
 		
 		if ( ACS_GetWeaponMode() == 0 )
 		{
@@ -280,6 +278,8 @@ function ACS_Equip_Weapon(weaponType : EPlayerWeapon)
 {
 	if ( ACS_Enabled() ) 
 	{
+		GetACSWatcher().register_extra_inputs();
+
 		if (thePlayer.IsAnyWeaponHeld())
 		{
 			if (weaponType == PW_Silver || weaponType == PW_Steel || weaponType == PW_Fists )

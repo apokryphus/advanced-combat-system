@@ -4533,12 +4533,25 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
@@ -4546,12 +4559,25 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('axii_sword_equipped'))
@@ -4571,12 +4597,12 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 				if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 				{
 					dist = 1.75;
-					ang =	30;
+					ang =	45;
 				}
 				else
 				{
 					dist = 1.6;
-					ang =	30;	
+					ang =	45;	
 				}
 			}
 		}
@@ -4589,12 +4615,12 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			)
 			{
 				dist = 2;
-				ang =	30;
+				ang =	45;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_sword_equipped'))
@@ -4605,7 +4631,7 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_secondary_sword_equipped'))
 		{
 			dist = 2;
-			ang =	30;	
+			ang =	45;	
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('yrden_sword_equipped'))
 		{
@@ -4664,12 +4690,12 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.6;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -4682,7 +4708,7 @@ state ACS_Detonation_Weapon_Effects_Switch_Engage in cACS_Detonation_Weapon_Effe
 			else
 			{
 				dist = 2.25;
-				ang =	40;
+				ang =	45;
 			}
 		}
 		else 
@@ -4865,12 +4891,25 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
@@ -4878,12 +4917,25 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('axii_sword_equipped'))
@@ -4903,12 +4955,12 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 				if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 				{
 					dist = 1.75;
-					ang =	30;
+					ang =	45;
 				}
 				else
 				{
 					dist = 1.6;
-					ang =	30;	
+					ang =	45;	
 				}
 			}
 		}
@@ -4921,12 +4973,12 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			)
 			{
 				dist = 2;
-				ang =	30;
+				ang =	45;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_sword_equipped'))
@@ -4937,7 +4989,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_secondary_sword_equipped'))
 		{
 			dist = 2;
-			ang =	30;	
+			ang =	45;	
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('yrden_sword_equipped'))
 		{
@@ -4996,12 +5048,12 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.6;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -5014,7 +5066,7 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 			else
 			{
 				dist = 2.25;
-				ang =	40;
+				ang =	45;
 			}
 		}
 		else 
@@ -5091,9 +5143,20 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
-										vfxEnt.PlayEffect('blood_explode');
-										vfxEnt.DestroyAfter(1.5);
+										if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+										{
+											vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+											vfxEnt.PlayEffect('blood_explode');
+											vfxEnt.DestroyAfter(1.5);
+										}
+										else
+										{
+											npc.PlayEffect('heavy_hit');
+											npc.StopEffect('heavy_hit');
+
+											npc.PlayEffect('light_hit');
+											npc.StopEffect('light_hit');
+										}
 									}
 								}
 								else if (thePlayer.GetEquippedSign() == ST_Quen)
@@ -5121,9 +5184,20 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
-										vfxEnt.PlayEffect('blood_explode');
-										vfxEnt.DestroyAfter(1.5);
+										if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+										{
+											vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+											vfxEnt.PlayEffect('blood_explode');
+											vfxEnt.DestroyAfter(1.5);
+										}
+										else
+										{
+											npc.PlayEffect('heavy_hit');
+											npc.StopEffect('heavy_hit');
+
+											npc.PlayEffect('light_hit');
+											npc.StopEffect('light_hit');
+										}
 									}
 								}
 								else if (thePlayer.GetEquippedSign() == ST_Aard)
@@ -5151,9 +5225,20 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
-										vfxEnt.PlayEffect('blood_explode');
-										vfxEnt.DestroyAfter(1.5);
+										if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+										{
+											vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+											vfxEnt.PlayEffect('blood_explode');
+											vfxEnt.DestroyAfter(1.5);
+										}
+										else
+										{
+											npc.PlayEffect('heavy_hit');
+											npc.StopEffect('heavy_hit');
+
+											npc.PlayEffect('light_hit');
+											npc.StopEffect('light_hit');
+										}
 									}
 								}
 								else if (thePlayer.GetEquippedSign() == ST_Axii)
@@ -5181,9 +5266,20 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
-										vfxEnt.PlayEffect('blood_explode');
-										vfxEnt.DestroyAfter(1.5);
+										if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+										{
+											vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+											vfxEnt.PlayEffect('blood_explode');
+											vfxEnt.DestroyAfter(1.5);
+										}
+										else
+										{
+											npc.PlayEffect('heavy_hit');
+											npc.StopEffect('heavy_hit');
+
+											npc.PlayEffect('light_hit');
+											npc.StopEffect('light_hit');
+										}
 									}
 								}
 								else if (thePlayer.GetEquippedSign() == ST_Yrden)
@@ -5211,22 +5307,53 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 									}
 									else if (thePlayer.HasTag('aard_sword_equipped'))
 									{
-										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
-										vfxEnt.PlayEffect('blood_explode');
-										vfxEnt.DestroyAfter(1.5);
+										if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+										{
+											vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
+											vfxEnt.PlayEffect('blood_explode');
+											vfxEnt.DestroyAfter(1.5);
+										}
+										else
+										{
+											npc.PlayEffect('heavy_hit');
+											npc.StopEffect('heavy_hit');
+
+											npc.PlayEffect('light_hit');
+											npc.StopEffect('light_hit');
+										}
 									}
 								}
 							}
 							else if ( thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('vampire_claws_equipped') )
 							{
-								vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-								vfxEnt.PlayEffectSingle('hit');
-								vfxEnt.PlayEffectSingle('hit_refraction');
-								vfxEnt.DestroyAfter(1.5);
+								if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+								{
+									vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
+									vfxEnt.PlayEffectSingle('hit');
+									vfxEnt.PlayEffectSingle('hit_refraction');
+									vfxEnt.DestroyAfter(1.5);
 
-								vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
-								vfxEnt2.PlayEffect('crawl_blood');
-								vfxEnt2.DestroyAfter(1.5);
+									vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
+									vfxEnt2.PlayEffect('crawl_blood');
+									vfxEnt2.DestroyAfter(1.5);
+								}
+								else
+								{
+									npc.PlayEffect('blood');
+									npc.StopEffect('blood');
+
+									npc.PlayEffect('death_blood');
+									npc.StopEffect('death_blood');
+
+									npc.PlayEffect('heavy_hit');
+									npc.StopEffect('heavy_hit');
+
+									npc.PlayEffect('light_hit');
+									npc.StopEffect('light_hit');
+
+									npc.PlayEffect('blood_spill');
+									npc.StopEffect('blood_spill');
+								}
 
 								/*
 								vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
@@ -6034,14 +6161,34 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 							{
 								if ( thePlayer.HasTag('vampire_claws_equipped') )
 								{
-									vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-									vfxEnt.PlayEffectSingle('hit');
-									vfxEnt.PlayEffectSingle('hit_refraction');
-									vfxEnt.DestroyAfter(1.5);
+									if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+									{
+										vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
+										vfxEnt.PlayEffectSingle('hit');
+										vfxEnt.PlayEffectSingle('hit_refraction');
+										vfxEnt.DestroyAfter(1.5);
 
-									vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
-									vfxEnt2.PlayEffect('crawl_blood');
-									vfxEnt2.DestroyAfter(1.5);
+										vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
+										vfxEnt2.PlayEffect('crawl_blood');
+										vfxEnt2.DestroyAfter(1.5);
+									}
+									else
+									{
+										npc.PlayEffect('blood');
+										npc.StopEffect('blood');
+
+										npc.PlayEffect('death_blood');
+										npc.StopEffect('death_blood');
+
+										npc.PlayEffect('heavy_hit');
+										npc.StopEffect('heavy_hit');
+
+										npc.PlayEffect('light_hit');
+										npc.StopEffect('light_hit');
+
+										npc.PlayEffect('blood_spill');
+										npc.StopEffect('blood_spill');
+									}
 
 									/*
 									vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
@@ -6071,14 +6218,34 @@ state ACS_Passive_Weapon_Effects_Switch_Engage in cACS_Passive_Weapon_Effects_Sw
 					{
 						if ( thePlayer.HasTag('vampire_claws_equipped') )
 						{
-							vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
-							vfxEnt.PlayEffectSingle('hit');
-							vfxEnt.PlayEffectSingle('hit_refraction');
-							vfxEnt.DestroyAfter(1.5);
+							if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+							{
+								vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), targetPos, targetRot );
+								vfxEnt.PlayEffectSingle('hit');
+								vfxEnt.PlayEffectSingle('hit_refraction');
+								vfxEnt.DestroyAfter(1.5);
 
-							vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
-							vfxEnt2.PlayEffect('crawl_blood');
-							vfxEnt2.DestroyAfter(1.5);
+								vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), targetPos, targetRot);
+								vfxEnt2.PlayEffect('crawl_blood');
+								vfxEnt2.DestroyAfter(1.5);
+							}
+							else
+							{
+								npc.PlayEffect('blood');
+								npc.StopEffect('blood');
+
+								npc.PlayEffect('death_blood');
+								npc.StopEffect('death_blood');
+
+								npc.PlayEffect('heavy_hit');
+								npc.StopEffect('heavy_hit');
+
+								npc.PlayEffect('light_hit');
+								npc.StopEffect('light_hit');
+
+								npc.PlayEffect('blood_spill');
+								npc.StopEffect('blood_spill');
+							}
 
 							/*
 							vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), targetPos, targetRot );
@@ -6425,12 +6592,25 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('igni_secondary_sword_equipped_TAG'))
@@ -6438,12 +6618,25 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.5;
-				ang =	30;
+				ang =	45;
+			}
+
+			if( thePlayer.HasAbility('Runeword 2 _Stats', true) )
+			{
+				if(  thePlayer.IsDoingSpecialAttack( false ) )
+				{
+					dist += 1.1;
+					ang +=	315;
+				}
+				else if(  thePlayer.IsDoingSpecialAttack( true ) )
+				{
+					dist += 1.9;
+				}
 			}
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('axii_sword_equipped'))
@@ -6463,12 +6656,12 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 				if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 				{
 					dist = 1.75;
-					ang =	30;
+					ang =	45;
 				}
 				else
 				{
 					dist = 1.6;
-					ang =	30;	
+					ang =	45;	
 				}
 			}
 		}
@@ -6481,12 +6674,12 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			)
 			{
 				dist = 2;
-				ang =	30;
+				ang =	45;
 			}
 			else if ( ACS_GetWeaponMode() == 3 )
 			{ 
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_sword_equipped'))
@@ -6497,7 +6690,7 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('aard_secondary_sword_equipped'))
 		{
 			dist = 2;
-			ang =	30;	
+			ang =	45;	
 		}
 		else if (!thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('yrden_sword_equipped'))
 		{
@@ -6556,12 +6749,12 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			if (thePlayer.GetDisplayTarget() == ACS_Big_Boi() )
 			{
 				dist = 1.75;
-				ang =	30;
+				ang =	45;
 			}
 			else
 			{
 				dist = 1.6;
-				ang =	30;
+				ang =	45;
 			}
 		}
 		else if ( !thePlayer.IsWeaponHeld( 'fist' ) && thePlayer.HasTag('quen_secondary_sword_equipped') )
@@ -6574,7 +6767,7 @@ state ACS_Marker_Switch_Engage in cACS_Marker_Switch
 			else
 			{
 				dist = 2.25;
-				ang =	40;
+				ang =	45;
 			}
 		}
 		else 
@@ -7708,7 +7901,7 @@ state ACS_bruxa_blood_resource_Engage in cACS_bruxa_blood_resource
 	private var npc 																																						: CActor;
 	private var actors    																																					: array<CActor>;
 	private var i         																																					: int;
-	private var vfxEnt																																						: CEntity;
+	private var vfxEnt, vfxEnt2, vfxEnt3																																	: CEntity;
 	private var targetRotationNPC																																			: EulerAngles;
 		
 	event OnEnterState(prevStateName : name)
@@ -7756,10 +7949,41 @@ state ACS_bruxa_blood_resource_Engage in cACS_bruxa_blood_resource
 				&& !npc.HasAbility('mon_troll_base')
 				)
 				{
-					vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), npc.GetWorldPosition(), targetRotationNPC );
-					vfxEnt.CreateAttachment( npc, , Vector( 0, 0, 1.5 ) );	
-					vfxEnt.PlayEffectSingle('hit');
-					vfxEnt.DestroyAfter(1);
+					if( ((CNewNPC)npc).GetBloodType() == BT_Red) 
+					{
+						vfxEnt = theGame.CreateEntity( (CEntityTemplate)LoadResource( "fx\blood\explode\blood_explode.w2ent", true ), npc.GetWorldPosition(), targetRotationNPC );
+						vfxEnt.CreateAttachment( npc, , Vector( 0, 0, 1.5 ), EulerAngles(0, RandRangeF(45,-45), RandRangeF(360,1)) );	
+						vfxEnt.PlayEffect('blood_explode');
+						vfxEnt.DestroyAfter(1.5);
+
+						vfxEnt2 = theGame.CreateEntity( (CEntityTemplate)LoadResource('finisher_blood', true), npc.GetWorldPosition(), targetRotationNPC);
+						vfxEnt2.CreateAttachment( npc, , Vector( 0, 0, 1.5 ), EulerAngles(0, RandRangeF(45,-45), RandRangeF(360,1)) );	
+						vfxEnt2.PlayEffect('crawl_blood');
+						vfxEnt2.DestroyAfter(1.5);
+
+						vfxEnt3 = theGame.CreateEntity( (CEntityTemplate)LoadResource( "dlc\bob\data\fx\gameplay\mutation\mutation_9\mutation_9_hit.w2ent", true ), npc.GetWorldPosition(), targetRotationNPC );
+						vfxEnt3.CreateAttachment( npc, , Vector( 0, 0, 1.5 ), EulerAngles(0, RandRangeF(45,-45), RandRangeF(360,1)) );	
+						vfxEnt3.PlayEffectSingle('hit');
+						vfxEnt3.PlayEffectSingle('hit_refraction');
+						vfxEnt3.DestroyAfter(1.5);
+					}
+					else
+					{
+						npc.PlayEffect('blood');
+						npc.StopEffect('blood');
+
+						npc.PlayEffect('death_blood');
+						npc.StopEffect('death_blood');
+
+						npc.PlayEffect('heavy_hit');
+						npc.StopEffect('heavy_hit');
+
+						npc.PlayEffect('light_hit');
+						npc.StopEffect('light_hit');
+
+						npc.PlayEffect('blood_spill');
+						npc.StopEffect('blood_spill');
+					}
 				}
 			}
 		}
@@ -8640,7 +8864,7 @@ state ACS_Umbral_Slash_Single_Engage in cACS_Umbral_Slash_Single
 			
 			attAction.SetSoundAttackType( 'wpn_slice' );
 			
-			//attAction.AddEffectInfo( EET_HeavyKnockdown, 1 );
+			attAction.AddEffectInfo( EET_Stagger, 1 );
 			
 			theGame.damageMgr.ProcessAction( attAction );	
 			

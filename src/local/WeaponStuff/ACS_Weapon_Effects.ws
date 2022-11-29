@@ -729,6 +729,70 @@ function ACS_Vampire_Back_Claw_Get() : CEntity
 	return claws;
 }
 
+function ACS_Sword_Trail_1() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_1' );
+	return trail;
+}
+
+function ACS_Sword_Trail_2() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_2' );
+	return trail;
+}
+
+function ACS_Sword_Trail_3() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_3' );
+	return trail;
+}
+
+function ACS_Sword_Trail_4() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_4' );
+	return trail;
+}
+
+function ACS_Sword_Trail_5() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_5' );
+	return trail;
+}
+
+function ACS_Sword_Trail_6() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_6' );
+	return trail;
+}
+
+function ACS_Sword_Trail_7() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_7' );
+	return trail;
+}
+
+function ACS_Sword_Trail_8() : CEntity
+{
+	var trail 			 : CEntity;
+	
+	trail = (CEntity)theGame.GetEntityByTag( 'acs_sword_trail_8' );
+	return trail;
+}
+
 function ACSStopEquippedSwordEffects()
 {
 	ACSGetEquippedSword().StopEffect('fire_sparks_trail');

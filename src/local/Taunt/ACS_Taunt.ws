@@ -1418,7 +1418,7 @@ state Engage in cTaunt
 
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 		}
 
 		watcher.claw_taunt_index = RandDifferent(watcher.previous_claw_taunt_index , 2);
@@ -1476,7 +1476,7 @@ state Engage in cTaunt
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{	
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 			
 			watcher.olgierd_combat_taunt_index_1 = RandDifferent(watcher.previous_olgierd_combat_taunt_index_1 , 16);
 
@@ -1662,7 +1662,7 @@ state Engage in cTaunt
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{	
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 			
 			watcher.eredin_combat_taunt_index_1 = RandDifferent(watcher.previous_eredin_combat_taunt_index_1 , 22);
 
@@ -1896,7 +1896,7 @@ state Engage in cTaunt
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{	
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 			
 			watcher.imlerith_combat_taunt_index_1 = RandDifferent(watcher.previous_imlerith_combat_taunt_index_1 , 14);
 
@@ -2066,7 +2066,7 @@ state Engage in cTaunt
 		
 		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
 		{	
-			movementAdjustor.RotateTowards( ticket, actor );
+			if (!thePlayer.IsUsingHorse() && !thePlayer.IsUsingVehicle()) {movementAdjustor.RotateTowards( ticket, actor );}  
 			
 			watcher.normal_combat_taunt_index_1 = RandDifferent(watcher.previous_normal_combat_taunt_index_1 , 17);
 

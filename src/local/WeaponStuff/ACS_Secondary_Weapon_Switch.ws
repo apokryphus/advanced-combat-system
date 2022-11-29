@@ -19,20 +19,22 @@ statemachine class cSecondaryWeaponSwitch
  
 state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 {
-	private var steelID, silverID 												: SItemUniqueId;
-	private var steelsword, silversword, scabbard_steel, scabbard_silver		: CDrawableComponent;
-	private var scabbards_steel, scabbards_silver 								: array<SItemUniqueId>;
-	private var attach_vec														: Vector;
-	private var attach_rot														: EulerAngles;
-	private var sword1, sword2, sword3, sword4, sword5, sword6, sword7, sword8	: CEntity;
-	private var weapontype 														: EPlayerWeapon;
-	private var item 															: SItemUniqueId;
-	private var res 															: bool;
-	private var inv 															: CInventoryComponent;
-	private var tags 															: array<name>;
-	private var settings														: SAnimatedComponentSlotAnimationSettings;
-	private var i																: int;				
-	private var steelswordentity, silverswordentity 							: CEntity;				
+	private var steelID, silverID 																														: SItemUniqueId;
+	private var steelsword, silversword, scabbard_steel, scabbard_silver																				: CDrawableComponent;
+	private var scabbards_steel, scabbards_silver 																										: array<SItemUniqueId>;
+	private var attach_vec																																: Vector;
+	private var attach_rot																																: EulerAngles;
+	private var trail_temp																																: CEntityTemplate;
+	private var sword1, sword2, sword3, sword4, sword5, sword6, sword7, sword8																			: CEntity;
+	private var sword_trail_1, sword_trail_2, sword_trail_3, sword_trail_4, sword_trail_5, sword_trail_6, sword_trail_7, sword_trail_8 					: CEntity;
+	private var weapontype 																																: EPlayerWeapon;
+	private var item 																																	: SItemUniqueId;
+	private var res 																																	: bool;
+	private var inv 																																	: CInventoryComponent;
+	private var tags 																																	: array<name>;
+	private var settings																																: SAnimatedComponentSlotAnimationSettings;
+	private var i																																		: int;				
+	private var steelswordentity, silverswordentity 																									: CEntity;				
 	
 
 	event OnEnterState(prevStateName : name)
@@ -453,7 +455,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 
 			SecondaryWeaponSummonEffect();
 		}
-		
 		else if ( ACS_GetWeaponMode() == 2)
 		{
 			if 
@@ -535,7 +536,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 
 			SecondaryWeaponSummonEffect();
 		}
-		
 		else if ( ACS_GetWeaponMode() == 3)
 		{
 			if 
@@ -547,6 +547,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			)
 			{
 				ACS_WeaponDestroyInit();
+
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
 
 				thePlayer.AddTag('axii_secondary_sword_equipped');
 
@@ -561,6 +599,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			{
 				ACS_WeaponDestroyInit();
 
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
+
 				thePlayer.AddTag('aard_secondary_sword_equipped');
 
 				AardSecondarySwordSwitch();
@@ -574,6 +650,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			{
 				ACS_WeaponDestroyInit();
 
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
+
 				thePlayer.AddTag('yrden_secondary_sword_equipped');
 
 				YrdenSecondarySwordSwitch();
@@ -586,6 +700,56 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			)
 			{
 				ACS_WeaponDestroyInit();
+
+				trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+				sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.2;
+
+				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_1.AddTag('acs_sword_trail_1');
+
+				attach_rot.Roll = 180;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = -0.2;
+
+				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_2.AddTag('acs_sword_trail_2');
+
+				attach_rot.Roll = 0;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = 0.4;
+
+				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_3.AddTag('acs_sword_trail_3');
+
+				attach_rot.Roll = 180;
+				attach_rot.Pitch = 0;
+				attach_rot.Yaw = 0;
+				attach_vec.X = 0;
+				attach_vec.Y = 0;
+				attach_vec.Z = -0.4;
+
+				sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+				sword_trail_4.AddTag('acs_sword_trail_4');
 
 				thePlayer.AddTag('quen_secondary_sword_equipped');
 
@@ -738,26 +902,40 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh' );
+					}
 				}
 			}
 	
@@ -787,26 +965,40 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh' );
+					}
 				}
 			}
 					
@@ -836,26 +1028,40 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh' );
+					}
 				}
 			}
 					
@@ -885,32 +1091,41 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SwordWalk_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk_passive_taunt' );
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_SCAAR_passive_taunt' );
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk' );
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_SCAAR' );
 				}
 			}
 			else
 			{
-				if (ACS_PassiveTaunt_Enabled())
+				if (ACS_SwordWalk_Enabled())
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_passive_taunt' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_swordwalk' );
+					}
 				}
 				else
 				{
-					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh' );
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_passive_taunt' );
+					}
+					else
+					{
+						thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh' );
+					}
 				}
-			}
-				
-			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
-			{
-				thePlayer.GotoState( 'Combat' );
 			}
 
 			UpdateBehGraph();
@@ -930,6 +1145,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 		
 		if ( thePlayer.GetInventory().IsItemHeld(steelID) )
 		{
@@ -1022,6 +1275,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -1596,6 +1887,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -1684,6 +2013,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -2834,6 +3201,43 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 		
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
@@ -2923,6 +3327,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -3694,6 +4136,44 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -3782,6 +4262,56 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 180;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = -0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
+		attach_rot.Roll = 180;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = -0.4;
+
+		sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_4.AddTag('acs_sword_trail_4');
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
@@ -4049,7 +4579,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
-					
+
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
@@ -4553,6 +5083,56 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		ACS_WeaponDestroyInit();
 		
 		ACS_StartAerondightEffectInit();
+
+		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
+
+		sword_trail_1 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_2 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_3 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.2;
+
+		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_1.AddTag('acs_sword_trail_1');
+
+		attach_rot.Roll = 180;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = -0.2;
+
+		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_2.AddTag('acs_sword_trail_2');
+
+		attach_rot.Roll = 0;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = 0.4;
+
+		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_3.AddTag('acs_sword_trail_3');
+
+		attach_rot.Roll = 180;
+		attach_rot.Pitch = 0;
+		attach_rot.Yaw = 0;
+		attach_vec.X = 0;
+		attach_vec.Y = 0;
+		attach_vec.Z = -0.4;
+
+		sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword_trail_4.AddTag('acs_sword_trail_4');
 
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{

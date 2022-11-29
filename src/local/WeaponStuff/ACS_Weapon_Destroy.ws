@@ -41,6 +41,15 @@ function ACS_WeaponDestroyInit()
 	ACS_Yrden_Sidearm_Destroy();
 
 	ACS_Bow_Arrow().Destroy();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 function ACS_WeaponDestroyIMMEDIATEInit()
@@ -86,6 +95,15 @@ function ACS_WeaponDestroyIMMEDIATEInit()
 	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
 
 	ACS_Bow_Arrow().Destroy();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
@@ -120,6 +138,15 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
 	ACS_Yrden_Sidearm_Destroy();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
@@ -154,6 +181,15 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
 	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 function ACS_Weapon_Invisible()
@@ -231,6 +267,22 @@ function ACS_Weapon_Invisible()
 		yrden_secondary_sword_summon();
 		YrdenSecondarySwordDestroy_NOTAG();
 	}
+
+	ACS_Sword_Trail_1().StopAllEffects();
+
+	ACS_Sword_Trail_2().StopAllEffects();
+	
+	ACS_Sword_Trail_3().StopAllEffects();
+
+	ACS_Sword_Trail_4().StopAllEffects();
+
+	ACS_Sword_Trail_5().StopAllEffects();
+
+	ACS_Sword_Trail_6().StopAllEffects();
+
+	ACS_Sword_Trail_7().StopAllEffects();
+
+	ACS_Sword_Trail_8().StopAllEffects();
 }
 
 function ACS_HideSwordWitoutScabbardStuff()
@@ -426,7 +478,16 @@ function ClawDestroy_NOTAG()
 	var vClawDestroy_NOTAG : cClawDestroy_NOTAG;
 	vClawDestroy_NOTAG = new cClawDestroy_NOTAG in theGame;
 			
-	vClawDestroy_NOTAG.ClawDestroy_NOTAG_Engage();	
+	vClawDestroy_NOTAG.ClawDestroy_NOTAG_Engage();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 statemachine class cClawDestroy_NOTAG
@@ -483,7 +544,16 @@ function ClawDestroy()
 	var vClawDestroy : cClawDestroy;
 	vClawDestroy = new cClawDestroy in theGame;
 			
-	vClawDestroy.ClawDestroy_Engage();	
+	vClawDestroy.ClawDestroy_Engage();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 statemachine class cClawDestroy
@@ -679,6 +749,15 @@ function ClawDestroy_WITH_EFFECT()
 	vClawDestroy_WITH_EFFECT = new cClawDestroy_WITH_EFFECT in theGame;
 			
 	vClawDestroy_WITH_EFFECT.ClawDestroy_WITH_EFFECT_Engage();
+
+	ACS_Sword_Trail_1().Destroy();
+	ACS_Sword_Trail_2().Destroy();
+	ACS_Sword_Trail_3().Destroy();
+	ACS_Sword_Trail_4().Destroy();
+	ACS_Sword_Trail_5().Destroy();
+	ACS_Sword_Trail_6().Destroy();
+	ACS_Sword_Trail_7().Destroy();
+	ACS_Sword_Trail_8().Destroy();
 }
 
 statemachine class cClawDestroy_WITH_EFFECT
