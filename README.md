@@ -964,7 +964,7 @@ In combat:
 # 8. ENEMIES
 
 ## Rage
-- Attacking or moving while in combat with at least one enemy has a 50% chance of triggering the Rage mechanic every 7 seconds.
+- Attacking or moving while in combat with at least one enemy has a variable chance between 25% to 75% (dependent upon which attack is performed) of triggering the Rage mechanic in enemies every 7 seconds.
 - When it is triggered, a red icon will appear above the player's head.
 - After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
 - Rage lasts for 3 seconds, or until the enemy lands a hit on the player.
