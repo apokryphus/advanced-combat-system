@@ -963,6 +963,13 @@ In combat:
  
 # 8. ENEMIES
 
+## Rage
+- Attacking or moving while in combat with at least one enemy has a 50% chance of triggering the Rage mechanic every 7 seconds.
+- When it is triggered, a red icon will appear above the player's head.
+- After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
+- Rage lasts for 3 seconds, or until the enemy lands a hit on the player.
+- Enraged enemies gain extra speed, take 50% less damage, are immune to hit reactions as well as negative buffs.
+
 ## Dynamic Enemy Behavior System 
 
 https://user-images.githubusercontent.com/98017171/196608085-fd4a751c-e4dc-45ed-b67e-e35ad288053e.mp4
