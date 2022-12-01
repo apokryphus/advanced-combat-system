@@ -968,8 +968,8 @@ In combat:
 - When it is triggered, a red icon will appear above the player's head.
 - After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
 - Rage lasts for 3 seconds, or until the enemy lands a hit on the player.
-- Enraged enemies gain extra speed, take 50% less damage, are immune to hit reactions as well as negative buffs.
-- Attacks from enraged enemies cannot be blocked, and will deal 30% of the player's current health, as well as drain 30% of the player's current stamina and adrenaline, as well as knocking the player back. 
+- Enraged enemies gain extra speed, take 50% less damage, and are immune to hit reactions as well as negative buffs.
+- Attacks from enraged enemies cannot be blocked, and will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as knocking the player back. 
 
 ## Dynamic Enemy Behavior System 
 
