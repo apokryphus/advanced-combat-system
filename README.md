@@ -1031,8 +1031,14 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
    - 1 if the player is between 66% and 33% health.
  
  ## Ice Titans
+- Nine ice titans roam the Skellige Islands.
 
-Nine ice titans roam the Skellige Islands.
+ ## Drowners, Scurvers, Rotfiends
+- Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
+
+ ## Nekker Guardian
+- While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
+- Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
 
 
 <div align="right">
