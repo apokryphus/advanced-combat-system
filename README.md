@@ -971,7 +971,7 @@ In combat:
   - 50% chance for special attacks
 - When triggered, a red icon will appear above the player's head, accompanied by an audio cue.
 - After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
-- Rage lasts for 3 seconds, or until the enemy lands a hit on the player.
+- Rage lasts for 2 seconds, or until the enemy lands a hit on the player.
 - Enraged enemies gain extra speed, take 50% less damage, and are immune to hit reactions as well as negative buffs.
 - The attack from enraged enemies cannot be blocked except by the alternate Quen sign. The attack will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as knocking the player back. 
 
@@ -997,6 +997,16 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
   - Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.
   - If the player has no money, the guard will heal to full health instead.
  
+  ## Ice Titans
+- Nine ice titans roam the Skellige Islands.
+
+ ## Drowners, Scurvers, Rotfiends
+- Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
+
+ ## Nekker Guardian
+- While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
+- Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
+
  ## Forest God
  
 **Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
@@ -1030,16 +1040,6 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
    - 2 if the player is between 100% and 66% health.
    - 1 if the player is between 66% and 33% health.
  
- ## Ice Titans
-- Nine ice titans roam the Skellige Islands.
-
- ## Drowners, Scurvers, Rotfiends
-- Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
-
- ## Nekker Guardian
-- While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
-- Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
-
 
 <div align="right">
   
