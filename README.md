@@ -6,68 +6,13 @@ Combat animation overhaul mod for The Witcher 3.
  </div>
  
  # OVERVIEW
-The primary purpose of this mod is to enable the player to use all humanoid NPC combat animations available in the game.
 
-The NPC animations are organized into 8 unique extra movesets:
-- Olgierd + 1-Hand Sword
-- Spear + Staff + Halberd
-- Eredin + Shield + 1-Hand Sword
-- Gregoire de Gorgon + 2-Hand Sword
-- Imlerith + Caranthir + Caretaker
-- 1-Hand Hammer + 2-Hand Hammer
-- Dettlaff + Bruxa 
-- 1-Hand Axe + 2-Hand Axe
-
-Geralt's default moveset/behavior/animations are available for use at any time.
-ACS does not edit them in any way, and allows for full compatibility with other mods that alter them.
-
-Each ACS moveset comes with:
-- Its own unique combos, abilities, counter-attacks, and weapon arts. 
-- Its own set of dodges, rolls, hit animations, parry animations, death animations, and weapon-holding/passive behavior animations.
-
-Additionally, the mod allows for higher vampire claw combat and abilities while the player is unarmed.
-Can be toggled on or off in the mod menu, or set to apply only when the player has certain items equipped.
-
-Also adds bow/arrow combat with special arrows and abilities, though is limited by weapon mode.
-
-All extra animations included within ACS allow for animation canceling, meaning you can start another dodge/roll/evade/attack before the current one finishes.
-
-This is by design, since some NPC animations are too long in duration to be used properly by humans without this feature, and I see no need to append the animations when they can be canceled. 
-
-This does not mean, however, that the animations were completely suited for human use, and to that end I had to modify them somewhat. 
-
-That being said, the animations are still quite complex and require a bit of timing as well as practice to use them effectively, especially for certain movesets.
-
-Easy to perform, hard to master.
-
-Depending on which weapon mode option is selected through the mod's Main Settings menu, the player may choose to play the game using one of the following modes:
-- Switch movesets based upon selected sign (Axii, Yrden, Aard, Igni, Quen) and performing light/heavy attacks, which transforms the player's in-hand weapon to match the moveset applied.
-- Select in the mod menu a desired moveset for the player's steel weapon and silver weapon, in which the player's in-hand weapon will transform to match the moveset.
-- Mix and match in the mod menu different combat animations to create your own unique moveset, in which the player's in-hand weapon will transform accordingly to each animation set.
-- Restrict the player to only use these special movesets when certain weapons/items are equipped.
-
-Addtionally, the mod:
-- Comes with a whole host of different offensive and defensive abilities / combo systems, either enabled/disabled through the mod menu, or tied to specific movesets/weapons.
-- Allows the player to use special movement systems to traverse the world of The Witcher 3, available both in combat and out of combat.
-- Incorporates a number of bugfixes not covered by other modders, such as fixing weapons not making impact sounds when applying debuffs to enemies. 
-- Interfaces with other potential weapon DLCs (Shades of Iron, Exotic Arsenal, and more) that you may have installed, and applies the appropriate animations to certain weapons when they are equipped.
-- Adds additional NPC weapons into the game as enemy loot, in which you may equip to gain access to the movesets.
-- Improves human enemy AI, with a dynamic behavior system that makes every encounter a potentially deadly one. 
-- Adds numerous custom enemies and bosses into the game world with their own mechanics and systems in place.
-
-ACS is:
-- Highly configurable through its mod menu, and just about every aspect can be modified to suit the player's needs.
-- Relatively easy to merge in terms of scripts.
-- Does not cause blurry dialogue loading screen from prolonged usage.
-- Can be installed or uninstalled at any time.
-- Is just about compatible with almost any overhaul/mod you can find.
-  
-# REQUIREMENTS
-- Both **Hearts of Stone** and **Blood & Wine** DLCs are required.
+Please read:
+https://www.nexusmods.com/witcher3/mods/7035
 
 # INSTALLATION
 
-## Automatic Installation: 
+## Automatic Installation (ONLY FOR NEXT GEN UPDATE): 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **installation folder for The Witcher 3**. 
 - If your game is on Steam, then the folder path might look something like: 
