@@ -964,15 +964,11 @@ In combat:
 # 8. ENEMIES
 
 ## Rage
-- Attacking or parrying while in combat with at least one enemy has a variable chance between 12.5% to 50% (dependent upon which attack is performed) of triggering the Rage mechanic in enemies every 10 seconds.
-  - 12.5% chance for light attacks
-  - 12.5% chance for parry
-  - 25% chance for heavy attacks
-  - 50% chance for special attacks
+- Rapidly attacking or dodging consecutively while in combat with at least one enemy will trigger the Rage mechanic in enemies every 10 seconds.
 - When triggered, a red icon will appear above the player's head, accompanied by an audio cue.
 - After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
 - Rage lasts for 2 seconds, or until the enemy lands a hit on the player.
-- Enraged enemies gain extra speed, take 50% less damage, and are immune to hit reactions as well as negative buffs.
+- Enraged enemies take 50% less damage, and are immune to hit reactions as well as negative buffs.
 - The attack from enraged enemies cannot be blocked except by the alternate Quen sign. The attack will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as knocking the player back. 
 
 ## Dynamic Enemy Behavior System 
