@@ -972,14 +972,13 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
 
 - The chances of Shadows spawning can be modified in the Main Settings menu.
 - Shadows cannot spawn more than once every 7 minutes. 
-- This chance of Shadows appearing will ignore the value set in the Main Settings menu and increase to 50% **if the player has any items to do with leshens in their inventory**. 
+- This chance of Shadows appearing will ignore the value set in the Main Settings menu and increase to 30% **if the player has any items to do with leshens in their inventory**. 
 - Shadows additionally drop emeralds and leshen mutagen upon death. 
 - Shadows are immune to negative effects.
-- Shadows heal for 5% of their max health on-hit against the player, and 25% of their max health against other NPCs.
+- Shadows heal for 5% of their max health on-hit against the player if the player is using any moveset other than the original, and 25% of their max health against other NPCs.
 - The number of Shadows that spawn will change depending on how much health the player currently has:
-   - 3 if the player is at 100% health.
-   - 2 if the player is between 100% and 66% health.
-   - 1 if the player is between 66% and 33% health.
+   - 2 if the player is at 100% health.
+   - 1 if the player is below 50% health.
  
 
 <div align="right">
