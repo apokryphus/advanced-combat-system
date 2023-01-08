@@ -927,18 +927,43 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		{
 			//theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
 
-			if (ACS_PassiveTaunt_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_SCAAR_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_E3ARP' );
+				}
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
-			}
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+				}
 
-			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
-			{
-				thePlayer.GotoState( 'Combat' );
+				if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
+				{
+					thePlayer.GotoState( 'Combat' );
+				}
 			}
 
 			settings.blendIn = 0;
@@ -1004,7 +1029,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1013,6 +1038,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_primary_beh_E3ARP' );
 				}
 			}
 			else
@@ -1062,7 +1098,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1071,6 +1107,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_primary_beh_E3ARP' );
 				}
 			}
 			else
@@ -1106,7 +1153,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1115,6 +1162,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_primary_beh_E3ARP' );
 				}
 			}
 			else
@@ -1165,7 +1223,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1174,6 +1232,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_primary_beh_E3ARP' );
 				}
 			}
 			else
@@ -5617,7 +5686,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5697,7 +5766,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5798,7 +5867,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -5918,7 +5987,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6019,7 +6088,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6099,7 +6168,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6200,7 +6269,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6320,7 +6389,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6424,7 +6493,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6504,7 +6573,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6605,7 +6674,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6725,7 +6794,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_01.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6826,7 +6895,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -6906,7 +6975,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -7007,7 +7076,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -7127,7 +7196,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\polearms\spear_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8347,13 +8416,43 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 		{
 			//theGame.GetBehTreeReactionManager().CreateReactionEventIfPossible( thePlayer, 'CastSignAction', -1, 20.0f, -1.f, -1, true );
 
-			if (ACS_PassiveTaunt_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_SCAAR_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_E3ARP' );
+				}
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'claw_beh' );
+				}
+
+				if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
+				{
+					thePlayer.GotoState( 'Combat' );
+				}
 			}
 
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);

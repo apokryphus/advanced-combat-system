@@ -119,6 +119,11 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 		}
 		else
 		{
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( ' ', 'PLAYER_SLOT', settings);	
+		}
+		/*
+		else
+		{
 			if ( thePlayer.GetCurrentStateName() == 'Combat' ) 
 			{
 				ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
@@ -136,6 +141,7 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 				}
 			}
 		}
+		*/
 	}
 	
 	entry function DefaultSwitch_PrimaryWeaponSwitch()
@@ -187,7 +193,20 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 			sword_trail_3.AddTag('acs_sword_trail_3');
 
 			thePlayer.AddTag('igni_sword_equipped');
-			thePlayer.AddTag('igni_secondary_sword_equipped');	
+			thePlayer.AddTag('igni_secondary_sword_equipped');
+
+			if (ACS_GetItem_Aerondight())
+			{
+				//ACS_Sword_Trail_1().StopEffect('aerondight_glow_sword');
+				ACS_Sword_Trail_1().PlayEffect('aerondight_glow_sword');
+				ACS_Sword_Trail_1().StopEffect('aerondight_glow_sword');
+
+				ACS_Sword_Trail_2().StopEffect('charge_10');
+				ACS_Sword_Trail_2().PlayEffect('charge_10');
+
+				ACS_Sword_Trail_2().StopEffect('aerondight_special_trail');
+				ACS_Sword_Trail_2().PlayEffect('aerondight_special_trail');
+			}
 
 			if (thePlayer.HasAbility('ForceFinisher'))
 			{
@@ -239,7 +258,7 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 				|| ACS_GetWeaponMode() == 1
 				)
 				{
-					WeaponSummonAnimation();
+					//WeaponSummonAnimation();
 				}
 			}
 		}
@@ -257,20 +276,7 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 
 function ACS_Theft_Prevention_9()
 {
-	var language : string;
-	var audioLanguage : string;
-
-	theGame.GetGameLanguageName(audioLanguage,language);
-
-	if (
-	(ACS_SCAAR_1_Installed()
-	|| ACS_SCAAR_2_Installed()
-	|| ACS_SCAAR_3_Installed())
-	&& ( language == "CN" || language == "ZH" || audioLanguage == "CN" || audioLanguage == "ZH" )
-	)
-	{
-		theGame.ChangePlayer( "Goodbye" );
-	}
+	return;
 }
 
 function ACS_DefaultSwitch_2()
@@ -399,6 +405,11 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 		}
 		else
 		{
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( ' ', 'PLAYER_SLOT', settings);	
+		}
+		/*
+		else
+		{
 			if ( thePlayer.GetCurrentStateName() == 'Combat' ) 
 			{
 				ACS_BruxaDodgeSlideBackInitForWeaponSwitching();
@@ -416,6 +427,7 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 				}
 			}
 		}
+		*/
 	}
 	
 	entry function DefaultSwitch_2_PrimaryWeaponSwitch()
@@ -483,6 +495,19 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 
 		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_3.AddTag('acs_sword_trail_3');
+
+		if (ACS_GetItem_Aerondight())
+		{
+			//ACS_Sword_Trail_1().StopEffect('aerondight_glow_sword');
+			ACS_Sword_Trail_1().PlayEffect('aerondight_glow_sword');
+			ACS_Sword_Trail_1().StopEffect('aerondight_glow_sword');
+
+			ACS_Sword_Trail_2().StopEffect('charge_10');
+			ACS_Sword_Trail_2().PlayEffect('charge_10');
+
+			ACS_Sword_Trail_2().StopEffect('aerondight_special_trail');
+			ACS_Sword_Trail_2().PlayEffect('aerondight_special_trail');
+		}
 
 		if ( thePlayer.GetInventory().IsItemHeld(steelID) )
 		{
@@ -605,7 +630,7 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 			|| ACS_GetWeaponMode() == 1
 			)
 			{
-				WeaponSummonAnimation();
+				//WeaponSummonAnimation();
 			}
 		}
 	}

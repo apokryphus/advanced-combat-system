@@ -260,10 +260,10 @@ state WildHuntBlink_Engage in cWildHuntBlink
 	latent function DodgePunishment()
 	{
 		actors.Clear();
+		
+		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
-		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
-
-		if( actors.Size() > 0 )
+		if( actors.Size() == 1 )
 		{
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
@@ -271,11 +271,48 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 				actor = actors[i];
 
-				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.5 );  
 
-				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-					
-				npc.GainStat( BCS_Stamina, npc.GetStat( BCS_Stamina ) + npc.GetStatMax( BCS_Stamina ) * 0.1 );
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.5 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
+				}
+			}
+		}
+		else if( actors.Size() > 1 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				npc = (CNewNPC)actors[i];
+
+				actor = actors[i];
+
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.05 );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.05 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.05 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
 			}
 		}
 	}
@@ -742,17 +779,24 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			ACS_dolphin_teleport_entity().Destroy();
 
-			ent = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( 
+			ent = theGame.CreateEntity( (CEntityTemplate)LoadResource( 
 
-				"dlc\bob\data\fx\quest\q703\mandragora\q703_dolphin.w2ent"
+				"dlc\bob\data\gameplay\abilities\water_mage\sand_gusts_bob.w2ent"
 
 				, true ), pos, rot );
 
-			ent.CreateAttachment( thePlayer, , Vector( 0, 0, 0 ), EulerAngles( 0, 0, 0 ) );
+			//ent.CreateAttachment( thePlayer, , Vector( 0, 0, 0 ), EulerAngles( 0, 0, 0 ) );
 
 			//ent.PlayEffectSingle('teleport_fx_triss');
 
-			ent.PlayEffectSingle('dolphin');
+			ent.PlayEffectSingle('up');
+			ent.PlayEffectSingle('warning_up');
+
+			ent.PlayEffectSingle('diagonal_up_right');
+			ent.PlayEffectSingle('warning_up_right');
+
+			ent.PlayEffectSingle('diagonal_up_left');
+			ent.PlayEffectSingle('warning_up_left');
 
 			thePlayer.SoundEvent('monster_water_mage_combat_spray');
 
@@ -992,21 +1036,22 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			pos = thePlayer.GetWorldPosition() + thePlayer.GetHeadingVector() * 1.3;
 
-			ACS_explosion_teleport_entity().Destroy();
+			//ACS_explosion_teleport_entity().Destroy();
 
-			ent = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( 
+			//ent = theGame.CreateEntity( (CEntityTemplate)LoadResourceAsync( 
 
-				"dlc\bob\data\fx\cutscenes\cs704_detlaff_morphs\cs704_detlaff_force.w2ent"
+				//"dlc\bob\data\fx\cutscenes\cs704_detlaff_morphs\cs704_detlaff_force.w2ent"
 
-				, true ), pos, rot );
+				//, true ), pos, rot );
 
 			//ent.CreateAttachment( thePlayer, , Vector( 0, 0, 0 ), EulerAngles( 0, 0, 0 ) );
 
 			//ent.PlayEffectSingle('teleport_fx_triss');
 
-			ent.PlayEffectSingle('smoke_explosion');
+			thePlayer.StopEffect('smoke_explosion');
+			thePlayer.PlayEffectSingle('smoke_explosion');
 
-			ent.AddTag('acs_explosion_teleport_fx');
+			//ent.AddTag('acs_explosion_teleport_fx');
 
 			//ent.DestroyAfter(2);
 
@@ -2936,9 +2981,35 @@ state ACS_RollInit_Engage in cACS_RollInit
 	{
 		actors.Clear();
 		
-		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
-		if( actors.Size() > 0 )
+		if( actors.Size() == 1 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				npc = (CNewNPC)actors[i];
+
+				actor = actors[i];
+
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.5 );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.5 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
+				}
+			}
+		}
+		else if( actors.Size() > 1 )
 		{
 			for( i = 0; i < actors.Size(); i += 1 )
 			{

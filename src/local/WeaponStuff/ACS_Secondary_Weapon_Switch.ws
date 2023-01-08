@@ -673,7 +673,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				attach_rot.Yaw = 0;
 				attach_vec.X = 0;
 				attach_vec.Y = 0;
-				attach_vec.Z = 0.2;
+				attach_vec.Z = 0.4;
 
 				sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 				sword_trail_2.AddTag('acs_sword_trail_2');
@@ -683,7 +683,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				attach_rot.Yaw = 0;
 				attach_vec.X = 0;
 				attach_vec.Y = 0;
-				attach_vec.Z = 0.4;
+				attach_vec.Z = 0.8;
 
 				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 				sword_trail_3.AddTag('acs_sword_trail_3');
@@ -902,7 +902,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -911,6 +911,17 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'axii_secondary_beh_E3ARP' );
 				}
 			}
 			else
@@ -965,7 +976,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -974,6 +985,17 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'aard_secondary_beh_E3ARP' );
 				}
 			}
 			else
@@ -1028,7 +1050,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1037,6 +1059,17 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'yrden_secondary_beh_E3ARP' );
 				}
 			}
 			else
@@ -1091,7 +1124,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled())
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
 				if (ACS_PassiveTaunt_Enabled())
 				{
@@ -1100,6 +1133,17 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				else
 				{
 					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_SCAAR' );
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_PassiveTaunt_Enabled())
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_E3ARP_passive_taunt' );
+				}
+				else
+				{
+					thePlayer.ActivateAndSyncBehavior( 'quen_secondary_beh_E3ARP' );
 				}
 			}
 			else
@@ -3351,7 +3395,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.2;
+		attach_vec.Z = 0.4;
 
 		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_2.AddTag('acs_sword_trail_2');
@@ -3361,7 +3405,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.4;
+		attach_vec.Z = 0.8;
 
 		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_3.AddTag('acs_sword_trail_3');
@@ -4159,7 +4203,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.2;
+		attach_vec.Z = 0.4;
 
 		sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_2.AddTag('acs_sword_trail_2');
@@ -4169,7 +4213,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.4;
+		attach_vec.Z = 0.8;
 
 		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_3.AddTag('acs_sword_trail_3');
@@ -4704,7 +4748,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4722,13 +4766,13 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
@@ -4738,7 +4782,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4755,8 +4799,8 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4772,7 +4816,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4781,30 +4825,30 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = 0.8;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4813,39 +4857,39 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = -0.7;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
-					
+
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
-					attach_rot.Roll = 0;
+					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 90;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.7;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\ep1\data\items\weapons\unique\hakland_sword.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
-					attach_rot.Roll = 180;
+					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 180;
+					attach_rot.Yaw = 90;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0;
+					attach_vec.Z = -0.6;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
@@ -4854,13 +4898,15 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					//"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
+
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
@@ -4870,7 +4916,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
+
+					//"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -4916,9 +4964,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4932,9 +4980,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4950,9 +4998,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4966,9 +5014,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -5000,7 +5048,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.125;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
@@ -5016,7 +5064,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.125;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
@@ -5048,9 +5096,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -5064,9 +5112,9 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -5138,7 +5186,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -5151,6 +5199,22 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
+
+			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+				
+			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
+				
+			, true), thePlayer.GetWorldPosition() );
+				
+			attach_rot.Roll = 180;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.8;
+					
+			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.AddTag('quen_secondary_sword_2');
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
 		{
@@ -5163,12 +5227,28 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
 			attach_rot.Yaw = 0;
-			attach_vec.X = 0;
+			attach_vec.X = -0.004;
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.6;
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
+
+			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+				
+			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
+				
+			, true), thePlayer.GetWorldPosition() );
+				
+			attach_rot.Roll = 180;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0.004;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.75;
+					
+			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.AddTag('quen_secondary_sword_2');
 		}
 	}
 	

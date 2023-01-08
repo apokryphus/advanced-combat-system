@@ -993,9 +993,35 @@ state BruxaDodgeSlideBack_Engage in cBruxaDodgeSlideBack
 	{
 		actors.Clear();
 		
-		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
+		actors = thePlayer.GetNPCsAndPlayersInRange( 3.5, 50, , FLAG_ExcludePlayer + FLAG_Attitude_Hostile + FLAG_OnlyAliveActors);
 
-		if( actors.Size() > 0 )
+		if( actors.Size() == 1 )
+		{
+			for( i = 0; i < actors.Size(); i += 1 )
+			{
+				npc = (CNewNPC)actors[i];
+
+				actor = actors[i];
+
+				if (npc.IsHuman())
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) * 0.5 );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) * 0.5 );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
+				else
+				{
+					npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+					npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+						
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) );
+				}
+			}
+		}
+		else if( actors.Size() > 1 )
 		{
 			for( i = 0; i < actors.Size(); i += 1 )
 			{

@@ -8412,8 +8412,6 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-		 
-		
 		ACS_StartAerondightEffectInit();
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
@@ -8508,7 +8506,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -8526,7 +8524,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -8544,7 +8542,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -8562,7 +8560,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 						
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
 					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
@@ -8682,7 +8680,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
-					
+
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
@@ -8701,7 +8699,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8717,7 +8715,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8733,7 +8731,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8749,7 +8747,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8807,7 +8805,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8825,13 +8823,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
@@ -8841,7 +8839,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8858,8 +8856,8 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8875,7 +8873,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8884,30 +8882,30 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.7;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = 0.8;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -8916,39 +8914,39 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = -0.7;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
-					
+
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
-					attach_rot.Roll = 0;
+					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 90;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.7;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
+					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
-					attach_rot.Roll = 180;
+					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 180;
+					attach_rot.Yaw = 90;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0;
+					attach_vec.Z = -0.6;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
@@ -8957,13 +8955,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					//"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
+
+					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
@@ -8973,7 +8973,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+					"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
+
+					//"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9019,9 +9021,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -9035,9 +9037,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -9053,9 +9055,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -9069,16 +9071,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9094,7 +9096,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9103,14 +9105,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.125;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9119,14 +9121,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.3;
+					attach_vec.Z = 0.125;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
-					"items\weapons\additional\q308_iron_poker.w2ent"
+					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
 					, true), thePlayer.GetWorldPosition() );
 					
@@ -9151,9 +9153,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = 0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.8;
+					attach_vec.Z = 0.75;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -9167,9 +9169,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
 					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
+					attach_vec.X = -0.004;
 					attach_vec.Y = 0;
-					attach_vec.Z = -0.5;
+					attach_vec.Z = -0.6;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -9183,15 +9185,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 		
-		 
-		
 		ACS_StartAerondightEffectInit();
 
 		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
-			"dlc\dlc_acs\data\entities\swords\guisarme_02.w2ent"
+			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 				
 			, true), thePlayer.GetWorldPosition() );
 				
@@ -9204,6 +9204,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
+
+			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+				
+			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
+				
+			, true), thePlayer.GetWorldPosition() );
+				
+			attach_rot.Roll = 180;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.8;
+					
+			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.AddTag('quen_secondary_sword_2');
 		}
 		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
 		{
@@ -9216,12 +9232,28 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
 			attach_rot.Yaw = 0;
-			attach_vec.X = 0;
+			attach_vec.X = -0.004;
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.6;
 					
 			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
+
+			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
+				
+			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
+				
+			, true), thePlayer.GetWorldPosition() );
+				
+			attach_rot.Roll = 180;
+			attach_rot.Pitch = 0;
+			attach_rot.Yaw = 0;
+			attach_vec.X = 0.004;
+			attach_vec.Y = 0;
+			attach_vec.Z = 0.75;
+					
+			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.AddTag('quen_secondary_sword_2');
 		}
 	}
 	

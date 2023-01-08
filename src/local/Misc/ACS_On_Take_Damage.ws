@@ -9,6 +9,14 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 	
 	ACS_Take_Damage(action);
 
+	ACS_Player_Attack_Beh_Switch(action);
+
+	ACS_Player_Attack_Steel_Silver_Switch(action);
+
+	ACS_Player_Attack_FX_Switch(action);
+
+	ACS_Player_Attack_Enemy_Switch(action);
+
 	ACS_Player_Attack(action);
 
     ACS_Player_Guard(action);
@@ -18,6 +26,8 @@ function ACS_OnTakeDamage(action: W3DamageAction)
 	ACS_Forest_God_Shadows_Attack(action);
 
     ACS_Ice_Titan_Attack(action);
+
+	ACS_Rage_Attack(action);
 }
 
 function ACS_Player_Fall_Negate(action: W3DamageAction)
@@ -72,17 +82,17 @@ function ACS_Player_Fall_Negate(action: W3DamageAction)
 	}
 }
 
-function ACS_Player_Attack(action: W3DamageAction)
+function ACS_Player_Attack_Beh_Switch(action: W3DamageAction)
 {
     var playerAttacker, playerVictim																								: CPlayer;
 	var npc, npcAttacker 																											: CActor;
 	var animatedComponentA 																											: CAnimatedComponent;
 	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
-	var movementAdjustor																											: CMovementAdjustor;
+	var movementAdjustor, movementAdjustorNPC																						: CMovementAdjustor;
 	var ticket 																														: SMovementAdjustmentRequestTicket;
 	var item																														: SItemUniqueId;
 	var dmg																															: W3DamageAction;
-	var damageMax, damageMin																										: float;
+	var damageMax, damageMin, dmgValSilver, dmgValSteel																				: float;
 	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
 	var heal, playerVitality 																										: float;
 	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist										: float;
@@ -92,6 +102,7 @@ function ACS_Player_Attack(action: W3DamageAction)
 	var tmpBool 																													: bool;
 	var mc 																															: EMonsterCategory;
 	var blood 																														: EBloodType;
+	var item_steel, item_silver																										: SItemUniqueId;
 	
     npc = (CActor)action.victim;
 	
@@ -111,6 +122,10 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
 
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
 	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
 
 	settingsA.blendIn = 0.25f;
@@ -124,41 +139,11 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 
+	movementAdjustorNPC = npc.GetMovingAgentComponent().GetMovementAdjustor();
+
 	if 
 	(playerAttacker && npc)
-	{
-		if (npc.HasAbility('mon_rotfiend')||npc.HasAbility('mon_rotfiend_large')){npc.AddAbility('OneShotImmune');}
-
-		if ( npc.HasTag('ACS_Forest_God') )
-		{
-			if (GetWitcherPlayer().IsAnyQuenActive())
-			{
-				//GetWitcherPlayer().FinishQuen(false);
-			}
-
-			if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.5)
-			&& !npc.HasTag('ACS_Spawn_Adds_1'))
-			{
-				ACS_Forest_God_Adds_1_Spawner();
-
-				GetWitcherPlayer().DisplayHudMessage( "DID YOU THINK IT WAS THAT EASY?" );
-
-				npc.AddTag('ACS_Spawn_Adds_1');
-			}
-			else if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.25 )
-			&& !npc.HasTag('ACS_Spawn_Adds_2'))
-			{
-				ACS_Forest_God_Adds_2_Spawner();
-
-				GetWitcherPlayer().DisplayHudMessage( "DEATH AND DESTRUCTION TO ALL" );
-
-				npc.AddTag('ACS_Spawn_Adds_2');
-			} 
-
-			//thePlayer.StopEffect('critical_poison');
-			//thePlayer.PlayEffectSingle('critical_poison');
-		}
-			
+	{	
 		if(!theGame.IsDialogOrCutscenePlaying()
 		&& !thePlayer.IsUsingHorse() 
 		&& !thePlayer.IsUsingVehicle()
@@ -691,13 +676,194 @@ function ACS_Player_Attack(action: W3DamageAction)
 				}
 			}
 		}
+	}
+}
 
+function ACS_Player_Attack_Steel_Silver_Switch(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim																								: CPlayer;
+	var npc, npcAttacker 																											: CActor;
+	var animatedComponentA 																											: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor, movementAdjustorNPC																						: CMovementAdjustor;
+	var ticket 																														: SMovementAdjustmentRequestTicket;
+	var item																														: SItemUniqueId;
+	var dmg																															: W3DamageAction;
+	var damageMax, damageMin, dmgValSilver, dmgValSteel																				: float;
+	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
+	var heal, playerVitality 																										: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist										: float;
+	var itemId_r, itemId_l 																											: SItemUniqueId;
+	var itemTags_r, itemTags_l, acs_npc_blood_fx 																					: array<name>;
+	var tmpName 																													: name;
+	var tmpBool 																													: bool;
+	var mc 																															: EMonsterCategory;
+	var blood 																														: EBloodType;
+	var item_steel, item_silver																										: SItemUniqueId;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
+
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+	movementAdjustorNPC = npc.GetMovingAgentComponent().GetMovementAdjustor();
+
+	if 
+	(playerAttacker && npc)
+	{
+		if ( !action.IsDoTDamage() 
+		&& !action.WasDodged() 
+		&& action.IsActionMelee()
+		&& !(((W3Action_Attack)action).IsParried())
+		&& action.DealsAnyDamage()
+		)
+		{
+			if (thePlayer.IsWeaponHeld('steelsword'))
+			{
+				if (npc.UsesEssence()
+				&& !npc.HasAbility('mon_wraith_base')
+				&& !npc.HasAbility('mon_noonwraith_base')
+				&& !npc.HasAbility('mon_nightwraith_banshee')
+				&& !npc.HasAbility('mon_EP2_wraiths')
+				&& !npc.HasAbility('mon_nightwraith_iris')
+				&& !npc.HasAbility('q604_shades')
+				&& !npc.HasAbility('mon_wraiths_ep1')
+				&& !npc.HasAbility('mon_djinn')
+				)
+				{
+					dmgValSilver = thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_SLASHING, GetInvalidUniqueId()) 
+					+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_PIERCING, GetInvalidUniqueId())
+					+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_BLUDGEONING, GetInvalidUniqueId());
+
+					action.processedDmg.essenceDamage += dmgValSilver;
+					action.processedDmg.essenceDamage += npc.GetStat(BCS_Essence) * RandRangeF(0.05, 0);
+					//action.processedDmg.essenceDamage += ( npc.GetStatMax(BCS_Essence) - npc.GetStat( BCS_Essence ) ) * RandRangeF(0.05, 0);
+				}
+			}
+			else if (thePlayer.IsWeaponHeld('silversword'))
+			{
+				if (npc.UsesVitality())
+				{
+					dmgValSteel = thePlayer.GetTotalWeaponDamage(item_silver, theGame.params.DAMAGE_NAME_SILVER, GetInvalidUniqueId()); 
+
+					action.processedDmg.vitalityDamage += dmgValSteel;
+
+					action.processedDmg.vitalityDamage += npc.GetStat(BCS_Vitality) * RandRangeF(0.05, 0);
+
+					if (!ACS_GetItem_Aerondight())
+					{
+						thePlayer.GetInventory().SetItemDurabilityScript(item_silver, (thePlayer.GetInventory().GetItemDurability(item_silver) - (thePlayer.GetInventory().GetItemDurability(item_silver) * 0.025)) );
+					}
+					else
+					{
+						action.processedDmg.vitalityDamage += ( npc.GetStatMax(BCS_Vitality) - npc.GetStat( BCS_Vitality ) ) * 0.05;
+					}
+				}
+			}	
+		}
+	}
+}
+
+function ACS_Player_Attack_FX_Switch(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim																								: CPlayer;
+	var npc, npcAttacker 																											: CActor;
+	var animatedComponentA 																											: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor, movementAdjustorNPC																						: CMovementAdjustor;
+	var ticket 																														: SMovementAdjustmentRequestTicket;
+	var item																														: SItemUniqueId;
+	var dmg																															: W3DamageAction;
+	var damageMax, damageMin, dmgValSilver, dmgValSteel																				: float;
+	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
+	var heal, playerVitality 																										: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist										: float;
+	var itemId_r, itemId_l 																											: SItemUniqueId;
+	var itemTags_r, itemTags_l, acs_npc_blood_fx 																					: array<name>;
+	var tmpName 																													: name;
+	var tmpBool 																													: bool;
+	var mc 																															: EMonsterCategory;
+	var blood 																														: EBloodType;
+	var item_steel, item_silver																										: SItemUniqueId;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
+
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+	movementAdjustorNPC = npc.GetMovingAgentComponent().GetMovementAdjustor();
+
+	if 
+	(playerAttacker && npc)
+	{
 		if ( !action.IsDoTDamage() 
 		&& !action.WasDodged() 
 		&& action.IsActionMelee()
 		&& !(((W3Action_Attack)action).IsParried())
 		)
 		{
+			ACS_Caretaker_Drain_Energy();
+
 			if (action.DealsAnyDamage())
 			{
 				if ( !thePlayer.HasTag('ACS_Storm_Spear_Active') && !thePlayer.HasTag('ACS_Sparagmos_Active') )
@@ -853,9 +1019,118 @@ function ACS_Player_Attack(action: W3DamageAction)
 					}
 				}
 			}
+			
+			if ( action.HasAnyCriticalEffect() 
+			|| action.GetIsHeadShot() 
+			|| action.HasForceExplosionDismemberment()
+			|| action.IsCriticalHit() )
+			{
+				ACS_Wraith_Attack_Trail();
+			}	
+		}
+	}
+}
 
-			ACS_Caretaker_Drain_Energy();
+function ACS_Player_Attack_Enemy_Switch(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim																								: CPlayer;
+	var npc, npcAttacker 																											: CActor;
+	var animatedComponentA 																											: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor, movementAdjustorNPC																						: CMovementAdjustor;
+	var ticket 																														: SMovementAdjustmentRequestTicket;
+	var item																														: SItemUniqueId;
+	var dmg																															: W3DamageAction;
+	var damageMax, damageMin, dmgValSilver, dmgValSteel																				: float;
+	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
+	var heal, playerVitality 																										: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist										: float;
+	var itemId_r, itemId_l 																											: SItemUniqueId;
+	var itemTags_r, itemTags_l, acs_npc_blood_fx 																					: array<name>;
+	var tmpName 																													: name;
+	var tmpBool 																													: bool;
+	var mc 																															: EMonsterCategory;
+	var blood 																														: EBloodType;
+	var item_steel, item_silver																										: SItemUniqueId;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
 
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+	movementAdjustorNPC = npc.GetMovingAgentComponent().GetMovementAdjustor();
+
+	if 
+	(playerAttacker && npc)
+	{
+		if (npc.HasAbility('mon_rotfiend')||npc.HasAbility('mon_rotfiend_large')){npc.AddAbility('OneShotImmune');}
+
+		if ( npc.HasTag('ACS_Forest_God') )
+		{
+			if (GetWitcherPlayer().IsAnyQuenActive())
+			{
+				//GetWitcherPlayer().FinishQuen(false);
+			}
+
+			if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.5)
+			&& !npc.HasTag('ACS_Spawn_Adds_1'))
+			{
+				ACS_Forest_God_Adds_1_Spawner();
+
+				GetWitcherPlayer().DisplayHudMessage( "DID YOU THINK IT WAS THAT EASY?" );
+
+				npc.AddTag('ACS_Spawn_Adds_1');
+			}
+			else if ( (npc.GetStat(BCS_Essence) <= npc.GetStatMax(BCS_Essence) * 0.25 )
+			&& !npc.HasTag('ACS_Spawn_Adds_2'))
+			{
+				ACS_Forest_God_Adds_2_Spawner();
+
+				GetWitcherPlayer().DisplayHudMessage( "DEATH AND DESTRUCTION TO ALL" );
+
+				npc.AddTag('ACS_Spawn_Adds_2');
+			} 
+
+			//thePlayer.StopEffect('critical_poison');
+			//thePlayer.PlayEffectSingle('critical_poison');
+		}
+
+		if ( !action.IsDoTDamage() 
+		&& !action.WasDodged() 
+		&& action.IsActionMelee()
+		&& !(((W3Action_Attack)action).IsParried())
+		)
+		{
 			if (action.GetHitReactionType() != EHRT_Reflect)
 			{
 				if (npc.IsHuman())
@@ -875,14 +1150,6 @@ function ACS_Player_Attack(action: W3DamageAction)
 					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
 				}
 			}
-			
-			if ( action.HasAnyCriticalEffect() 
-			|| action.GetIsHeadShot() 
-			|| action.HasForceExplosionDismemberment()
-			|| action.IsCriticalHit() )
-			{
-				ACS_Wraith_Attack_Trail();
-			}
 
 			if (npc.HasAbility( 'ForceHeadbuttFinisher' ))
 			{
@@ -894,11 +1161,166 @@ function ACS_Player_Attack(action: W3DamageAction)
 				npc.RemoveAbility('ForceHiltFinisher');
 			}
 
-			if (npc.HasTag('ACS_Swapped_To_Shield'))
+			if (
+			npc.HasTag('ACS_Swapped_To_Shield')
+			|| npc.HasTag('ACS_In_Rage'))
 			{
-				action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
+				if (npc.UsesVitality())
+				{
+					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.5;
+				}
+				else if (npc.UsesEssence())
+				{
+					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.5;
+				}
+
+				ticket = movementAdjustorNPC.GetRequest( 'ACS_NPC_Attacked_Rotate');
+				movementAdjustorNPC.CancelByName( 'ACS_NPC_Attacked_Rotate' );
+				movementAdjustorNPC.CancelAll();
+
+				ticket = movementAdjustorNPC.CreateNewRequest( 'ACS_NPC_Attacked_Rotate' );
+				movementAdjustorNPC.AdjustmentDuration( ticket, 0.25 );
+				movementAdjustorNPC.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+				movementAdjustorNPC.RotateTowards( ticket, thePlayer );
+
+				if (npc.HasTag('ACS_Swapped_To_Shield'))
+				{
+					npc.SoundEvent("shield_wood_impact");
+
+					npc.SoundEvent("grunt_vo_block");
+				}
 			}
 
+			if ( npc.HasTag('ACS_Nekker_Guardian'))
+			{
+				if (npc.UsesVitality())
+				{
+					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.75;
+				}
+				else if (npc.UsesEssence())
+				{
+					action.processedDmg.essenceDamage -= action.processedDmg.essenceDamage * 0.75;
+				}
+
+				ticket = movementAdjustorNPC.GetRequest( 'ACS_NPC_Attacked_Rotate');
+				movementAdjustorNPC.CancelByName( 'ACS_NPC_Attacked_Rotate' );
+				movementAdjustorNPC.CancelAll();
+
+				ticket = movementAdjustorNPC.CreateNewRequest( 'ACS_NPC_Attacked_Rotate' );
+				movementAdjustorNPC.AdjustmentDuration( ticket, 0.5 );
+				movementAdjustorNPC.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+				movementAdjustorNPC.RotateTowards( ticket, thePlayer );
+
+				npc.SoundEvent("monster_him_vo_pain_ALWAYS");
+
+				npc.SoundEvent("monster_bies_vo_pain_normal");
+			}		
+		}
+		else
+		{
+			if (npc.IsHuman() )
+			{
+				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+
+				if (
+				npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ) 
+				&& npc.GetBehaviorGraphInstanceName() != 'Shield'
+				)	
+				{
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}	
+			}
+			else
+			{
+				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
+
+				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
+					
+				if (npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ))	
+				{
+					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
+				}
+			}
+		}
+	}
+}
+
+function ACS_Player_Attack(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim																																		: CPlayer;
+	var npc, npcAttacker 																																					: CActor;
+	var animatedComponentA 																																					: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																															: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor, movementAdjustorNPC																																: CMovementAdjustor;
+	var ticket 																																								: SMovementAdjustmentRequestTicket;
+	var item																																								: SItemUniqueId;
+	var dmg																																									: W3DamageAction;
+	var damageMax, damageMin, dmgValSilver, dmgValSteel																														: float;
+	var vACS_Shield_Summon 																																					: cACS_Shield_Summon;
+	var heal, playerVitality 																																				: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence, finisherDist, vampireDmgValSteel, vampireDmgValSilver										: float;
+	var itemId_r, itemId_l 																																					: SItemUniqueId;
+	var itemTags_r, itemTags_l, acs_npc_blood_fx 																															: array<name>;
+	var tmpName 																																							: name;
+	var tmpBool 																																							: bool;
+	var mc 																																									: EMonsterCategory;
+	var blood 																																								: EBloodType;
+	var item_steel, item_silver																																				: SItemUniqueId;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
+
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+	movementAdjustorNPC = npc.GetMovingAgentComponent().GetMovementAdjustor();
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SteelSword, item_steel);
+
+	thePlayer.GetInventory().GetItemEquippedOnSlot(EES_SilverSword, item_silver);
+
+	if 
+	(playerAttacker && npc)
+	{
+		if ( !action.IsDoTDamage() 
+		&& !action.WasDodged() 
+		&& action.IsActionMelee()
+		&& !(((W3Action_Attack)action).IsParried())
+		)
+		{
 			if (
 			thePlayer.HasTag('aard_sword_equipped')
 			|| thePlayer.HasTag('aard_secondary_sword_equipped')
@@ -1524,29 +1946,97 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 				ACS_Passive_Weapon_Effects_Switch();
 
+				if (thePlayer.IsWeaponHeld('steelsword'))
+				{
+					if (npc.UsesEssence()
+					&& !npc.HasAbility('mon_wraith_base')
+					&& !npc.HasAbility('mon_noonwraith_base')
+					&& !npc.HasAbility('mon_nightwraith_banshee')
+					&& !npc.HasAbility('mon_EP2_wraiths')
+					&& !npc.HasAbility('mon_nightwraith_iris')
+					&& !npc.HasAbility('q604_shades')
+					&& !npc.HasAbility('mon_wraiths_ep1')
+					&& !npc.HasAbility('mon_djinn')
+					)
+					{
+						dmgValSilver = thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_SLASHING, GetInvalidUniqueId()) 
+						+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_PIERCING, GetInvalidUniqueId())
+						+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_BLUDGEONING, GetInvalidUniqueId());
+
+						action.processedDmg.essenceDamage += dmgValSilver;
+						action.processedDmg.essenceDamage += npc.GetStat(BCS_Essence) * RandRangeF(0.005, 0);
+						//action.processedDmg.essenceDamage += ( npc.GetStatMax(BCS_Essence) - npc.GetStat( BCS_Essence ) ) * RandRangeF(0.05, 0);
+					}
+				}
+				else if (thePlayer.IsWeaponHeld('silversword'))
+				{
+					if (npc.UsesVitality())
+					{
+						dmgValSteel = thePlayer.GetTotalWeaponDamage(item_silver, theGame.params.DAMAGE_NAME_SILVER, GetInvalidUniqueId()); 
+
+						action.processedDmg.vitalityDamage += dmgValSteel;
+
+						action.processedDmg.vitalityDamage += npc.GetStat(BCS_Vitality) * RandRangeF(0.005, 0);
+
+						if (!ACS_GetItem_Aerondight())
+						{
+							thePlayer.GetInventory().SetItemDurabilityScript(item_silver, (thePlayer.GetInventory().GetItemDurability(item_silver) - (thePlayer.GetInventory().GetItemDurability(item_silver) * 0.025)) );
+						}
+						else
+						{
+							action.processedDmg.vitalityDamage += ( npc.GetStatMax(BCS_Vitality) - npc.GetStat( BCS_Vitality ) ) * 0.05;
+						}
+					}
+				}
+
 				if (npc.UsesEssence())
 				{
 					thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.1 ); 
 
-					maxTargetEssence = npc.GetStatMax( BCS_Essence );
-					
-					damageMax = maxTargetEssence * ACS_Vampire_Claws_Monster_Max_Damage(); 
-					
-					damageMin = maxTargetEssence * ACS_Vampire_Claws_Monster_Min_Damage(); 
+					if (ACS_Vampire_Claws_Monster_Max_Damage() != 0 
+					&& ACS_Vampire_Claws_Monster_Min_Damage() != 0 )
+					{
+						maxTargetEssence = npc.GetStatMax( BCS_Essence );
+						
+						damageMax = maxTargetEssence * ACS_Vampire_Claws_Monster_Max_Damage(); 
+						
+						damageMin = maxTargetEssence * ACS_Vampire_Claws_Monster_Min_Damage(); 
 
-					action.processedDmg.essenceDamage += RandRangeF(damageMax,damageMin) - action.processedDmg.essenceDamage;
+						action.processedDmg.essenceDamage += RandRangeF(damageMax,damageMin) - action.processedDmg.essenceDamage;
+					}
+					else
+					{
+						vampireDmgValSilver = thePlayer.GetTotalWeaponDamage(item_silver, theGame.params.DAMAGE_NAME_SILVER, GetInvalidUniqueId()); 
+
+						action.processedDmg.essenceDamage += vampireDmgValSilver;
+
+						action.processedDmg.essenceDamage += npc.GetStat(BCS_Essence) * RandRangeF(0.05, 0);
+					}
 				}
 				else if (npc.UsesVitality())
 				{
 					thePlayer.GainStat( BCS_Focus, thePlayer.GetStatMax( BCS_Focus) * 0.05 );
 
-					maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+					if (ACS_Vampire_Claws_Human_Max_Damage() != 0 
+					&& ACS_Vampire_Claws_Human_Min_Damage() != 0 )
+					{
+						maxTargetVitality = npc.GetStatMax( BCS_Vitality );
 
-					damageMax = maxTargetVitality * ACS_Vampire_Claws_Human_Max_Damage(); 
-					
-					damageMin = maxTargetVitality * ACS_Vampire_Claws_Human_Min_Damage(); 
+						damageMax = maxTargetVitality * ACS_Vampire_Claws_Human_Max_Damage(); 
+						
+						damageMin = maxTargetVitality * ACS_Vampire_Claws_Human_Min_Damage(); 
 
-					action.processedDmg.vitalityDamage += RandRangeF(damageMax,damageMin) - action.processedDmg.vitalityDamage;
+						action.processedDmg.vitalityDamage += RandRangeF(damageMax,damageMin) - action.processedDmg.vitalityDamage;
+					}
+					else
+					{
+						vampireDmgValSteel = thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_SLASHING, GetInvalidUniqueId()) 
+						+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_PIERCING, GetInvalidUniqueId())
+						+ thePlayer.GetTotalWeaponDamage(item_steel, theGame.params.DAMAGE_NAME_BLUDGEONING, GetInvalidUniqueId());
+
+						action.processedDmg.vitalityDamage += vampireDmgValSteel;
+						action.processedDmg.vitalityDamage += npc.GetStat(BCS_Vitality) * RandRangeF(0.05, 0);
+					}
 				}
 
 				if( !npc.IsImmuneToBuff( EET_Bleeding ) && !npc.HasBuff( EET_Bleeding ) ) 
@@ -1672,34 +2162,6 @@ function ACS_Player_Attack(action: W3DamageAction)
 
 				return;
 			}		
-		}
-		else
-		{
-			if (npc.IsHuman() )
-			{
-				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-
-				if (
-				npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ) 
-				&& npc.GetBehaviorGraphInstanceName() != 'Shield'
-				)	
-				{
-					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
-				}	
-			}
-			else
-			{
-				npc.GainStat( BCS_Morale, npc.GetStatMax( BCS_Morale ) );  
-
-				npc.GainStat( BCS_Focus, npc.GetStatMax( BCS_Focus ) );  
-					
-				if (npc.GetStat(BCS_Stamina) != npc.GetStatMax( BCS_Stamina ))	
-				{
-					npc.GainStat( BCS_Stamina, npc.GetStatMax( BCS_Stamina ) * 0.5 );
-				}
-			}
 		}
 	}
 }
@@ -2269,60 +2731,6 @@ function ACS_Take_Damage(action: W3DamageAction)
 		}
 		else
 		{
-			if (
-			npcAttacker.HasTag('ACS_Perilous_Attacker') 
-			&& !npcAttacker.HasTag('ACS_Forest_God')
-			)
-			{
-				ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
-				movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.CancelAll();
-				thePlayer.GetMovingAgentComponent().ResetMoveRequests();
-				thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
-				thePlayer.ResetRawPlayerHeading();
-				ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
-				movementAdjustor.AdjustmentDuration( ticket, 0.25 );
-				movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
-
-				GetACSWatcher().Grow_Geralt_Immediate();
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				movementAdjustor.RotateTowards( ticket, npcAttacker );
-
-				thePlayer.SetPlayerTarget( npcAttacker );
-
-				thePlayer.SetPlayerCombatTarget( npcAttacker );
-
-				thePlayer.UpdateDisplayTarget( true );
-
-				thePlayer.UpdateLookAtTarget();
-
-				thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-				if( !playerVictim.IsImmuneToBuff( EET_Bleeding ) && !playerVictim.HasBuff( EET_Bleeding ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Bleeding, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Knockdown ) && !playerVictim.HasBuff( EET_Knockdown ) ) 
-				{ 	
-					if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
-
-					playerVictim.AddEffectDefault( EET_Knockdown, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-				
-				if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
-				{ 	
-					playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' ); 							
-				}
-
-				ACS_PlayerHitEffects();
-
-				thePlayer.PlayEffectSingle('mutation_7_adrenaline_drop');
-				thePlayer.StopEffect('mutation_7_adrenaline_drop');
-			}
-
 			if (
 			!action.IsDoTDamage()
 			&& action.GetHitReactionType() != EHRT_Reflect
@@ -3850,28 +4258,64 @@ function ACS_Forest_God_Shadows_Attack(action: W3DamageAction)
 	&& !action.IsDoTDamage()
 	)
 	{	
-		if (playerVictim)
+		if (
+			 thePlayer.HasTag('igni_sword_equipped_TAG') || !thePlayer.HasTag('igni_secondary_sword_equipped_TAG')
+		)
 		{
-			if (action.IsActionMelee())
+			if (playerVictim)
 			{
-				npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.05 );
+				if (action.IsActionMelee())
+				{
+					npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.0125 );
 
-				npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.25 );
+					npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.25 );
+
+					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+				}
+			}
+			else
+			{
+				npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.25 );
+
+				npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.5 );
+
+				if (npc.UsesEssence())
+				{
+					npc.DrainEssence(npc.GetStatMax(BCS_Essence) * 0.25 );
+				}
+				else if (npc.UsesVitality())
+				{
+					npc.DrainVitality(npc.GetStatMax(BCS_Vitality) * 0.25 );
+				}
 			}
 		}
 		else
 		{
-			npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.25 );
-
-			npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.5 );
-
-			if (npc.UsesEssence())
+			if (playerVictim)
 			{
-				npc.DrainEssence(npc.GetStatMax(BCS_Essence) * 0.25 );
+				if (action.IsActionMelee())
+				{
+					npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.025 );
+
+					npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.25 );
+
+					action.processedDmg.vitalityDamage -= action.processedDmg.vitalityDamage * 0.25;
+				}
 			}
-			else if (npc.UsesVitality())
+			else
 			{
-				npc.DrainVitality(npc.GetStatMax(BCS_Vitality) * 0.25 );
+				npcAttacker.GainStat( BCS_Essence, npcAttacker.GetStatMax(BCS_Essence) * 0.25 );
+
+				npcAttacker.GainStat( BCS_Stamina, npcAttacker.GetStatMax(BCS_Stamina) * 0.5 );
+
+				if (npc.UsesEssence())
+				{
+					npc.DrainEssence(npc.GetStatMax(BCS_Essence) * 0.25 );
+				}
+				else if (npc.UsesVitality())
+				{
+					npc.DrainVitality(npc.GetStatMax(BCS_Vitality) * 0.25 );
+				}
 			}
 		}
 	}
@@ -4026,6 +4470,192 @@ function ACS_Ice_Titan_Attack(action: W3DamageAction)
 	}
 }
 
+function ACS_Rage_Attack(action: W3DamageAction)
+{
+    var playerAttacker, playerVictim																								: CPlayer;
+	var npc, npcAttacker 																											: CActor;
+	var animatedComponentA 																											: CAnimatedComponent;
+	var settingsA, settingsB, settings_interrupt																					: SAnimatedComponentSlotAnimationSettings;
+	var movementAdjustor																											: CMovementAdjustor;
+	var ticket 																														: SMovementAdjustmentRequestTicket;
+	var item																														: SItemUniqueId;
+	var dmg																															: W3DamageAction;
+	var damageMax, damageMin																										: float;
+	var vACS_Shield_Summon 																											: cACS_Shield_Summon;
+	var heal, playerVitality 																										: float;
+	var curTargetVitality, maxTargetVitality, curTargetEssence, maxTargetEssence													: float;
+	var paramsKnockdown, paramsDrunkEffect 																							: SCustomEffectParams;
+	
+    npc = (CActor)action.victim;
+	
+	npcAttacker = (CActor)action.attacker;
+	
+	playerAttacker = (CPlayer)action.attacker;
+	
+	playerVictim = (CPlayer)action.victim;
+
+	curTargetVitality = npc.GetStat( BCS_Vitality );
+
+	maxTargetVitality = npc.GetStatMax( BCS_Vitality );
+
+	curTargetEssence = npc.GetStat( BCS_Essence );
+
+	maxTargetEssence = npc.GetStatMax( BCS_Essence );
+
+	heal = thePlayer.GetStatMax(BCS_Vitality) * 0.025;
+
+	animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' ); ACS_Theft_Prevention_6 ();
+
+	settingsA.blendIn = 0.25f;
+	settingsA.blendOut = 0.75f;
+
+	settingsB.blendIn = 0.3f;
+	settingsB.blendOut = 0.3f;
+	
+	settings_interrupt.blendIn = 0.25f;
+	settings_interrupt.blendOut = 0.75f;
+
+	movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+
+	if (
+	npcAttacker
+	&& npcAttacker.HasTag('ACS_In_Rage') 
+	&& !npcAttacker.HasTag('ACS_Forest_God')
+	&& !npcAttacker.HasTag('ACS_Forest_God_Shadows')
+	&& !action.IsDoTDamage()
+	)
+	{
+		if (playerVictim
+		&& !GetWitcherPlayer().IsQuenActive(true))
+		{
+			if (action.IsActionMelee())
+			{
+				if (!action.WasDodged() 
+				&& !thePlayer.IsCurrentlyDodging())
+				{
+					thePlayer.RemoveBuffImmunity( EET_Stagger,					'acs_guard');
+					thePlayer.RemoveBuffImmunity( EET_LongStagger,				'acs_guard');
+
+					thePlayer.SetGuarded(false);
+					thePlayer.OnGuardedReleased();	
+
+					GetACSWatcher().RemoveTimer('ACS_Shield_Spawn_Delay'); 
+
+					ACS_Shield_Destroy(); 
+
+					ticket = movementAdjustor.GetRequest( 'ACS_Player_Attacked_Rotate');
+					movementAdjustor.CancelByName( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.CancelAll();
+					thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+					thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+					thePlayer.ResetRawPlayerHeading();
+					ticket = movementAdjustor.CreateNewRequest( 'ACS_Player_Attacked_Rotate' );
+					movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+					movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+
+					GetACSWatcher().Grow_Geralt_Immediate();
+
+					thePlayer.ClearAnimationSpeedMultipliers();	
+
+					movementAdjustor.RotateTowards( ticket, npcAttacker );
+
+					thePlayer.SetPlayerTarget( npcAttacker );
+
+					thePlayer.SetPlayerCombatTarget( npcAttacker );
+
+					thePlayer.UpdateDisplayTarget( true );
+
+					thePlayer.UpdateLookAtTarget();
+
+					thePlayer.RaiseEvent( 'AttackInterrupt' );
+
+					if (((CMovingPhysicalAgentComponent)(npcAttacker.GetMovingAgentComponent())).GetCapsuleHeight() >= 2
+					|| npcAttacker.GetRadius() >= 0.7
+					)
+					{
+						if( !playerVictim.IsImmuneToBuff( EET_HeavyKnockdown ) && !playerVictim.HasBuff( EET_HeavyKnockdown ) ) 
+						{ 	
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+							//playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' );
+
+							paramsKnockdown.effectType = EET_HeavyKnockdown;
+							paramsKnockdown.creator = npcAttacker;
+							paramsKnockdown.sourceName = "ACS_Rage_Effect_Custom";
+							paramsKnockdown.duration = 2;
+
+							playerVictim.AddEffectCustom( paramsKnockdown ); 							
+						}
+					}
+					else
+					{
+						if( !playerVictim.IsImmuneToBuff( EET_Stagger ) && !playerVictim.HasBuff( EET_Stagger ) ) 
+						{ 	
+							if(thePlayer.IsAlive()){playerVictim.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );}
+
+							//playerVictim.AddEffectDefault( EET_HeavyKnockdown, npcAttacker, 'acs_HIT_REACTION' );
+
+							paramsKnockdown.effectType = EET_Stagger;
+							paramsKnockdown.creator = npcAttacker;
+							paramsKnockdown.sourceName = "ACS_Rage_Effect_Custom";
+							paramsKnockdown.duration = 0.25;
+
+							playerVictim.AddEffectCustom( paramsKnockdown ); 							
+						}
+					}
+					
+					if( !playerVictim.IsImmuneToBuff( EET_Drunkenness ) && !playerVictim.HasBuff( EET_Drunkenness ) ) 
+					{ 	
+						//playerVictim.AddEffectDefault( EET_Drunkenness, npcAttacker, 'acs_HIT_REACTION' );
+
+						paramsDrunkEffect.effectType = EET_Drunkenness;
+						paramsDrunkEffect.creator = npcAttacker;
+						paramsDrunkEffect.sourceName = "ACS_Rage_Effect_Custom";
+						paramsDrunkEffect.duration = 3;
+
+						playerVictim.AddEffectCustom( paramsDrunkEffect );								
+					}
+
+					ACS_PlayerHitEffects();
+
+					thePlayer.PlayEffectSingle('mutation_7_adrenaline_drop');
+					thePlayer.StopEffect('mutation_7_adrenaline_drop');
+
+					thePlayer.DrainVitality((thePlayer.GetStat(BCS_Vitality) * 0.3) + 50);
+
+					thePlayer.DrainStamina( ESAT_FixedValue, thePlayer.GetStat(BCS_Stamina) * 0.3 );
+
+					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) * 0.3 );
+
+					ACS_Rage_Marker_1_Get().Destroy();
+					ACS_Rage_Marker_2_Get().Destroy();
+					ACS_Rage_Marker_3_Get().Destroy();
+					ACS_Rage_Marker_4_Get().Destroy();
+					ACS_Rage_Marker_5_Get().Destroy();
+					ACS_Rage_Marker_6_Get().Destroy();
+					ACS_Rage_Marker_7_Get().Destroy();
+
+					GetACSWatcher().RemoveTimer('ACS_Rage_Remove');
+					GetACSWatcher().AddTimer('ACS_Rage_Remove', 0, false);
+
+					ACS_Rage_Marker_Player_1_Get().Destroy();
+					ACS_Rage_Marker_Player_2_Get().Destroy();
+					ACS_Rage_Marker_Player_3_Get().Destroy();
+					ACS_Rage_Marker_Player_4_Get().Destroy();
+					ACS_Rage_Marker_Player_5_Get().Destroy();
+					ACS_Rage_Marker_Player_6_Get().Destroy();
+					ACS_Rage_Marker_Player_7_Get().Destroy();
+
+					thePlayer.SoundEvent("cmb_play_hit_heavy");
+
+					thePlayer.PlayEffect('heavy_hit');
+					thePlayer.StopEffect('heavy_hit');
+				}
+			}
+		}
+	}
+}
+
 function ACS_EnemyBehSwitch_OnHit(i: int)
 {
 	var vACS_EnemyBehSwitch_OnHit : cACS_EnemyBehSwitch_OnHit;
@@ -4076,7 +4706,8 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 {
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
-	private var behGraphNames 			: array< name >;	
+	private var behGraphNames 			: array< name >;
+	private var params 					: SCustomEffectParams;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4170,7 +4801,12 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch_OnHit
 
 				Sleep(0.0625);
 
-				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+				params.effectType = EET_Stagger;
+				params.creator = thePlayer;
+				params.sourceName = "ACS_Beh_Transform";
+				params.duration = 0.1;
+
+				actor.AddEffectCustom( params );	
 
 				actor.SetAnimationSpeedMultiplier(1);
 
@@ -4189,6 +4825,7 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
 	private var behGraphNames 			: array< name >;
+	private var params 					: SCustomEffectParams;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4284,7 +4921,12 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch_OnHit
 
 				Sleep(0.0625);
 
-				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+				params.effectType = EET_Stagger;
+				params.creator = thePlayer;
+				params.sourceName = "ACS_Beh_Transform";
+				params.duration = 0.1;
+
+				actor.AddEffectCustom( params );	
 
 				actor.SetAnimationSpeedMultiplier(1.15);
 
@@ -4305,6 +4947,7 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 	private var actor					: CActor;
 	private var sword					: SItemUniqueId;
 	private var behGraphNames 			: array< name >;
+	private var params 					: SCustomEffectParams;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4400,7 +5043,12 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch_OnHit
 
 				Sleep(0.0625);
 
-				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+				params.effectType = EET_Stagger;
+				params.creator = thePlayer;
+				params.sourceName = "ACS_Beh_Transform";
+				params.duration = 0.1;
+
+				actor.AddEffectCustom( params );	
 
 				actor.SetAnimationSpeedMultiplier(0.875);
 
@@ -4421,6 +5069,7 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 	private var shield_temp														: CEntityTemplate;
 	private var shield															: CEntity;
 	private var behGraphNames 													: array< name >;
+	private var params 															: SCustomEffectParams;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -4523,7 +5172,12 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch_OnHit
 
 				Sleep(0.0625);
 
-				actor.AddEffectDefault( EET_Stagger, thePlayer, 'console' );
+				params.effectType = EET_Stagger;
+				params.creator = thePlayer;
+				params.sourceName = "ACS_Beh_Transform";
+				params.duration = 0.1;
+
+				actor.AddEffectCustom( params );	
 
 				actor.SetAnimationSpeedMultiplier(1.25);
 

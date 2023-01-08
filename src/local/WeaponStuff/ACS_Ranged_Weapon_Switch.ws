@@ -270,7 +270,18 @@ state Engage in cRangedWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh' );
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh_SCAAR' );
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh_E3ARP' );
+			}
+			else
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh' );
+			}
 					
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
 			{
@@ -294,7 +305,18 @@ state Engage in cRangedWeaponSwitch
 		&& !thePlayer.IsUsingVehicle()
 		)
 		{
-			thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh' );
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh_SCAAR' );
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh_E3ARP' );
+			}
+			else
+			{
+				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh' );
+			}
 					
 			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
 			{
