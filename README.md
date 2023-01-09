@@ -960,6 +960,10 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
  ## Drowners, Scurvers, Rotfiends
 - Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
 
+ ## Ghouls, Wild Hunt Hounds
+- All ghoul subspecies are capable of launching projectile attacks from a distance. These are poisonous to the player and will explode if set fire to.
+- Wild hunt hounds are capable of launching ice spikes from a distance. 
+
  ## Nekker Guardian
 - While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
 - Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
