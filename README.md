@@ -12,9 +12,19 @@ https://www.nexusmods.com/witcher3/mods/7035
 
 # INSTALLATION
 
-## Automatic Installation (ONLY FOR NEXT GEN UPDATE): 
+## Automatic Installation (FOR NEXT GEN UPDATE): 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://github.com/apokryphus/advanced-combat-system/releases/download/supplement-v1.0.0/ACS_INSTALL_SCRIPT_RIGHT_CLICK_TO_RUN_WITH_POWERSHELL.ps1) and place it directly in your **installation folder for The Witcher 3**. 
+- If your game is on Steam, then the folder path might look something like: 
+  - **C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3**
+- If your game is on GOG, then the folder path might looking something like: 
+  - **C:\Program Files (x86)\GOG Galaxy\Games\The Witcher 3 Wild Hunt GOTY**
+- If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
+- Right click the script and click **Run with PowerShell**.
+
+## Automatic Installation (FOR 1.32): 
+Easy installer script that downloads and installs the mod automatically.
+- Download this [script](https://www.nexusmods.com/witcher3/mods/7035?tab=files&file_id=42633) and place it directly in your **installation folder for The Witcher 3**. 
 - If your game is on Steam, then the folder path might look something like: 
   - **C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3**
 - If your game is on GOG, then the folder path might looking something like: 
@@ -29,13 +39,18 @@ For those that prefer to install manually.
 - Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 
 ## After Installation:
+- If you are on **Next Gen**, check these two files:
+  - `bin\config\r4game\user_config_matrix\pc\dx11filelist.txt`
+  - `bin\config\r4game\user_config_matrix\pc\dx12filelist.txt`
+- Add the line `modACS.xml;` to the very bottom of both files if it does not exist. 
 - Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. 
 - If not, remember to pick and include the code from ACS.
 - If you don't know how to use the script merger, please read through this [guide](https://aelto.github.io/tw3-notes/misc/merging/index.html) by Aeltoth, author of RER. 
-- Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
+- If you are on **1.32**, use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 
 ## Updating the mod:
-- Run the automatic installer again, or go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
+- For both **Next Gen** and **1.32**, run the automatic installer again. 
+- For **Next Gen** only, go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
 
 
 
