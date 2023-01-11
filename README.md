@@ -925,7 +925,7 @@ In combat:
 # 8. ENEMIES
 
 ## Rage
-- Rapidly attacking or dodging consecutively while in combat with at least one enemy will trigger the Rage mechanic in enemies every 10 seconds.
+- Rapidly attacking or dodging consecutively while in combat with at least one enemy will trigger the Rage mechanic in enemies every 14 seconds.
 - When triggered, a red icon will appear above the player's head, accompanied by an audio cue.
 - After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
 - Rage lasts for 2 seconds, or until the enemy lands a hit on the player.
