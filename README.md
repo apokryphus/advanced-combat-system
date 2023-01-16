@@ -974,7 +974,7 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 
  ## Blade of the Unseen
 - Killing a bruxa will trigger the summoning of the Blade of the Unseen, the vampire assassin.
-- The Blade of the Unseen will hunt for the player, showing himself to the player any time between 5-10 minutes after the death of the last bruxa killed by the player.
+- The Blade of the Unseen will hunt for the player, showing himself to the player any time between 3-5 minutes after the death of the last bruxa killed by the player.
 - If the player manages to run away, the Blade will continue its pursuit.
 - The hunt will only be over if the player defeats the Blade of the Unseen, or if the player is killed by him.
 
