@@ -931,6 +931,13 @@ In combat:
 - Rage lasts for 2 seconds, or until the enemy lands a hit on the player.
 - Enraged enemies take 50% less damage, and are immune to hit reactions as well as negative buffs.
 - The attack from enraged enemies cannot be blocked except by the alternate Quen sign. The attack will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as blurring the player's screen. Small enemies will stagger the player, while larger enemies will knock the player back. 
+- Performing a perfect dodge* from an enraged attack will:
+  - Drain the attacker's stamina by 50% of their current stamina.
+  - Damage the attacker by 10% of their max health.
+  - Stagger the attacker.
+  
+*Perfect dodge means dodging the attack right as it is about to land.
+
 
 ## Dynamic Enemy Behavior System 
 
