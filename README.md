@@ -1044,7 +1044,8 @@ https://user-images.githubusercontent.com/98017171/160714014-cfb75b10-6d9d-48cd-
 ```Witcher Sense + Hold Sprint + Forward (W)``` or ```Witcher Sense + Hold Sprint + Doubletap Forward (W)```
 - Can only be used out of combat.
 - Enables the player to ignore collision, phase through walls, and fly through the air.
-- Press jump or perform a bruxa dash to exit wraith mode.
+- Press jump, dodge/roll, or perform a bruxa dash to exit wraith mode.
+- Wraith mode speed is decreased if the player is indoor or if witcher sense is active. 
 - Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game. 
 
 ### || Leap Attack ||
