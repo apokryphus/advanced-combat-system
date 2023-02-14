@@ -97,9 +97,6 @@ state Hijack_YAxis_Engage in cHijackYAxis
 			npc = (CNewNPC)actors[i];
 					
 			animatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
-					
-			settings.blendIn = 0.2f;
-			settings.blendOut = 1.0f;
 
 			if( actors.Size() > 0 )
 			{
@@ -121,7 +118,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'neck3', bone_vec, bone_rot );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}
@@ -129,7 +126,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					{
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'head', npc.GetBoneWorldPosition('head'), npc.GetWorldRotation() );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}
@@ -137,7 +134,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					{
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'head', npc.GetBoneWorldPosition('head'), npc.GetWorldRotation() );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}
@@ -145,7 +142,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					{
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'head', npc.GetBoneWorldPosition('head'), npc.GetWorldRotation() );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}
@@ -153,7 +150,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					{
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'head', npc.GetBoneWorldPosition('head'), npc.GetWorldRotation() );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}	
@@ -161,7 +158,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					{
 						//markerNPC.CreateAttachmentAtBoneWS( npc, 'head', npc.GetBoneWorldPosition('head'), npc.GetWorldRotation() );
 
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.001, true);
 					}
@@ -172,25 +169,25 @@ state Hijack_YAxis_Engage in cHijackYAxis
 				{
 					if (npc.HasAbility('mon_garkain'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.465, true);
 					}
 					else if (npc.HasAbility('mon_sharley'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'roll_forward', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'roll_forward', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.35, true);
 					}
 					else if (npc.HasAbility('mon_bies_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_run__f', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_run__f', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 0.95, true);
 					}
 					else if (npc.HasAbility('mon_golem_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_attack_charge', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_attack_charge', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 2.75, true);
 					}
@@ -201,7 +198,7 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					|| npc.HasAbility('mon_black_spider_base')
 					|| npc.HasAbility('mon_black_spider_ep2_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_f', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_f', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 1.55, true);
 					}
@@ -210,13 +207,13 @@ state Hijack_YAxis_Engage in cHijackYAxis
 					|| npc.HasAbility('mon_knight_giant')
 					|| npc.HasAbility('mon_cloud_giant'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_walk', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_walk', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 1.5, true);
 					}
 					else if (npc.HasAbility('mon_troll_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_run', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_run', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 
 						GetACSWatcher().AddTimer('ACS_HijackMoveForward', 3.75, true);
 					}

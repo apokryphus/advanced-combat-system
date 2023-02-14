@@ -93,7 +93,7 @@ function ACS_Custom_Attack_Range( data : CPreAttackEventData ) : array< CGamepla
 				|| ACS_GetWeaponMode() == 2
 				)
 				{
-					dist = 2;
+					dist = 2.25;
 					ang =	45;
 				}
 				else if ( ACS_GetWeaponMode() == 3 )
@@ -364,11 +364,6 @@ function ACS_Enabled(): bool
   }
 }
 
-function ACS_ModEnabled(): bool 
-{
-  return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodEnabled');
-}
-
 function ACS_Init_Attempt()
 {
 	if (!ACS_IsInitialized()) 
@@ -441,14 +436,64 @@ function ACS_DisplayWelcomeMessage()
 	theGame.GetTutorialSystem().ShowTutorialHint(msg);
 }
 
+function ACSMainSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodMain', nam);
+
+	return value;
+}
+
+function ACS_ModEnabled(): bool 
+{
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+
+	else return (bool)configValueString;
+}
+
 function ACS_IsInitialized(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodInit');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodInit');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+
+	else return (bool)configValueString;
 }
 
 function ACS_SizeIsInitialized(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodSizeInit');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodSizeInit');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+
+	else return (bool)configValueString;
 }
 
 function ACS_InitializeSettings() 
@@ -474,57 +519,194 @@ function ACS_InitializeSettings()
 
 function ACS_GetWeaponMode(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodWeaponMode'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodWeaponMode');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_StaminaBlockAction_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodStaminaBlockAction');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodStaminaBlockAction');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+
+	else return (bool)configValueString;
 }
 
 function ACS_OnHitEffects_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodOnHitEffects');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodOnHitEffects');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_ElementalRend_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodElementalRend');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodElementalRend');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_HideSwordsheathes_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodHideSwordsheathes');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodHideSwordsheathes');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_VampireSoundEffects_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodVampireSoundEffects');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodVampireSoundEffects');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_ExperimentalDismemberment_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodExperimentalDismemberment');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodExperimentalDismemberment');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
+}
+
+function ACS_RageMechanic_Enabled(): bool 
+{
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodRageMechanic');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_GetFistMode(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodFistMode'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodFistMode');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 1;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetTargetMode(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodTargetMode'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodTargetMode');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_AutoFinisher_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodAutoFinisherEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodAutoFinisherEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_ShadowsSpawnChancesNormal(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodShadowsSpawnChancesNormal'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodShadowsSpawnChancesNormal');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0.1;
+	}
+	
+	else return configValue;
 }
 
 function ACS_DisableAutomaticSwordSheathe_Enabled(): bool
@@ -534,302 +716,1029 @@ function ACS_DisableAutomaticSwordSheathe_Enabled(): bool
 
 function ACS_ComboMode(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodComboMode'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodComboMode');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_SwordWalk_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodSwordWalkEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodSwordWalkEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_PassiveTaunt_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodPassiveTauntEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodPassiveTauntEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_Player_Scale(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMain', 'ACSmodPlayerScale'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSMainSettingsGetConfigValue('ACSmodPlayerScale');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 1;
+	}
+	
+	else return configValue;
 }
 
 // Armiger Mode
 
+function ACSArmigerModeSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodArmigerModeSettings', nam);
+
+	return value;
+}
+
 function ACS_GetArmigerModeWeaponType(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerModeWeaponType'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerModeWeaponType');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Armiger_Axii_Set_Sign_Weapon_Type(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerAxiiSignWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerAxiiSignWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 2;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Armiger_Aard_Set_Sign_Weapon_Type(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerAardSignWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerAardSignWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 3;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Armiger_Yrden_Set_Sign_Weapon_Type(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerYrdenSignWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerYrdenSignWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 4;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Armiger_Quen_Set_Sign_Weapon_Type(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerQuenSignWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerQuenSignWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 1;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Armiger_Igni_Set_Sign_Weapon_Type(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodArmigerModeSettings', 'ACSmodArmigerIgniSignWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSArmigerModeSettingsGetConfigValue('ACSmodArmigerIgniSignWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 // Focus Mode
 
+function ACSFocusModeGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodFocusModeSettings', nam);
+
+	return value;
+}
+
 function ACS_GetFocusModeSilverWeapon(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodFocusModeSettings', 'ACSmodFocusModeSilverWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSFocusModeGetConfigValue('ACSmodFocusModeSilverWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetFocusModeSteelWeapon(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodFocusModeSettings', 'ACSmodFocusModeSteelWeapon'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSFocusModeGetConfigValue('ACSmodFocusModeSteelWeapon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetFocusModeWeaponType(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodFocusModeSettings', 'ACSmodFocusModeWeaponType'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSFocusModeGetConfigValue('ACSmodFocusModeWeaponType');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 // Hybrid Mode
 
+function ACSHybridModeGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodHybridModeSettings', nam);
+
+	return value;
+}
+
 function ACS_GetHybridModeWeaponType(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeWeaponType'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeWeaponType');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeLightAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeLightAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeLightAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeForwardLightAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeForwardLightAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeForwardLightAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeHeavyAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeHeavyAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeHeavyAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeForwardHeavyAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeForwardHeavyAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeForwardHeavyAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeSpecialAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeSpecialAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeSpecialAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeForwardSpecialAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeForwardSpecialAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeForwardSpecialAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_GetHybridModeCounterAttack(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodHybridModeSettings', 'ACSmodHybridModeCounterAttack'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSHybridModeGetConfigValue('ACSmodHybridModeCounterAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 // Misc Settings
 
+function ACSTauntSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodMain', nam);
+
+	return value;
+}
+
 function ACS_TauntSystem_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodTauntSettings', 'ACSmodTauntSystemEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSTauntSettingsGetConfigValue('ACSmodTauntSystemEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_IWannaPlayGwent_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodTauntSettings', 'ACSmodIWannaPlayGwentEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSTauntSettingsGetConfigValue('ACSmodIWannaPlayGwentEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_CombatTaunt_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodTauntSettings', 'ACSmodCombatTauntEnabled');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSTauntSettingsGetConfigValue('ACSmodCombatTauntEnabled');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return false;
+	}
+	
+	else return (bool)configValueString;
 }
 
 // Movement
 
+function ACSMovementSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodMovementSettings', nam);
+
+	return value;
+}
+
+function ACS_CombatJump_Enabled(): bool 
+{
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodCombatJump');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
+}
+
 function ACS_JumpExtend_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtend');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtend');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_JumpExtend_Effect_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtendEffect');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtendEffect');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_Normal_JumpExtend_GetHeight(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtendNormalHeight'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtendNormalHeight');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 5;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Normal_JumpExtend_GetDistance(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtendNormalDistance'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtendNormalDistance');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 10;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Sprinting_JumpExtend_GetHeight(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtendSprintingHeight'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtendSprintingHeight');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 7;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Sprinting_JumpExtend_GetDistance(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodJumpExtendSprintingDistance'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodJumpExtendSprintingDistance');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 12;
+	}
+	
+	else return configValue;
 }
 
 function ACS_BruxaDash_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDash');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDash');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaDashInput(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDashInput'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDashInput');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_BruxaDash_Normal_Distance(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDashNormalDistance'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDashNormalDistance');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 15;
+	}
+	
+	else return configValue;
 }
 
 function ACS_BruxaDash_Combat_Distance(): int
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDashCombatDistance'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDashCombatDistance');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 6;
+	}
+	
+	else return configValue;
 }
 
 function ACS_BruxaLeapAttack_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaLeapAttack');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaLeapAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaDodgeSlideBack_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDodgeSlideBack');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDodgeSlideBack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaDodgeCenter_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDodgeCenter');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDodgeCenter');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaDodgeLeft_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDodgeLeft');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDodgeLeft');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaDodgeRight_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodBruxaDodgeRight');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodBruxaDodgeRight');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_WildHuntBlink_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodWildHuntBlink');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodWildHuntBlink');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_WraithMode_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodWraithMode');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodWraithMode');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_WraithModeInput(): int 
 {
-	return StringToInt(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodWraithModeInput'));
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodWraithModeInput');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_DodgeEffects_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodMovementSettings', 'ACSmodDodgeEffects');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSMovementSettingsGetConfigValue('ACSmodDodgeEffects');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 // Special Abilities
 
+function ACSSpecialAbilitiesSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodSpecialAbilitiesSettings', nam);
+
+	return value;
+}
+
 function ACS_SummonedShades_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodSummonedShades');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodSummonedShades');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BeamAttack_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodBeamAttack');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodBeamAttack');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_SwordArray_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodSwordArray');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodSwordArray');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_ShieldEntity_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodShieldEntity');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodShieldEntity');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_QuenMonsterSummon_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodQuenMonsterSummon');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodQuenMonsterSummon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_YrdenSkeleSummon_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodYrdenSkeleSummon');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodYrdenSkeleSummon');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_AardPull_Enabled(): bool
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodAardPull');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodAardPull');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaCamoDecoy_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodBruxaCamoDecoy');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodBruxaCamoDecoy');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 function ACS_BruxaBite_Enabled(): bool 
 {
-	return theGame.GetInGameConfigWrapper().GetVarValue('ACSmodSpecialAbilitiesSettings', 'ACSmodBruxaBite');
+	var configValue :int;
+	var configValueString : string;
+	
+	configValueString = ACSSpecialAbilitiesSettingsGetConfigValue('ACSmodBruxaBite');
+	configValue =(int) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return true;
+	}
+	
+	else return (bool)configValueString;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Damage
 
+function ACSDamageSettingsGetConfigValue(nam : name) : string
+{
+	var conf: CInGameConfigWrapper;
+	var value: string;
+	
+	conf = theGame.GetInGameConfigWrapper();
+	
+	value = conf.GetVarValue('ACSmodDamageSettings', nam);
+
+	return value;
+}
+
 function ACS_Vampire_Claws_Human_Max_Damage(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodVampireClawsHumanMaxDamage'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSDamageSettingsGetConfigValue('ACSmodVampireClawsHumanMaxDamage');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Vampire_Claws_Human_Min_Damage(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodVampireClawsHumanMinDamage'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSDamageSettingsGetConfigValue('ACSmodVampireClawsHumanMinDamage');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Vampire_Claws_Monster_Max_Damage(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodVampireClawsMonsterMaxDamage'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSDamageSettingsGetConfigValue('ACSmodVampireClawsMonsterMaxDamage');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Vampire_Claws_Monster_Min_Damage(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodVampireClawsMonsterMinDamage'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSDamageSettingsGetConfigValue('ACSmodVampireClawsMonsterMinDamage');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0;
+	}
+	
+	else return configValue;
 }
 
 function ACS_Player_Fall_Damage(): float
 {
-	return StringToFloat(theGame.GetInGameConfigWrapper().GetVarValue('ACSmodDamageSettings', 'ACSmodPlayerFallDamage'));
+	var configValue :float;
+	var configValueString : string;
+	
+	configValueString = ACSDamageSettingsGetConfigValue('ACSmodPlayerFallDamage');
+	configValue =(float) configValueString;
+
+	if(configValueString=="" || configValue<0)
+	{
+		return 0.2;
+	}
+	
+	else return configValue;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1931,6 +2840,18 @@ function ACS_GetItem_Aerondight(): bool
 	}
 }
 
+function ACS_GetItem_Iris(): bool
+{
+	if( thePlayer.GetInventory().ItemHasTag( thePlayer.GetInventory().GetCurrentlyHeldSword(), 'OlgierdSabre' ))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 function ACS_GetItem_VampClaw(): bool
 {
 	if ( GetWitcherPlayer().IsItemEquippedByName( 'q702_vampire_gloves')
@@ -2233,34 +3154,35 @@ function ACS_ThingsThatShouldBeRemoved_BASE_ALT()
 
 	ACS_RemoveStabbedEntities(); ACS_Theft_Prevention_9 ();
 
-	GetACSWatcher().RemoveTimer('ACS_ShootBowMoving'); 
+	//GetACSWatcher().RemoveTimer('ACS_ShootBowMoving'); 
 
-	GetACSWatcher().RemoveTimer('ACS_ShootBowStationary'); 
+	//GetACSWatcher().RemoveTimer('ACS_ShootBowStationary'); 
 
-	GetACSWatcher().RemoveTimer('ACS_ShootBowToIdle'); 
+	//GetACSWatcher().RemoveTimer('ACS_ShootBowToIdle'); 
 
-	GetACSWatcher().PlayBowAnim_Reset();
+	//GetACSWatcher().PlayBowAnim_Reset();
 
-	GetACSWatcher().RemoveTimer('ACS_HeadbuttDamage'); 
+	//GetACSWatcher().RemoveTimer('ACS_HeadbuttDamage'); 
 
 	GetACSWatcher().RemoveTimer('ACS_ExplorationDelay');
+
 	GetACSWatcher().AddTimer('ACS_ExplorationDelay', 2 , false);
 
 	GetACSWatcher().RemoveTimer('ACS_shout'); 
 
 	GetACSWatcher().RemoveTimer('ACS_Blood_Spray'); 
 
-	GetACSWatcher().RemoveTimer('ACS_ResetAnimation');
+	//GetACSWatcher().RemoveTimer('ACS_ResetAnimation');
 
-	GetACSWatcher().RemoveTimer('ACS_dodge_timer_attack');
+	//GetACSWatcher().RemoveTimer('ACS_dodge_timer_attack');
 
 	GetACSWatcher().RemoveTimer('ACS_dodge_timer_wildhunt');
 
-	GetACSWatcher().RemoveTimer('ACS_dodge_timer_slideback');
+	//GetACSWatcher().RemoveTimer('ACS_dodge_timer_slideback');
 
-	GetACSWatcher().RemoveTimer('ACS_dodge_timer');
+	//GetACSWatcher().RemoveTimer('ACS_dodge_timer');
 
-	GetACSWatcher().RemoveTimer('ACS_alive_check');
+	//GetACSWatcher().RemoveTimer('ACS_alive_check');
 
 	thePlayer.RemoveTag('ACS_Shadow_Dash_Empowered');
 
@@ -2278,6 +3200,7 @@ function ACS_ThingsThatShouldBeRemoved_BASE_ALT()
 
 	if( thePlayer.IsAlive() && thePlayer.IsInCombat() ){ thePlayer.SetVisibility( true ); }		 
 
+	/*
 	thePlayer.SetImmortalityMode( AIM_None, AIC_Combat ); 
 
 	thePlayer.SetCanPlayHitAnim(true); 
@@ -2285,6 +3208,7 @@ function ACS_ThingsThatShouldBeRemoved_BASE_ALT()
 	thePlayer.EnableCharacterCollisions(true); 
 	thePlayer.RemoveBuffImmunity_AllNegative('acs_dodge'); 
 	thePlayer.SetIsCurrentlyDodging(false);
+	*/
 }
 
 function ACS_ThingsThatShouldBeRemoved_ALT()
@@ -2500,6 +3424,11 @@ function ACS_Pre_Attack( animEventName : name, animEventType : EAnimationEventTy
 		GetACSWatcher().aerondight_sword_trail();
 	}
 
+	if (ACS_GetItem_Iris())
+	{
+		GetACSWatcher().iris_sword_trail();
+	}
+
 	if( thePlayer.HasAbility('Runeword 2 _Stats', true) && thePlayer.IsInCombat() )
 	{
 		ACS_Light_Attack_Extended_Trail();
@@ -2619,9 +3548,10 @@ function ACS_PlayerHitEffects()
 function ACS_AttitudeCheck( actor : CActor ) : bool
 {
 	if ( 
-	thePlayer.GetAttitude( actor ) == AIA_Hostile 
+	(thePlayer.GetAttitude( actor ) == AIA_Hostile 
 	|| theGame.GetGlobalAttitude( actor.GetBaseAttitudeGroup(), 'player' ) == AIA_Hostile
-	|| (actor.IsAttackableByPlayer() && actor.IsTargetableByPlayer()) 
+	|| (actor.IsAttackableByPlayer() && actor.IsTargetableByPlayer()))
+	&& actor.IsAlive()
 	)
 	{
 		return true;
@@ -2910,8 +3840,6 @@ statemachine class cACS_Setup_Combat_Action_Light
 
 state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 {	
-	private var settings_interrupt					: SAnimatedComponentSlotAnimationSettings;
-
 	event OnEnterState(prevStateName : name)
 	{
 		Attack_Light_Entry();
@@ -2924,14 +3852,11 @@ state Setup_Combat_Action_Light_Engage in cACS_Setup_Combat_Action_Light
 	
 	latent function Attack_Light_Latent()
 	{
-		settings_interrupt.blendIn = 1;
-		settings_interrupt.blendOut = 1;
-
 		if( thePlayer.IsInCombat() )
 		{
 			if (thePlayer.IsAlive())
 			{
-				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 			}
 
 			//Sleep(0.0003125);
@@ -2977,8 +3902,6 @@ statemachine class cACS_Setup_Combat_Action_Heavy
 
 state Setup_Combat_Action_Heavy_Engage in cACS_Setup_Combat_Action_Heavy
 {	
-	private var settings_interrupt					: SAnimatedComponentSlotAnimationSettings;
-
 	event OnEnterState(prevStateName : name)
 	{
 		Attack_Heavy_Entry();
@@ -2991,14 +3914,11 @@ state Setup_Combat_Action_Heavy_Engage in cACS_Setup_Combat_Action_Heavy
 	
 	latent function Attack_Heavy_Latent()
 	{
-		settings_interrupt.blendIn = 1;
-		settings_interrupt.blendOut = 1;
-
 		if( thePlayer.IsInCombat() )
 		{
 			if (thePlayer.IsAlive())
 			{
-				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+				//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 			}
 
 			//Sleep(0.0003125);
@@ -3065,7 +3985,7 @@ struct ACS_Rage_Marker_Check
 	var rage_marker_cooldown			: float;
 	var num								: float;
 
-	default rage_marker_cooldown = 10;
+	default rage_marker_cooldown = 14;
 }
 
 function ACS_can_spawn_rage_marker(): bool 
@@ -3093,7 +4013,7 @@ struct ACS_Ghoul_Proj_Check
 	var last_ghoul_proj_spawn_time 	: float;
 	var ghoul_proj_cooldown			: float;
 
-	default ghoul_proj_cooldown = 6;
+	default ghoul_proj_cooldown = 15;
 }
 
 function ACS_ghoul_proj(): bool 
@@ -3121,7 +4041,7 @@ struct ACS_Tentacle_Proj_Check
 	var last_tentacle_proj_spawn_time 	: float;
 	var tentacle_proj_cooldown			: float;
 
-	default tentacle_proj_cooldown = 5;
+	default tentacle_proj_cooldown = 7;
 }
 
 function ACS_tentacle_proj(): bool 
@@ -3168,6 +4088,146 @@ function ACS_refresh_nekker_guardian_cooldown()
 	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
 
 	watcher.vACS_Nekker_Guardian_Check.last_nekker_guardian_time = theGame.GetEngineTimeAsSeconds();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct ACS_Katakan_Check 
+{
+	var last_katakan_time 			: float;
+	var katakan_cooldown			: float;
+
+	default katakan_cooldown = 10;
+}
+
+function ACS_can_summon_katakan(): bool 
+{
+	var property: ACS_Katakan_Check;
+
+	property = GetACSWatcher().vACS_Katakan_Check;
+
+	return theGame.GetEngineTimeAsSeconds() - property.last_katakan_time > property.katakan_cooldown;
+}
+
+function ACS_refresh_katakan_cooldown() 
+{
+	var watcher: W3ACSWatcher;
+
+	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
+
+	watcher.vACS_Katakan_Check.last_katakan_time = theGame.GetEngineTimeAsSeconds();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct ACS_Bat_Projectile_Check 
+{
+	var last_bat_projectile_time 			: float;
+	var bat_projectile_cooldown				: float;
+
+	default bat_projectile_cooldown = 10;
+}
+
+function ACS_can_shoot_bat_projectile(): bool 
+{
+	var property: ACS_Bat_Projectile_Check;
+
+	property = GetACSWatcher().vACS_Bat_Projectile_Check;
+
+	return theGame.GetEngineTimeAsSeconds() - property.last_bat_projectile_time > property.bat_projectile_cooldown;
+}
+
+function ACS_refresh_bat_projectile_cooldown() 
+{
+	var watcher: W3ACSWatcher;
+
+	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
+
+	watcher.vACS_Bat_Projectile_Check.last_bat_projectile_time = theGame.GetEngineTimeAsSeconds();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct ACS_Fire_Bear_Flames_Check 
+{
+	var last_bear_flame_on_time 			: float;
+	var bear_flame_on_cooldown				: float;
+
+	default bear_flame_on_cooldown = 15;
+}
+
+function ACS_bear_can_flame_on(): bool 
+{
+	var property: ACS_Fire_Bear_Flames_Check;
+
+	property = GetACSWatcher().vACS_Fire_Bear_Flames_Check;
+
+	return theGame.GetEngineTimeAsSeconds() - property.last_bear_flame_on_time > property.bear_flame_on_cooldown;
+}
+
+function ACS_refresh_bear_flame_on_cooldown() 
+{
+	var watcher: W3ACSWatcher;
+
+	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
+
+	watcher.vACS_Fire_Bear_Flames_Check.last_bear_flame_on_time = theGame.GetEngineTimeAsSeconds();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct ACS_Fire_Bear_Fireball_Check 
+{
+	var last_bear_fireball_time 			: float;
+	var bear_fireball_cooldown				: float;
+
+	default bear_fireball_cooldown = 1.5;
+}
+
+function ACS_bear_can_throw_fireball(): bool 
+{
+	var property: ACS_Fire_Bear_Fireball_Check;
+
+	property = GetACSWatcher().vACS_Fire_Bear_Fireball_Check;
+
+	return theGame.GetEngineTimeAsSeconds() - property.last_bear_fireball_time > property.bear_fireball_cooldown;
+}
+
+function ACS_refresh_bear_fireball_cooldown() 
+{
+	var watcher: W3ACSWatcher;
+
+	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
+
+	watcher.vACS_Fire_Bear_Fireball_Check.last_bear_fireball_time = theGame.GetEngineTimeAsSeconds();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct ACS_Fire_Bear_FireLine_Check 
+{
+	var last_bear_fireline_time 			: float;
+	var bear_fireline_cooldown				: float;
+
+	default bear_fireline_cooldown = 7;
+}
+
+function ACS_bear_can_throw_fireline(): bool 
+{
+	var property: ACS_Fire_Bear_FireLine_Check;
+
+	property = GetACSWatcher().vACS_Fire_Bear_FireLine_Check;
+
+	return theGame.GetEngineTimeAsSeconds() - property.last_bear_fireline_time > property.bear_fireline_cooldown;
+}
+
+function ACS_refresh_bear_fireline_cooldown() 
+{
+	var watcher: W3ACSWatcher;
+
+	watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
+
+	watcher.vACS_Fire_Bear_FireLine_Check.last_bear_fireline_time = theGame.GetEngineTimeAsSeconds();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3274,15 +4334,14 @@ exec function ACS_aniplay(animation_name: name)
 }
 
 exec function ACS_aniplay1(animation_name: name)
-{
-	var sett 									: SAnimatedComponentSlotAnimationSettings;
-	
-	sett.blendIn = 0.2f;
-	sett.blendOut = 0.5f;
-		
-	//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
+{	
+	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f) );
+}
 
-	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( animation_name, 'PLAYER_SLOT', sett );
+exec function ACS_ParryTest()
+{
+	//thePlayer.SetBehaviorVariable( 'parryType', fv );
+	thePlayer.RaiseForceEvent( 'PerformParry' );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3557,12 +4616,17 @@ state ACS_Forest_God_Adds_1_Spawner_Engage in cACS_Forest_God_Spawner
 			spawnPos.Z = playerPos.Z;
 			
 			ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
+			
 			((CNewNPC)ent).SetLevel( 5 );
+
 			((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+
+			((CNewNPC)ent).SetAttitude(ACS_Forest_God(), AIA_Friendly);
+
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.25);
 
-			((CActor)ent).DrainEssence(((CActor)ent).GetStatMax(BCS_Essence)/2);
+			((CActor)ent).DrainEssence(((CActor)ent).GetStatMax(BCS_Essence)/4);
 			ent.AddTag( 'ACS_Echinops' );
 		}
 	}
@@ -3622,11 +4686,15 @@ state ACS_Forest_God_Adds_2_Spawner_Engage in cACS_Forest_God_Spawner
 			
 			ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
 			((CNewNPC)ent).SetLevel( 5 );
+
 			((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+
+			((CNewNPC)ent).SetAttitude(ACS_Forest_God(), AIA_Friendly);
+
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.5);
 
-			((CActor)ent).DrainEssence(((CActor)ent).GetStatMax(BCS_Essence)/2);
+			((CActor)ent).DrainEssence(((CActor)ent).GetStatMax(BCS_Essence)/4);
 			ent.AddTag( 'ACS_Echinops' );
 		}
 	}
@@ -3912,7 +4980,7 @@ state ACS_Forest_God_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -3939,7 +5007,7 @@ state ACS_Forest_God_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4264,7 +5332,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4291,7 +5359,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4354,7 +5422,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4381,7 +5449,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4444,7 +5512,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4471,7 +5539,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4534,7 +5602,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4561,7 +5629,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4624,7 +5692,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4651,7 +5719,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4714,7 +5782,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 			((CNewNPC)ent).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent).SetAnimationSpeedMultiplier(1.1);
 
-			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 500000 );
+			((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
 
 			if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 			{
@@ -4741,7 +5809,7 @@ state ACS_Forest_God_Static_Spawner_Engage in cACS_Forest_God_Spawner
 
 			((CActor)ent).AddTag( 'ContractTarget' );
 
-			ent.HasTag('IsBoss');
+			((CActor)ent).AddTag('IsBoss');
 
 			((CActor)ent).AddAbility('Boss');
 
@@ -4936,7 +6004,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_1).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_1).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_1).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_1).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_1).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -4946,7 +6014,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_1).AddTag( 'ContractTarget' );
 
-			ent_1.HasTag('IsBoss');
+			((CActor)ent_1).AddTag('IsBoss');
 
 			((CActor)ent_1).AddAbility('Boss');
 
@@ -4975,7 +6043,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_2).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_2).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_2).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_2).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_2).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -4985,7 +6053,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_2).AddTag( 'ContractTarget' );
 
-			ent_2.HasTag('IsBoss');
+			((CActor)ent_2).AddTag('IsBoss');
 
 			((CActor)ent_2).AddAbility('Boss');
 
@@ -5014,7 +6082,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_3).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_3).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_3).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_3).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_3).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5024,7 +6092,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_3).AddTag( 'ContractTarget' );
 
-			ent_3.HasTag('IsBoss');
+			((CActor)ent_3).AddTag('IsBoss');
 
 			((CActor)ent_3).AddAbility('Boss');
 
@@ -5053,7 +6121,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_4).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_4).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_4).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_4).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_4).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5063,7 +6131,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_4).AddTag( 'ContractTarget' );
 
-			ent_4.HasTag('IsBoss');
+			((CActor)ent_4).AddTag('IsBoss');
 
 			((CActor)ent_4).AddAbility('Boss');
 
@@ -5092,7 +6160,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_5).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_5).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_5).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_5).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_5).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5102,7 +6170,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_5).AddTag( 'ContractTarget' );
 
-			ent_5.HasTag('IsBoss');
+			((CActor)ent_5).AddTag('IsBoss');
 
 			((CActor)ent_5).AddAbility('Boss');
 
@@ -5131,7 +6199,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_6).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_6).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_6).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_6).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_6).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5141,7 +6209,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_6).AddTag( 'ContractTarget' );
 
-			ent_6.HasTag('IsBoss');
+			((CActor)ent_6).AddTag('IsBoss');
 
 			((CActor)ent_6).AddAbility('Boss');
 
@@ -5170,7 +6238,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_7).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_7).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_7).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_7).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_7).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5180,7 +6248,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_7).AddTag( 'ContractTarget' );
 
-			ent_7.HasTag('IsBoss');
+			((CActor)ent_7).AddTag('IsBoss');
 
 			((CActor)ent_7).AddAbility('Boss');
 
@@ -5209,7 +6277,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_8).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_8).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_8).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_8).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_8).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5219,7 +6287,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_8).AddTag( 'ContractTarget' );
 
-			ent_8.HasTag('IsBoss');
+			((CActor)ent_8).AddTag('IsBoss');
 
 			((CActor)ent_8).AddAbility('Boss');
 
@@ -5248,7 +6316,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 			((CNewNPC)ent_9).SetTemporaryAttitudeGroup( 'hostile_to_player', AGP_Default );
 			((CActor)ent_9).SetAnimationSpeedMultiplier(0.75);
 
-			((CActor)ent_9).GetInventory().AddAnItem( 'Crowns', 25000 );
+			((CActor)ent_9).GetInventory().AddAnItem( 'Crowns', 2500 );
 
 			((CActor)ent_9).GetInventory().AddAnItem( 'Diamond flawless', 10 );
 
@@ -5258,7 +6326,7 @@ state ACS_Ice_Titans_Static_Spawner_Engage in cACS_Ice_Titans_Static_Spawner
 
 			((CActor)ent_9).AddTag( 'ContractTarget' );
 
-			ent_9.HasTag('IsBoss');
+			((CActor)ent_9).AddTag('IsBoss');
 
 			((CActor)ent_9).AddAbility('Boss');
 
@@ -5294,13 +6362,14 @@ function ACS_Ice_Titan_Destroy()
 		titan[i].Destroy();
 	}
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function ACS_Spawner()
 {
 	var vACS_Spawner : cACS_Spawner;
-	vACS_Spawner = new cACS_Spawner in theGame;
+	var vW3ACSWatcher	: W3ACSWatcher;
+
+	vACS_Spawner = new cACS_Spawner in vW3ACSWatcher;
 			
 	vACS_Spawner.ACS_Spawner_Engage();
 }
@@ -5334,13 +6403,10 @@ state ACS_Spawner_Engage in cACS_Spawner
 	
 	entry function Spawn_Entry()
 	{	
-		LockEntryFunction(true);
-	
 		Spawn_Latent();
-		
-		LockEntryFunction(false);
 	}
 	
+	/*
 	latent function Spawn_Latent()
 	{
 		temp = (CEntityTemplate)LoadResourceAsync( 
@@ -5386,7 +6452,7 @@ state ACS_Spawner_Engage in cACS_Spawner
 
 		playerPos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 5;
 		
-		count = 1;
+		count = 100;
 			
 		for( i = 0; i < count; i += 1 )
 		{
@@ -5435,7 +6501,7 @@ state ACS_Spawner_Engage in cACS_Spawner
 			((CActor)anchor).EnableCharacterCollisions(false);
 
 
-			ent_1_temp = (CEntityTemplate)LoadResource( 
+			ent_1_temp = (CEntityTemplate)LoadResourceAsync( 
 
 				//"dlc\dlc_acs\data\entities\monsters\endrega_echinops_turret.w2ent"
 
@@ -5504,6 +6570,89 @@ state ACS_Spawner_Engage in cACS_Spawner
 
 			ent.AddTag( 'ACS_enemy' );
 			//ent.AddTag( 'ACS_Big_Boi' );
+		}
+	}
+	*/
+
+	latent function Spawn_Latent()
+	{
+		temp = (CEntityTemplate)LoadResourceAsync( 
+
+			//"dlc/dlc_acs/data/entities/monsters/hym.w2ent"
+
+			//"dlc\dlc_acs\data\entities\monsters\treant.w2ent"
+
+			//"quests\part_1\quest_files\q202_giant\characters\q202_ice_giant.w2ent"
+
+			//"dlc\dlc_acs\data\entities\monsters\ice_giant_1.w2ent"
+
+			//"dlc\ep1\data\characters\npc_entities\monsters\ethernal.w2ent"
+
+			"dlc\ep1\data\quests\main_npcs\olgierd.w2ent"
+
+			//"dlc\dlc_acs\data\entities\monsters\shadow_wolf.w2ent"
+
+			//"dlc\bob\data\characters\npc_entities\monsters\bruxa_alp_cloak_always_spawn.w2ent"
+
+			//"dlc\bob\data\characters\npc_entities\monsters\bruxa_cloak_always_spawn.w2ent"
+
+			//"dlc\dlc_acs\data\entities\monsters\ethernal.w2ent"
+			//"dlc\dlc_acs\data\entities\monsters\nekker_nekker.w2ent"
+
+			//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_evil_spirit.w2ent"
+
+			//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_plague_victim_axe_hostile.w2ent"
+
+			//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_witcher.w2ent"
+
+			//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\entities\mq1060_glow_roots_large.w2ent"
+			
+			, true );
+
+		playerPos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 5;
+		
+		count = 1000;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 5 + 5 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+			
+			ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
+
+			animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
+			meshcomp = ent.GetComponentByClassName('CMeshComponent');
+			h = 1;
+			animcomp.SetScale(Vector(h,h,h,1));
+			meshcomp.SetScale(Vector(h,h,h,1));	
+
+			((CNewNPC)ent).SetLevel(100);
+			((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+			((CActor)ent).SetAnimationSpeedMultiplier(1);
+
+			//ent.PlayEffect('ice');
+
+			//ent.PlayEffectSingle('appear');
+			//ent.StopEffect('appear');
+			//ent.PlayEffectSingle('shadow_form');
+			//ent.PlayEffectSingle('demonic_possession');
+
+			//((CActor)ent).SetBehaviorVariable( 'wakeUpType', 1.0 );
+			//((CActor)ent).AddAbility( 'EtherealActive' );
+
+			((CActor)ent).RemoveBuffImmunity( EET_Stagger );
+			((CActor)ent).RemoveBuffImmunity( EET_LongStagger );
+
+			//ent.PlayEffect('special_attack_fx');
+
+			ent.AddTag( 'ACS_enemy' );
+			//ent.AddTag( 'ACS_Big_Boi' );
+
+			SleepOneFrame();
 		}
 	}
 	
@@ -5625,16 +6774,11 @@ exec function ACS_peffect(enam : CName)
 
 exec function ACS_fallup()
 {
-	var sett 							: SAnimatedComponentSlotAnimationSettings;
 	var actor							: CActor; 
 	var enemyAnimatedComponent 			: CAnimatedComponent;
-	var settings						: SAnimatedComponentSlotAnimationSettings;
 	var actors		    				: array<CActor>;
 	var i								: int;
 	var npc								: CNewNPC;
-
-	settings.blendIn = 0.3f;
-	settings.blendOut = 0.3f;
 
 	actors.Clear();
 
@@ -5650,41 +6794,32 @@ exec function ACS_fallup()
 
 			enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
 			
-			enemyAnimatedComponent.PlaySlotAnimationAsync( 'fall_up_idle', 'NPC_ANIM_SLOT', settings);
+			enemyAnimatedComponent.PlaySlotAnimationAsync( 'fall_up_idle', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 		}
 	}
-	
-	sett.blendIn = 0.2f;
-	sett.blendOut = 0.5f;
 		
-	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_idle_sign_aard_light', 'PLAYER_SLOT', sett );
+	thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'man_ger_idle_sign_aard_light', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f) );
 }
 
 exec function ACS_eforceani(animation_name: name)
 {
 	var actor							: CActor; 
 	var enemyAnimatedComponent 			: CAnimatedComponent;
-	var settings						: SAnimatedComponentSlotAnimationSettings;
 	
 	actor = (CActor)( thePlayer.GetDisplayTarget() );
 	
-	enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
-	settings.blendIn = 0.3f;
-	settings.blendOut = 0.3f;
+	enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );	
 	
-	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', settings);
+	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 }
 
 function ACS_ForceAni(npc: CActor, animation_name: name)
 {
 	var enemyAnimatedComponent 			: CAnimatedComponent;
-	var settings						: SAnimatedComponentSlotAnimationSettings;
 	
 	enemyAnimatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );		
-	settings.blendIn = 0.3f;
-	settings.blendOut = 0.3f;
 	
-	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', settings);
+	enemyAnimatedComponent.PlaySlotAnimationAsync( animation_name, 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 }
 
 exec function ACS_eforcebeh(i: int)
@@ -5776,7 +6911,6 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -5786,9 +6920,6 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_sword1h()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -5811,7 +6942,7 @@ state EnemyBehSwitch_Sword1h in cACS_EnemyBehSwitch
 
 				enemyAnimatedComponent = (CAnimatedComponent)actor.GetComponentByClassName( 'CAnimatedComponent' );		
 				
-				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
@@ -5826,7 +6957,6 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 	private var sword					: SItemUniqueId;
 
 	event OnEnterState(prevStateName : name)
@@ -5837,9 +6967,6 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_sword2h()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -5874,7 +7001,7 @@ state EnemyBehSwitch_Sword2h in cACS_EnemyBehSwitch
 
 				//actor.DrawWeaponAndAttackLatent(sword);
 
-				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 
 				//actor.ActionCancelAll();
@@ -5892,7 +7019,6 @@ state EnemyBehSwitch_Fistfight in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -5902,9 +7028,6 @@ state EnemyBehSwitch_Fistfight in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_fistfight()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -5936,7 +7059,6 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -5946,9 +7068,6 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_witcher()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -5969,7 +7088,7 @@ state EnemyBehSwitch_Witcher in cACS_EnemyBehSwitch
 
 				actor.AttachBehavior( 'Witcher' );
 
-				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
@@ -5983,7 +7102,6 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -5993,9 +7111,6 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_shield()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -6016,7 +7131,7 @@ state EnemyBehSwitch_Shield in cACS_EnemyBehSwitch
 
 				actor.AttachBehavior( 'Shield' );
 
-				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
@@ -6030,7 +7145,6 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 	private var i						: int;
 	private var npc						: CNewNPC;
 	private var enemyAnimatedComponent 	: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -6040,9 +7154,6 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 	
 	entry function EnemyBehSwitch_bow()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 0;
-
 		actors.Clear();
 
 		actors = thePlayer.GetNPCsAndPlayersInRange( 100, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
@@ -6063,7 +7174,7 @@ state EnemyBehSwitch_Bow in cACS_EnemyBehSwitch
 
 				actor.AttachBehavior( 'Bow' );
 
-				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', settings);
+				//enemyAnimatedComponent.PlaySlotAnimationAsync( 'man_npc_sword_1hand_attack_l_1_right_NEW_LONG', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				//actor.ActionPlaySlotAnimationAsync('NPC_ANIM_SLOT','', 0.1, 1, false);
 			}
 		}
@@ -6173,9 +7284,6 @@ exec function ACS_acsfxtest(effect_name:name)
 	ent.PlayEffectSingle(effect_name);
 }
 
-
-
-
 exec function toadtest(i:int)
 {
 	var ent, ent_1, ent_2, ent_3, ent_4, ent_5, ent_6, ent_7, anchor    : CEntity;
@@ -6183,7 +7291,6 @@ exec function toadtest(i:int)
     var pos, attach_vec													: Vector;
 	var meshcomp														: CComponent;
 	var animcomp 														: CAnimatedComponent;
-	var AnimSettings													: SAnimatedComponentSlotAnimationSettings;
 	var h 																: float;
 	var bone_vec														: Vector;
 	var bone_rot														: EulerAngles;
@@ -6258,16 +7365,14 @@ exec function toadtest(i:int)
 
 	ent_1.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0.5f;
 
 	if (i == 1)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 	else if (i == 2)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 
 	animcomp.FreezePoseFadeIn(4.5f);
@@ -6304,16 +7409,13 @@ exec function toadtest(i:int)
 
 	ent_2.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0.5f;
-
 	if (i == 1)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 	else if (i == 2)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 
 	animcomp.FreezePoseFadeIn(4.5f);
@@ -6349,16 +7451,13 @@ exec function toadtest(i:int)
 
 	ent_3.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0.5f;
-
 	if (i == 1)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 	else if (i == 2)
 	{
-		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 	}
 
 	animcomp.FreezePoseFadeIn(4.5f);
@@ -6382,6 +7481,203 @@ exec function toadtest(i:int)
 	//ent_3.DestroyAfter(3);
 }
 
+function ACS_toadtest(i:int)
+{
+	var ent, ent_1, ent_2, ent_3, ent_4, ent_5, ent_6, ent_7, anchor    : CEntity;
+	var rot, attach_rot                        						 	: EulerAngles;
+    var pos, attach_vec													: Vector;
+	var meshcomp														: CComponent;
+	var animcomp 														: CAnimatedComponent;
+	var AnimSettings													: SAnimatedComponentSlotAnimationSettings;
+	var h 																: float;
+	var bone_vec														: Vector;
+	var bone_rot														: EulerAngles;
+	var anchor_temp, ent_1_temp, ent_2_temp								: CEntityTemplate;
+
+	GetACSToadTest_1().Destroy();
+
+	GetACSToadTest_2().Destroy();
+
+	GetACSToadTest_3().Destroy();
+
+	GetToadAnchor().Destroy();
+
+	rot = thePlayer.GetWorldRotation();
+
+    pos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 5;
+
+	anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+
+
+	thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'head' ), bone_vec, bone_rot );
+
+	anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+
+	anchor.AddTag('toad_anchor');
+
+	anchor.CreateAttachmentAtBoneWS( thePlayer, 'head', bone_vec, bone_rot );
+
+	((CActor)anchor).EnableCollisions(false);
+	((CActor)anchor).EnableCharacterCollisions(false);
+
+
+
+
+
+	ent_1_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\monsters\toad_tongue.w2ent", true );
+
+	ent_2_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\monsters\toad_tongue_no_face.w2ent", true );
+
+
+
+
+
+	ent_1 = theGame.CreateEntity( ent_2_temp, pos, rot );
+
+	ent_1.AddTag('ACS_Toad_Test_1');
+
+	((CNewNPC)ent_1).SetTemporaryAttitudeGroup( 'friendly_to_player', AGP_Default );	
+	((CNewNPC)ent_1).EnableCharacterCollisions(false);
+	((CNewNPC)ent_1).EnableCollisions(false);
+	((CNewNPC)ent_1).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+	((CActor)ent_1).SetTemporaryAttitudeGroup( 'neutral_to_all', AGP_Default );
+	((CActor)ent_1).EnableCollisions(false);
+	((CActor)ent_1).EnableCharacterCollisions(false);
+	((CActor)ent_1).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+
+	thePlayer.EnableCharacterCollisions(false);
+
+	animcomp = (CAnimatedComponent)ent_1.GetComponentByClassName('CAnimatedComponent');
+	meshcomp = ent_1.GetComponentByClassName('CMeshComponent');
+
+	animcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));
+
+	meshcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));	
+
+	attach_rot.Roll = 90;
+	attach_rot.Pitch = 0;
+	attach_rot.Yaw = 0;
+	attach_vec.X = -0.35;
+	attach_vec.Y = 0.5;
+	attach_vec.Z = 0;
+
+	ent_1.CreateAttachment( anchor, , attach_vec, attach_rot );
+
+	if (i == 1)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+	else if (i == 2)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+
+	animcomp.FreezePoseFadeIn(4.5f);
+
+
+
+
+	ent_2 = theGame.CreateEntity( ent_2_temp, pos, rot );
+
+	ent_2.AddTag('ACS_Toad_Test_2');
+
+	((CNewNPC)ent_2).SetTemporaryAttitudeGroup( 'friendly_to_player', AGP_Default );	
+	((CNewNPC)ent_2).EnableCharacterCollisions(false);
+	((CNewNPC)ent_2).EnableCollisions(false);
+	((CNewNPC)ent_2).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+	((CActor)ent_2).SetTemporaryAttitudeGroup( 'neutral_to_all', AGP_Default );
+	((CActor)ent_2).EnableCollisions(false);
+	((CActor)ent_2).EnableCharacterCollisions(false);
+	((CActor)ent_2).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+
+	animcomp = (CAnimatedComponent)ent_2.GetComponentByClassName('CAnimatedComponent');
+	meshcomp = ent_2.GetComponentByClassName('CMeshComponent');
+
+	animcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));
+
+	meshcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));	
+
+	attach_rot.Roll = -30;
+	attach_rot.Pitch = 0;
+	attach_rot.Yaw = 0;
+	attach_vec.X = 0.275;
+	attach_vec.Y = 0.5;
+	attach_vec.Z = -0.4;
+
+	ent_2.CreateAttachment( anchor, , attach_vec, attach_rot );
+
+	if (i == 1)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+	else if (i == 2)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+
+	animcomp.FreezePoseFadeIn(4.5f);
+
+
+
+	ent_3 = theGame.CreateEntity( ent_2_temp, pos, rot );
+
+	ent_3.AddTag('ACS_Toad_Test_3');
+
+	((CNewNPC)ent_3).SetTemporaryAttitudeGroup( 'friendly_to_player', AGP_Default );	
+	((CNewNPC)ent_3).EnableCharacterCollisions(false);
+	((CNewNPC)ent_3).EnableCollisions(false);
+	((CNewNPC)ent_3).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+	((CActor)ent_3).SetTemporaryAttitudeGroup( 'neutral_to_all', AGP_Default );
+	((CActor)ent_3).EnableCollisions(false);
+	((CActor)ent_3).EnableCharacterCollisions(false);
+	((CActor)ent_3).SetImmortalityMode( AIM_Invulnerable, AIC_Default, true );
+
+	animcomp = (CAnimatedComponent)ent_3.GetComponentByClassName('CAnimatedComponent');
+	meshcomp = ent_3.GetComponentByClassName('CMeshComponent');
+
+	animcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));
+
+	meshcomp.SetScale(Vector( 0.25, 0.25, 0.25, 1 ));	
+
+	attach_rot.Roll = -150;
+	attach_rot.Pitch = 0;
+	attach_rot.Yaw = 0;
+	attach_vec.X = 0.275;
+	attach_vec.Y = 0.5;
+	attach_vec.Z = 0.4;
+
+	ent_3.CreateAttachment( anchor, , attach_vec, attach_rot );
+
+	if (i == 1)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+	else if (i == 2)
+	{
+		animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
+	}
+
+	animcomp.FreezePoseFadeIn(4.5f);
+
+
+
+
+
+
+
+
+
+
+
+	anchor.DestroyAfter(2);
+
+	ent_1.DestroyAfter(2);
+
+	ent_2.DestroyAfter(2);
+
+	ent_3.DestroyAfter(2);
+}
+
 exec function toadplayanim( i: int)
 {
 	var AnimatedComponent 		: CAnimatedComponent;
@@ -6391,16 +7687,13 @@ exec function toadplayanim( i: int)
 
 	AnimatedComponent.UnfreezePose();
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0;
-
 	if (i == 1)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 	else if (i == 2)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 
 	AnimatedComponent.FreezePoseFadeIn(4.5);
@@ -6411,16 +7704,13 @@ exec function toadplayanim( i: int)
 
 	AnimatedComponent.UnfreezePose();
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0;
-
 	if (i == 1)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 	else if (i == 2)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 
 	AnimatedComponent.FreezePoseFadeIn(4.5);
@@ -6431,16 +7721,13 @@ exec function toadplayanim( i: int)
 
 	AnimatedComponent.UnfreezePose();
 
-	AnimSettings.blendIn = 0;
-	AnimSettings.blendOut = 0;
-
 	if (i == 1)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 	else if (i == 2)
 	{
-		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', AnimSettings);
+		AnimatedComponent.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 	}
 
 
@@ -6626,13 +7913,17 @@ function ACS_HighlightObjects_2()
 
 function ACS_EventHack()
 {
-	thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_Dodge );
-	thePlayer.RaiseForceEvent	 	( 'CombatAction' );
+	if (thePlayer.IsAlive() && !thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped') && !thePlayer.HasTag('ACS_Shielded_Entity'))
+	{
+		thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_Dodge );
+		thePlayer.RaiseForceEvent	 	( 'CombatAction' );
+	}
 }
 
 exec function ACS_EventHack_Test()
 {
 	thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_SpecialAttack );
+	//thePlayer.SetBehaviorVariable	( 'combatActionType', (int)CAT_Attack );
 	thePlayer.RaiseForceEvent	 	( 'CombatAction' );
 }
 
@@ -6651,18 +7942,26 @@ exec function testthing(effect_name:name)
 
 	rot = thePlayer.GetWorldRotation();
 
-    pos = thePlayer.GetWorldPosition();
+    pos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 25;
+
+	//pos.Z -= 200;
 
 	ent = theGame.CreateEntity( (CEntityTemplate)LoadResource( 
 
 		//"dlc\bob\data\quests\minor_quests\quest_files\mq7006_the_paths_of_destiny\entities\mq7006_aerondight.w2ent"
-		"dlc\dlc_acs\data\fx\acs_sword_trail.w2ent"
+		//"dlc\dlc_acs\data\fx\acs_sword_trail.w2ent"
+
+		//"fx\quest\q502\conjunction\q502_sky_conjunction.w2ent"
+
+		//"fx\quest\sq205\sq205_ritual_storm.w2ent"
+
+		"dlc\dlc_acs\data\fx\fire_conjunction.w2ent"
 
 		, true ), pos, rot );
 
 	ent.AddTag('ACS_Test_Ent');
 
-	ent.CreateAttachment( thePlayer, 'r_weapon' );
+	//ent.CreateAttachment( thePlayer, 'r_weapon' );
 
 	ent.PlayEffectSingle(effect_name);
 }
@@ -6768,10 +8067,7 @@ exec function cthulucall()
 
 				drownerAnimatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
 
-				drownerAnimSettings.blendIn = 0.25f;
-				drownerAnimSettings.blendOut = 0.5f;
-
-				drownerAnimatedComponent.PlaySlotAnimationAsync ( 'monster_drowner_act2', 'NPC_ANIM_SLOT', drownerAnimSettings);
+				drownerAnimatedComponent.PlaySlotAnimationAsync ( 'monster_drowner_act2', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.5f));
 
 				ticket = movementAdjustor.GetRequest( 'ACS_Tentacle_Rotate_1');
 				movementAdjustor.CancelByName( 'ACS_Tentacle_Rotate_1' );
@@ -6864,10 +8160,7 @@ exec function cthulucall()
 
 				ent_1.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-				AnimSettings.blendIn = 0;
-				AnimSettings.blendOut = 0.5f;
-
-				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 
 				//animcomp.FreezePoseFadeIn(7.5f);
 
@@ -6903,10 +8196,7 @@ exec function cthulucall()
 
 				ent_2.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-				AnimSettings.blendIn = 0;
-				AnimSettings.blendOut = 0.5f;
-
-				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 
 				//animcomp.FreezePoseFadeIn(7.5f);
 
@@ -6941,10 +8231,7 @@ exec function cthulucall()
 
 				ent_3.CreateAttachment( anchor, , attach_vec, attach_rot );
 
-				AnimSettings.blendIn = 0;
-				AnimSettings.blendOut = 0.5f;
-
-				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', AnimSettings);
+				animcomp.PlaySlotAnimationAsync ( 'monster_toad_attack_tongue_10m', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 
 				//animcomp.FreezePoseFadeIn(7.5f);
 
@@ -7408,4 +8695,265 @@ function ACS_SetupSimpleSyncAnim2( syncAction : name, master, slave : CEntity ) 
 	
 	
 	return true;
+}
+
+exec function acsspawnent()
+{
+	var temp, temp_2, ent_1_temp, blade_temp							: CEntityTemplate;
+	var ent, ent_2, ent_1, r_anchor, l_anchor, r_blade1, l_blade1		: CEntity;
+	var i, count														: int;
+	var playerPos, spawnPos												: Vector;
+	var randAngle, randRange											: float;
+	var meshcomp														: CComponent;
+	var animcomp 														: CAnimatedComponent;
+	var h 																: float;
+	var bone_vec, pos, attach_vec										: Vector;
+	var bone_rot, rot, attach_rot										: EulerAngles;
+
+	GetACSEnemy().Destroy();
+
+	temp = (CEntityTemplate)LoadResource( 
+
+		//"dlc/dlc_acs/data/entities/monsters/hym.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\treant.w2ent"
+
+		//"quests\part_1\quest_files\q202_giant\characters\q202_ice_giant.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\ice_giant_1.w2ent"
+
+		//"dlc\ep1\data\characters\npc_entities\monsters\ethernal.w2ent"
+
+		//"dlc\ep1\data\quests\main_npcs\olgierd.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\shadow_wolf.w2ent"
+
+		//"dlc\bob\data\characters\npc_entities\monsters\bruxa_alp_cloak_always_spawn.w2ent"
+
+		//"dlc\bob\data\characters\npc_entities\monsters\bruxa_cloak_always_spawn.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\ethernal.w2ent"
+		//"dlc\dlc_acs\data\entities\monsters\nekker_nekker.w2ent"
+
+		//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_evil_spirit.w2ent"
+
+		//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_plague_victim_axe_hostile.w2ent"
+
+		//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\characters\mq1060_witcher.w2ent"
+
+		//"quests\minor_quests\no_mans_land\quest_files\mq1060_devils_pit\entities\mq1060_glow_roots_large.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\spiral_endrega.w2ent"
+
+		//"dlc\bob\data\characters\npc_entities\monsters\echinops_turret.w2ent"
+
+		//"quests\minor_quests\novigrad\quest_files\mq3037_sleeping_vampire\characters\mq3037_vampire_monster.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\blade_of_the_unseen.w2ent"
+
+		//"characters\npc_entities\monsters\_quest__endriaga_spiral.w2ent"
+
+		//"dlc\ep1\data\characters\npc_entities\secondary_npc\hakland_mage.w2ent"
+
+		//"dlc\ep1\data\quests\quest_files\q601_intro\characters\q601_ofir_mage.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\shadow_wolf.w2ent"
+
+		//"characters\npc_entities\monsters\bear_berserker_lvl1.w2ent"
+
+		//"dlc\dlc_acs\data\entities\monsters\fire_bear.w2ent"
+
+		//"fx\quest\q308\q308_bonfire.w2ent"
+
+		//"fx\quest\q502\conjunction\q502_sky_conjunction.w2ent"
+
+		//"environment\architecture\human\redania\novigrad\temple_of_internal_fire\shrine_of_ethernal_fire_altar.w2ent"
+
+		"dlc\dlc_acs\data\entities\other\chaos_flame_altar_mesh.w2ent"
+		
+		, true );
+
+	playerPos = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 5;
+	
+	count = 1;
+		
+	for( i = 0; i < count; i += 1 )
+	{
+		randRange = 5 + 5 * RandF();
+		randAngle = 2 * Pi() * RandF();
+		
+		spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+		spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+		spawnPos.Z = playerPos.Z;
+		
+		//ent = theGame.CreateEntity( temp, spawnPos, thePlayer.GetWorldRotation() );
+
+		ent = theGame.CreateEntity( temp, TraceFloor(playerPos), thePlayer.GetWorldRotation() );
+
+		animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
+		meshcomp = ent.GetComponentByClassName('CMeshComponent');
+		h = 1;
+		animcomp.SetScale(Vector(h,h,h,1));
+		meshcomp.SetScale(Vector(h,h,h,1));	
+
+		((CNewNPC)ent).SetLevel(thePlayer.GetLevel());
+		((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+		((CActor)ent).SetAnimationSpeedMultiplier(1);
+
+		ent.PlayEffect('flames');
+
+		ent.PlayEffect('fire');
+
+		//ent.PlayEffectSingle('appear');
+		//ent.StopEffect('appear');
+		//ent.PlayEffectSingle('shadow_form');
+		//ent.PlayEffectSingle('demonic_possession');
+
+		//((CActor)ent).SetBehaviorVariable( 'wakeUpType', 1.0 );
+		//((CActor)ent).AddAbility( 'EtherealActive' );
+
+		//((CActor)ent).RemoveBuffImmunity( EET_Stagger );
+		//((CActor)ent).RemoveBuffImmunity( EET_LongStagger );
+
+		ent.AddTag( 'ACS_enemy' );
+	}
+}
+
+exec function dropbearbossfight()
+{	
+	ACS_dropbearbossfight();
+}
+
+exec function dropbearmeteorascend()
+{
+	ACS_dropbearmeteorstart();
+}
+
+exec function unseenblade()
+{
+	ACS_Unseen_Blade_Summon_Start();
+}
+
+exec function ACS_snowstorm()
+{
+	theGame.GetGameCamera().PlayEffect( 'q403_battle_frost' );
+}
+
+exec function ACS_changestyle()
+{
+	var actors																	: array<CActor>;
+	var i 																		: int;
+
+	actors.Clear();
+		
+	actors = thePlayer.GetNPCsAndPlayersInRange( 20, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
+
+	if( actors.Size() > 0 )
+	{
+		for( i = 0; i < actors.Size(); i += 1 )
+		{
+			if ( actors[i] )
+			{
+				actors[i].SignalGameplayEvent('LeaveCurrentCombatStyle');
+			}
+		}
+	}
+}
+
+exec function ACS_AddWeaponsChangeAttitude()
+{
+	var actors																	: array<CActor>;
+	var i 																		: int;
+
+	actors.Clear();
+		
+	actors = thePlayer.GetNPCsAndPlayersInRange( 20, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
+
+	if( actors.Size() > 0 )
+	{
+		for( i = 0; i < actors.Size(); i += 1 )
+		{
+			if ( actors[i] 
+			&& ((CNewNPC)actors[i] ).GetNPCType() == ENGT_Commoner
+			&& ((CNewNPC)actors[i] ).GetNPCType() != ENGT_Quest
+			)
+			{
+				if( RandF() < 0.5 )
+				{
+					if( RandF() < 0.5 )
+					{
+						actors[i].GetInventory().AddAnItem( 'Skellige sword 1', 1 );
+
+						//sword = actors[i].GetInventory().GetItemId('Skellige sword 1');
+					}
+					else
+					{
+						actors[i].GetInventory().AddAnItem( 'Skellige sword 2', 1 );
+
+						//sword = actors[i].GetInventory().GetItemId('Skellige sword 2');
+					}	
+				}
+				else
+				{
+					if( RandF() < 0.5 )
+					{
+						actors[i].GetInventory().AddAnItem( 'Rusty Skellige sword', 1 );
+
+						//sword = actors[i].GetInventory().GetItemId('Rusty Skellige sword');
+					}
+					else
+					{
+						actors[i].GetInventory().AddAnItem( 'Skellige sword 4', 1 );
+
+						//sword = actors[i].GetInventory().GetItemId('Skellige sword 4');
+					}
+				}
+
+				actors[i].SetTatgetableByPlayer(true);
+
+				//((CNewNPC)actors[i]).SetAttitude(thePlayer, AIA_Neutral);
+
+				((CNewNPC)actors[i]).SetAttitude(thePlayer, AIA_Hostile);
+
+				((CNewNPC)actors[i]).SetImmortalityMode( AIM_None, AIC_IsAttackableByPlayer ); 
+			}
+		}
+	}
+}
+
+exec function ACS_equipgregsword()
+{
+	var actors																	: array<CActor>;
+	var i 																		: int;
+	var sword					: SItemUniqueId;
+
+	actors.Clear();
+		
+	actors = thePlayer.GetNPCsAndPlayersInRange( 20, 100, , FLAG_ExcludePlayer + FLAG_OnlyAliveActors);
+
+	if( actors.Size() > 0 )
+	{
+		for( i = 0; i < actors.Size(); i += 1 )
+		{
+			if ( actors[i] )
+			{
+				actors[i].GetInventory().RemoveAllItems();
+
+				actors[i].DropItemFromSlot('r_weapon'); 
+
+				actors[i].GetInventory().AddAnItem( 'NPC Gregoire Sword', 1 );
+
+				sword = actors[i].GetInventory().GetItemId('NPC Gregoire Sword');
+
+				actors[i].GetInventory().MountItem(sword, true);
+
+				actors[i].DrawItems( true, sword );
+			}
+		}
+	}
+}
+
+exec function ACS_teleportvector( x:float, y:float, z:float )
+{
+	thePlayer.Teleport(Vector(x,y,z));
 }

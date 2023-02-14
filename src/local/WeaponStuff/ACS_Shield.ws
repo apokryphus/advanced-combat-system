@@ -751,19 +751,8 @@ state Yrden_Skele_Summon_Normal in cACS_Shield_Summon
 	latent function tomb_names_array()
 	{
 		tomb_names.Clear();
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_01.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_02.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_03.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_04.w2ent");
 		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_05.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_06.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_07.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_08.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_01_overgrown.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_02_overgrown.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_03_overgrown.w2ent");
-		tomb_names.PushBack("dlc\bob\data\environment\decorations\gameplay\generic\stone\gravestones\entities\bob_tombstone_04_overgrown.w2ent");
-		tomb_names.PushBack("dlc\bob\data\gameplay\container_definitions\ep2_loot_catacombs__skeleton_impaled.w2ent");	
+		tomb_names.PushBack("dlc\bob\data\quests\minor_quests\quest_files\mq7017_talking_horse\entities\mq7017_tombstone.w2ent");
 	}
 
 	latent function Skele_Summon_Actual()

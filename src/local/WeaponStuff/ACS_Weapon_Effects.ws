@@ -403,6 +403,7 @@ function yrden_secondary_sword_6() : CEntity
 
 function ACSGetEquippedSword() : CEntity
 {
+	/*
 	var steelID, silverID 						: SItemUniqueId;
 	var blade_temp_ent							: CEntity;
 
@@ -417,6 +418,13 @@ function ACSGetEquippedSword() : CEntity
 	{
 		blade_temp_ent = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
 	}
+
+	return blade_temp_ent;
+	*/
+
+	var blade_temp_ent			: CItemEntity;
+		
+	thePlayer.GetInventory().GetCurrentlyHeldSwordEntity( blade_temp_ent );
 
 	return blade_temp_ent;
 }
@@ -452,6 +460,11 @@ function ACSGetEquippedSwordUpdateEnhancements()
 
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+
+		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+		}
 	}
 	else if ( 3 == runeCount && 1 == enhancements.Size() )
 	{
@@ -460,9 +473,79 @@ function ACSGetEquippedSwordUpdateEnhancements()
 
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
+
+		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+		}
 	}
 
 	ACSGetEquippedSword().PlayEffect('rune_blast_loop');
+}
+
+function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
+{
+	var steelID, silverID 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	if (thePlayer.IsWeaponHeld('steelsword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+	}
+	else if (thePlayer.IsWeaponHeld('silversword'))
+	{
+		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		if (!ACSGetEquippedSword().IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!ACSGetEquippedSword().IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+
+		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+		}
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		if (!ACSGetEquippedSword().IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!ACSGetEquippedSword().IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+
+		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		{
+			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+		}
+	}
+
+	if (!ACSGetEquippedSword().IsEffectActive('rune_blast_loop', false))
+	{
+		ACSGetEquippedSword().PlayEffectSingle( 'rune_blast_loop' );
+	}
 }
 
 function ACS_GetRuneLevel( count : int ) : name

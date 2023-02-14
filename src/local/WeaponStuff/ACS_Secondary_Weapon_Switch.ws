@@ -716,7 +716,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				attach_rot.Yaw = 0;
 				attach_vec.X = 0;
 				attach_vec.Y = 0;
-				attach_vec.Z = 0.2;
+				attach_vec.Z = 0.4;
 
 				sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 				sword_trail_1.AddTag('acs_sword_trail_1');
@@ -736,7 +736,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				attach_rot.Yaw = 0;
 				attach_vec.X = 0;
 				attach_vec.Y = 0;
-				attach_vec.Z = 0.4;
+				attach_vec.Z = 0.6;
 
 				sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 				sword_trail_3.AddTag('acs_sword_trail_3');
@@ -4322,7 +4322,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.2;
+		attach_vec.Z = 0.4;
 
 		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_1.AddTag('acs_sword_trail_1');
@@ -4342,7 +4342,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.4;
+		attach_vec.Z = 0.6;
 
 		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_3.AddTag('acs_sword_trail_3');
@@ -4374,7 +4374,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4389,10 +4389,10 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4408,7 +4408,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4423,10 +4423,10 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4442,7 +4442,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4458,7 +4458,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = -0.2;
 							
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
@@ -4476,7 +4476,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.6;
+					attach_vec.Z = 0.4;
 							
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
@@ -4494,7 +4494,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.6;
+					attach_vec.Z = 0.4;
 							
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
@@ -4512,7 +4512,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = -0.2;
 							
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
@@ -4527,10 +4527,10 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
+					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4546,7 +4546,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4567,7 +4567,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4585,7 +4585,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4601,7 +4601,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4619,7 +4619,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4635,7 +4635,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -4651,7 +4651,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = -0.2;
 						
 					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
@@ -4667,7 +4667,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.6;
+					attach_vec.Z = 0.4;
 						
 					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
@@ -4683,7 +4683,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.6;
+					attach_vec.Z = 0.4;
 						
 					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
@@ -4699,7 +4699,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 180;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0;
+					attach_vec.Z = -0.2;
 						
 					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
@@ -4717,7 +4717,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
+					attach_vec.Z = 0.2;
 						
 					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
@@ -4733,7 +4733,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					attach_rot.Yaw = 0;
 					attach_vec.X = 0;
 					attach_vec.Y = 0;
-					attach_vec.Z = 0.2;
+					attach_vec.Z = 0;
 						
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
@@ -5147,7 +5147,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.2;
+		attach_vec.Z = 0.4;
 
 		sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_1.AddTag('acs_sword_trail_1');
@@ -5167,7 +5167,7 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 		attach_rot.Yaw = 0;
 		attach_vec.X = 0;
 		attach_vec.Y = 0;
-		attach_vec.Z = 0.4;
+		attach_vec.Z = 0.6;
 
 		sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 		sword_trail_3.AddTag('acs_sword_trail_3');

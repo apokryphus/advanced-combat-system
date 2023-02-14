@@ -3011,3 +3011,1428 @@ class ACSBowProjectileRain extends W3AdvancedProjectile
 		}
 	}
 }
+
+class W3BatSwarmGather extends W3AdvancedProjectile
+{
+	var damage 						: Float; 
+	var effect						: CEntity;
+	var victims						: array<CGameplayEntity>;
+	var comp						: CMeshComponent;
+	var range						: float;
+	
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{		
+		comp = (CMeshComponent)this.GetComponentByClassName('CMeshComponent');
+		comp.SetScale( Vector ( 0.f, 0.f, 0.f ) );
+		
+		range = 3;
+	}
+	
+	event OnProjectileInit()
+	{
+
+	}
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( IsStopped() )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		else
+			victim = NULL;
+
+		
+		if ( victim && victim.IsAlive() && !victims.Contains(victim) && victim != thePlayer )
+		{
+			DealDamageProj();
+		}
+		else if ( hitCollisionsGroups.Contains( 'Terrain' ) || hitCollisionsGroups.Contains( 'Static' ) || hitCollisionsGroups.Contains( 'Water' ) || hitCollisionsGroups.Contains( 'Foliage' ) )
+		{
+			DealDamageProj();
+		}
+	}
+	
+	function DealDamageProj()
+	{
+		var ent 				: CEntity;
+		var damageAreaEntity 	: CDamageAreaEntity;
+		var entities	 		: array<CGameplayEntity>;
+		var i					: int;
+		var surface				: CGameplayFXSurfacePost;
+		
+		FindGameplayEntitiesInSphere( entities, GetWorldPosition(), range, 100 );
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			DealDamageToVictimProj( entities[i] );
+		}
+		StopProjectile();
+		StopAllEffects();
+		//PlayEffect('explode');
+	}
+	
+	function DealDamageToVictimProj( victim : CGameplayEntity )
+	{
+		//var action 								: W3DamageAction;
+		var damage_action 							: W3Action_Attack;
+		var victimtarget						: CActor;
+		var templatename 				: string;
+		var targetpos		: Vector;
+		var rotation		: EulerAngles;
+		
+		if ( !victim.HasTag('spells_custom_projs') )
+		{
+			victim.OnAardHit( NULL );
+		}
+		victimtarget = (CActor)victim;
+		
+		templatename = "dlc\magicspellsrev\data\entities\assassin_dodge.w2ent";
+		
+		if ( victimtarget && victimtarget != thePlayer && GetAttitudeBetween( victimtarget, thePlayer ) == AIA_Hostile && victimtarget.IsAlive() ) 
+		{
+			
+		}
+		victims.PushBack(victim);
+	}
+}
+
+class W3BatSwarmAttack extends CProjectileTrajectory
+{
+	var damage 						: Float; 
+	var effect						: CEntity;
+	var victims						: array<CGameplayEntity>;
+	var comp						: CMeshComponent;
+	var range						: float;
+	
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{		
+		comp = (CMeshComponent)this.GetComponentByClassName('CMeshComponent');
+		comp.SetScale( Vector ( 0.f, 0.f, 0.f ) );
+		
+		range = 3;
+	}
+	
+	event OnProjectileInit()
+	{
+
+	}
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( IsStopped() )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		else
+			victim = NULL;
+
+		
+		if ( victim && victim.IsAlive() && !victims.Contains(victim) && victim != thePlayer )
+		{
+			DealDamageProj();
+		}
+		else if ( hitCollisionsGroups.Contains( 'Terrain' ) || hitCollisionsGroups.Contains( 'Static' ) || hitCollisionsGroups.Contains( 'Water' ) || hitCollisionsGroups.Contains( 'Foliage' ) )
+		{
+			DealDamageProj();
+		}
+	}
+	
+	function DealDamageProj()
+	{
+		var ent 				: CEntity;
+		var damageAreaEntity 	: CDamageAreaEntity;
+		var entities	 		: array<CGameplayEntity>;
+		var i					: int;
+		var surface				: CGameplayFXSurfacePost;
+		
+		FindGameplayEntitiesInSphere( entities, GetWorldPosition(), range, 100 );
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			DealDamageToVictimProj( entities[i] );
+		}
+
+		StopProjectile();
+
+		StopAllEffects();
+
+		PlayEffect('venom');
+
+		PlayEffect('venom_hit');
+	}
+	
+	function DealDamageToVictimProj( victim : CGameplayEntity )
+	{
+		var victimtarget								: CActor;
+		var paramsKnockdown, paramsDrunkEffect 			: SCustomEffectParams;
+		var settings_interrupt							: SAnimatedComponentSlotAnimationSettings;
+
+		victimtarget = (CActor)victim;
+
+		settings_interrupt.blendIn = 0.25f;
+		settings_interrupt.blendOut = 0.75f;
+		
+		if ( victimtarget == thePlayer ) 
+		{
+			if(victimtarget.IsAlive()){victimtarget.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );}
+
+			victimtarget.AddEffectDefault(EET_Stagger, victimtarget, 'console');
+
+			victimtarget.DrainVitality((victimtarget.GetStat(BCS_Vitality) * 0.1) + 25);
+			
+			PlayEffect('venom_hit');
+		}
+
+		victims.PushBack(victim);
+	}
+}
+
+class W3ACSEredinFrostLine extends W3TraceGroundProjectile
+{
+	private var action 						: W3DamageAction;
+	private var damage						: float;
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+			
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			if (((CActor)victim).UsesEssence())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victim).UsesVitality())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_Heavy,CPS_SpellPower,false,true,false,false);
+			action.AddDamage(theGame.params.DAMAGE_NAME_FROST, damage );
+			action.AddEffectInfo( projEfect, 2.0 );
+			action.SetCanPlayHitParticle(false);
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+
+			/*
+			if ( deactivateOnCollisionWithVictim )
+			{
+				isActive = false;
+			}
+			*/
+
+			delete action;
+		}
+	}
+}
+
+class W3ACSFireLine extends W3TraceGroundProjectile
+{
+	private var action 						: W3DamageAction;
+	private var damage						: float;
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+		
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			if (((CActor)victim).UsesEssence())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victim).UsesVitality())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_Light,CPS_SpellPower,false,true,false,false);
+			action.AddDamage(theGame.params.DAMAGE_NAME_FIRE, damage );		
+			action.AddEffectInfo(EET_Burning, 1.0);
+			action.SetCanPlayHitParticle(false);
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+
+			/*
+			if ( deactivateOnCollisionWithVictim )
+			{
+				isActive = false;
+			}
+			*/
+
+			delete action;
+		}
+	}
+}
+
+class W3ACSRockLine extends W3TraceGroundProjectile
+{
+	private var action 						: W3DamageAction;
+	private var damage						: float;
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+		
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			if (((CActor)victim).UsesEssence())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victim).UsesVitality())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_None,CPS_AttackPower,false,true,false,false);
+			action.AddEffectInfo(EET_Knockdown);
+			action.AddDamage(theGame.params.DAMAGE_NAME_ELEMENTAL, damage );	
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+
+			delete action;
+		}
+	}
+}
+
+class W3ACSGiantShockwave extends W3TraceGroundProjectile
+{
+	private var action 						: W3DamageAction;
+	private var damage						: float;
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+		
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			if (((CActor)victim).UsesEssence())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victim).UsesVitality())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_None,CPS_AttackPower,false,true,false,false);
+			action.AddEffectInfo(EET_Knockdown);
+			action.AddDamage(theGame.params.DAMAGE_NAME_ELEMENTAL, damage );	
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+
+			delete action;
+		}
+	}
+}
+
+class W3ACSSharleyShockwave extends W3TraceGroundProjectile
+{
+	private var action 						: W3DamageAction;
+	private var damage						: float;
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+		
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			if (((CActor)victim).UsesEssence())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victim).UsesVitality())
+			{
+				damage = ((CActor)victim).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_None,CPS_AttackPower,false,true,false,false);
+			action.AddEffectInfo(EET_Knockdown);
+			action.AddDamage(theGame.params.DAMAGE_NAME_ELEMENTAL, damage );	
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+
+			delete action;
+		}
+	}
+}
+
+class W3ACSRootAttack extends CGameplayEntity
+{
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{
+		PlayEffect('ground_fx');
+		AddTimer('effect', 0.3);
+		AddTimer('attack', 0.4);
+		AddTimer('stop_effect', 1.f);
+	}
+
+	timer function effect ( dt : float, optional id : int)
+	{
+		PlayEffect('attack_fx1');
+	}
+
+	timer function stop_effect ( dt : float, optional id : int)
+	{
+		StopEffect('ground_fx');
+	}
+
+	timer function attack ( dt : float, optional id : int)
+	{
+		var entities	 		: array<CGameplayEntity>;
+		var i					: int;
+		
+		FindGameplayEntitiesInSphere( entities, GetWorldPosition(), 3, 100 );
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			deal_damage( (CActor)entities[i] );
+		}
+	}
+	
+	function deal_damage( victimtarget : CActor )
+	{
+		var action 			: W3DamageAction;
+		var damage 			: float;
+		
+		if ( victimtarget && victimtarget.IsAlive() && victimtarget != thePlayer ) 
+		{
+			if (((CActor)victimtarget).UsesEssence())
+			{
+				damage = ((CActor)victimtarget).GetStat( BCS_Essence ) * 0.125;
+			}
+			else if (((CActor)victimtarget).UsesVitality())
+			{
+				damage = ((CActor)victimtarget).GetStat( BCS_Vitality ) * 0.125;
+			}
+
+			if ( VecDistance2D( this.GetWorldPosition(), victimtarget.GetWorldPosition() ) > 0.5 )
+			{
+				damage -= damage * VecDistance2D( this.GetWorldPosition(), victimtarget.GetWorldPosition() ) * 0.1;
+			}
+			
+			action = new W3DamageAction in theGame.damageMgr;
+			action.Initialize(thePlayer,victimtarget,this,thePlayer.GetName(),EHRT_Heavy,CPS_Undefined,false, false, true, false );
+			action.SetProcessBuffsIfNoDamage(true);
+			action.SetCanPlayHitParticle( true );
+			
+			action.AddEffectInfo( EET_Bleeding, 3 );
+
+			action.AddEffectInfo( EET_LongStagger );
+
+			action.AddDamage( theGame.params.DAMAGE_NAME_ELEMENTAL, damage  );
+			
+			theGame.damageMgr.ProcessAction( action );
+			delete action;
+		}
+	}
+}
+
+class W3WHMinionProjectile extends W3TraceGroundProjectile
+{
+	private var action : W3DamageAction;
+
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		else
+			victim = NULL;
+		
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		if ( victim && !collidedEntities.Contains(victim) )
+		{
+			action = new W3DamageAction in this;
+			action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_None,CPS_AttackPower,false,true,false,false);
+			action.AddEffectInfo(EET_Knockdown);
+			action.AddDamage(theGame.params.DAMAGE_NAME_ELEMENTAL, 200.f );	
+			theGame.damageMgr.ProcessAction( action );
+			collidedEntities.PushBack(victim);
+			
+			delete action;
+		}
+	}
+}
+
+class W3ACSBearFireball extends W3AdvancedProjectile
+{
+	editable var initFxName 			: name;
+	editable var onCollisionFxName 		: name;
+	editable var spawnEntityTemplate 	: CEntityTemplate;
+	editable var decreasePlayerDmgBy	: float; default decreasePlayerDmgBy = 0.f;
+
+	private var projectileHitGround : bool;
+	
+	default projDMG = 200.f;
+	default projEfect = EET_Burning;
+
+	event OnProjectileInit()
+	{
+		this.PlayEffect(initFxName);
+		projectileHitGround = false;
+		isActive = true;
+	}
+	
+	event OnProjectileCollision( pos, normal : Vector, collidingComponent : CComponent, hitCollisionsGroups : array< name >, actorIndex : int, shapeIndex : int )
+	{
+		if ( !isActive )
+		{
+			return true;
+		}
+		
+		if(collidingComponent)
+		{
+			victim = (CGameplayEntity)collidingComponent.GetEntity();
+		}
+		else
+		{
+			victim = NULL;
+		}
+
+		super.OnProjectileCollision(pos, normal, collidingComponent, hitCollisionsGroups, actorIndex, shapeIndex);
+		
+		/*
+		if ( victim && !hitCollisionsGroups.Contains( 'Static' ) && !projectileHitGround && !collidedEntities.Contains(victim) && victim != ACSFireBear() )
+		{
+			VictimCollision(victim);
+		}
+		else if ( hitCollisionsGroups.Contains( 'Terrain' ) || hitCollisionsGroups.Contains( 'Static' ) )
+		{
+			ProjectileHitGround();
+		}
+		else if ( hitCollisionsGroups.Contains( 'Water' ) )
+		{
+			ProjectileHitGround();
+		}
+		*/
+
+		if ( victim && !hitCollisionsGroups.Contains( 'Static' ) && !projectileHitGround && !collidedEntities.Contains(victim) && victim != ACSFireBear() )
+		{
+			VictimCollision(victim);
+		}
+		else if ( hitCollisionsGroups.Contains( 'Terrain' ) )
+		{
+			ProjectileHitGround();
+		}
+		else if ( hitCollisionsGroups.Contains( 'Water' ) )
+		{
+			ProjectileHitGround();
+		}
+
+	}
+	
+	protected function VictimCollision( victim : CGameplayEntity )
+	{
+		DealDamageToVictim(victim);
+		DeactivateProjectile(victim);
+	}
+	
+	protected function DealDamageToVictim( victim : CGameplayEntity )
+	{
+		var action : W3DamageAction;
+		
+		action = new W3DamageAction in theGame;
+		action.Initialize((CGameplayEntity)caster,victim,this,caster.GetName(),EHRT_Light,CPS_SpellPower,false,true,false,false);
+		
+		if ( victim == thePlayer )
+		{
+			projDMG = projDMG - (projDMG * decreasePlayerDmgBy);
+		}
+		else if ( victim == ACSFireBear() )
+		{
+			projDMG = 0;
+		}
+	
+		action.AddDamage(theGame.params.DAMAGE_NAME_FIRE, projDMG );
+		action.AddEffectInfo(EET_Burning, 2.0);
+		action.AddEffectInfo(EET_HeavyKnockdown, 2);
+		action.SetCanPlayHitParticle(false);
+		theGame.damageMgr.ProcessAction( action );
+		delete action;
+		
+		collidedEntities.PushBack(victim);
+	}
+	
+	protected function PlayCollisionEffect( optional victim : CGameplayEntity )
+	{
+		if ( victim == thePlayer && thePlayer.GetCurrentlyCastSign() == ST_Quen && ((W3PlayerWitcher)thePlayer).IsCurrentSignChanneled() )
+		{}
+		else
+			this.PlayEffect(onCollisionFxName);
+	}
+	
+	protected function DeactivateProjectile( optional victim : CGameplayEntity )
+	{
+		isActive = false;
+		this.StopEffect(initFxName);
+		this.DestroyAfter(0.25);
+		PlayCollisionEffect ( victim );
+	}
+	
+	protected function ProjectileHitGround()
+	{
+		var ent 				: CEntity;
+		var damageAreaEntity 	: CDamageAreaEntity;
+		var actorsAround	 	: array<CActor>;
+		var i					: int;
+		
+		if ( spawnEntityTemplate )
+		{
+			ent = theGame.CreateEntity( spawnEntityTemplate, this.GetWorldPosition(), this.GetWorldRotation() );
+			damageAreaEntity = (CDamageAreaEntity)ent;
+			if ( damageAreaEntity )
+			{
+				damageAreaEntity.owner = (CActor)caster;
+				projectileHitGround = true;
+			}
+		}
+		
+		else
+		{
+			actorsAround = GetActorsInRange( this, 2, , , true );
+			for( i = 0; i < actorsAround.Size(); i += 1 )
+			{
+				DealDamageToVictim( actorsAround[i] );
+			}
+		}
+		DeactivateProjectile();
+
+		theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( this.GetWorldPosition() ), 1.f, 60, 2.f, 30.f, 1);
+	}
+	
+	event OnRangeReached()
+	{
+		this.DestroyAfter(2.f);
+	}
+	
+	function SetProjectileHitGround( b : bool )
+	{
+		projectileHitGround = b;
+	}
+}
+
+class W3BearSummonMeteorProjectile extends W3ACSBearFireball
+{
+	editable var explosionRadius 		: float;
+	editable var markerEntityTemplate	: CEntityTemplate;
+	editable var destroyMarkerAfter		: float;
+
+	var markerEntity 			: CEntity;
+	
+	default projSpeed = 10;
+	default projAngle = 0;
+	
+	default explosionRadius = 2;
+	default destroyMarkerAfter = 2.f;
+
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{
+		var createEntityHelper 												: W3BearSummonMeteorProjectile_CreateMarkerEntityHelper;
+		var animatedComponentA												: CAnimatedComponent;
+		var movementAdjustorNPC												: CMovementAdjustor; 
+		var ticketNPC 														: SMovementAdjustmentRequestTicket; 
+	
+		//super.OnProjectileShot(targetCurrentPosition, target);
+		
+		//createEntityHelper = new W3BearSummonMeteorProjectile_CreateMarkerEntityHelper in theGame;
+		//createEntityHelper.owner = this;
+		//createEntityHelper.SetPostAttachedCallback( createEntityHelper, 'OnEntityCreated' );
+
+		//theGame.CreateEntityAsync( createEntityHelper, markerEntityTemplate, TraceFloor(targetCurrentPosition), EulerAngles(0,0,0) );
+
+		if (ACSFireBear())
+		{
+			if (ACSFireBear().IsAlive())
+			{
+				AddTimer('firebearteleport', 0.000001, true);
+
+				//AddTimer('meteortrackingdelay', 1.75, false);
+			}
+		}
+
+		AddTimer('meteortrackingdelay', 1.75, false);
+	}
+	
+	protected function VictimCollision( victim : CGameplayEntity )
+	{
+		
+	}
+	
+	protected function DeactivateProjectile( optional victim : CGameplayEntity)
+	{
+		if ( !isActive )
+			return;
+		
+		Explode();
+		
+		
+		if ( markerEntity )
+		{
+			markerEntity.StopAllEffects();
+			markerEntity.DestroyAfter( destroyMarkerAfter );
+		}
+		
+		super.DeactivateProjectile(victim);
+
+		RemoveTimer('meteortracking');
+	}
+	
+	protected function Explode()
+	{
+		var entities 														: array<CGameplayEntity>;
+		var i																: int;
+		var animatedComponentA												: CAnimatedComponent;
+		var movementAdjustorNPC												: CMovementAdjustor; 
+		var ticketNPC 														: SMovementAdjustmentRequestTicket; 
+
+		RemoveTimer('meteortracking');
+		
+		FindGameplayEntitiesInCylinder( entities, this.GetWorldPosition(), explosionRadius, 2.f, 99 ,'',FLAG_ExcludeTarget, this );
+		
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			if ( !collidedEntities.Contains(entities[i]) )
+			{
+				DealDamageToVictim(entities[i]);
+			}
+		}
+		
+		GCameraShake( 3, 5, GetWorldPosition() );
+
+		theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( this.GetWorldPosition() ), 1.f, 60, 2.f, 30.f, 1);
+
+		if (ACSFireBear())
+		{
+			if (ACSFireBear().IsAlive())
+			{
+				RemoveTimer('firebearteleport');
+
+				ACSFireBear().EnableCharacterCollisions(true); 
+
+				ACSFireBear().EnableCollisions(true);
+
+				//ACSFireBear().TeleportWithRotation( this.GetWorldPosition(), thePlayer.GetWorldRotation() );
+
+				ACSFireBear().SetVisibility(true);
+
+				animatedComponentA = (CAnimatedComponent)((CNewNPC)ACSFireBear()).GetComponentByClassName( 'CAnimatedComponent' );
+
+				animatedComponentA.UnfreezePose();
+
+				movementAdjustorNPC = ACSFireBear().GetMovingAgentComponent().GetMovementAdjustor();
+
+				ticketNPC = movementAdjustorNPC.GetRequest( 'ACS_Fire_Bear_Spawn_Rotate');
+				movementAdjustorNPC.CancelByName( 'ACS_Fire_Bear_Spawn_Rotate' );
+
+				ticketNPC = movementAdjustorNPC.CreateNewRequest( 'ACS_Fire_Bear_Spawn_Rotate' );
+				movementAdjustorNPC.AdjustmentDuration( ticketNPC, 0.01 );
+				movementAdjustorNPC.MaxRotationAdjustmentSpeed( ticketNPC, 50000 );
+
+				movementAdjustorNPC.RotateTowards( ticketNPC, thePlayer );
+
+				animatedComponentA.PlaySlotAnimationAsync ( 'bear_special_attack', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 1));
+
+				ACSFireBear().PlayEffect('burning_body');
+				ACSFireBear().PlayEffect('flames');
+				ACSFireBear().PlayEffect('critical_burning');
+				ACSFireBear().PlayEffect('demonic_possession');
+
+				ACSFireBear().AddEffectDefault( EET_FireAura, ACSFireBear(), 'acs_fire_bear_fire_aura' );
+
+				((CNewNPC)ACSFireBear()).NoticeActor(thePlayer);
+
+				((CActor)ACSFireBear()).ActionMoveToNodeWithHeadingAsync(thePlayer);
+
+				GetACSWatcher().SetFireBearMeteorProcess(false);
+
+				if (ACSFireBear().GetStat(BCS_Essence) <= ACSFireBear().GetStatMax(BCS_Essence)/2)
+				{
+					GetACSWatcher().RemoveTimer('DropBearMeteorStart');
+					GetACSWatcher().AddTimer('DropBearMeteorStart', 15, true);
+				}
+				else
+				{
+					GetACSWatcher().RemoveTimer('DropBearMeteorStart');
+					GetACSWatcher().AddTimer('DropBearMeteorStart', RandRangeF(30,15), true);
+				}
+
+				//SpawnStonePillarCircle_3();
+			}
+			else
+			{
+				acsfirebearspawntemp();
+
+				SpawnStonePillarCircle_1();
+
+				SpawnStonePillarCircle_2();
+
+				GetACSWatcher().RemoveTimer('DropBearMeteorStart');
+				GetACSWatcher().AddTimer('DropBearMeteorStart', RandRangeF(30,15), true);
+			}
+		}
+		else
+		{
+			acsfirebearspawntemp();
+
+			SpawnStonePillarCircle_1();
+
+			SpawnStonePillarCircle_2();
+
+			GetACSWatcher().RemoveTimer('DropBearMeteorStart');
+			GetACSWatcher().AddTimer('DropBearMeteorStart', RandRangeF(30,15), true);
+		}
+	}
+	
+	protected function acsfirebearspawntemp()
+	{
+		var temp, temp_2, ent_1_temp, blade_temp							: CEntityTemplate;
+		var ent, ent_2, ent_1, r_anchor, l_anchor, r_blade1, l_blade1		: CEntity;
+		var i, count														: int;
+		var playerPos, spawnPos												: Vector;
+		var randAngle, randRange											: float;
+		var meshcomp														: CComponent;
+		var animcomp 														: CAnimatedComponent;
+		var h 																: float;
+		var bone_vec, pos, attach_vec										: Vector;
+		var bone_rot, rot, attach_rot										: EulerAngles;
+		var playerRot														: EulerAngles;
+		var animatedComponentA												: CAnimatedComponent;
+		var movementAdjustorNPC												: CMovementAdjustor; 
+		var ticketNPC 														: SMovementAdjustmentRequestTicket; 
+
+		ACSFireBear().Destroy();
+
+		temp = (CEntityTemplate)LoadResource(
+
+		"dlc\dlc_acs\data\entities\monsters\fire_bear.w2ent"
+		
+		, true );
+
+		playerRot = thePlayer.GetWorldRotation();
+
+		playerRot.Roll = 0;
+		playerRot.Pitch = 0;
+		playerRot.Yaw = 180;
+		
+		ent = theGame.CreateEntity( temp, this.GetWorldPosition(), playerRot );
+
+		animcomp = (CAnimatedComponent)ent.GetComponentByClassName('CAnimatedComponent');
+		meshcomp = ent.GetComponentByClassName('CMeshComponent');
+		h = 1.5;
+		animcomp.SetScale(Vector(h,h,h,1));
+		meshcomp.SetScale(Vector(h,h,h,1));	
+
+		((CNewNPC)ent).SetLevel(thePlayer.GetLevel());
+		((CNewNPC)ent).SetAttitude(thePlayer, AIA_Hostile);
+		((CActor)ent).SetAnimationSpeedMultiplier(1);
+
+		((CNewNPC)ent).NoticeActor(thePlayer);
+
+		((CActor)ent).ActionMoveToNodeWithHeadingAsync(thePlayer);
+
+		//ent.PlayEffect('ice');
+
+		//ent.PlayEffectSingle('appear');
+		//ent.StopEffect('appear');
+		//ent.PlayEffectSingle('shadow_form');
+		//ent.PlayEffectSingle('demonic_possession');
+
+		//((CActor)ent).SetBehaviorVariable( 'wakeUpType', 1.0 );
+		//((CActor)ent).AddAbility( 'EtherealActive' );
+
+		//((CActor)ent).RemoveBuffImmunity( EET_Stagger );
+		//((CActor)ent).RemoveBuffImmunity( EET_LongStagger );
+
+		ent.PlayEffect('burning_body');
+		ent.PlayEffect('flames');
+		ent.PlayEffect('critical_burning');
+		ent.PlayEffect('demonic_possession');
+
+		((CNewNPC)ent).SetLevel(thePlayer.GetLevel() + 10);
+
+		((CActor)ent).AddEffectDefault( EET_FireAura, ((CActor)ent), 'acs_fire_bear_fire_aura' );
+
+		((CActor)ent).AddEffectDefault( EET_AutoEssenceRegen, ((CActor)ent), 'acs_fire_bear_essence_regen_buff' );
+
+		((CActor)ent).AddEffectDefault( EET_AutoMoraleRegen, ((CActor)ent), 'acs_fire_bear_morale_regen_buff' );
+
+		((CActor)ent).AddEffectDefault( EET_AutoStaminaRegen, ((CActor)ent), 'acs_fire_bear_stamina_regen_buff' );
+
+		((CActor)ent).AddEffectDefault( EET_AutoPanicRegen, ((CActor)ent), 'acs_fire_bear_panic_regen_buff' );
+
+		((CActor)ent).SetCanPlayHitAnim(false);
+
+		((CActor)ent).GetInventory().AddAnItem( 'Crowns', 50000 );
+
+		((CActor)ent).GetInventory().AddAnItem( 'Ruby flawless', 50 );
+
+		//((CActor)ent).AddBuffImmunity	( EET_Stagger,				'acs_fire_bear_buff', false);
+		//((CActor)ent).AddBuffImmunity	( EET_LongStagger,			'acs_fire_bear_buff', false);
+		//((CActor)ent).AddBuffImmunity	( EET_Knockdown,			'acs_fire_bear_buff', false);
+		//((CActor)ent).AddBuffImmunity	( EET_Ragdoll,				'acs_fire_bear_buff', false);
+		//((CActor)ent).AddBuffImmunity	( EET_HeavyKnockdown,		'acs_fire_bear_buff', false);
+		((CActor)ent).AddBuffImmunity	( EET_Burning,				'acs_fire_bear_buff', false);
+		((CActor)ent).AddBuffImmunity	( EET_Frozen,				'acs_fire_bear_buff', false);
+		((CActor)ent).AddBuffImmunity	( EET_SlowdownFrost,		'acs_fire_bear_buff', false);
+
+		ent.AddTag( 'ACS_Fire_Bear' );
+		ent.AddTag( 'ACS_Big_Boi' );
+		ent.AddTag( 'ContractTarget' );
+		ent.AddTag('IsBoss');
+
+		((CActor)ent).AddAbility('Boss');
+
+		movementAdjustorNPC = ((CActor)ent).GetMovingAgentComponent().GetMovementAdjustor();
+
+		ticketNPC = movementAdjustorNPC.GetRequest( 'ACS_Fire_Bear_Spawn_Rotate');
+		movementAdjustorNPC.CancelByName( 'ACS_Fire_Bear_Spawn_Rotate' );
+
+		ticketNPC = movementAdjustorNPC.CreateNewRequest( 'ACS_Fire_Bear_Spawn_Rotate' );
+		movementAdjustorNPC.AdjustmentDuration( ticketNPC, 0.01 );
+		movementAdjustorNPC.MaxRotationAdjustmentSpeed( ticketNPC, 50000 );
+
+		movementAdjustorNPC.RotateTowards( ticketNPC, thePlayer );
+
+		animatedComponentA = (CAnimatedComponent)((CNewNPC)ent).GetComponentByClassName( 'CAnimatedComponent' );	
+
+		animatedComponentA.PlaySlotAnimationAsync ( 'bear_taunt02', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1));
+	}
+	
+	protected function ProjectileHitGround()
+	{
+		var entities 		: array<CGameplayEntity>;
+		var i				: int;
+		var landPos			: Vector;
+		
+		landPos = this.GetWorldPosition();
+		
+		FindGameplayEntitiesInSphere( entities, this.GetWorldPosition(), 4, 10, '', FLAG_ExcludeTarget, this );
+		
+		for( i = 0; i < entities.Size(); i += 1 )
+		{
+			entities[i].ApplyAppearance( "hole" );			
+			if( theGame.GetWorld().GetWaterLevel( landPos ) > landPos.Z )
+			{
+				entities[i].StopEffect('explosion_water');	
+				entities[i].PlayEffect('explosion_water');			
+			}
+			else
+			{
+				entities[i].StopEffect('explosion');
+				entities[i].PlayEffect('explosion');
+			}
+		}
+		
+		super.ProjectileHitGround();
+	}
+
+	function SpawnStonePillarCircle_1()
+	{
+		var temp															: CEntityTemplate;
+		var ent																: W3ACSStonePillar;
+		var i, count														: int;
+		var playerPos, spawnPos												: Vector;
+		var randAngle, randRange											: float;
+		var meshcomp														: CComponent;
+		var animcomp 														: CAnimatedComponent;
+		var h 																: float;
+		var targetRotationNPC												: EulerAngles;
+
+		temp = (CEntityTemplate)LoadResource( 
+
+		"dlc\dlc_acs\data\entities\projectiles\elemental_dao_pillar_arena.w2ent"
+		
+		, true );
+
+		playerPos = this.GetWorldPosition();
+
+		playerPos = TraceFloor(playerPos);
+		
+		count = 50;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 10 + 10 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+
+			targetRotationNPC = thePlayer.GetWorldRotation();
+			targetRotationNPC.Yaw = RandRangeF(360,1);
+			targetRotationNPC.Pitch = RandRangeF(45,-45);
+			
+			ent = (W3ACSStonePillar)theGame.CreateEntity( temp, TraceFloor(spawnPos), targetRotationNPC );
+
+			ent.DestroyAfter(30.5);
+
+			theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( spawnPos ), 1.f, 60, 2.f, 5.f, 1);
+		}
+	}
+
+	function SpawnStonePillarCircle_2()
+	{
+		var temp															: CEntityTemplate;
+		var ent																: W3ACSStonePillar;
+		var i, count														: int;
+		var playerPos, spawnPos												: Vector;
+		var randAngle, randRange											: float;
+		var meshcomp														: CComponent;
+		var animcomp 														: CAnimatedComponent;
+		var h 																: float;
+		var targetRotationNPC												: EulerAngles;
+
+		temp = (CEntityTemplate)LoadResource( 
+
+		"dlc\dlc_acs\data\entities\projectiles\elemental_dao_pillar_arena.w2ent"
+		
+		, true );
+
+		playerPos = this.GetWorldPosition();
+
+		playerPos = TraceFloor(playerPos);
+		
+		count = 25;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 7.5 + 7.5 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+
+			targetRotationNPC = thePlayer.GetWorldRotation();
+			targetRotationNPC.Yaw = RandRangeF(360,1);
+			targetRotationNPC.Pitch = RandRangeF(45,-45);
+			
+			ent = (W3ACSStonePillar)theGame.CreateEntity( temp, TraceFloor(spawnPos), targetRotationNPC );
+
+			ent.DestroyAfter(30.5);
+
+			theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( spawnPos ), 1.f, 60, 2.f, 5.f, 1);
+		}
+	}
+
+	function SpawnStonePillarCircle_3()
+	{
+		var temp															: CEntityTemplate;
+		var ent																: W3ACSStonePillar;
+		var i, count														: int;
+		var playerPos, spawnPos												: Vector;
+		var randAngle, randRange											: float;
+		var meshcomp														: CComponent;
+		var animcomp 														: CAnimatedComponent;
+		var h 																: float;
+		var targetRotationNPC												: EulerAngles;
+
+		temp = (CEntityTemplate)LoadResource( 
+
+		"dlc\dlc_acs\data\entities\projectiles\elemental_dao_pillar_arena.w2ent"
+		
+		, true );
+
+		playerPos = this.GetWorldPosition();
+
+		playerPos = TraceFloor(playerPos);
+		
+		count = 25;
+			
+		for( i = 0; i < count; i += 1 )
+		{
+			randRange = 10 + 10 * RandF();
+			randAngle = 2 * Pi() * RandF();
+			
+			spawnPos.X = randRange * CosF( randAngle ) + playerPos.X;
+			spawnPos.Y = randRange * SinF( randAngle ) + playerPos.Y;
+			spawnPos.Z = playerPos.Z;
+
+			targetRotationNPC = thePlayer.GetWorldRotation();
+			targetRotationNPC.Yaw = RandRangeF(360,1);
+			targetRotationNPC.Pitch = RandRangeF(45,-45);
+			
+			ent = (W3ACSStonePillar)theGame.CreateEntity( temp, TraceFloor(spawnPos), targetRotationNPC );
+
+			ent.DestroyAfter(30.5);
+
+			theGame.GetSurfacePostFX().AddSurfacePostFXGroup( TraceFloor( spawnPos ), 1.f, 60, 2.f, 5.f, 1);
+		}
+	}
+
+	timer function firebearteleport( deltaTime : float , id : int)
+	{
+		var pos																: Vector;
+
+		pos = this.GetWorldPosition();
+
+		pos.Z += 0.5;
+
+		pos.Y -= 2;
+
+		ACSFireBear().TeleportWithRotation(pos, ACSFireBear().GetWorldRotation());
+	}
+
+	timer function meteortracking( deltaTime : float , id : int)
+	{
+		var pos																: Vector;
+
+		pos = thePlayer.GetWorldPosition();
+
+		pos.Z -= 1;
+
+		if(thePlayer.IsAlive()
+		&& !theGame.IsDialogOrCutscenePlaying()
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+		&& !theGame.IsFading()
+		&& !theGame.IsBlackscreen()
+		)
+		{
+			this.ShootProjectileAtPosition(projAngle,projSpeed*0.5,pos);
+		}
+	}
+
+	timer function meteortrackingdelay( deltaTime : float , id : int)
+	{
+		AddTimer('meteortracking', 0.25, true);
+	}
+	
+	event OnProjectileShot( targetCurrentPosition : Vector, optional target : CNode )
+	{
+		var createEntityHelper 												: W3BearSummonMeteorProjectile_CreateMarkerEntityHelper;
+	
+		super.OnProjectileShot(targetCurrentPosition, target);
+		
+		createEntityHelper = new W3BearSummonMeteorProjectile_CreateMarkerEntityHelper in theGame;
+		createEntityHelper.owner = this;
+		createEntityHelper.SetPostAttachedCallback( createEntityHelper, 'OnEntityCreated' );
+
+		theGame.CreateEntityAsync( createEntityHelper, markerEntityTemplate, TraceFloor(targetCurrentPosition), EulerAngles(0,0,0) );
+	}
+}
+
+class W3BearSummonMeteorProjectile_CreateMarkerEntityHelper extends CCreateEntityHelper
+{
+	var owner : W3BearSummonMeteorProjectile;
+	
+	event OnEntityCreated( entity : CEntity )
+	{
+		/*
+		if ( owner )
+		{
+			owner.markerEntity = entity;
+			theGame.GetBehTreeReactionManager().CreateReactionEvent( owner, 'MeteorMarker', owner.destroyMarkerAfter, owner.explosionRadius, 0.1f, 999, true );
+			owner = NULL;
+		}
+		else
+		{
+			entity.StopAllEffects();
+			entity.DestroyAfter(2.f);
+		}
+		*/
+		if(thePlayer.IsAlive()
+		&& !theGame.IsDialogOrCutscenePlaying()
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+		&& !theGame.IsFading()
+		&& !theGame.IsBlackscreen()
+		)
+		{
+			entity.DestroyAfter(5);
+		}
+		else
+		{
+			entity.Destroy();
+		}
+	}
+}
+
+class W3BearDespawnMeteorProjectile extends W3ACSBearFireball
+{	
+	default projSpeed = 10;
+	default projAngle = 0;
+
+	private saved var angleIncrement	: int;
+
+	default angleIncrement = 0;
+
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{
+		var animatedComponentA												: CAnimatedComponent;
+		var movementAdjustorNPC												: CMovementAdjustor; 
+		var ticketNPC 														: SMovementAdjustmentRequestTicket; 
+
+		var pos																: Vector;
+	
+		//super.OnProjectileShot(targetCurrentPosition, target);
+
+		if (ACSFireBear().IsAlive())
+		{
+			//pos = thePlayer.GetWorldPosition();
+
+			//pos.Z += 150;
+
+			//ACSFireBear().TeleportWithRotation(pos, thePlayer.GetWorldRotation());
+
+			AddTimer('firebearteleport', 0.000001, true);
+
+			//AddTimer('firebearinvis', 1.5, false);
+
+			GetACSWatcher().RemoveTimer('ACSFireBearFlameOnDelay');
+
+			GetACSWatcher().RemoveTimer('ACSFireBearFireballLeftDelay');
+
+			GetACSWatcher().RemoveTimer('ACSFireBearFireballRightDelay');
+
+			GetACSWatcher().RemoveTimer('ACSFireBearFireLineDelay');
+
+			ACSFireBear().StopAllEffects();
+
+			ACSFireBear().RemoveBuff(EET_FireAura, true, 'acs_fire_bear_fire_aura');
+
+			ACSFireBear().SetVisibility(false);
+
+			animatedComponentA = (CAnimatedComponent)((CNewNPC)ACSFireBear()).GetComponentByClassName( 'CAnimatedComponent' );
+
+			animatedComponentA.FreezePose();
+
+			AddTimer('meteortrackingdelay', 1, false);
+		}
+	}
+
+	timer function firebearteleport( deltaTime : float , id : int)
+	{
+		var pos																: Vector;
+
+		pos = this.GetWorldPosition();
+
+		pos.Z += 3;
+
+		//ACSFireBear().TeleportWithRotation(pos, ACSFireBear().GetWorldRotation());
+
+		ACSFireBear().Teleport(pos);
+	}
+
+	timer function firebearinvis( deltaTime : float , id : int)
+	{
+		ACSFireBear().SetVisibility(false);
+
+		ACSFireBear().StopAllEffects();
+
+		ACSFireBear().RemoveBuff(EET_FireAura, true, 'acs_fire_bear_fire_aura');
+	}
+
+	timer function meteortracking_first( deltaTime : float , id : int)
+	{
+		var pos 															: Vector;
+
+		pos = ACSFireBear().GetHeadingVector() + ACSFireBear().GetWorldForward() * -100;
+
+		pos.Z += 200;
+
+		if(thePlayer.IsAlive()
+		&& !theGame.IsDialogOrCutscenePlaying()
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+		&& !theGame.IsFading()
+		&& !theGame.IsBlackscreen()
+		)
+		{
+			this.ShootProjectileAtPosition(projAngle,projSpeed,pos);
+		}
+	}
+
+	timer function meteortracking_second( deltaTime : float , id : int)
+	{
+		var pos 															: Vector;
+
+		pos = ACSFireBear().GetHeadingVector() + ACSFireBear().GetWorldForward() * 200;
+
+		pos.Z += 100;
+
+		if(thePlayer.IsAlive()
+		&& !theGame.IsDialogOrCutscenePlaying()
+		&& !thePlayer.IsInNonGameplayCutscene() 
+		&& !thePlayer.IsInGameplayScene()
+		&& !theGame.IsCurrentlyPlayingNonGameplayScene()
+		&& !theGame.IsFading()
+		&& !theGame.IsBlackscreen()
+		)
+		{
+			this.ShootProjectileAtPosition(projAngle,projSpeed,pos);
+		}
+	}
+
+	timer function meteortrackingswitch( deltaTime : float , id : int)
+	{
+		RemoveTimer('meteortracking_first');
+
+		AddTimer('meteortracking_second', 0.0001, true);
+	}
+
+	timer function meteortrackingdelay( deltaTime : float , id : int)
+	{
+		AddTimer('meteortracking_first', 0.0001, true);
+
+		AddTimer('meteortrackingswitch', 1.5, false);
+	}
+	
+	event OnProjectileShot( targetCurrentPosition : Vector, optional target : CNode )
+	{
+		//AddTimer('meteortrackingdelay', 1, false);
+	}
+
+	event OnDestroyed()
+	{
+		RemoveTimer('meteortracking_second');
+		RemoveTimer('firebearteleport');
+	}
+}
+
+class W3ACSStonePillar extends W3DurationObstacle
+{
+	private editable var 		damageValue 			: float; 		default damageValue = 100;
+	
+	
+	event OnSpawned( spawnData : SEntitySpawnData )
+	{	
+		super.OnSpawned( spawnData );
+		
+		AddTimer( 'Appear', 0.5f );
+	}
+	
+	
+	private timer function Appear( _Delta : float, optional id : int)
+	{
+		var i						: int;
+		var l_entitiesInRange		: array <CGameplayEntity>;
+		var l_range					: float;
+		var l_actor					: CActor;
+		var none					: SAbilityAttributeValue;
+		var l_damage				: W3DamageAction;
+		var l_summonedEntityComp 	: W3SummonedEntityComponent;
+		var	l_summoner				: CActor;	
+		
+		l_summonedEntityComp = (W3SummonedEntityComponent) GetComponentByClassName('W3SummonedEntityComponent');
+		
+		if( !l_summonedEntityComp )
+		{
+			return;
+		}
+		
+		l_summoner = l_summonedEntityComp.GetSummoner();
+		
+		l_range = 1;
+		
+		PlayEffect('circle_stone');
+		
+		FindGameplayEntitiesInRange( l_entitiesInRange, this, l_range, 1000);
+		
+		for	( i = 0; i < l_entitiesInRange.Size(); i += 1 )
+		{
+			l_actor = (CActor) l_entitiesInRange[i];
+			if( !l_actor ) continue;
+			
+			if ( l_actor == ACSFireBear() ) continue;
+			
+			//l_damage = new W3DamageAction in this;
+			//l_damage.Initialize( l_summoner, l_actor, l_summoner, l_summoner.GetName(), EHRT_Heavy, CPS_Undefined, false, false, false, true );
+			//l_damage.AddDamage( theGame.params.DAMAGE_NAME_PHYSICAL, damageValue );
+			//l_damage.AddEffectInfo( EET_KnockdownTypeApplicator, 1);
+			//theGame.damageMgr.ProcessAction( l_damage );
+			//delete l_damage;
+		}
+	}
+}

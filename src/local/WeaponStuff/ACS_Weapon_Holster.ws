@@ -240,6 +240,8 @@ function ACS_WeaponHolsterInit()
 	ACS_ThingsThatShouldBeRemoved();
 
 	//GetACSWatcher().UpdateBehGraph();
+
+	ACSGetEquippedSword().StopAllEffects();
 }
 
 /*

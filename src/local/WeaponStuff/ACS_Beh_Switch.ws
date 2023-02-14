@@ -42,7 +42,8 @@ function ACS_CombatBehSwitch()
 					thePlayer.StopEffect('claws_effect');
 				}
 				*/
-
+				thePlayer.BreakAttachment();
+				
 				ACS_Skele_Destroy();
 
 				ACS_Sword_Array_Fire_Override();
@@ -74,6 +75,8 @@ function ACS_CombatBehSwitch()
 				GetACSTentacle_3().Destroy();
 
 				GetACSTentacleAnchor().Destroy();
+
+				GetACSWatcher().SetRageProcess(false);
 
 				//thePlayer.RemoveTag('ACS_Has_Summoned_Nekker_Guardian');
 				

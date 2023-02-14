@@ -3,7 +3,8 @@ function ACS_SignSwitchArsenalInit()
 	if (!thePlayer.IsPerformingFinisher() 
 	&& !thePlayer.IsCrossbowHeld() 
 	&& !thePlayer.IsInHitAnim() 
-	&& !thePlayer.HasTag('blood_sucking'))		
+	&& !thePlayer.HasTag('blood_sucking')
+	)		
 	{
 		thePlayer.ClearAnimationSpeedMultipliers();
 		

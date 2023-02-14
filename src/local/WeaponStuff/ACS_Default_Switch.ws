@@ -192,6 +192,8 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 			sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 			sword_trail_3.AddTag('acs_sword_trail_3');
 
+			ACSGetEquippedSwordUpdateEnhancements();
+
 			thePlayer.AddTag('igni_sword_equipped');
 			thePlayer.AddTag('igni_secondary_sword_equipped');
 
@@ -206,6 +208,15 @@ state DefaultSwitch_Engage in cACS_DefaultSwitch
 
 				ACS_Sword_Trail_2().StopEffect('aerondight_special_trail');
 				ACS_Sword_Trail_2().PlayEffect('aerondight_special_trail');
+			}
+
+			if (ACS_GetItem_Iris())
+			{
+				ACS_Sword_Trail_2().StopEffect('red_charge_10');
+				ACS_Sword_Trail_2().PlayEffect('red_charge_10');
+
+				ACS_Sword_Trail_2().StopEffect('red_aerondight_special_trail');
+				ACS_Sword_Trail_2().PlayEffect('red_aerondight_special_trail');
 			}
 
 			if (thePlayer.HasAbility('ForceFinisher'))
@@ -437,6 +448,8 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 			igni_sword_summon();
 		}
 
+		ACSGetEquippedSwordUpdateEnhancements();
+
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_RangedWeapon, rangedID);
@@ -507,6 +520,15 @@ state DefaultSwitch_2_Engage in cACS_DefaultSwitch_2
 
 			ACS_Sword_Trail_2().StopEffect('aerondight_special_trail');
 			ACS_Sword_Trail_2().PlayEffect('aerondight_special_trail');
+		}
+
+		if (ACS_GetItem_Iris())
+		{
+			ACS_Sword_Trail_2().StopEffect('red_charge_10');
+			ACS_Sword_Trail_2().PlayEffect('red_charge_10');
+
+			ACS_Sword_Trail_2().StopEffect('red_aerondight_special_trail');
+			ACS_Sword_Trail_2().PlayEffect('red_aerondight_special_trail');
 		}
 
 		if ( thePlayer.GetInventory().IsItemHeld(steelID) )

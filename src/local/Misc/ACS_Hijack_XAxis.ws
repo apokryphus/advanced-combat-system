@@ -43,9 +43,6 @@ state HijackXAxis_Engage in cHijackXAxis
 					
 				animatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
 					
-				settings.blendIn = 0.2f;
-				settings.blendOut = 1.0f;
-					
 				if( actors.Size() > 0 )
 				{				
 					if( npc.IsAlive() )
@@ -56,35 +53,35 @@ state HijackXAxis_Engage in cHijackXAxis
 							
 							if (npc.HasAbility('mon_gryphon_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dr_tighter', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dr_tighter', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_siren_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_dr', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_dr', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_wyvern_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_right_down', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_right_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_harpy_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_dr_tight', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_dr_tight', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_draco_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_right_down', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_right_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_basilisk'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dr_tighter', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dr_tighter', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_garkain'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_werewolf_run_turn_r', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_werewolf_run_turn_r', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_sharley'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'roll_forward_right', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'roll_forward_right', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							
 							npc.ClearAnimationSpeedMultipliers();
@@ -115,35 +112,35 @@ state HijackXAxis_Engage in cHijackXAxis
 							
 							if (npc.HasAbility('mon_gryphon_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dl_tighter', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dl_tighter', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_siren_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_dl', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_dl', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_wyvern_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_left_down', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_left_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_harpy_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_dl_tight', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_dl_tight', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_draco_base'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_left_down', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_left_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_basilisk'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dl_tighter', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_dl_tighter', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_garkain'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'monster_werewolf_run_turn_l', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'monster_werewolf_run_turn_l', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							else if (npc.HasAbility('mon_sharley'))
 							{
-								animatedComponent.PlaySlotAnimationAsync ( 'roll_forward_left', 'NPC_ANIM_SLOT', settings);
+								animatedComponent.PlaySlotAnimationAsync ( 'roll_forward_left', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 							}
 							
 							npc.ClearAnimationSpeedMultipliers();
@@ -171,27 +168,27 @@ state HijackXAxis_Engage in cHijackXAxis
 					
 					if (npc.HasAbility('mon_gryphon_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_siren_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_d', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_wyvern_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_harpy_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_d', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_draco_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}	
 					else if (npc.HasAbility('mon_basilisk'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 								
 					npc.ClearAnimationSpeedMultipliers();

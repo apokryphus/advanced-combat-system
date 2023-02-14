@@ -6,6 +6,7 @@ function ACS_RangedWeaponSwitch()
 	if (ACS_Enabled())
 	{	
 		vRangedWeaponSwitch.Engage();
+		ACSGetEquippedSword().StopAllEffects();
 	}
 }
 

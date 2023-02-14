@@ -3,7 +3,14 @@ function ACS_EquipTauntInit()
 	var vEquipTaunt : cEquipTaunt;
 	vEquipTaunt = new cEquipTaunt in theGame;
 
-	if (!thePlayer.IsPerformingFinisher() && !thePlayer.IsCrossbowHeld() && !thePlayer.IsInHitAnim() && !thePlayer.HasTag('blood_sucking') && !thePlayer.HasTag('in_wraith'))		
+	if (!thePlayer.IsPerformingFinisher() 
+	&& !thePlayer.IsCrossbowHeld() 
+	&& !thePlayer.IsInHitAnim() 
+	&& !thePlayer.HasTag('blood_sucking')
+	&& !thePlayer.HasTag('in_wraith') 
+	&& thePlayer.IsActionAllowed(EIAB_Movement)
+	&& ACS_BuffCheck()
+	)		
 	{		
 		vEquipTaunt.Engage();
 	}
@@ -19,7 +26,6 @@ statemachine class cEquipTaunt
  
 state Engage in cEquipTaunt
 {
-	private var settings, settings_interrupt								: SAnimatedComponentSlotAnimationSettings;
 	private var m_tauntTime													: float;
 	private var movementAdjustor											: CMovementAdjustor;
 	private var ticket 														: SMovementAdjustmentRequestTicket;
@@ -34,9 +40,6 @@ state Engage in cEquipTaunt
 	entry function EquipTauntSwitch()
 	{
 		watcher = (W3ACSWatcher)theGame.GetEntityByTag( 'acswatcher' );
-
-		settings_interrupt.blendIn = 0;
-		settings_interrupt.blendOut = 0;
 
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
 		
@@ -205,7 +208,7 @@ state Engage in cEquipTaunt
 						}
 						else
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 
 							Sleep(0.025);
 
@@ -288,7 +291,7 @@ state Engage in cEquipTaunt
 					}
 					else
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 
 						Sleep(0.025);
 							
@@ -370,7 +373,7 @@ state Engage in cEquipTaunt
 					}
 					else
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 
 						Sleep(0.025);
 
@@ -445,7 +448,7 @@ state Engage in cEquipTaunt
 					}
 					else
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 
 						Sleep(0.025);
 
@@ -465,7 +468,7 @@ state Engage in cEquipTaunt
 		}	
 		else
 		{
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
 		}
 	}
 
@@ -513,9 +516,6 @@ state Engage in cEquipTaunt
 			thePlayer.AddTag('ACS_Special_Dodge');
 		}
 		
-		settings.blendIn = 0.5f;
-		settings.blendOut = 0.75f;
-		
 		if(thePlayer.IsInCombat())
 		{
 			if(thePlayer.GetStat(BCS_Vitality) <= thePlayer.GetStatMax(BCS_Vitality) * 0.5)
@@ -526,22 +526,22 @@ state Engage in cEquipTaunt
 					{
 						if ( RandF() < 0.5 )
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_001_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 						else
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_002_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 					}
 					else
 					{
 						if ( RandF() < 0.5 )
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_003_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 						else
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_004_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_wakeup_buff_idle_004_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 					}
 				}
@@ -551,22 +551,22 @@ state Engage in cEquipTaunt
 					{
 						if ( RandF() < 0.5 )
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_001_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 						else
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_002_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 					}
 					else
 					{
 						if ( RandF() < 0.5 )
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_003_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 						else
 						{
-							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_004_ACS', 'PLAYER_SLOT', settings );
+							thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'ethereal_buff_idle_004_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f) );
 						}
 					}
 				}
@@ -578,99 +578,99 @@ state Engage in cEquipTaunt
 				switch (watcher.olgierd_taunt_index) 
 				{	
 					case 23:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_righttoleft_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_righttoleft_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 22:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_lefttoright_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_lefttoright_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 
 					case 21:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_9_right_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_9_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 20:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_8_right_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_8_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 19:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_8_left_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_8_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 18:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_004_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_004_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 17:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_003_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 16:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_002_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 15:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_001_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_forward_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 14:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_down_002_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_down_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 13:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_down_001_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_down_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 12:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_004_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_004_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 11:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_003_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;
 						
 					case 10:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_002_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 9:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_001_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_forward_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 8:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_003_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 					
 					case 7:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_002_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 6:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_001_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_to_down_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 
 					case 5:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_005_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_005_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 
 					case 4:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_004_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_004_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;			
 						
 					case 3:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_003_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_003_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 2:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_002_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_002_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					case 1:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_down_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 						
 					default:
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_intro_ACS', 'PLAYER_SLOT', settings);
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_intro_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 					break;	
 				}
 
@@ -685,9 +685,6 @@ state Engage in cEquipTaunt
 		{
 			thePlayer.AddTag('ACS_Special_Dodge');
 		}
-
-		settings.blendIn = 0.5f;
-		settings.blendOut = 0.75f;
 		
 		if(thePlayer.IsInCombat())
 		{
@@ -696,99 +693,99 @@ state Engage in cEquipTaunt
 			switch (watcher.regular_taunt_index) 
 			{
 				case 23:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 22:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 21:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 20:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 19:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 18:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 17:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 16:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 15:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_3_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_3_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 14:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_3_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_3_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 13:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_2_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_2_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 12:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_2_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_2_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 11:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_19_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_19_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 					
 				case 10:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_18_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_18_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 9:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_17_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_17_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 8:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_16_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_16_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 				
 				case 7:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_15_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_15_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 6:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_14_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_14_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 
 				case 5:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_13_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_13_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 
 				case 4:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_12_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_12_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;			
 					
 				case 3:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_11_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_11_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 2:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_10_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_10_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 1:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_1_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_1_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				default:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_1_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_1_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 			}
 			watcher.previous_regular_taunt_index = watcher.regular_taunt_index;
@@ -801,9 +798,6 @@ state Engage in cEquipTaunt
 		{
 			thePlayer.AddTag('ACS_Special_Dodge');
 		}
-
-		settings.blendIn = 0.5f;
-		settings.blendOut = 0.75f;
 		
 		if(thePlayer.IsInCombat())
 		{
@@ -812,71 +806,71 @@ state Engage in cEquipTaunt
 			switch (watcher.eredin_taunt_index) 
 			{	
 				case 16:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 15:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_4_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 14:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 						
 				case 13:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_5_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 12:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 						
 				case 11:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_left_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_7_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 						
 				case 10:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_right_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_1hand_taunt_6_right_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 9:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_2hand_taunt_2_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_2hand_taunt_2_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 						
 				case 8:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_2hand_taunt_1_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_sword_2hand_taunt_1_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 				
 				case 7:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_05_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_05_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 
 				case 6:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_04_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_04_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 				
 				case 5:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_03_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_03_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 
 				case 4:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_03_lp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_03_lp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;			
 						
 				case 3:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_02_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_02_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 					
 				case 2:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_02_lp', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_02_lp', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 						
 				case 1:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_01_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_01_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 						
 				default:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_01_lp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_longsword_taunt_01_lp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 			}
 			watcher.previous_eredin_taunt_index = watcher.eredin_taunt_index;
@@ -889,9 +883,6 @@ state Engage in cEquipTaunt
 		{
 			thePlayer.AddTag('ACS_Special_Dodge');
 		}
-
-		settings.blendIn = 0.5f;
-		settings.blendOut = 0.75f;
 		
 		if(thePlayer.IsInCombat())
 		{
@@ -900,59 +891,59 @@ state Engage in cEquipTaunt
 			switch (watcher.imlerith_taunt_index) 
 			{				
 				case 13:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_02_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_02_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 12:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_01_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_01_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 11:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_03_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_03_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 10:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_03_lp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_03_lp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 9:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_02_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_02_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 8:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_02_lp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_02_lp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 7:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_01_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_01_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 6:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_01_lp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2haxe_taunt_01_lp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 5:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_rp_01_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 4:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_03_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 3:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_02_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 				
 				case 2:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_shield_taunt_lp_01_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 						
 				case 1:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_04_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_04_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;	
 						
 				default:
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_03_rp_ACS', 'PLAYER_SLOT', settings);
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_npc_2hhalberd_taunt_03_rp_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 				break;
 			}
 			watcher.previous_imlerith_taunt_index = watcher.imlerith_taunt_index;
@@ -988,20 +979,17 @@ state Engage in cEquipTaunt
 				thePlayer.SoundEvent("monster_dettlaff_monster_voice_roar");
 			}
 		}
-
-		settings.blendIn = 0.5f;
-		settings.blendOut = 0.75f;
 		
 		watcher.claw_taunt_index = RandDifferent(watcher.previous_claw_taunt_index , 2);
 
 		switch (watcher.claw_taunt_index) 
 		{	
 			case 1:
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_taunt_02_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_taunt_02_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 			break;	
 					
 			default:
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_taunt_01_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_taunt_01_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.5f, 0.75f));
 			break;	
 		}
 

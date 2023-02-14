@@ -92,7 +92,6 @@ state BruxaBite_HijackForward in cBruxaBite
 	private var npc     				: CNewNPC;
 	private var actors					: array< CActor >;
 	private var animatedComponent 		: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -115,10 +114,7 @@ state BruxaBite_HijackForward in cBruxaBite
 			npc = (CNewNPC)actors[i];
 				
 			animatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
-				
-			settings.blendIn = 0.2f;
-			settings.blendOut = 1.0f;
-				
+
 			if( actors.Size() > 0 )
 			{	
 				((CNewNPC)npc).SetUnstoppable(true);
@@ -133,46 +129,46 @@ state BruxaBite_HijackForward in cBruxaBite
 				{
 					if (npc.HasAbility('mon_gryphon_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_siren_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_wyvern_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_harpy_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_draco_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_up', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}	
 					else if (npc.HasAbility('mon_basilisk'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_u', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 				}
 				else
 				{
 					if (npc.HasAbility('mon_garkain'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_sharley_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'roll_forward', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'roll_forward', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_bies_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_walk_f', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_walk_f', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_golem_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_move_walk_f', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_move_walk_f', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (
 					npc.HasAbility('mon_endriaga_base')
@@ -182,7 +178,7 @@ state BruxaBite_HijackForward in cBruxaBite
 					|| npc.HasAbility('mon_black_spider_ep2_base')
 					)
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_f', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_f', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (
 					npc.HasAbility('mon_ice_giant')
@@ -191,11 +187,11 @@ state BruxaBite_HijackForward in cBruxaBite
 					|| npc.HasAbility('mon_cloud_giant')
 					)
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_taunt_2', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_taunt_2', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 					else if (npc.HasAbility('mon_troll_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_run_turn_r', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_run_turn_r', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 1.0f));
 					}
 				}
 				
@@ -216,7 +212,6 @@ state BruxaBite_Engage in cBruxaBite
 	private var actor											: CActor;
 	private var dist											: float;
 	private var animatedComponent 								: CAnimatedComponent;
-	private var settings										: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -243,10 +238,7 @@ state BruxaBite_Engage in cBruxaBite
 	}
 	
 	latent function bruxa_bite_init ()
-	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
-				
+	{		
 		actor = (CActor)( thePlayer.GetTarget() );
 		
 		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
@@ -275,9 +267,7 @@ state BruxaBite_Engage in cBruxaBite
 			
 			movementAdjustor.SlideTowards( ticket, actor, dist, dist );
 
-			//thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_attack_ACS', 'PLAYER_SLOT', settings);
-
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			GetACSWatcher().AddTimer('ACS_bruxa_bite_delay', 0.25 , false);
 		}
@@ -285,7 +275,7 @@ state BruxaBite_Engage in cBruxaBite
 		{
 			movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 10 );
 	
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 		}
 	}
 	event OnLeaveState( nextStateName : name ) 

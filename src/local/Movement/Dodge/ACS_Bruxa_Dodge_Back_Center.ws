@@ -94,7 +94,6 @@ statemachine class cBruxaDodgeBackCenter
 
 state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 {
-	private var settings, settings_interrupt			: SAnimatedComponentSlotAnimationSettings;
 	private var pActor, actor 							: CActor;
 	private var movementAdjustor						: CMovementAdjustor;
 	private var ticket 									: SMovementAdjustmentRequestTicket;
@@ -111,13 +110,7 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 	}
 	
 	entry function bruxa_regular_dodge_Entry()
-	{
-		settings.blendIn = 0.25f;
-		settings.blendOut = 0.875f;
-		
-		settings_interrupt.blendIn = 0;
-		settings_interrupt.blendOut = 0;
-
+	{	
 		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
 				
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
@@ -172,7 +165,7 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 					
 			GetACSWatcher().dodge_timer_actual();
 		
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
 
@@ -184,7 +177,7 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 				
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
 
@@ -199,7 +192,6 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 	private var npc     				: CNewNPC;
 	private var actors					: array< CActor >;
 	private var animatedComponent 		: CAnimatedComponent;
-	private var settings				: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -225,9 +217,6 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 				
 			animatedComponent = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
 				
-			settings.blendIn = 0.2f;
-			settings.blendOut = 1.0f;
-				
 			if( actors.Size() > 0 )
 			{	
 				/*
@@ -241,41 +230,41 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 				
 				if (npc.HasAbility('mon_gryphon_base'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_fall_stop', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_fall_stop', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_siren_base'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_d', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_knockdown_loop', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_fly_fast_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_siren_knockdown_loop', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_wyvern_base'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_knockdown_fall', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_knockdown_fall', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_harpy_base'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_d', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_death_fly_high_loop', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_fly_fast_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_harpy_death_fly_high_loop', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_draco_base'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_knockdown_fall', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_down', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_wyvern_fly_knockdown_fall', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}	
 				else if (npc.HasAbility('mon_basilisk'))
 				{
-					//animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', settings);
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_fall_stop', 'NPC_ANIM_SLOT', settings);
+					//animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_d', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_gryphon_fly_fall_stop', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_garkain'))
 				{
-					animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', settings);
+					animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_up_aoe_attack', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				else if (npc.HasAbility('mon_sharley_base'))
 				{
-					animatedComponent.PlaySlotAnimationAsync ( 'roll_back_from_idle_to_idle', 'NPC_ANIM_SLOT', settings);
+					animatedComponent.PlaySlotAnimationAsync ( 'roll_back_from_idle_to_idle', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 				
 				npc.ClearAnimationSpeedMultipliers();
@@ -296,19 +285,19 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 				{
 					if (npc.HasAbility('mon_garkain'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_back', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_katakan_jump_back', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (npc.HasAbility('mon_sharley_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'roll_back_from_idle_to_idle', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'roll_back_from_idle_to_idle', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (npc.HasAbility('mon_bies_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_dodge_b', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_bies_dodge_b', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (npc.HasAbility('mon_golem_base'))
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_move_idle_to_walk_r180', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_elemental_move_idle_to_walk_r180', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (
 					npc.HasAbility('mon_endriaga_base')
@@ -318,7 +307,7 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 					|| npc.HasAbility('mon_black_spider_ep2_base')
 					)
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_b', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'monster_archas_move_walk_b', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (
 					npc.HasAbility('mon_ice_giant')
@@ -327,17 +316,17 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 					|| npc.HasAbility('mon_cloud_giant')
 					)
 					{
-						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_taunt_2', 'NPC_ANIM_SLOT', settings);
+						animatedComponent.PlaySlotAnimationAsync ( 'giant_combat_taunt_2', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 					}
 					else if (npc.HasAbility('mon_troll_base'))
 					{
 						if( RandF() < 0.5 ) 
 						{
-							animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_turn_r_180', 'NPC_ANIM_SLOT', settings);
+							animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_turn_r_180', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 						}
 						else
 						{
-							animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_turn_l_180', 'NPC_ANIM_SLOT', settings);
+							animatedComponent.PlaySlotAnimationAsync ( 'monster_cave_troll_turn_l_180', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 						}
 					}
 				}
@@ -354,7 +343,6 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 	private var ticket 									: SMovementAdjustmentRequestTicket;
 	private var actor									: CActor;
 	private var dist									: float;
-	private var settings								: SAnimatedComponentSlotAnimationSettings;
 
 	event OnEnterState(prevStateName : name)
 	{
@@ -378,10 +366,7 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 	}
 	
 	latent function dodge_back_center ()
-	{
-		settings.blendIn = 0.3f;
-		settings.blendOut = 0.3f;
-				
+	{		
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
 		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius();
 		
@@ -419,7 +404,7 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', settings);
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 
 		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -2 );
 
@@ -429,13 +414,13 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 		{	
 			movementAdjustor.RotateTo( ticket, theCamera.GetCameraHeading() );
 				
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
 		}
 		else
 		{
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
 		}
