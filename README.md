@@ -1017,6 +1017,17 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
    - 2 if the player is at 100% health.
    - 1 if the player is below 50% health.
  
+ ## Volos, Bringer of Chaos
+ 
+**Volos, Bringer of Chaos** has established a foothold upon the world of The Witcher 3.
+
+- Three altars are placed in Velen, Skellige, and Toussaint:
+  - Velen: South of Blackbough
+  - Skellige: Ard Skellig, south of Redgill
+  - Toussaint: North of Coronata Vineyard and south of Arthach Palace Ruins
+- Destroying the altars will release the flames into the world and summon Volos, Bringer of Chaos.
+- Altars will re-spawn after changing maps (eg. Skellige <---> Velen).
+
 
 <div align="right">
   
