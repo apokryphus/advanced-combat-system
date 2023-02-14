@@ -53,7 +53,7 @@
 2117035047|        |preset_value_acs_armiger_mode_settings_default|Default
 2117035048|        |option_acs_armiger_mode_weapon_type|Armiger Mode Weapon Type
 2117035049|        |preset_value_acs_armiger_evolving_weapons|Evolving Weapons
-2117035040|        |preset_value_acs_armiger_static_weapons|Static Weapons
+2117035050|        |preset_value_acs_armiger_static_weapons|Static Weapons
 2117035051|        |option_acs_armiger_igni_sign_weapon|<font color="#ff0000">Igni</font>
 2117035052|        |preset_value_acs_armiger_mode_default_weapon|Default Weapon
 2117035053|        |preset_value_acs_armiger_mode_olgierd_weapon|Olgierd/Spear
@@ -83,7 +83,7 @@
 2117035077|        |preset_value_acs_focus_mode_giant_steel_weapon|Giant's Weapon
 2117035078|        |preset_value_acs_focus_mode_dettlaff_steel_weapon|Sword Claws
 2117035079|        |preset_value_acs_focus_mode_axe_steel_weapon|Axe/Warhammer
-2117035080|        |option_acs_focus_mode_silver_weapon|Focus Mode Silberwaffe
+2117035080|        |option_acs_focus_mode_silver_weapon|Focus Mode Silver Weapon
 2117035081|        |preset_value_acs_focus_mode_default_silver_weapon|Default Geralt Silver Sword
 2117035082|        |preset_value_acs_focus_mode_olgierd_silver_weapon|Ofieri Sabre
 2117035083|        |preset_value_acs_focus_mode_spear_silver_weapon|Guisarme / Staff
@@ -321,3 +321,9 @@
 2117035315|        |option_dlc_acs_name|MOD: Advanced Combat System
 2117035316|        ||Berstuk, The Forgotten Forest God
 2117035317|        ||Shadow of the Forest God
+2117035318|        ||Nekker Guardian
+2117035319|        ||Blade of the Unseen
+2117035320|        ||Volos, Bringer of Chaos
+2117035321|        |option_acs_rage_mechanic|Rage Mechanic Enabled
+2117035322|        |option_acs_combat_jump|Jump While Sprinting During Combat Enabled
+2117035323|        ||Altar of the Chaos Flame

@@ -1,7 +1,7 @@
 @echo off
 set copycmd=/Y
 set modDir=D:\acs_strings
-set gameDir=D:\The Witcher 3 Wild Hunt GOTY - Ghost Mode
+set gameDir=D:\The Witcher 3 Wild Hunt GOTY - Next Gen
 set id_space=2923
 set modName=mod_ACS
  
