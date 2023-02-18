@@ -1433,10 +1433,8 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   </div>
   
 # 14. STAMINA
-- Attacks/dodges/special abilities/counter attacks now have a minimum stamina requirement to use. 
-- This feature can be toggled off in the Main Settings menu. 
-- In vanilla, this doesn't create much of a difference, since attacks/dodges do not consume stamina. However, when used together with other gameplay overhauls that affect this, such as GM and W3EE, it creates a limitation on how many attacks/dodges you can do until you run out of stamina, which is a staple feature to these overhauls.
-- You can tweak how much stamina is used for attacks and dodges by using the stamina settings from the overhauls. My mod takes their settings. 
+- The Main Settings menu allows the player to tweak various stamina settings for performing attacks and dodges.
+- Only applies to ACS animations.
 
  <div align="right">
   
