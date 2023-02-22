@@ -49,8 +49,8 @@ For those that prefer to install manually.
 - If you are on **1.32**, use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 
 ## Updating the mod:
-- For both **Next Gen** and **1.32**, run the automatic installer again. 
-- For **Next Gen** only, go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
+- For both **Next Gen** and **1.32**, you may run the automatic installer again. 
+- Optionally, for **Next Gen** only, go into **mods\mod_ACS** , click on the file **CLICK_ME_TO_UPDATE.bat**, and follow its instructions. 
 
 
 
