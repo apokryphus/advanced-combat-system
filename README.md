@@ -987,6 +987,12 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 - The hunt will only be over if the player defeats the Blade of the Unseen, or if the player is killed by him.
 - Summoning and defeating the Blade of the Unseen for the 3rd time in a row within the same game session will cause it to transform into Khagmar, the Monster of the Unseen.
 
+ ## Knightmare Eternum
+- The Knightmare Eternum guards the abandoned storehouse east of Tesha Mutna Ruins in Toussaint.
+
+ ## Loviatar, Matron of Decay
+- Loviatar, the Matron of Decay, roams the Crookback Bog just east of the Ruined Tower.
+
  ## Forest God
  
 **Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
