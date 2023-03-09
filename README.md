@@ -985,6 +985,7 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 - Subsequent bruxa killed will decrease the timer by 150 seconds, with a minimum of a 5 second delay.
 - If the player manages to run away, the Blade will continue its pursuit.
 - The hunt will only be over if the player defeats the Blade of the Unseen, or if the player is killed by him.
+- Summoning and defeating the Blade of the Unseen for the 3rd time in a row within the same game session will cause it to transform into Khagmar, the Monster of the Unseen.
 
  ## Forest God
  
