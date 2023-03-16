@@ -2,7 +2,7 @@
 
 <div align="center">
 
-Combat animation overhaul mod for The Witcher 3.
+Combat overhaul mod for The Witcher 3.
  </div>
  
  # OVERVIEW
