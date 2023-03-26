@@ -65,6 +65,8 @@ For those that prefer to install manually.
 - Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 	
 ## After Installation:
+- Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. 
+- If not, remember to pick and include the code from ACS.
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 	
 ## Updating the mod:
