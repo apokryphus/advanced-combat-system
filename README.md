@@ -5,10 +5,7 @@
 Combat overhaul mod for The Witcher 3.
  </div>
  
- # OVERVIEW
-
-Please read:
-https://www.nexusmods.com/witcher3/mods/7035
+# [OVERVIEW](https://www.nexusmods.com/witcher3/mods/7035)
 
 # INSTALLATION
 
@@ -22,6 +19,12 @@ Easy installer script that downloads and installs the mod automatically.
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
 - Right click the script and click **Run with PowerShell**.
 
+## Manual Installation (FOR NEXT GEN UPDATE): 
+For those that prefer to install manually.
+- Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
+- Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under **Assets**. Do not download the source code.
+- Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
+
 ## Automatic Installation (FOR 1.32): 
 Easy installer script that downloads and installs the mod automatically.
 - Download this [script](https://www.nexusmods.com/witcher3/mods/7035?tab=files&file_id=42633) and place it directly in your **installation folder for The Witcher 3**. 
@@ -32,10 +35,9 @@ Easy installer script that downloads and installs the mod automatically.
 - If you see the folders **bin**, **content**, and **dlc**, then the script is in the correct place.
 - Right click the script and click **Run with PowerShell**.
 
-## Manual Installation: 
+## Manual Installation (FOR 1.32): 
 For those that prefer to install manually.
-- Latest and previous versions of the mod can be found in [releases](https://github.com/apokryphus/advanced-combat-system/releases).
-- Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/latest). First link under **Assets**. Do not download the source code.
+- Download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/tag/v2.3). First link under **Assets**. Do not download the source code.
 - Drag and drop all 3 folders in the zip file (**dlc**, **mods**, and **bin**) into your Witcher 3 installation folder.
 
 ## After Installation:
