@@ -67,6 +67,7 @@ For those that prefer to install manually.
 ## After Installation:
 - Run [***script merger***](https://www.nexusmods.com/witcher3/mods/484) and merge the scripts if you have other script mods installed. It should auto-merge in most cases. 
 - If not, remember to pick and include the code from ACS.
+- If you don't know how to use the script merger, please read through this [guide](https://aelto.github.io/tw3-notes/misc/merging/index.html) by Aeltoth, author of RER. 
 - Use either [mod limit fix](https://www.nexusmods.com/witcher3/mods/3643) or [mod limit adjuster](https://www.nexusmods.com/witcher3/mods/3711) if your game does not start.
 	
 ## Updating the mod:
