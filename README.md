@@ -1456,45 +1456,43 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
 </div>
 
 # 13. SCHOOL SPECIFIC COMBAT STYLES
+- Each Witcher school has their own custom moveset when using the default Witcher moveset.
+- Only applies when wearing **boots, armor, gloves, and pants** belonging to the same school, regardless of tier.
 
-Each Witcher school has their own custom moveset when using the default Witcher moveset.
-
-Only applies when wearing **boots, armor, gloves, and pants** belonging to the same school, regardless of tier.
-
-Wolf School
+## Wolf School
 - Holding forward (W key) will modify attack style to include far attacks.
 - Massively reduced attack animations from regular Geralt moveset, making it more controllable and predictable.
 - Medium range dodges replacing both dodges and rolls.
 
-Bear School:
+## Bear School:
 - All attacks are heavy attacks.
 - Slow attack wind up, but slightly larger attack range and angle.
 - Short dodges replacing both dodge and roll.
 - Attacks can't be interrupted by enemies.
 - Whirl replaced by a quick rend.
 
-Cat School:
+## Cat School:
 - All attacks are light attacks.
 - Attacks are a mixture of one-handed sword and Witcher two-hand, with a decaying speed boost upon activation.
 - Both dodges are rolls are replaced with a custom set of pirouette dodges with a decaying speed boost upon activation.
 - Whirl is replaced with a spinning charge attack and one-handed charge attacks.
 
-Viper School:
+## Viper School:
 - Attacks are a combination of 1-handed mace attacks and witcher two-hand attacks.
 - Rolls and dodges are replaced with pirouettes and short dodges respectively.
 - Whirl is replaced with a long range spinning strike that inflicts poison on targets.
 
-Griffin School:
+## Griffin School:
 - Dodges and rolls are replaced with medium range dodges.
 - Attacks are a mix of witcher and two-handed longsword knight attacks.
 - Whirl is replaced with a long range longsword special attack that inflicts the status effect of the selected sign upon damaging enemies.
 
-Manticore School:
+## Manticore School:
 - Attacks are a mixture of regular witcher attacks, long sweeping witcher attacks, and stab attacks.
 - Rolls are replaced with medium range dodges, while dodges are replaced with short range dodges.
 - Whirl is replaced with the Manticore's Sting, which are a series of long range stab attacks that inflicts poison upon damaging enemies.
 
- Forgotten Wolf set (Netflix armor):
+## Forgotten Wolf Set (Netflix Armor):
 - Essentially the same as Wolf School, but slower with everything, with dodges traveling for shorter distances compared to Wolf School.
 - Combat animations cannot be interrupted by enemy attacks to account for the armor being heavier than Wolf School.
 
