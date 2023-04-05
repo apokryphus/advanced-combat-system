@@ -72,6 +72,7 @@ For those that prefer to install manually.
 	
 ## Updating the mod:
 - Run the automatic installer again, if you installed it that way.
+- If not, download zip from [latest version](https://github.com/apokryphus/advanced-combat-system/releases/tag/v2.3) again.
 
 </details>
 
