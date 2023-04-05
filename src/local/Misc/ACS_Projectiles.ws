@@ -4178,7 +4178,7 @@ class W3BearSummonMeteorProjectile extends W3ACSBearFireball
 		&& !theGame.IsBlackscreen()
 		)
 		{
-			this.ShootProjectileAtPosition(projAngle,projSpeed*0.5,pos);
+			this.ShootProjectileAtPosition(projAngle,projSpeed*0.75,pos);
 		}
 	}
 

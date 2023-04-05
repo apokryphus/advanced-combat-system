@@ -1,3 +1,37 @@
+latent function ACS_BehSwitch(prevStateName : name)
+{
+	var stupidArray 	: array< name >;
+
+	stupidArray.PushBack( 'Gameplay' );
+
+	if ( prevStateName == 'TraverseExploration' || prevStateName == 'PlayerDialogScene' )
+	{
+		ACS_CombatBehSwitch();
+	}
+	else
+	{
+		if(
+		prevStateName=='HorseRiding'
+		||prevStateName=='DismountBoat'
+		||prevStateName=='DismountHorse'
+		||prevStateName=='DismountTheVehicle'
+		||prevStateName=='Swimming'
+		||prevStateName=='MountBoat'
+		||prevStateName=='MountHorse'
+		||prevStateName=='MountTheVehicle'
+		||prevStateName=='Sailing'
+		||prevStateName=='ApproachTheVehicle'
+		||prevStateName=='UseVehicle')
+		{
+			thePlayer.ActivateAndSyncBehaviors(stupidArray);
+		}
+		else
+		{
+			ACS_CombatBehSwitch();
+		}
+	}
+}
+
 function ACS_CombatBehSwitch()
 {
 	var vBehSwitch 										: cBehSwitch;
@@ -42,6 +76,11 @@ function ACS_CombatBehSwitch()
 					thePlayer.StopEffect('claws_effect');
 				}
 				*/
+
+				thePlayer.StopEffect('special_attack_only_black_fx');
+
+				thePlayer.StopEffect('special_attack_fx');
+
 				thePlayer.BreakAttachment();
 				
 				ACS_Skele_Destroy();
@@ -98,7 +137,7 @@ function ACS_CombatBehSwitch()
 				&& !theGame.IsDialogOrCutscenePlaying() 
 				&& !thePlayer.IsInNonGameplayCutscene() 
 				&& !thePlayer.IsInGameplayScene()
-				&& !ACS_PlayerSettlementCheck()
+				&& !ACS_PlayerSettlementCheck(50)
 				)
 				{
 					if (
@@ -172,8 +211,6 @@ function ACS_BehSwitchINIT()
 {
 	var vBehSwitch : cBehSwitch;
 	vBehSwitch = new cBehSwitch in theGame;
-	
-	ACS_Init_Attempt();
 	
 	if (ACS_Enabled())
 	{

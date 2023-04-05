@@ -32,7 +32,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 	private var res 																																	: bool;
 	private var inv 																																	: CInventoryComponent;
 	private var tags 																																	: array<name>;
-	private var settings																																: SAnimatedComponentSlotAnimationSettings;
 	private var i																																		: int;				
 	private var steelswordentity, silverswordentity 																									: CEntity;				
 	
@@ -117,9 +116,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 	
 	entry function SecondaryWeaponSwitch()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 1;
-
 		if ( ACS_GetWeaponMode() == 0 )
 		{
 			if
@@ -839,7 +835,17 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 				}
 				else
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( ' ', 'PLAYER_SLOT', settings);	
+					if (!thePlayer.IsCiri()
+					&& !thePlayer.IsPerformingFinisher()
+					&& !thePlayer.HasTag('in_wraith')
+					&& !thePlayer.HasTag('blood_sucking')
+					&& ACS_BuffCheck()
+					&& thePlayer.IsActionAllowed(EIAB_Dodge)
+					&& !thePlayer.IsInAir()
+					)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1) );
+					}
 				}
 			}
 		}
@@ -4447,40 +4453,6 @@ state Secondary_Weapon_Switch_Engage in cSecondaryWeaponSwitch
 					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 						
-					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-				
-					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
-						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-						
-					attach_rot.Roll = 180;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 0;
-					attach_vec.X = 0;
-					attach_vec.Y = 0;
-					attach_vec.Z = -0.2;
-							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword3.AddTag('quen_secondary_sword_3');
-
-					////////////////////////////////////////////////////////////////////////////
-						
-					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
-						
-					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
-						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-						
-					attach_rot.Roll = 0;
-					attach_rot.Pitch = 0;
-					attach_rot.Yaw = 180;
-					attach_vec.X = 0;
-					attach_vec.Y = 0;
-					attach_vec.Z = 0.4;
-							
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
-					sword4.AddTag('quen_secondary_sword_4');
-
 					////////////////////////////////////////////////////////////////////////////
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 

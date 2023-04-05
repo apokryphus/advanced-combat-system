@@ -42,7 +42,8 @@ state ACS_Dodge_Engage in cACS_Dodge
 	
 	entry function Dodge()
 	{
-		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		if (!thePlayer.HasTag('ACS_Camo_Active')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 			thePlayer.StopEffect( 'magic_step_l_new' );	

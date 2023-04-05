@@ -19,7 +19,7 @@ statemachine class cACS_Shield_Summon
 		this.PushState('Axii_Shield');
 	}
 
-	 function Axii_Persistent_Shield_Summon()
+	function Axii_Persistent_Shield_Summon()
 	{
 		if(!thePlayer.HasTag('ACS_Shield_Summoned'))
 		{
@@ -552,7 +552,6 @@ state Yrden_Revive_Normal in cACS_Shield_Summon
 	private var i																										: int;
 	private var npc																										: CNewNPC;
 	private var revAnimatedComponent 																					: CAnimatedComponent;
-	private var revAnimSettings																							: SAnimatedComponentSlotAnimationSettings;
 	private var revMovementAdjustor																						: CMovementAdjustor; 
 	private var revTicket 																								: SMovementAdjustmentRequestTicket; 
 	private var curVitality, maxVitality, curMorale, maxMorale, curStamina, maxStamina, curEssence, maxEssence, damage	: float;
@@ -698,18 +697,15 @@ state Yrden_Revive_Normal in cACS_Shield_Summon
 
 				revAnimatedComponent = (CAnimatedComponent)rev_ent.GetComponentByClassName( 'CAnimatedComponent' );	
 
-				revAnimSettings.blendIn = 0;
-				revAnimSettings.blendOut = 0.5f;
-
 				if (npc.IsHuman())
 				{
 					if( RandF() < 0.5 ) 
 					{
-						revAnimatedComponent.PlaySlotAnimationAsync ( 'exploration_effect_getup_front', 'NPC_ANIM_SLOT', revAnimSettings);
+						revAnimatedComponent.PlaySlotAnimationAsync ( 'exploration_effect_getup_front', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 					}
 					else
 					{
-						revAnimatedComponent.PlaySlotAnimationAsync ( 'exploration_effect_getup_back', 'NPC_ANIM_SLOT', revAnimSettings);
+						revAnimatedComponent.PlaySlotAnimationAsync ( 'exploration_effect_getup_back', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0.5f));
 					}
 				}
 			}
@@ -904,6 +900,7 @@ state Quen_Wolf_Summon in cACS_Shield_Summon
 			wolf_ent.StopEffect('appear');
 			wolf_ent.PlayEffectSingle('shadow_form');
 			wolf_ent.PlayEffectSingle('demonic_possession');
+			wolf_ent.PlayEffect('shadow_form_2');
 			
 			wolf_ent.AddTag( 'ACS_Summoned_Wolf' );
 		}
@@ -1079,7 +1076,9 @@ state Axii_Persistent_Shield in cACS_Shield_Summon
 		
 		//"items\weapons\unique\imlerith_shield_new.w2ent" // REPLACE IN THE QUOTATIONS WHAT SHIELD YOU WANT TO USE. DEFAULT IS IMLERITH'S SHIELD.
 
-		"dlc\dlc_acs\data\entities\other\imlerith_shield_damaged.w2ent"
+		//"dlc\dlc_acs\data\entities\other\imlerith_shield_damaged.w2ent"
+
+		"dlc\dlc_acs\data\entities\other\amasii_shield.w2ent"
 		
 		// LIST OF AVAILABLE SHIELDS TO USE //
 		
@@ -1152,7 +1151,9 @@ state Axii_Persistent_Shield in cACS_Shield_Summon
 
 			shield = (CEntity)theGame.CreateEntity( shield_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
 
-			shield.CreateAttachment( thePlayer, 'l_weapon', Vector(0.1, 0, 0.1), EulerAngles(10, -20, 0) );
+			//shield.CreateAttachment( thePlayer, 'l_weapon', Vector(0.1, 0, 0.1), EulerAngles(10, -20, 0) );
+
+			shield.CreateAttachment( thePlayer, 'l_weapon', Vector(0, 0.125, -0.5), EulerAngles(0, 0, 0) );
 
 			//shield.StopEffect('fire_sparks_trail');
 
@@ -1216,7 +1217,6 @@ state Axii_Shield_Entity in cACS_Shield_Summon
 	private var animcomp 																		: CAnimatedComponent;
 	private var h 																				: float;
 	private var shieldAnimatedComponent 														: CAnimatedComponent;
-	private var shieldAnimSettings																: SAnimatedComponentSlotAnimationSettings;
 	private var shieldMovementAdjustor															: CMovementAdjustor; 
 	private var shieldTicket 																	: SMovementAdjustmentRequestTicket; 
 	private var actors 																			: array< CActor >;
@@ -1287,9 +1287,6 @@ state Axii_Shield_Entity in cACS_Shield_Summon
 	{
 		shieldAnimatedComponent = (CAnimatedComponent)ACS_Shield_Entity().GetComponentByClassName( 'CAnimatedComponent' );	
 
-		shieldAnimSettings.blendIn = 0.2f;
-		shieldAnimSettings.blendOut = 0.5f;
-
 		shieldMovementAdjustor = ((CMovingPhysicalAgentComponent)ACS_Shield_Entity().GetMovingAgentComponent()).GetMovementAdjustor();
 
 		shieldMovementAdjustor.CancelAll();
@@ -1304,7 +1301,7 @@ state Axii_Shield_Entity in cACS_Shield_Summon
 		//shieldMovementAdjustor.ScaleAnimationLocationVertically( shieldTicket, true );
 		shieldMovementAdjustor.RotateTo( shieldTicket, VecHeading(thePlayer.GetHeadingVector()) );
 
-		shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_taunt_leaves', 'NPC_ANIM_SLOT', shieldAnimSettings);
+		shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_taunt_leaves', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 	}
 
 	latent function shield_entity_destroy_pre()
@@ -1415,14 +1412,10 @@ function ACS_Axii_Shield_Destroy_IMMEDIATE()
 function shield_entity_despawn_anim()
 {
 	var shieldAnimatedComponent 					: CAnimatedComponent;
-	var shieldAnimSettings							: SAnimatedComponentSlotAnimationSettings;
 	var shieldMovementAdjustor						: CMovementAdjustor; 
 	var shieldTicket 								: SMovementAdjustmentRequestTicket; 
 
 	shieldAnimatedComponent = (CAnimatedComponent)ACS_Shield_Entity().GetComponentByClassName( 'CAnimatedComponent' );	
-
-	shieldAnimSettings.blendIn = 0.2f;
-	shieldAnimSettings.blendOut = 0.5f;
 
 	shieldMovementAdjustor = ((CMovingPhysicalAgentComponent)ACS_Shield_Entity().GetMovingAgentComponent()).GetMovementAdjustor();
 
@@ -1437,7 +1430,7 @@ function shield_entity_despawn_anim()
 	//shieldMovementAdjustor.ScaleAnimationLocationVertically( shieldTicket, true );
 	shieldMovementAdjustor.RotateTo( shieldTicket, VecHeading(thePlayer.GetHeadingVector()) );
 
-	shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_taunt_scream', 'NPC_ANIM_SLOT', shieldAnimSettings);
+	shieldAnimatedComponent.PlaySlotAnimationAsync ( 'monster_lessun_taunt_scream', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 
 	ACS_Shield_Entity().PlayEffectSingle('hym_despawn');
 	ACS_Shield_Entity().StopEffect('hym_despawn');
@@ -1553,9 +1546,6 @@ state Bruxa_Camo_Decoy_Deactivate_Claw_Equip_Standalone_Engage in cBruxa_Camo_De
 	
 	latent function ClawEquipStandalone_Latent()
 	{
-		settings.blendIn = 1;
-		settings.blendOut = 1;
-
 		/*
 		ACS_Vampire_Arms_1_Get().Destroy();
 
@@ -1582,7 +1572,7 @@ state Bruxa_Camo_Decoy_Deactivate_Claw_Equip_Standalone_Engage in cBruxa_Camo_De
 
 		stupidArray_extra_arms.PushBack( 'Cutscene' );
 
-		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 		if ( thePlayer.HasBuff(EET_BlackBlood) )
 		{
@@ -1594,7 +1584,7 @@ state Bruxa_Camo_Decoy_Deactivate_Claw_Equip_Standalone_Engage in cBruxa_Camo_De
 
 			extra_arms_temp_l = (CEntityTemplate)LoadResource("dlc\dlc_acs\data\entities\other\vampire_extra_arm_left.w2ent", true);	
 
-			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -1802,7 +1792,6 @@ function NPC_Fear_Revert()
 	var actors					: array< CActor >;
 	var npcGroupType 			: ENPCGroupType;
 	var animatedComponentA 		: CAnimatedComponent;
-	var settingsA				: SAnimatedComponentSlotAnimationSettings;
 
 	//ACS_Focus_Sound_Red_Destroy();
 
@@ -1816,9 +1805,6 @@ function NPC_Fear_Revert()
 			
 		animatedComponentA = (CAnimatedComponent)npc.GetComponentByClassName( 'CAnimatedComponent' );	
 			
-		settingsA.blendIn = 1;
-		settingsA.blendOut = 1;
-			
 		if ( npc == thePlayer || npc.HasTag('smokeman') )
 			continue;
 			
@@ -1829,11 +1815,7 @@ function NPC_Fear_Revert()
 		&& npc.IsHuman()
 		)
 		{				
-			animatedComponentA.PlaySlotAnimationAsync ( ' ', 'NPC_ANIM_SLOT', settingsA);
-
-			((CNewNPC)npc).ForgetActor(thePlayer);
-
-			npc.ForgetActor(thePlayer);
+			animatedComponentA.PlaySlotAnimationAsync ( '', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0));
 		}
 	}
 }
@@ -1843,7 +1825,6 @@ function ACS_Revenant_Destroy()
 	var revenant 											: array<CActor>;
 	var i													: int;
 	var revenantAnimatedComponent 							: CAnimatedComponent;
-	var revenantAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	var revenantMovementAdjustor							: CMovementAdjustor; 
 	var revenantTicket 										: SMovementAdjustmentRequestTicket; 
 	
@@ -1869,10 +1850,8 @@ function ACS_Revenant_Destroy()
 		revenantMovementAdjustor.RotateTowards( revenantTicket, thePlayer );
 
 		revenantAnimatedComponent = (CAnimatedComponent)revenant[i].GetComponentByClassName( 'CAnimatedComponent' );	
-		revenantAnimSettings.blendIn = 0.2f;
-		revenantAnimSettings.blendOut = 0.5f;
 		
-		revenantAnimatedComponent.PlaySlotAnimationAsync ( 'sq701_knight_sword_drawn_gesture_hailing', 'NPC_ANIM_SLOT', revenantAnimSettings);
+		revenantAnimatedComponent.PlaySlotAnimationAsync ( 'sq701_knight_sword_drawn_gesture_hailing', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 		
 		revenant[i].PlayEffectSingle('demonic_possession');
 		revenant[i].DestroyAfter(2.5);
@@ -1888,7 +1867,6 @@ function ACS_Skele_Destroy()
 	var skeleton 											: array<CActor>;
 	var i													: int;
 	var skeletonAnimatedComponent 							: CAnimatedComponent;
-	var skeletonAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	var skeleMovementAdjustor								: CMovementAdjustor; 
 	var skeleTicket 										: SMovementAdjustmentRequestTicket; 
 	
@@ -1914,10 +1892,8 @@ function ACS_Skele_Destroy()
 		skeleMovementAdjustor.RotateTowards( skeleTicket, thePlayer );
 
 		skeletonAnimatedComponent = (CAnimatedComponent)skeleton[i].GetComponentByClassName( 'CAnimatedComponent' );	
-		skeletonAnimSettings.blendIn = 0.2f;
-		skeletonAnimSettings.blendOut = 0.5f;
 		
-		skeletonAnimatedComponent.PlaySlotAnimationAsync ( 'sq701_knight_sword_drawn_gesture_hailing', 'NPC_ANIM_SLOT', skeletonAnimSettings);
+		skeletonAnimatedComponent.PlaySlotAnimationAsync ( 'sq701_knight_sword_drawn_gesture_hailing', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 		
 		skeleton[i].PlayEffectSingle('death_glow');
 		skeleton[i].PlayEffectSingle('suck_into_painting');
@@ -1932,7 +1908,6 @@ function ACS_Centipede_Destroy()
 	var centipedes 											: array<CActor>;
 	var i													: int;
 	var centipedeAnimatedComponent 							: CAnimatedComponent;
-	var centipedeAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	
 	centipedes.Clear();
 
@@ -1941,10 +1916,8 @@ function ACS_Centipede_Destroy()
 	for( i = 0; i < centipedes.Size(); i += 1 )
 	{
 		centipedeAnimatedComponent = (CAnimatedComponent)centipedes[i].GetComponentByClassName( 'CAnimatedComponent' );	
-		centipedeAnimSettings.blendIn = 0.2f;
-		centipedeAnimSettings.blendOut = 0.5f;
 		
-		centipedeAnimatedComponent.PlaySlotAnimationAsync ( 'attack_jump_02', 'NPC_ANIM_SLOT', centipedeAnimSettings);
+		centipedeAnimatedComponent.PlaySlotAnimationAsync ( 'attack_jump_02', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 		
 		centipedes[i].PlayEffectSingle('dirt_jump');
 		centipedes[i].DestroyAfter(2);
@@ -1969,7 +1942,6 @@ function ACS_Wolf_Destroy()
 	var wolves 											: array<CActor>;
 	var i												: int;
 	var wolfAnimatedComponent 							: CAnimatedComponent;
-	var wolfAnimSettings								: SAnimatedComponentSlotAnimationSettings;
 	
 	wolves.Clear();
 
@@ -1978,10 +1950,8 @@ function ACS_Wolf_Destroy()
 	for( i = 0; i < wolves.Size(); i += 1 )
 	{
 		wolfAnimatedComponent = (CAnimatedComponent)wolves[i].GetComponentByClassName( 'CAnimatedComponent' );	
-		wolfAnimSettings.blendIn = 0.2f;
-		wolfAnimSettings.blendOut = 0.5f;
 		
-		wolfAnimatedComponent.PlaySlotAnimationAsync ( 'wolf_howling_loop', 'NPC_ANIM_SLOT', wolfAnimSettings);
+		wolfAnimatedComponent.PlaySlotAnimationAsync ( 'wolf_howling_loop', 'NPC_ANIM_SLOT', SAnimatedComponentSlotAnimationSettings(0.2f, 0.5f));
 		
 		wolves[i].PlayEffectSingle('disappear');
 		wolves[i].DestroyAfter(2);

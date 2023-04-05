@@ -33,7 +33,7 @@ function ACS_BruxaDodgeBackLeftInit()
 
 						vBruxaDodgeBackLeft.BruxaDodgeBackLeft_Engage();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 				/*
@@ -57,7 +57,7 @@ function ACS_BruxaDodgeBackLeftInit()
 
 						vBruxaDodgeBackLeft.BruxaRegularDodgeLeft_Engage();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 				*/
@@ -449,7 +449,8 @@ state BruxaDodgeBackLeft_Engage in cBruxaDodgeBackLeft
 	
 	entry function BruxaDodgeBackLeft()
 	{
-		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		if (!thePlayer.HasTag('ACS_Camo_Active')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'shadowdash_short' );
 			thePlayer.StopEffect( 'shadowdash_short' );
@@ -503,7 +504,7 @@ state BruxaDodgeBackLeft_Engage in cBruxaDodgeBackLeft
 
 		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_left_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor( ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.1 ) );
 
 		//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -2 ) );
 		

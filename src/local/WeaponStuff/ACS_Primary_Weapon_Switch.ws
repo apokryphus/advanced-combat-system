@@ -34,7 +34,6 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 	private var res 																																																																																							: bool;
 	private var inv 																																																																																							: CInventoryComponent;
 	private var tags 																																																																																							: array<name>;
-	private var settings																																																																																						: SAnimatedComponentSlotAnimationSettings;
 	private var animatedComponent_extra_arms 																																																																																	: CAnimatedComponent;
 	private var stupidArray_extra_arms 																																																																																			: array< name >;
 	private var h 																																																																																								: float;
@@ -124,9 +123,6 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 	
 	entry function PrimaryWeaponSwitch()
 	{
-		settings.blendIn = 1;
-		settings.blendOut = 1;
-
 		if ( ACS_GetWeaponMode() == 0 )
 		{
 			if
@@ -891,7 +887,17 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				}
 				else
 				{
-					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( ' ', 'PLAYER_SLOT', settings);	
+					if (!thePlayer.IsCiri()
+					&& !thePlayer.IsPerformingFinisher()
+					&& !thePlayer.HasTag('in_wraith')
+					&& !thePlayer.HasTag('blood_sucking')
+					&& ACS_BuffCheck()
+					&& thePlayer.IsActionAllowed(EIAB_Dodge)
+					&& !thePlayer.IsInAir()
+					)
+					{
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1) );
+					}
 				}
 			}
 		}
@@ -918,9 +924,6 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 			{
 				thePlayer.GotoState( 'Combat' );
 			}
-
-			settings.blendIn = 0;
-			settings.blendOut = 1;
 		}
 	}
 
@@ -976,10 +979,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 				}
 			}
 
-			settings.blendIn = 0;
-			settings.blendOut = 1;
-
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1) );
 		}
 	}
 
@@ -1326,7 +1326,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 		stupidArray_extra_arms.PushBack( 'Cutscene' );
 
-		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
 
@@ -1378,7 +1378,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 			extra_arms_temp_l = (CEntityTemplate)LoadResource("dlc\dlc_acs\data\entities\other\vampire_extra_arm_left.w2ent", true);	
 
-			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -2897,7 +2897,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 
 		ACS_WeaponDestroyInit();
 
-		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
 		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
@@ -3094,7 +3094,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
 		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
@@ -3765,7 +3765,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
 		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
@@ -4433,7 +4433,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
 		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
@@ -5131,7 +5131,7 @@ state Primary_Weapon_Switch_Engage in cPrimaryWeaponSwitch
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-		anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
 		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
 		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
@@ -7849,7 +7849,6 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 	private var claw_temp, head_temp, extra_arms_anchor_temp, extra_arms_temp_r, extra_arms_temp_l, back_claw_temp																			: CEntityTemplate;
 	private var p_actor 																																									: CActor;
 	private var p_comp, meshcompHead, p_comp_2																																				: CComponent;
-	private var settings																																									: SAnimatedComponentSlotAnimationSettings;
 	private var animatedComponent_extra_arms 																																				: CAnimatedComponent;
 	private var stupidArray_extra_arms 																																						: array< name >;
 	private var attach_vec, bone_vec																																						: Vector;
@@ -7874,9 +7873,6 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 	
 	latent function ClawEquipStandalone_Latent()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 1;
-
 		ACS_Sword_Trail_1().Destroy();
 		ACS_Sword_Trail_2().Destroy();
 		ACS_Sword_Trail_3().Destroy();
@@ -7904,7 +7900,7 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 
 		stupidArray_extra_arms.PushBack( 'Cutscene' );
 
-		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 		trail_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\fx\acs_sword_trail.w2ent" , true );
 
@@ -7958,7 +7954,7 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 
 			extra_arms_temp_l = (CEntityTemplate)LoadResource("dlc\dlc_acs\data\entities\other\vampire_extra_arm_left.w2ent", true);	
 
-			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -8251,7 +8247,7 @@ state Claw_Equip_Standalone_Engage in cClawEquipStandalone
 				}
 			}
 
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'locomotion_walkstart_forward_dettlaff_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1) );
 		}
 	}
 }
@@ -8288,7 +8284,6 @@ state Blood_Armor_Standalone_Engage in cBloodArmorStandalone
 	private var head_temp, extra_arms_anchor_temp, extra_arms_temp_r, extra_arms_temp_l, back_claw_temp																						: CEntityTemplate;
 	private var p_actor 																																									: CActor;
 	private var p_comp, meshcompHead																																						: CComponent;
-	private var settings																																									: SAnimatedComponentSlotAnimationSettings;
 	private var animatedComponent_extra_arms 																																				: CAnimatedComponent;
 	private var stupidArray_extra_arms 																																						: array< name >;
 	private var attach_vec, bone_vec																																						: Vector;
@@ -8309,9 +8304,6 @@ state Blood_Armor_Standalone_Engage in cBloodArmorStandalone
 	
 	latent function Blood_Armor_Standalone_Latent()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 1;
-
 		ACS_Vampire_Arms_1_Get().Destroy();
 
 		ACS_Vampire_Arms_2_Get().Destroy();
@@ -8328,7 +8320,7 @@ state Blood_Armor_Standalone_Engage in cBloodArmorStandalone
 
 		ACS_Vampire_Head_Get().Destroy();
 
-		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+		extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 		if ( thePlayer.HasBuff(EET_BlackBlood) )
 		{
@@ -8340,7 +8332,7 @@ state Blood_Armor_Standalone_Engage in cBloodArmorStandalone
 
 			extra_arms_temp_l = (CEntityTemplate)LoadResource("dlc\dlc_acs\data\entities\other\vampire_extra_arm_left.w2ent", true);	
 
-			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\ep1\data\items\quest_items\q604\q604_item__chalk.w2ent", true );
+			extra_arms_anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		

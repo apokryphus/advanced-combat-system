@@ -38,6 +38,7 @@ function ACS_WeaponDestroyInit()
 	QuenCrossbowDestroy();
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Actual_Timer');
 	ACS_Yrden_Sidearm_Destroy();
 
 	ACS_Bow_Arrow().Destroy();
@@ -92,6 +93,7 @@ function ACS_WeaponDestroyIMMEDIATEInit()
 	QuenCrossbowDestroyIMMEDIATE();
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Actual_Timer');
 	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
 
 	ACS_Bow_Arrow().Destroy();
@@ -137,6 +139,7 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
 	QuenCrossbowDestroy();
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Actual_Timer');
 	ACS_Yrden_Sidearm_Destroy();
 
 	ACS_Sword_Trail_1().Destroy();
@@ -180,6 +183,7 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
 	QuenCrossbowDestroyIMMEDIATE();
 
 	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Timer');
+	GetACSWatcher().RemoveTimer('ACS_Yrden_Sidearm_Destroy_Actual_Timer');
 	ACS_Yrden_Sidearm_DestroyIMMEDIATE();
 
 	ACS_Sword_Trail_1().Destroy();
@@ -227,6 +231,8 @@ function ACS_Weapon_Invisible()
 		thePlayer.AddTag('ACS_HideWeaponOnDodge_Claw_Effect');
 	}
 
+	//ACS_StopAerondightEffectInit();
+
 	if (thePlayer.HasTag('quen_sword_equipped'))
 	{
 		quen_sword_summon();
@@ -267,7 +273,7 @@ function ACS_Weapon_Invisible()
 		yrden_secondary_sword_summon();
 		YrdenSecondarySwordDestroy_NOTAG();
 	}
-
+	
 	ACS_Sword_Trail_1().StopAllEffects();
 
 	ACS_Sword_Trail_2().StopAllEffects();
@@ -311,7 +317,7 @@ function ACS_HideSwordWitoutScabbardStuff()
 		silversword.SetVisible(false);
 
 		silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
-		silverswordentity.SetHideInGame(true); 
+		silverswordentity.SetHideInGame(true);
 	}
 
 	thePlayer.RemoveTag('igni_sword_effect_played');

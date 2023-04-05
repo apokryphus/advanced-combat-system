@@ -570,7 +570,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled())
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -580,9 +580,9 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
-
-				thePlayer.PlayEffectSingle( 'shadowdash' );
 			}
+
+			thePlayer.PlayEffectSingle( 'shadowdash' );
 
 			thePlayer.AddTag('ACS_Bruxa_Jump_Init');
 
@@ -594,7 +594,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 		{
 			GetACSWatcher().dodge_timer_actual();
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled())
 			{
 				thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 				thePlayer.StopEffect( 'bruxa_dash_trails' );
@@ -707,7 +707,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled())
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -794,7 +794,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			//ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled())
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -885,7 +885,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			//ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled()) 
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -961,13 +961,10 @@ state WildHuntBlink_Engage in cWildHuntBlink
 					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'taunt_forward_to_down_001_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 				}
 			}
-			
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
-			{
-				thePlayer.StopEffect('special_attack_fx');
 
-				thePlayer.PlayEffectSingle('special_attack_fx');
-			}
+			thePlayer.StopEffect('special_attack_fx');
+
+			thePlayer.PlayEffectSingle('special_attack_fx');
 
 			ACS_Marker_Smoke();
 
@@ -1045,7 +1042,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			//ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1132,7 +1129,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 			//ent.DestroyAfter(2);
 
-			if (!thePlayer.HasTag('ACS_Camo_Active'))
+			if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 			{
 				thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 				thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1350,7 +1347,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -1420,7 +1417,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -1462,7 +1459,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 ));
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -1504,7 +1501,7 @@ state WildHuntBlink_Engage in cWildHuntBlink
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 ));
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -1632,7 +1629,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 						
 						//ACS_Dodge();
 
-						if (!thePlayer.HasTag('ACS_Camo_Active'))
+						if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 						{
 							thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 							thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1642,13 +1639,16 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
+
+							thePlayer.PlayEffectSingle( 'shadowdash_short' );
+							thePlayer.StopEffect( 'shadowdash_short' );
 						}
 
 						GetACSWatcher().dodge_timer_actual();
 
 						bruxa_regular_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1669,7 +1669,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 						
 						//ACS_Dodge();
 
-						if (!thePlayer.HasTag('ACS_Camo_Active'))
+						if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 						{
 							thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 							thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1686,7 +1686,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						bruxa_front_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1707,7 +1707,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 						
 						//ACS_Dodge();
 
-						if (!thePlayer.HasTag('ACS_Camo_Active'))
+						if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 						{
 							thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 							thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1717,11 +1717,14 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
+
+							thePlayer.PlayEffectSingle( 'shadowdash_short' );
+							thePlayer.StopEffect( 'shadowdash_short' );
 						}
 
 						bruxa_right_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1742,7 +1745,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 						
 						//ACS_Dodge();
 
-						if (!thePlayer.HasTag('ACS_Camo_Active'))
+						if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 						{
 							thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 							thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1752,11 +1755,14 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
+
+							thePlayer.PlayEffectSingle( 'shadowdash_short' );
+							thePlayer.StopEffect( 'shadowdash_short' );
 						}
 
 						bruxa_left_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1777,7 +1783,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 						
 						//ACS_Dodge();
 
-						if (!thePlayer.HasTag('ACS_Camo_Active'))
+						if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
 						{
 							thePlayer.PlayEffectSingle( 'magic_step_l_new' );
 							thePlayer.StopEffect( 'magic_step_l_new' );	
@@ -1787,13 +1793,16 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
+
+							thePlayer.PlayEffectSingle( 'shadowdash_short' );
+							thePlayer.StopEffect( 'shadowdash_short' );
 						}
 
 						GetACSWatcher().dodge_timer_actual();
 
 						bruxa_regular_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1842,7 +1851,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}	
 			}
@@ -1873,16 +1882,23 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							front_dodge_skate();
 						}
 						else
 						{
-							one_hand_sword_front_dodge_alt_1();
-						}	
+							if (RandF() < 0.5)
+							{
+								one_hand_sword_front_dodge_alt_1();
+							}
+							else
+							{
+								one_hand_sword_front_dodge();
+							}
+						}
 			
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1913,7 +1929,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							right_dodge_skate();
 						}
@@ -1922,7 +1938,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_right_dodge_alt();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1952,8 +1968,8 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
-
-						if ( thePlayer.IsGuarded() ) 
+						
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							left_dodge_skate();
 						}
@@ -1962,7 +1978,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_left_dodge_alt();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -1995,7 +2011,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2044,7 +2060,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}	
 			}
@@ -2075,7 +2091,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							front_dodge_skate();
 						}
@@ -2084,7 +2100,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_front_dodge();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2115,7 +2131,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							right_dodge_skate();
 						}
@@ -2124,7 +2140,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_right_dodge();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2155,7 +2171,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							left_dodge_skate();
 						}
@@ -2164,7 +2180,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_left_dodge();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2197,7 +2213,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2246,7 +2262,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_sword_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}	
 			}
@@ -2277,16 +2293,23 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							front_dodge_skate();
 						}
 						else
 						{
-							one_hand_sword_front_dodge();
+							if (RandF() < 0.5)
+							{
+								one_hand_sword_front_dodge_alt_1();
+							}
+							else
+							{
+								one_hand_sword_front_dodge();
+							}
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2317,7 +2340,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							right_dodge_skate();
 						}
@@ -2326,7 +2349,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_sword_right_dodge();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2357,7 +2380,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							left_dodge_skate();
 						}
@@ -2366,7 +2389,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							two_hand_sword_left_dodge();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2399,7 +2422,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						two_hand_sword_back_dodge();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2448,7 +2471,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						one_hand_sword_back_dodge_alt_1();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}	
 			}
@@ -2479,16 +2502,23 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							front_dodge_skate();
 						}
 						else
 						{
-							one_hand_sword_front_dodge_alt_1();
+							if (RandF() < 0.5)
+							{
+								one_hand_sword_front_dodge_alt_1();
+							}
+							else
+							{
+								one_hand_sword_front_dodge();
+							}
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2519,7 +2549,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							right_dodge_skate();
 						}
@@ -2528,7 +2558,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							one_hand_sword_right_dodge_alt_2();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2559,7 +2589,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							left_dodge_skate();
 						}
@@ -2568,7 +2598,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							one_hand_sword_left_dodge_alt_2();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2601,7 +2631,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						one_hand_sword_back_dodge_alt_1();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2650,7 +2680,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						one_hand_sword_back_dodge_alt_2();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}		
 			}
@@ -2681,7 +2711,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							front_dodge_skate();
 						}
@@ -2690,7 +2720,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							one_hand_sword_front_dodge_alt_2();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2721,7 +2751,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							right_dodge_skate();
 						}
@@ -2730,7 +2760,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							one_hand_sword_right_dodge_alt_2();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2761,7 +2791,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							thePlayer.StopEffect( 'bruxa_dash_trails' );
 						}
 
-						if ( thePlayer.IsGuarded() ) 
+						if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
 						{
 							left_dodge_skate();
 						}
@@ -2770,7 +2800,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 							one_hand_sword_left_dodge_alt_2();
 						}
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
 				}
 			}
@@ -2803,14 +2833,1535 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 						one_hand_sword_back_dodge_alt_2();
 						
-						thePlayer.DrainStamina(ESAT_Dodge);
+						GetACSWatcher().ACS_StaminaDrain(4);
 					}
+				}
+			}
+		}
+		else if (
+		thePlayer.HasTag('igni_sword_equipped') || thePlayer.HasTag('igni_secondary_sword_equipped')
+		)
+		{
+			if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+			&& !thePlayer.HasTag('blood_sucking')
+			)
+			{
+				ACS_Weapon_Respawn();
+
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+				thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+			}
+
+			if (ACS_Wolf_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								if (RandF() < 0.5)
+								{
+									one_hand_sword_front_dodge_alt_1();
+								}
+								else
+								{
+									one_hand_sword_front_dodge();
+								}
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_right_dodge_alt_4();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_left_dodge_alt_4();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Bear_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							two_hand_sword_back_dodge();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								if (RandF() < 0.5)
+								{
+									one_hand_sword_front_dodge_alt_1();
+								}
+								else
+								{
+									one_hand_sword_front_dodge();
+								}
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								two_hand_sword_right_dodge();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								two_hand_sword_left_dodge();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							two_hand_sword_back_dodge();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Cat_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_front_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_right_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_left_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Griffin_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_1();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								if (RandF() < 0.5)
+								{
+									one_hand_sword_front_dodge_alt_1();
+								}
+								else
+								{
+									one_hand_sword_front_dodge();
+								}
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_right_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_left_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Manticore_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_1();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								if (RandF() < 0.5)
+								{
+									one_hand_sword_front_dodge_alt_1();
+								}
+								else
+								{
+									one_hand_sword_front_dodge();
+								}
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_right_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_left_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Forgotten_Wolf_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								if (RandF() < 0.5)
+								{
+									one_hand_sword_front_dodge_alt_1();
+								}
+								else
+								{
+									one_hand_sword_front_dodge();
+								}
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_right_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								one_hand_sword_left_dodge_alt_2();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else if (ACS_Viper_School_Check())
+			{
+				if (theInput.GetActionValue('GI_AxisLeftY') < -0.5 )
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}	
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								front_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_front_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								right_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_right_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat()) 
+							{
+								left_dodge_skate();
+							}
+							else
+							{
+								cat_one_hand_sword_left_dodge_alt_3();
+							}
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+				else
+				{
+					if (ACS_can_dodge())
+					{
+						if ( ACS_StaminaBlockAction_Enabled() 
+						&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+						)
+						{
+							thePlayer.RaiseEvent( 'CombatTaunt' );
+							thePlayer.SoundEvent("gui_no_stamina");
+						}
+						else
+						{
+							ACS_refresh_dodge_cooldown();
+
+							if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+							{
+								thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+								thePlayer.StopEffect( 'magic_step_l_new' );	
+
+								thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+								thePlayer.StopEffect( 'magic_step_r_new' );	
+
+								thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+								thePlayer.StopEffect( 'bruxa_dash_trails' );
+							}
+
+							one_hand_sword_back_dodge_alt_3();
+							
+							GetACSWatcher().ACS_StaminaDrain(4);
+						}
+					}
+				}
+			}
+			else
+			{
+				if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat() ) 
+				{
+					if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
+					{
+						if (ACS_can_dodge())
+						{
+							if ( ACS_StaminaBlockAction_Enabled() 
+							&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+							)
+							{
+								thePlayer.RaiseEvent( 'CombatTaunt' );
+								thePlayer.SoundEvent("gui_no_stamina");
+							}
+							else
+							{
+								ACS_refresh_dodge_cooldown();
+
+								if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+								{
+									thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+									thePlayer.StopEffect( 'magic_step_l_new' );	
+
+									thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+									thePlayer.StopEffect( 'magic_step_r_new' );	
+
+									thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+									thePlayer.StopEffect( 'bruxa_dash_trails' );
+								}
+
+								front_dodge_skate();
+								
+								GetACSWatcher().ACS_StaminaDrain(4);
+							}
+						}
+					}
+					else if (theInput.GetActionValue('GI_AxisLeftX') > 0.5)
+					{
+						if (ACS_can_dodge())
+						{
+							if ( ACS_StaminaBlockAction_Enabled() 
+							&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+							)
+							{
+								thePlayer.RaiseEvent( 'CombatTaunt' );
+								thePlayer.SoundEvent("gui_no_stamina");
+							}
+							else
+							{
+								ACS_refresh_dodge_cooldown();
+
+								if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+								{
+									thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+									thePlayer.StopEffect( 'magic_step_l_new' );	
+
+									thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+									thePlayer.StopEffect( 'magic_step_r_new' );	
+
+									thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+									thePlayer.StopEffect( 'bruxa_dash_trails' );
+								}
+
+								right_dodge_skate();
+		
+								GetACSWatcher().ACS_StaminaDrain(4);
+							}
+						}
+					}
+					else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5) 
+					{
+						if (ACS_can_dodge())
+						{
+							if ( ACS_StaminaBlockAction_Enabled() 
+							&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+							)
+							{
+								thePlayer.RaiseEvent( 'CombatTaunt' );
+								thePlayer.SoundEvent("gui_no_stamina");
+							}
+							else
+							{
+								ACS_refresh_dodge_cooldown();
+
+								if (!thePlayer.HasTag('ACS_Camo_Active') && ACS_DodgeEffects_Enabled() )
+								{
+									thePlayer.PlayEffectSingle( 'magic_step_l_new' );
+									thePlayer.StopEffect( 'magic_step_l_new' );	
+
+									thePlayer.PlayEffectSingle( 'magic_step_r_new' );
+									thePlayer.StopEffect( 'magic_step_r_new' );	
+
+									thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
+									thePlayer.StopEffect( 'bruxa_dash_trails' );
+								}
+
+								left_dodge_skate();
+
+								GetACSWatcher().ACS_StaminaDrain(4);
+							}
+						}
+					}
+					else
+					{
+						if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+						&& !thePlayer.HasTag('blood_sucking')
+						)
+						{
+							ACS_Weapon_Respawn();
+
+							thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+							thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+						}
+
+						GetACSWatcher().dodge_timer_attack_actual();
+
+						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
+
+						Sleep(0.0625);
+						
+						thePlayer.EvadePressed(EBAT_Roll);	
+					}
+				}
+				else
+				{
+					if (thePlayer.HasTag('ACS_HideWeaponOnDodge') 
+					&& !thePlayer.HasTag('blood_sucking')
+					)
+					{
+						ACS_Weapon_Respawn();
+
+						thePlayer.RemoveTag('ACS_HideWeaponOnDodge');
+
+						thePlayer.RemoveTag('ACS_HideWeaponOnDodge_Claw_Effect');
+					}
+
+					GetACSWatcher().dodge_timer_attack_actual();
+
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );
+
+					Sleep(0.0625);
+					
+					thePlayer.EvadePressed(EBAT_Roll);	
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsGuarded() ) 
+			if ( thePlayer.IsGuarded() && !thePlayer.IsInCombat() ) 
 			{
 				if (theInput.GetActionValue('GI_AxisLeftY') > 0.5)
 				{
@@ -2841,7 +4392,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							front_dodge_skate();
 							
-							thePlayer.DrainStamina(ESAT_Dodge);
+							GetACSWatcher().ACS_StaminaDrain(4);
 						}
 					}
 				}
@@ -2874,7 +4425,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							right_dodge_skate();
 	
-							thePlayer.DrainStamina(ESAT_Dodge);
+							GetACSWatcher().ACS_StaminaDrain(4);
 						}
 					}
 				}
@@ -2907,7 +4458,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 							left_dodge_skate();
 
-							thePlayer.DrainStamina(ESAT_Dodge);
+							GetACSWatcher().ACS_StaminaDrain(4);
 						}
 					}
 				}
@@ -3920,7 +5471,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -4217,7 +5768,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -4469,7 +6020,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -4545,12 +6096,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-
-		
-
-		
-
 		thePlayer.ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_left_dodge_alt_2' );
@@ -4586,11 +6131,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-
-		
-
-		
 
 		thePlayer.ResetRawPlayerHeading();
 		
@@ -4629,12 +6169,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-
-		
-
-		
-
 		thePlayer.ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_back_dodge_alt_3' );
@@ -4649,7 +6183,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1 );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
 
 		thePlayer.ClearAnimationSpeedMultipliers();	
 								
@@ -4674,8 +6208,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		movementAdjustor.CancelByName( 'one_hand_sword_front_dodge_alt_3' );
 		
 		movementAdjustor.CancelAll();
-
-		
 		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_front_dodge_alt_3' );
 		
@@ -4710,7 +6242,8 @@ state ACS_RollInit_Engage in cACS_RollInit
 		}
 
 		if (!thePlayer.HasTag('ACS_Camo_Active')
-		&& !thePlayer.HasTag('blood_sucking'))
+		&& !thePlayer.HasTag('blood_sucking')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
 			thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
@@ -4735,7 +6268,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_3' );
 		
 		movementAdjustor.CancelAll();
-
 
 		thePlayer.ResetRawPlayerHeading();
 		
@@ -4770,12 +6302,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-
-		
-
-		
-
 		thePlayer.ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_right_dodge_alt_3' );
@@ -4803,6 +6329,250 @@ state ACS_RollInit_Engage in cACS_RollInit
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	latent function one_hand_sword_left_dodge_alt_4()
+	{
+		ticket = movementAdjustor.GetRequest( 'one_hand_sword_left_dodge_alt_4');
+		
+		movementAdjustor.CancelByName( 'one_hand_sword_left_dodge_alt_4' );
+		
+		movementAdjustor.CancelAll();
+
+		thePlayer.ResetRawPlayerHeading();
+		
+		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_left_dodge_alt_4' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
+
+		movementAdjustor.SlideTo( ticket, ( TraceFloor(thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.5) );
+
+		thePlayer.ClearAnimationSpeedMultipliers();	
+								
+		//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }	
+				
+		//GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.5 , false);
+
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_left_350m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+	}
+
+	latent function one_hand_sword_right_dodge_alt_4()
+	{
+		ticket = movementAdjustor.GetRequest( 'one_hand_sword_right_dodge_alt_4');
+		
+		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_4' );
+		
+		movementAdjustor.CancelAll();
+
+		thePlayer.ResetRawPlayerHeading();
+		
+		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_right_dodge_alt_4' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
+
+		movementAdjustor.SlideTo( ticket, ( TraceFloor(thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * 1.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * 1.5) );
+
+		thePlayer.ClearAnimationSpeedMultipliers();	
+								
+		//if (thePlayer.IsGuarded() || thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15){thePlayer.SetAnimationSpeedMultiplier( 1  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }	
+				
+		//GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.5 , false);
+
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_right_350m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	latent function cat_one_hand_sword_back_dodge_alt_3()
+	{
+		ticket = movementAdjustor.GetRequest( 'cat_one_hand_sword_back_dodge_alt_3');
+		
+		movementAdjustor.CancelByName( 'cat_one_hand_sword_back_dodge_alt_3' );
+		
+		movementAdjustor.CancelAll();
+
+		thePlayer.ResetRawPlayerHeading();
+		
+		ticket = movementAdjustor.CreateNewRequest( 'cat_one_hand_sword_back_dodge_alt_3' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
+
+		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -1.1) );
+
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
+		if (thePlayer.IsGuarded()||thePlayer.HasBuff(EET_SlowdownFrost)||thePlayer.HasBuff(EET_Slowdown)||thePlayer.HasBuff(EET_Blizzard)){thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5 ); }
+
+		GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.25  , false);	
+
+		if( RandF() < 0.5 ) 
+		{
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge1_back_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+		}
+		else
+		{
+			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_back_350m_lp', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+		}
+	}
+
+	latent function cat_one_hand_sword_front_dodge_alt_3()
+	{
+		ticket = movementAdjustor.GetRequest( 'cat_one_hand_sword_front_dodge_alt_3');
+		
+		movementAdjustor.CancelByName( 'cat_one_hand_sword_front_dodge_alt_3' );
+		
+		movementAdjustor.CancelAll();
+
+		ticket = movementAdjustor.CreateNewRequest( 'cat_one_hand_sword_front_dodge_alt_3' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.1 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
+		if (thePlayer.IsGuarded()||thePlayer.HasBuff(EET_SlowdownFrost)||thePlayer.HasBuff(EET_Slowdown)||thePlayer.HasBuff(EET_Blizzard)){thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5 ); }
+
+		GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.25  , false);
+		
+		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
+		{	
+			if (thePlayer.IsEnemyInCone( actor, thePlayer.GetHeadingVector(), 50, 180, actor ))
+			{
+				movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
+
+				if( RandF() < 0.5 ) 
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward1_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+				}
+				else
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward2_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+				}
+			}
+			else
+			{
+				movementAdjustor.RotateTowards( ticket, actor );
+
+				if( RandF() < 0.5 ) 
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward_350m_180deg_lp', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+				}
+				else
+				{
+					thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward_350m_180deg', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+				}
+			}
+		}
+		else
+		{			
+			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
+				
+			if( RandF() < 0.5 ) 
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward1_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+			}
+			else
+			{
+				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge_forward2_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));	
+			}
+		}
+	}
+
+	latent function cat_one_hand_sword_left_dodge_alt_3()
+	{
+		ticket = movementAdjustor.GetRequest( 'cat_one_hand_sword_left_dodge_alt_3');
+		
+		movementAdjustor.CancelByName( 'cat_one_hand_sword_left_dodge_alt_3' );
+		
+		movementAdjustor.CancelAll();
+
+		thePlayer.ResetRawPlayerHeading();
+		
+		ticket = movementAdjustor.CreateNewRequest( 'cat_one_hand_sword_left_dodge_alt_3' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
+
+		//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.1 );
+
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
+		if (thePlayer.IsGuarded()||thePlayer.HasBuff(EET_SlowdownFrost)||thePlayer.HasBuff(EET_Slowdown)||thePlayer.HasBuff(EET_Blizzard)){thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5 ); }
+
+		GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.25  , false);
+
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge1_left_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+	}
+
+	latent function cat_one_hand_sword_right_dodge_alt_3()
+	{
+		ticket = movementAdjustor.GetRequest( 'cat_one_hand_sword_right_dodge_alt_3');
+		
+		movementAdjustor.CancelByName( 'cat_one_hand_sword_right_dodge_alt_3' );
+		
+		movementAdjustor.CancelAll();
+
+		thePlayer.ResetRawPlayerHeading();
+		
+		ticket = movementAdjustor.CreateNewRequest( 'cat_one_hand_sword_right_dodge_alt_3' );
+		
+		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
+		
+		movementAdjustor.MaxRotationAdjustmentSpeed( ticket, 50000000 );
+		
+		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
+
+		GetACSWatcher().dodge_timer_attack_actual();
+
+		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
+
+		//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * 1.1 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * 1.1 );
+
+		if( thePlayer.IsAlive()) {thePlayer.ClearAnimationSpeedMultipliers();}	
+
+		if (thePlayer.IsGuarded()||thePlayer.HasBuff(EET_SlowdownFrost)||thePlayer.HasBuff(EET_Slowdown)||thePlayer.HasBuff(EET_Blizzard)){thePlayer.SetAnimationSpeedMultiplier( 1.25  ); }else{thePlayer.SetAnimationSpeedMultiplier( 1.5 ); }		
+
+		GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.25  , false);
+
+		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_sword_dodge1_right_4m', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	latent function front_dodge_skate()
 	{
 		ticket = movementAdjustor.GetRequest( 'one_hand_sword_front_dodge_alt_2');
@@ -4811,8 +6581,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_front_dodge_alt_2' );
 		
 		movementAdjustor.AdjustmentDuration( ticket, 0.25 );
@@ -4835,7 +6603,7 @@ state ACS_RollInit_Engage in cACS_RollInit
 			{
 				movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 
-				movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 2.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 2.5 );
+				movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 2.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 2.5) );
 			}
 			else
 			{
@@ -4846,11 +6614,12 @@ state ACS_RollInit_Engage in cACS_RollInit
 		{			
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 2.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 2.5 );
+			movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 2.5 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 2.5) );
 		}
 		
 		if (!thePlayer.HasTag('ACS_Camo_Active')
-		&& !thePlayer.HasTag('blood_sucking'))
+		&& !thePlayer.HasTag('blood_sucking')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
 			thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
@@ -4890,12 +6659,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		
 		movementAdjustor.CancelAll();
 
-		
-
-		
-
-		
-
 		thePlayer.ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'one_hand_sword_left_dodge_alt_2' );
@@ -4923,7 +6686,8 @@ state ACS_RollInit_Engage in cACS_RollInit
 		//GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.5 , false);
 
 		if (!thePlayer.HasTag('ACS_Camo_Active')
-		&& !thePlayer.HasTag('blood_sucking'))
+		&& !thePlayer.HasTag('blood_sucking')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
 			thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
@@ -4948,7 +6712,6 @@ state ACS_RollInit_Engage in cACS_RollInit
 		movementAdjustor.CancelByName( 'one_hand_sword_right_dodge_alt_2' );
 		
 		movementAdjustor.CancelAll();
-
 
 		thePlayer.ResetRawPlayerHeading();
 		
@@ -4977,7 +6740,8 @@ state ACS_RollInit_Engage in cACS_RollInit
 		//GetACSWatcher().AddTimer('ACS_ResetAnimation', 0.5 , false);
 
 		if (!thePlayer.HasTag('ACS_Camo_Active')
-		&& !thePlayer.HasTag('blood_sucking'))
+		&& !thePlayer.HasTag('blood_sucking')
+		&& ACS_DodgeEffects_Enabled())
 		{
 			thePlayer.PlayEffectSingle( 'bruxa_dash_trails_backup' );
 			thePlayer.StopEffect( 'bruxa_dash_trails_backup' );

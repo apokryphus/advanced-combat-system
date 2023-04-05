@@ -461,9 +461,12 @@ function ACSGetEquippedSwordUpdateEnhancements()
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 
-		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
-			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
+			{
+				ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			}
 		}
 	}
 	else if ( 3 == runeCount && 1 == enhancements.Size() )
@@ -474,9 +477,12 @@ function ACSGetEquippedSwordUpdateEnhancements()
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
 
-		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
-			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
+			{
+				ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			}
 		}
 	}
 
@@ -519,9 +525,12 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 		}
 
-		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
-			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
+			{
+				ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			}
 		}
 	}
 	else if ( 3 == runeCount && 1 == enhancements.Size() )
@@ -536,9 +545,12 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 		}
 
-		if (thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() && !ACSGetEquippedSword().IsEffectActive('charge_10', false))
+		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
-			ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
+			{
+				ACSGetEquippedSword().PlayEffectSingle( 'charge_10' );
+			}
 		}
 	}
 
@@ -4483,6 +4495,88 @@ function ACS_Fast_Attack_Buff_Hit()
 
 		ACS_Yrden_Sidearm_3().StopEffect('fast_attack_buff_hit');
 	}
+}
+
+function ACS_Griffin_Special_Attack_Effects()
+{
+	if (thePlayer.GetEquippedSign() == ST_Igni)
+	{
+		ACS_Sword_Trail_1().PlayEffect('fire_sparks_trail');
+		ACS_Sword_Trail_1().PlayEffect('fire_sparks_trail');
+		ACS_Sword_Trail_1().PlayEffect('fire_sparks_trail');
+		ACS_Sword_Trail_1().StopEffect('fire_sparks_trail');
+
+		ACS_Sword_Trail_1().PlayEffect('runeword1_fire_trail');
+		ACS_Sword_Trail_1().PlayEffect('runeword1_fire_trail');
+		ACS_Sword_Trail_1().PlayEffect('runeword1_fire_trail');
+		ACS_Sword_Trail_1().StopEffect('runeword1_fire_trail');
+		
+		ACS_Sword_Trail_1().PlayEffect('runeword_igni');
+		ACS_Sword_Trail_1().PlayEffect('runeword_igni');
+		ACS_Sword_Trail_1().PlayEffect('runeword_igni');
+		ACS_Sword_Trail_1().StopEffect('runeword_igni');
+	}
+	else if (thePlayer.GetEquippedSign() == ST_Axii)
+	{
+		ACS_Sword_Trail_1().PlayEffect('ice_sparks_trail');
+		ACS_Sword_Trail_1().PlayEffect('ice_sparks_trail');
+		ACS_Sword_Trail_1().PlayEffect('ice_sparks_trail');
+		ACS_Sword_Trail_1().StopEffect('ice_sparks_trail');
+		
+		ACS_Sword_Trail_1().PlayEffect('runeword_axii');
+		ACS_Sword_Trail_1().PlayEffect('runeword_axii');
+		ACS_Sword_Trail_1().PlayEffect('runeword_axii');
+		ACS_Sword_Trail_1().StopEffect('runeword_axii');
+	}
+	else if (thePlayer.GetEquippedSign() == ST_Aard)
+	{
+		ACS_Sword_Trail_1().PlayEffect('aard_power');
+		ACS_Sword_Trail_1().PlayEffect('aard_power');
+		ACS_Sword_Trail_1().PlayEffect('aard_power');
+		ACS_Sword_Trail_1().StopEffect('aard_power');
+		
+		ACS_Sword_Trail_1().PlayEffect('runeword_aard');
+		ACS_Sword_Trail_1().PlayEffect('runeword_aard');
+		ACS_Sword_Trail_1().PlayEffect('runeword_aard');
+		ACS_Sword_Trail_1().StopEffect('runeword_aard');
+	}
+	else if (thePlayer.GetEquippedSign() == ST_Yrden)
+	{	
+		ACS_Sword_Trail_1().PlayEffect('yrden_power');
+		ACS_Sword_Trail_1().PlayEffect('yrden_power');
+		ACS_Sword_Trail_1().PlayEffect('yrden_power');
+		ACS_Sword_Trail_1().StopEffect('yrden_power');
+		
+		ACS_Sword_Trail_1().PlayEffect('runeword_yrden');
+		ACS_Sword_Trail_1().PlayEffect('runeword_yrden');
+		ACS_Sword_Trail_1().PlayEffect('runeword_yrden');
+		ACS_Sword_Trail_1().StopEffect('runeword_yrden');
+	}
+	else if (thePlayer.GetEquippedSign() == ST_Quen)
+	{
+		ACS_Sword_Trail_1().PlayEffect('quen_power');
+		ACS_Sword_Trail_1().PlayEffect('quen_power');
+		ACS_Sword_Trail_1().PlayEffect('quen_power');
+		ACS_Sword_Trail_1().StopEffect('quen_power');
+		
+		ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+		ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+		ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+		ACS_Sword_Trail_1().StopEffect('runeword_quen');
+	}
+}
+
+function ACS_Manticore_Special_Attack_Effects()
+{
+	ACS_Sword_Trail_1().PlayEffect('quen_power');
+	ACS_Sword_Trail_1().PlayEffect('quen_power');
+	ACS_Sword_Trail_1().PlayEffect('quen_power');
+	ACS_Sword_Trail_1().StopEffect('quen_power');
+	
+	ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+	ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+	ACS_Sword_Trail_1().PlayEffect('runeword_quen');
+	ACS_Sword_Trail_1().StopEffect('runeword_quen');
 }
 
 //////////////////////////Ranged/////////////////////////

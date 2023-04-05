@@ -273,7 +273,7 @@ state BruxaBite_Engage in cBruxaBite
 		}
 		else
 		{
-			movementAdjustor.SlideTo( ticket, thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 10 );
+			movementAdjustor.SlideTo( ticket, TraceFloor(thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 10) );
 	
 			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 		}
