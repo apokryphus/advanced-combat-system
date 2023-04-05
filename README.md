@@ -95,11 +95,12 @@ For those that prefer to install manually.
 ### [10. ARMOR SYSTEM](#10-armor-system-1)
 ### [11. SPECIAL ABILITIES](#11-special-abilities-1)
 ### [12. WEAPON ARTS](#12-weapon-arts-1)
-### [13. COOLDOWN ADJUSTMENT](#13-cooldown-adjustment-1)
-### [14. STAMINA](#14-stamina-1)
-### [15. COMPATIBILITY](#15-compatibility-1)
-### [16. Q&A](#16-qa-1)
-### [17. CONTACT ME](#17-contact-me-1)
+### [13. SCHOOL SPECIFIC COMBAT STYLES](#13-school-specific-combat-styles-1)
+### [14. COOLDOWN ADJUSTMENT](#14-cooldown-adjustment-1)
+### [15. STAMINA](#15-stamina-1)
+### [16. COMPATIBILITY](#16-compatibility-1)
+### [17. Q&A](#17-qa-1)
+### [18. CONTACT ME](#18-contact-me-1)
 </div>
 
 
@@ -1453,8 +1454,57 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
 ##### [Return to Index](#index)
   
 </div>
+
+# 13. SCHOOL SPECIFIC COMBAT STYLES
+
+Each Witcher school has their own custom moveset when using the default Witcher moveset.
+
+Only applies when wearing **boots, armor, gloves, and pants** belonging to the same school, regardless of tier.
+
+Wolf School
+- Holding forward (W key) will modify attack style to include far attacks.
+- Massively reduced attack animations from regular Geralt moveset, making it more controllable and predictable.
+- Medium range dodges replacing both dodges and rolls.
+
+Bear School:
+- All attacks are heavy attacks.
+- Slow attack wind up, but slightly larger attack range and angle.
+- Short dodges replacing both dodge and roll.
+- Attacks can't be interrupted by enemies.
+- Whirl replaced by a quick rend.
+
+Cat School:
+- All attacks are light attacks.
+- Attacks are a mixture of one-handed sword and Witcher two-hand, with a decaying speed boost upon activation.
+- Both dodges are rolls are replaced with a custom set of pirouette dodges with a decaying speed boost upon activation.
+- Whirl is replaced with a spinning charge attack and one-handed charge attacks.
+
+Viper School:
+- Attacks are a combination of 1-handed mace attacks and witcher two-hand attacks.
+- Rolls and dodges are replaced with pirouettes and short dodges respectively.
+- Whirl is replaced with a long range spinning strike that inflicts poison on targets.
+
+Griffin School:
+- Dodges and rolls are replaced with medium range dodges.
+- Attacks are a mix of witcher and two-handed longsword knight attacks.
+- Whirl is replaced with a long range longsword special attack that inflicts the status effect of the selected sign upon damaging enemies.
+
+Manticore School:
+- Attacks are a mixture of regular witcher attacks, long sweeping witcher attacks, and stab attacks.
+- Rolls are replaced with medium range dodges, while dodges are replaced with short range dodges.
+- Whirl is replaced with the Manticore's Sting, which are a series of long range stab attacks that inflicts poison upon damaging enemies.
+
+ Forgotten Wolf set (Netflix armor):
+- Essentially the same as Wolf School, but slower with everything, with dodges traveling for shorter distances compared to Wolf School.
+- Combat animations cannot be interrupted by enemy attacks to account for the armor being heavier than Wolf School.
+
+<div align="right">
+  
+##### [Return to Index](#index)
+  
+</div>
  
-# 13. COOLDOWN ADJUSTMENT
+# 14. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1463,7 +1513,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 14. STAMINA
+# 15. STAMINA
 - The Main Settings menu allows the player to tweak various stamina settings for performing attacks and dodges.
 - Only applies to ACS animations.
 
@@ -1473,7 +1523,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 15. COMPATIBILITY
+# 16. COMPATIBILITY
 - Most likely completely conflict free in terms of scripts.
 
  <div align="right">
@@ -1482,7 +1532,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 16. Q&A
+# 17. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1516,7 +1566,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 17. CONTACT ME
+# 18. CONTACT ME
 - If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
