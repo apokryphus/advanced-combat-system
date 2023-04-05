@@ -1460,7 +1460,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
 - Each Witcher school has their own custom moveset when using the default Witcher moveset.
 - Only applies when wearing **boots, armor, gloves, and pants** belonging to the same school, regardless of tier.
 
-## Wolf School
+## Wolf School:
 - Holding forward (W key) will modify attack style to include far attacks.
 - Massively reduced attack animations from regular Geralt moveset, making it more controllable and predictable.
 - Medium range dodges replacing both dodges and rolls.
