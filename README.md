@@ -1547,9 +1547,6 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
 ### || I heard/experienced some animation mods cause long loading screens. Does this mod do that?
 - No. The reason that some animation mods cause long loading screens is because they edit a file called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
 
-### || Does this mod cause that weird twitching behavior for guards holding polearm weapons common to some animation mods?
-- No. The reason for that is because of the method those animation mods edit the way the player holds their weapon. This mod does not do that. 
-
 ### || Will this mod affect Ciri's animations?
 - No. The extra animations are mounted onto Geralt only. Ciri's animations are untouched. I'd consider adding more animations to her, but the player doesn't get to play as her very often anyways, so what's the point?
 
