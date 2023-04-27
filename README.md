@@ -97,11 +97,12 @@ For those that prefer to install manually.
 ### [11. SPECIAL ABILITIES](#11-special-abilities-1)
 ### [12. WEAPON ARTS](#12-weapon-arts-1)
 ### [13. SCHOOL SPECIFIC COMBAT STYLES](#13-school-specific-combat-styles-1)
-### [14. COOLDOWN ADJUSTMENT](#14-cooldown-adjustment-1)
-### [15. STAMINA](#15-stamina-1)
-### [16. COMPATIBILITY](#16-compatibility-1)
-### [17. Q&A](#17-qa-1)
-### [18. CONTACT ME](#18-contact-me-1)
+### [14. TRANSFORMATIONS](#14-transformations-1)
+### [15. COOLDOWN ADJUSTMENT](#15-cooldown-adjustment-1)
+### [16. STAMINA](#16-stamina-1)
+### [17. COMPATIBILITY](#17-compatibility-1)
+### [18. Q&A](#18-qa-1)
+### [19. CONTACT ME](#19-contact-me-1)
 </div>
 
 
@@ -1502,8 +1503,31 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
 ##### [Return to Index](#index)
   
 </div>
+
+# 14. TRANSFORMATIONS
+
+## The Wolven Curse:
+- Killing Morkvarg's human form will drop The Wolven Fang. (item code: acs_wolven_fang)
+- Equipping and using The Wolven Fang will transform the player into a werewolf. Cannot be used indoors or while a weapon is equipped in hand. 
+- Press the cast sign button to transform back into human form.
+
+Werewolf form:
+- Gains 75% damage reduction against all damage types. Is completely immortal during days/nights with full moon and cloudless weather. 
+- Holding down sprint enables the werewolf to run on all fours. Does not work on controllers for now. 
+- Dodges and rolls are both the same. Has small invulnerability window. 
+- Light attacks are single handed claw swipes mixed with bite, which heals the player for a small portion of the player's maximum health. Bite heals more, dealing significantly more damage and inflicts poison + bleeding status upon enemies. 
+- Heavy attacks are two handed claw swipes. Inflicts stagger + bleeding upon enemies. Does not heal the player. 
+- Special light attack (hold down light attack) are long range leaps, which stagger enemies and deal a lot more damage. The werewolf will dash through enemies upon cast. Does not heal the player. 
+- Pressing light attack + back (S) while in combat while the player/werewolf has full adrenaline will let out a roar that staggers nearby enemies. In addition, in exchange for 50% of the player's current health and all of the player's adrenaline, the size of the werewolf form is increased, granting increased attack range, immunity to hit reactions, as well as increased damage reduction for 15 seconds.
+
+
+<div align="right">
+  
+##### [Return to Index](#index)
+  
+</div>
  
-# 14. COOLDOWN ADJUSTMENT
+# 15. COOLDOWN ADJUSTMENT
 - Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
 
  <div align="right">
@@ -1512,7 +1536,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 15. STAMINA
+# 16. STAMINA
 - The Main Settings menu allows the player to tweak various stamina settings for performing attacks and dodges.
 - Only applies to ACS animations.
 
@@ -1522,7 +1546,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 16. COMPATIBILITY
+# 17. COMPATIBILITY
 - Most likely completely conflict free in terms of scripts.
 
  <div align="right">
@@ -1531,7 +1555,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 17. Q&A
+# 18. Q&A
 ### || Is this mod considered lore friendly and immersive?
 - Very.
 
@@ -1562,7 +1586,7 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
   </div>
   
-# 18. CONTACT ME
+# 19. CONTACT ME
 - If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
