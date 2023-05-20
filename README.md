@@ -984,33 +984,36 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
   - Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.
   - If the player has no money, the guard will heal to full health instead.
  
-  ## Mages
+## Mages
 - Rogue mages hide out in the wilderness of Velen.
 
-  ## Wild Hunt Warriors
+## Wild Hunt Warriors
 - Wild Hunt riders are actively hunting Geralt while he is in Skellege or Velen. 
 - Has a chance to spawn after the player exits combat every 14 minutes. 
 - Chance to spawn can be adjusted in the Main Settings menu.
 
-  ## Ice Titans
+## Ice Titans
 - Nine ice titans roam the Skellige Islands.
 
- ## Drowners, Scurvers, Rotfiends
+## Bruxae/Alps
+- Cloaked bruxae and alps hide amongst the people of Toussaint. 
+
+## Drowners, Scurvers, Rotfiends
 - Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
 
- ## Ghouls, Wild Hunt Hounds
+## Ghouls, Wild Hunt Hounds
 - All ghoul subspecies are capable of launching projectile attacks from a distance. These are poisonous to the player and will explode if set fire to.
 - Wild hunt hounds are capable of launching ice spikes from a distance. 
 
- ## Nekker Guardian
+## Nekker Guardian
 - While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
 - Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
 
- ## Novigrad Vampires
+## Novigrad Vampires
 - The vampire sleeping beneath Novigrad is now a true higher vampire with a katakan minion.
 - The vampire at the end of the Carnal Sins quest is now a true higher vampire.
 
- ## Blade of the Unseen
+## Blade of the Unseen
 - Killing a bruxa will trigger the summoning of the Blade of the Unseen, the vampire assassin.
 - The Blade of the Unseen will hunt for the player, showing himself to the player 5 minutes after the death of the first bruxa killed by the player.
 - Subsequent bruxa killed will decrease the timer by 150 seconds, with a minimum of a 5 second delay.
@@ -1018,19 +1021,19 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 - The hunt will only be over if the player defeats the Blade of the Unseen, or if the player is killed by him.
 - Summoning and defeating the Blade of the Unseen for the 3rd time in a row within the same game session will cause it to transform into Khagmar, Monster of the Unseen.
 
- ## Khagmar, Monster of the Unseen
+## Khagmar, Monster of the Unseen
 - Be afraid. Be very afraid.
 
- ## Knightmare Eternum
+## Knightmare Eternum
 - The Knightmare Eternum guards the abandoned storehouse east of Tesha Mutna Ruins in Toussaint.
 
- ## Loviatar, Matron of Decay
+## Loviatar, Matron of Decay
 - Loviatar, the Matron of Decay, roams the Crookback Bog just east of the Ruined Tower.
 
- ## Alexander, Lord of the Plague
+## Alexander, Lord of the Plague
 - Alexander, the rat mage of Fyke Isle, can be found on the shores surrounding Fyke Isle. 
 
- ## Forest God
+## Forest God
  
 **Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
 
@@ -1048,7 +1051,7 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 - If **Shades of Iron** is installed, instead of gems he will drop one random Radiant quality armor and one random Radiant quality weapon.
 - Berstuk will respawn each time the player changes maps (eg. Velen <---> Skellige).
  
- ## Forest God Shadows
+## Forest God Shadows
 
 As long as the Forest God is alive on a map, there is a 10% chance his Shadow will appear after any fight. 
 
@@ -1062,7 +1065,7 @@ As long as the Forest God is alive on a map, there is a 10% chance his Shadow wi
    - 2 if the player is at 100% health.
    - 1 if the player is below 50% health.
  
- ## Volos, Bringer of Chaos
+## Volos, Bringer of Chaos
  
 **Volos, Bringer of Chaos** has established a foothold upon the world of The Witcher 3.
 
