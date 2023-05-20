@@ -984,6 +984,14 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
   - Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.
   - If the player has no money, the guard will heal to full health instead.
  
+  ## Mages
+- Rogue mages hide out in the wilderness of Velen.
+
+  ## Wild Hunt Warriors
+- Wild Hunt riders are actively hunting Geralt while he is in Skellege or Velen. 
+- Has a chance to spawn after the player exits combat every 14 minutes. 
+- Chance to spawn can be adjusted in the Main Settings menu.
+
   ## Ice Titans
 - Nine ice titans roam the Skellige Islands.
 
@@ -1018,6 +1026,9 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 
  ## Loviatar, Matron of Decay
 - Loviatar, the Matron of Decay, roams the Crookback Bog just east of the Ruined Tower.
+
+ ## Alexander, Lord of the Plague
+- Alexander, the rat mage of Fyke Isle, can be found on the shores surrounding Fyke Isle. 
 
  ## Forest God
  
