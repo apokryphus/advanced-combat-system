@@ -1033,6 +1033,27 @@ The Dynamic Enemy Behavior System applies to all non-quest human type enemies ca
 ## Alexander, Lord of the Plague
 - Alexander, the rat mage of Fyke Isle, can be found on the shores surrounding Fyke Isle. 
 
+## Xeno Swarm
+The Xeno Swarm have infested every single area in the world of TW3 in the form of eggs.
+
+Eggs will spawn different Xeno swarm castes upon detecting any sort of movement within a small radius around it.
+
+Outer Xeno Swarm eggs house workers, armored workers, and soldiers:
+
+- Workers: Capable of firing binding webs from a distance. Very fragile.
+- Armored Workers: Capable of a number of abilities including venom, charge attacks, and 360 degree spikes. Will swap abilities randomly on being damaged. Moderately tough.
+- Soldier: Capable of firing venom from a distance, burrowing underground, or leaping. Will swap abilities on being damaged. Very tough.
+
+The center egg houses the Xeno Swarm Tyrant, which commands the other Xeno Swarm members in coordinated attacks. 
+
+It will issue commands to other Xeno Swarm castes at intervals of 15 seconds to swap abilities or swarm the player. 
+
+Capable of firing venom from a distance or burrowing underground. 
+
+Will swap abilities upon attacking/being attacked. 
+
+Other castes will heal the Xeno Swarm Tyrant upon damaging the player.
+
 ## Forest God
  
 **Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
