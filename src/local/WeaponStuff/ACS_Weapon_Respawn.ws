@@ -40,12 +40,12 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 	entry function Weapon_Respawn()
 	{
-		if (!thePlayer.HasTag('vampire_claws_equipped'))
+		if (!GetWitcherPlayer().HasTag('vampire_claws_equipped'))
 		{
-			if (thePlayer.IsAnyWeaponHeld())
+			if (GetWitcherPlayer().IsAnyWeaponHeld())
 			{
-				//thePlayer.PlayEffectSingle('claws_effect');
-				//thePlayer.StopEffect('claws_effect');
+				//GetWitcherPlayer().PlayEffectSingle('claws_effect');
+				//GetWitcherPlayer().StopEffect('claws_effect');
 			}
 
 			ClawDestroy_Latent_OnDodge();
@@ -53,43 +53,43 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_GetWeaponMode() == 0 )
 		{	
-			if (thePlayer.HasTag('igni_sword_equipped'))
+			if (GetWitcherPlayer().HasTag('igni_sword_equipped'))
 			{
 				IgniSword();
 			}
-			else if (thePlayer.HasTag('quen_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 			{
 				ArmigerModeQuenSword();	
 			}
-			else if (thePlayer.HasTag('axii_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 			{
 				ArmigerModeAxiiSword();		
 			}
-			else if (thePlayer.HasTag('aard_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 			{
 				ArmigerModeAardSword();			
 			}
-			else if (thePlayer.HasTag('yrden_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 			{
 				ArmigerModeYrdenSword();	
 			}
-			else if (thePlayer.HasTag('igni_secondary_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('igni_secondary_sword_equipped'))
 			{
 				IgniSword();	
 			}
-			else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 			{
 				ArmigerModeQuenSecondarySword();	
 			}
-			else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 			{
 				ArmigerModeAxiiSecondarySword();	
 			}
-			else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 			{
 				ArmigerModeAardSecondarySword();	
 			}
-			else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+			else if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 			{
 				ArmigerModeYrdenSecondarySword();	
 			}
@@ -103,7 +103,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		{
 			if 
 			(
-				thePlayer.HasTag('igni_sword_equipped') 
+				GetWitcherPlayer().HasTag('igni_sword_equipped') 
 			)
 			{
 				IgniSword();
@@ -111,7 +111,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			
 			else if  
 			(
-				thePlayer.HasTag('axii_sword_equipped')
+				GetWitcherPlayer().HasTag('axii_sword_equipped')
 			)
 			{
 				FocusModeAxiiSword();
@@ -119,7 +119,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			
 			else if  
 			(
-				thePlayer.HasTag('aard_sword_equipped') 
+				GetWitcherPlayer().HasTag('aard_sword_equipped') 
 			)
 			{
 				FocusModeAardSword();
@@ -127,7 +127,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			
 			else if  
 			(
-				thePlayer.HasTag('yrden_sword_equipped') 
+				GetWitcherPlayer().HasTag('yrden_sword_equipped') 
 			)
 			{
 				FocusModeYrdenSword();
@@ -135,7 +135,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			
 			else if 
 			(
-				thePlayer.HasTag('quen_sword_equipped') 
+				GetWitcherPlayer().HasTag('quen_sword_equipped') 
 			)
 			{
 				FocusModeQuenSword();
@@ -143,7 +143,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			else if 
 			(
-				thePlayer.HasTag('igni_secondary_sword_equipped') 
+				GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') 
 			)
 			{
 				IgniSword();
@@ -151,7 +151,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			else if 
 			(
-				thePlayer.HasTag('axii_secondary_sword_equipped') 
+				GetWitcherPlayer().HasTag('axii_secondary_sword_equipped') 
 			)
 			{
 				FocusModeAxiiSecondarySword();
@@ -159,7 +159,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			else if 
 			(
-				thePlayer.HasTag('aard_secondary_sword_equipped') 
+				GetWitcherPlayer().HasTag('aard_secondary_sword_equipped') 
 			)
 			{
 				FocusModeAardSecondarySword();
@@ -167,7 +167,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			else if 
 			(
-				thePlayer.HasTag('yrden_secondary_sword_equipped') 
+				GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped') 
 			)
 			{
 				FocusModeYrdenSecondarySword();
@@ -175,7 +175,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			else if 
 			(
-				thePlayer.HasTag('quen_secondary_sword_equipped') 
+				GetWitcherPlayer().HasTag('quen_secondary_sword_equipped') 
 			)
 			{
 				FocusModeQuenSecondarySword();
@@ -188,52 +188,52 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		
 		else if ( ACS_GetWeaponMode() == 2)
 		{
-			if (thePlayer.HasTag('igni_sword_equipped') )
+			if (GetWitcherPlayer().HasTag('igni_sword_equipped') )
 			{
 				IgniSword();
 			}	
 
-			else if (thePlayer.HasTag('axii_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('axii_sword_equipped') )
 			{
 				HybridModeAxiiSword();	
 			}
 			
-			else if (thePlayer.HasTag('aard_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('aard_sword_equipped') )
 			{
 				HybridModeAardSword();
 			}
 
-			else if (thePlayer.HasTag('yrden_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('yrden_sword_equipped') )
 			{
 				HybridModeYrdenSword();	
 			}
 
-			else if (thePlayer.HasTag('quen_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('quen_sword_equipped') )
 			{
 				HybridModeQuenSword();
 			}
 
-			else if (thePlayer.HasTag('igni_secondary_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') )
 			{
 				IgniSword();
 			}
 
-			else if (thePlayer.HasTag('axii_secondary_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped') )
 			{
 				HybridModeAxiiSecondarySword();
 			}
 
-			else if (thePlayer.HasTag('aard_secondary_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped') )
 			{
 				HybridModeAardSecondarySword();
 			}
 
-			else if (thePlayer.HasTag('yrden_secondary_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped') )
 			{
 				HybridModeYrdenSecondarySword();
 			}
 
-			else if (thePlayer.HasTag('quen_secondary_sword_equipped') )
+			else if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped') )
 			{
 				HybridModeQuenSecondarySword();
 			}
@@ -245,7 +245,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		
 		else if ( ACS_GetWeaponMode() == 3)
 		{	
-			if (thePlayer.HasTag('aard_sword_equipped') )
+			if (GetWitcherPlayer().HasTag('aard_sword_equipped') )
 			{
 				EquipmentModeAardSword();
 			}
@@ -256,16 +256,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			
 			//Sleep(0.125);
 
-			if (!thePlayer.HasTag('blood_sucking'))
+			if (!GetWitcherPlayer().HasTag('blood_sucking'))
 			{
-				if ( thePlayer.HasTag('aard_sword_equipped') 
-				&& !thePlayer.HasTag('aard_sword_effect_played'))
+				if ( GetWitcherPlayer().HasTag('aard_sword_equipped') 
+				&& !GetWitcherPlayer().HasTag('aard_sword_effect_played'))
 				{
 					//aard_sword_summon();
 
 					GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-					thePlayer.AddTag('aard_sword_effect_played');
+					GetWitcherPlayer().AddTag('aard_sword_effect_played');
 				}
 				else
 				{
@@ -279,14 +279,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 	latent function ClawDestroy_Latent_OnDodge()
 	{
-		p_actor = thePlayer;
+		p_actor = GetWitcherPlayer();
 		p_comp = p_actor.GetComponentByClassName( 'CAppearanceComponent' );
 			
-		claw_temp = (CEntityTemplate)LoadResource(	
-			
-			"dlc\dlc_ACS\data\entities\swords\vamp_claws.w2ent"
-
-			, true);
+		if (ACS_Armor_Equipped_Check())
+		{
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
+		}
+		else
+		{
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
+		}
 
 		head_temp = (CEntityTemplate)LoadResource("dlc\bob\data\items\cutscenes\cs704_dettlaff_transformation\cs704_dettlaff_transformation_extra_arms.w2ent", true);	
 
@@ -299,21 +302,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 	{
 		GetACSWatcher().RemoveTimer('ACS_Weapon_Summon_Delay');
 
-		if (thePlayer.HasTag('igni_sword_equipped')
-		&& !thePlayer.HasTag('igni_sword_effect_played'))
+		if (GetWitcherPlayer().HasTag('igni_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('igni_sword_effect_played'))
 		{
-			if (!thePlayer.HasTag('blood_sucking'))
+			if (!GetWitcherPlayer().HasTag('blood_sucking'))
 			{
 				igni_sword_summon();
 
 				GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 			}
 			
-			thePlayer.AddTag('igni_sword_effect_played');
-			thePlayer.AddTag('igni_secondary_sword_effect_played');
+			GetWitcherPlayer().AddTag('igni_sword_effect_played');
+			GetWitcherPlayer().AddTag('igni_secondary_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('axii_sword_equipped')
-		&& !thePlayer.HasTag('axii_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('axii_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('axii_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -321,19 +324,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('axii_sword_effect_played');
+			GetWitcherPlayer().AddTag('axii_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('aard_sword_equipped')
-		&& !thePlayer.HasTag('aard_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('aard_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('aard_sword_effect_played'))
 		{
 			//aard_sword_summon();
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('aard_sword_effect_played');
+			GetWitcherPlayer().AddTag('aard_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('yrden_sword_equipped')
-		&& !thePlayer.HasTag('yrden_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('yrden_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('yrden_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -341,10 +344,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('yrden_sword_effect_played');
+			GetWitcherPlayer().AddTag('yrden_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('quen_sword_equipped')
-		&& !thePlayer.HasTag('quen_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('quen_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('quen_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -352,10 +355,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('quen_sword_effect_played');
+			GetWitcherPlayer().AddTag('quen_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('axii_secondary_sword_equipped')
-		&& !thePlayer.HasTag('axii_secondary_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('axii_secondary_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -363,10 +366,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('axii_secondary_sword_effect_played');
+			GetWitcherPlayer().AddTag('axii_secondary_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('aard_secondary_sword_equipped')
-		&& !thePlayer.HasTag('aard_secondary_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('aard_secondary_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -374,10 +377,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('aard_secondary_sword_effect_played');
+			GetWitcherPlayer().AddTag('aard_secondary_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('yrden_secondary_sword_equipped')
-		&& !thePlayer.HasTag('yrden_secondary_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('yrden_secondary_sword_effect_played'))
 		{
 			igni_sword_summon();
 
@@ -385,10 +388,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('yrden_secondary_sword_effect_played');
+			GetWitcherPlayer().AddTag('yrden_secondary_sword_effect_played');
 		}
-		else if (thePlayer.HasTag('quen_secondary_sword_equipped')
-		&& !thePlayer.HasTag('quen_secondary_sword_effect_played'))
+		else if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped')
+		&& !GetWitcherPlayer().HasTag('quen_secondary_sword_effect_played'))
 		{
 			igni_sword_summon();
 			
@@ -396,7 +399,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			GetACSWatcher().AddTimer('ACS_Weapon_Summon_Delay', 0.125, false);
 
-			thePlayer.AddTag('quen_secondary_sword_effect_played');
+			GetWitcherPlayer().AddTag('quen_secondary_sword_effect_played');
 		}
 	}
 	
@@ -405,50 +408,67 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 		GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 		
-		steelsword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
-		silversword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
+		steelsword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
+		silversword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
 		
 		ACS_StartAerondightEffectInit();
 		
-		if ( thePlayer.GetInventory().IsItemHeld(steelID) )
+		if ( GetWitcherPlayer().GetInventory().IsItemHeld(steelID) )
 		{
-			steelsword.SetVisible(true);
+			if (!ACS_Armor_Equipped_Check())
+			{
+				steelsword.SetVisible(true);
 
-			steelswordentity = thePlayer.inv.GetItemEntityUnsafe(steelID);
-			steelswordentity.SetHideInGame(false); 
+				steelswordentity = GetWitcherPlayer().inv.GetItemEntityUnsafe(steelID);
+				steelswordentity.SetHideInGame(false); 
+			}
 
 			if (!ACS_HideSwordsheathes_Enabled())
 			{
 				scabbards_steel.Clear();
 
-				scabbards_steel = thePlayer.inv.GetItemsByCategory('steel_scabbards');
+				scabbards_steel = GetWitcherPlayer().inv.GetItemsByCategory('steel_scabbards');
 
 				for ( i=0; i < scabbards_steel.Size() ; i+=1 )
 				{
-					scabbard_steel = (CDrawableComponent)((thePlayer.inv.GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
+					scabbard_steel = (CDrawableComponent)((GetWitcherPlayer().inv.GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
 					//scabbard_steel.SetVisible(true);
 				}
 			}
 		}
-		else if( thePlayer.GetInventory().IsItemHeld(silverID) )
+		else if( GetWitcherPlayer().GetInventory().IsItemHeld(silverID) )
 		{
-			silversword.SetVisible(true);
+			if (!ACS_Armor_Equipped_Check())
+			{
+				silversword.SetVisible(true);
 			
-			silverswordentity = thePlayer.inv.GetItemEntityUnsafe(silverID);
-			silverswordentity.SetHideInGame(false); 
+				silverswordentity = GetWitcherPlayer().inv.GetItemEntityUnsafe(silverID);
+				silverswordentity.SetHideInGame(false); 
+			}
 
 			if (!ACS_HideSwordsheathes_Enabled())
 			{
 				scabbards_silver.Clear();
 
-				scabbards_silver = thePlayer.inv.GetItemsByCategory('silver_scabbards');
+				scabbards_silver = GetWitcherPlayer().inv.GetItemsByCategory('silver_scabbards');
 
 				for ( i=0; i < scabbards_silver.Size() ; i+=1 )
 				{
-					scabbard_silver = (CDrawableComponent)((thePlayer.inv.GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
+					scabbard_silver = (CDrawableComponent)((GetWitcherPlayer().inv.GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
 					//scabbard_silver.SetVisible(true);
 				}
 			}
+		}
+
+		if (!GetACSArmorEtherSword() 
+		&& (thePlayer.HasTag('igni_secondary_sword_equipped')
+		|| thePlayer.HasTag('igni_secondary_sword_equipped_TAG')
+		|| thePlayer.HasTag('igni_sword_equipped')
+		|| thePlayer.HasTag('igni_sword_equipped_TAG'))
+		&& thePlayer.IsAnyWeaponHeld()
+		)
+		{
+			ACSArmorEtherSwordSummon();
 		}
 	}
 
@@ -497,9 +517,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -507,7 +527,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -516,10 +536,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -527,7 +547,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\pridefall\pridefall.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -536,7 +556,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -545,7 +565,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -554,7 +574,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -563,7 +583,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -572,10 +592,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 			
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -583,7 +603,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\pridefall\pridefall.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -592,7 +612,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -603,7 +623,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -612,7 +632,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -623,7 +643,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -632,7 +652,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -643,7 +663,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0.25;
 					attach_rot.Pitch = 0;
@@ -652,7 +672,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.35;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('axii_sword_4');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -663,7 +683,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0.25;
 					attach_rot.Pitch = 0;
@@ -672,7 +692,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.35;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('axii_sword_5');
 				}
 				else
@@ -683,7 +703,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\pridefall\pridefall.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -692,7 +712,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -701,7 +721,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -710,7 +730,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -719,7 +739,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\voidblade\voidbladeshades.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -728,13 +748,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 			
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -742,7 +762,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -751,10 +771,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -762,7 +782,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\oblivion\sinter2.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -771,7 +791,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -782,7 +802,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -791,7 +811,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -802,7 +822,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -811,10 +831,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -822,7 +842,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\oblivion\sinter2.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -831,7 +851,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -842,7 +862,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -851,7 +871,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -862,7 +882,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -871,7 +891,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -882,7 +902,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -891,7 +911,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.045;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('axii_sword_4');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -902,7 +922,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -911,7 +931,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.045;
 					
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('axii_sword_5');
 				}
 				else
@@ -922,7 +942,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\oblivion\sinter2.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -931,7 +951,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -942,7 +962,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -951,7 +971,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -962,7 +982,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\sinner\sinter1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -971,16 +991,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.055;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -988,7 +1008,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl2.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -997,10 +1017,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -1008,7 +1028,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1017,7 +1037,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1028,7 +1048,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1037,10 +1057,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -1048,7 +1068,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1057,7 +1077,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1068,7 +1088,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1077,7 +1097,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1088,7 +1108,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1097,7 +1117,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1108,7 +1128,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1117,7 +1137,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('axii_sword_4');
 				}
 				else
@@ -1128,7 +1148,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1137,7 +1157,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1148,7 +1168,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\unique\unique_silver_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1157,13 +1177,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -1171,7 +1191,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl1.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1180,10 +1200,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -1191,7 +1211,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1200,7 +1220,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1211,7 +1231,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\swords\knight_swords\knight_lvl1_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1220,10 +1240,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -1231,7 +1251,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1240,7 +1260,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1251,7 +1271,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1260,7 +1280,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1271,7 +1291,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\swords\knight_swords\knight_lvl1_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1280,7 +1300,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_sword_3');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1291,7 +1311,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\swords\knight_swords\knight_lvl1_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1300,7 +1320,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('axii_sword_4');
 				}
 				else
@@ -1311,7 +1331,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1320,7 +1340,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_sword_1');
 					
 					/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1331,7 +1351,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\bob\data\items\weapons\swords\knight_swords\knight_lvl1_sword.w2ent" //REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -1340,7 +1360,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_sword_2');
 				}
 			}
@@ -1354,7 +1374,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 		
@@ -1362,7 +1382,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 			"items\weapons\unique\eredin_sword.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -1371,7 +1391,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.1;
 				
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('axii_sword_1');
 
 			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -1380,7 +1400,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 			"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -1389,10 +1409,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.16;
 				
-			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword2.AddTag('axii_sword_2');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 		
@@ -1400,7 +1420,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 			"items\weapons\unique\eredin_sword.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -1409,7 +1429,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.1;
 				
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('axii_sword_1');
 
 			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -1418,7 +1438,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 			"items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -1427,7 +1447,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.16;
 				
-			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword2.AddTag('axii_sword_2');
 		}
 	}
@@ -1475,25 +1495,25 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
-		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		r_anchor.CreateAttachmentAtBoneWS( thePlayer, 'r_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
+		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		r_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'r_hand', bone_vec, bone_rot );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
-		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
+		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		l_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'l_hand', bone_vec, bone_rot );
 		
 		ACS_StopAerondightEffectInit();
 
 		ACS_HideSword();
 		
-		if (thePlayer.IsWeaponHeld('steelsword'))
+		if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 		{
-			blade_temp_ent = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
+			blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
 		}
-		else if (thePlayer.IsWeaponHeld('silversword'))
+		else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 		{
-			blade_temp_ent = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
+			blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
 		}
 				
 		r_blade1 = (CEntity)theGame.CreateEntity( (CEntityTemplate)LoadResource(blade_temp_ent.GetReadableName(), true ), Vector( 0, 0, -20 ) );
@@ -1631,22 +1651,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
-		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		r_anchor.CreateAttachmentAtBoneWS( thePlayer, 'r_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
+		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		r_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'r_hand', bone_vec, bone_rot );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
-		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
+		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		l_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'l_hand', bone_vec, bone_rot );
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1666,18 +1686,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1733,24 +1753,24 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				blade_temp = (CEntityTemplate)LoadResource( 
 				"dlc\azinoth9897\data\parts\gla_black_01.w2ent"
 
 				, true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1828,14 +1848,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1892,14 +1912,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1919,18 +1939,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -1986,23 +2006,23 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2080,14 +2100,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{			
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2164,22 +2184,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
-		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		r_anchor.CreateAttachmentAtBoneWS( thePlayer, 'r_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
+		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		r_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'r_hand', bone_vec, bone_rot );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
-		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
+		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		l_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'l_hand', bone_vec, bone_rot );
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2199,18 +2219,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2266,21 +2286,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2358,14 +2378,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2422,14 +2442,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2449,18 +2469,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2516,23 +2536,23 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2610,14 +2630,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{			
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2694,22 +2714,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
-		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		r_anchor.CreateAttachmentAtBoneWS( thePlayer, 'r_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
+		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		r_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'r_hand', bone_vec, bone_rot );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
-		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
+		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		l_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'l_hand', bone_vec, bone_rot );
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -2729,18 +2749,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{	
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -2796,21 +2816,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );		
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -2902,14 +2922,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2966,14 +2986,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl4.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -2993,18 +3013,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade1.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl4.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3060,21 +3080,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade3.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl4.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3166,14 +3186,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			{			
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl4.w2ent", true );
 			
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3252,34 +3272,34 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		anchor_temp = (CEntityTemplate)LoadResource( "dlc\dlc_acs\data\entities\other\fx_ent.w2ent", true );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
-		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		r_anchor.CreateAttachmentAtBoneWS( thePlayer, 'r_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'r_hand' ), bone_vec, bone_rot );
+		r_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		r_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'r_hand', bone_vec, bone_rot );
 		
-		thePlayer.GetBoneWorldPositionAndRotationByIndex( thePlayer.GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
-		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, thePlayer.GetWorldPosition() );
-		l_anchor.CreateAttachmentAtBoneWS( thePlayer, 'l_hand', bone_vec, bone_rot );
+		GetWitcherPlayer().GetBoneWorldPositionAndRotationByIndex( GetWitcherPlayer().GetBoneIndex( 'l_hand' ), bone_vec, bone_rot );
+		l_anchor = (CEntity)theGame.CreateEntity( anchor_temp, GetWitcherPlayer().GetWorldPosition() );
+		l_anchor.CreateAttachmentAtBoneWS( GetWitcherPlayer(), 'l_hand', bone_vec, bone_rot );
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if (thePlayer.IsWeaponHeld( 'silversword' ))
+			if (GetWitcherPlayer().IsWeaponHeld( 'silversword' ))
 			{
 				blade_temp = (CEntityTemplate)LoadResource( 
 				"dlc\azinoth9897\data\parts\gla_black_01.w2ent"
 
 				, true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3353,23 +3373,23 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );	
 			}
-			else if (thePlayer.IsWeaponHeld( 'steelsword' ))
+			else if (GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\lionhunter\lionsword.w2ent", true );
 				//blade_temp = (CEntityTemplate)LoadResource( "dlc\dlc_shadesofiron\data\items\weapons\rakuyo\rakuyos.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 				
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3446,21 +3466,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_rusty.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 90;
@@ -3548,21 +3568,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 				r_blade4.CreateAttachment( r_anchor, , attach_vec, attach_rot );
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
 				blade_temp = (CEntityTemplate)LoadResource( "items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl4.w2ent", true );
 				
-				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade1 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade2 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade3 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
-				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+				r_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+				l_blade4 = (CEntity)theGame.CreateEntity( blade_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 					
 				attach_rot.Roll = 90;
 				attach_rot.Pitch = 270;
@@ -3709,9 +3729,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -3719,7 +3739,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -3737,7 +3757,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -3745,7 +3765,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3754,9 +3774,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -3765,7 +3785,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3774,9 +3794,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');	
@@ -3786,7 +3806,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -3795,16 +3815,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -3812,7 +3832,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -3830,7 +3850,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -3838,7 +3858,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3847,9 +3867,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -3858,7 +3878,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3867,9 +3887,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -3879,7 +3899,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -3888,9 +3908,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -3899,7 +3919,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -3908,17 +3928,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -3926,7 +3946,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -3944,7 +3964,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -3952,7 +3972,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3961,9 +3981,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -3972,7 +3992,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -3981,9 +4001,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -3993,7 +4013,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 30;
 					attach_rot.Pitch = 180;
@@ -4002,9 +4022,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_5.AddTag('acs_sword_trail_5');
 
 					sword4.AddTag('yrden_sword_4');
@@ -4013,7 +4033,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4022,9 +4042,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4033,7 +4053,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4042,16 +4062,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4059,7 +4079,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4077,7 +4097,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -4085,7 +4105,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4094,9 +4114,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -4105,7 +4125,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4114,9 +4134,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -4126,7 +4146,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4135,9 +4155,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4146,7 +4166,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\aquila\eaglesword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4155,17 +4175,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4173,7 +4193,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4191,14 +4211,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4207,16 +4227,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4224,7 +4244,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4242,14 +4262,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4258,9 +4278,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4269,7 +4289,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4278,17 +4298,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4296,7 +4316,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4314,14 +4334,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 30;
 					attach_rot.Pitch = 180;
@@ -4330,9 +4350,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_5.AddTag('acs_sword_trail_5');
 
 					sword4.AddTag('yrden_sword_4');
@@ -4341,7 +4361,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4350,9 +4370,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4361,7 +4381,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4370,16 +4390,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4387,7 +4407,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4405,14 +4425,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4421,9 +4441,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4432,7 +4452,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\bloodletter\bloodletter.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4441,9 +4461,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
@@ -4452,9 +4472,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4462,7 +4482,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4480,7 +4500,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -4488,7 +4508,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4497,9 +4517,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -4508,7 +4528,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4517,9 +4537,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');	
@@ -4529,7 +4549,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4538,16 +4558,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4555,7 +4575,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4573,7 +4593,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -4581,7 +4601,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4590,9 +4610,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -4601,7 +4621,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4610,9 +4630,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -4622,7 +4642,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4631,9 +4651,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4642,7 +4662,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4651,17 +4671,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4669,7 +4689,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4687,7 +4707,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -4695,7 +4715,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4704,9 +4724,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -4715,7 +4735,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4724,9 +4744,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -4736,7 +4756,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 30;
 					attach_rot.Pitch = 180;
@@ -4745,9 +4765,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_5.AddTag('acs_sword_trail_5');
 
 					sword4.AddTag('yrden_sword_4');
@@ -4756,7 +4776,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4765,9 +4785,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4776,7 +4796,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4785,16 +4805,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4802,7 +4822,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\scythe_bone.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4820,7 +4840,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					/*
@@ -4828,7 +4848,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4837,9 +4857,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = -0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 
-					sword_trail_1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_1.AddTag('acs_sword_trail_1');
 
 					sword2.AddTag('yrden_sword_2');
@@ -4848,7 +4868,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -4857,9 +4877,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0.0125;
 					attach_vec.Z = 0.7;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_2.AddTag('acs_sword_trail_2');
 					
 					sword3.AddTag('yrden_sword_3');
@@ -4869,7 +4889,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -4878,9 +4898,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -4889,7 +4909,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4898,17 +4918,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4916,7 +4936,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4934,14 +4954,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -4950,16 +4970,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -4967,7 +4987,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -4985,14 +5005,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -5001,9 +5021,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -5012,7 +5032,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -5021,17 +5041,17 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
-					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_5 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -5039,7 +5059,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -5057,14 +5077,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 30;
 					attach_rot.Pitch = 180;
@@ -5073,9 +5093,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_5.AddTag('acs_sword_trail_5');
 
 					sword4.AddTag('yrden_sword_4');
@@ -5084,7 +5104,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -5093,9 +5113,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -5104,7 +5124,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -5113,16 +5133,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
 				}
 				else
 				{
-					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, thePlayer.GetWorldPosition() + Vector( 0, 0, -20 ) );
+					sword_trail_4 = (CEntity)theGame.CreateEntity( trail_temp, GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -20 ) );
 
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
@@ -5130,7 +5150,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"dlc\dlc_acs\data\entities\swords\scythe_samurai.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					/*
 					attach_rot.Roll = 180;
@@ -5148,14 +5168,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.1;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_sword_1');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 40;
 					attach_rot.Pitch = 180;
@@ -5164,9 +5184,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_4.AddTag('acs_sword_trail_4');
 
 					sword5.AddTag('yrden_sword_5');
@@ -5175,7 +5195,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					
 					"items\weapons\swords\wildhunt_swords\wildhunt_sword_lvl3.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 50;
 					attach_rot.Pitch = 180;
@@ -5184,9 +5204,9 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.4;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					
-					sword_trail_3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword_trail_3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword_trail_3.AddTag('acs_sword_trail_3');
 
 					sword6.AddTag('yrden_sword_6');
@@ -5202,7 +5222,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -5210,7 +5230,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			"dlc\dlc_acs\data\entities\swords\imlerith_mace.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -5219,10 +5239,10 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.1;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('yrden_sword_1');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
@@ -5230,7 +5250,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 			"dlc\dlc_acs\data\entities\swords\caretaker_shovel.w2ent" // REPLACE WHAT'S INSIDE THE QUOTATION MARKS
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -5239,7 +5259,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.1;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('yrden_sword_1');
 		}
 	}
@@ -5289,15 +5309,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\vulcan\vulcan.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5306,16 +5326,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\vulcan.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5324,18 +5344,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\vulcan.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5344,7 +5364,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					physicalComponent = (CMeshComponent)(sword1.GetComponentByClassName('CRigidMeshComponent'));
@@ -5362,7 +5382,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\vulcan.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5371,19 +5391,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\khopesh\khopesh.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5392,16 +5412,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\khopesh.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5410,18 +5430,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\khopesh.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5430,7 +5450,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					physicalComponent = (CMeshComponent)(sword1.GetComponentByClassName('CRigidMeshComponent'));
@@ -5448,7 +5468,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\khopesh.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5457,7 +5477,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
@@ -5466,15 +5486,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 
 					"dlc\ep1\data\items\weapons\swords\steel_swords\steel_sword_ep1_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5483,16 +5503,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5501,18 +5521,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5521,7 +5541,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					physicalComponent = (CMeshComponent)(sword1.GetComponentByClassName('CRigidMeshComponent'));
@@ -5539,7 +5559,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5548,21 +5568,21 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5571,16 +5591,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
 
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5589,18 +5609,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5609,7 +5629,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');	
 
 					physicalComponent = (CMeshComponent)(sword1.GetComponentByClassName('CRigidMeshComponent'));
@@ -5629,7 +5649,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\ep1\data\items\weapons\swords\unique\olgierd_sabre\olgierd_sabre.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5638,7 +5658,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.025;
 							
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_sword_1');
 
 					sword1.AddTag('quen_sword_upgraded_1');	
@@ -5654,13 +5674,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\hakland_sabre.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -5669,18 +5689,18 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.025;
 						
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_sword_1');
 
 			sword1.AddTag('quen_sword_upgraded_1');	
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 
 			"dlc\dlc_acs\data\entities\swords\olgierd_sabre.w2ent"
 			
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 			
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -5689,7 +5709,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.025;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_sword_1');	
 
 			sword1.AddTag('quen_sword_upgraded_1');	
@@ -5743,15 +5763,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5760,16 +5780,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5778,14 +5798,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmdivider\goyen_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5794,16 +5814,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5812,14 +5832,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmdivider\goyen_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5828,14 +5848,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmdivider\goyen_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5844,7 +5864,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_secondary_sword_3');
 				}
 				else
@@ -5853,7 +5873,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5862,14 +5882,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmdivider\goyen_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5878,19 +5898,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5899,16 +5919,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5917,14 +5937,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmblade\goyen_blade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5933,16 +5953,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5951,14 +5971,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmblade\goyen_blade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5967,14 +5987,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmblade\goyen_blade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -5983,7 +6003,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_secondary_sword_3');
 				}
 				else
@@ -5992,7 +6012,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6001,14 +6021,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\realmblade\goyen_blade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6017,22 +6037,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6041,16 +6061,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6059,14 +6079,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6075,16 +6095,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6093,14 +6113,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6109,14 +6129,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6125,7 +6145,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_secondary_sword_3');
 				}
 				else
@@ -6134,7 +6154,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6143,14 +6163,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\unique_steel_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6159,19 +6179,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6180,16 +6200,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6198,14 +6218,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\collector_sword\collector_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6214,16 +6234,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6232,14 +6252,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 							
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\collector_sword\collector_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6248,14 +6268,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\collector_sword\collector_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6264,7 +6284,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('axii_secondary_sword_3');
 				}
 				else
@@ -6273,7 +6293,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6282,14 +6302,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('axii_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\bob\data\items\weapons\unique\collector_sword\collector_sword.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 							
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6298,7 +6318,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.05;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('axii_secondary_sword_2');
 				}
 			}
@@ -6314,13 +6334,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -6329,16 +6349,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.05;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('axii_secondary_sword_1');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\sword_for_champion_of_arena.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -6347,7 +6367,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.05;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('axii_secondary_sword_1');
 		}
 	}
@@ -6399,15 +6419,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6416,16 +6436,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6434,14 +6454,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6450,14 +6470,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6466,14 +6486,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6482,16 +6502,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6500,14 +6520,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6516,14 +6536,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6532,14 +6552,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6548,14 +6568,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6564,14 +6584,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 		
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('aard_secondary_sword_5');
 
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6580,14 +6600,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('aard_secondary_sword_6');
 
 					sword7 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6596,14 +6616,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword7.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword7.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword7.AddTag('aard_secondary_sword_7');
 
 					sword8 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6612,7 +6632,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword8.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword8.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword8.AddTag('aard_secondary_sword_8');
 				}
 				else
@@ -6621,7 +6641,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6630,14 +6650,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6646,14 +6666,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6662,14 +6682,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6678,19 +6698,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6699,16 +6719,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6717,14 +6737,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6733,14 +6753,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6749,14 +6769,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6765,16 +6785,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6783,14 +6803,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6799,14 +6819,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6815,14 +6835,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6831,14 +6851,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6847,14 +6867,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 		
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('aard_secondary_sword_5');
 
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6863,14 +6883,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('aard_secondary_sword_6');
 
 					sword7 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6879,14 +6899,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword7.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword7.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword7.AddTag('aard_secondary_sword_7');
 
 					sword8 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6895,7 +6915,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword8.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword8.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword8.AddTag('aard_secondary_sword_8');
 				}
 				else
@@ -6904,7 +6924,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\doomblade\doomblade.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6913,14 +6933,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6929,14 +6949,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6945,14 +6965,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6961,22 +6981,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -6985,16 +7005,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7003,14 +7023,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7019,14 +7039,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7035,14 +7055,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7051,16 +7071,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7069,14 +7089,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7085,14 +7105,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7101,14 +7121,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7117,14 +7137,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7133,14 +7153,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 		
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('aard_secondary_sword_5');
 
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7149,14 +7169,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('aard_secondary_sword_6');
 
 					sword7 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7165,14 +7185,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword7.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword7.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword7.AddTag('aard_secondary_sword_7');
 
 					sword8 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7181,7 +7201,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword8.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword8.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword8.AddTag('aard_secondary_sword_8');
 				}
 				else
@@ -7190,7 +7210,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7199,14 +7219,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7215,14 +7235,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7231,14 +7251,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7247,19 +7267,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7268,16 +7288,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7286,14 +7306,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7302,14 +7322,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7318,14 +7338,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7334,16 +7354,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7352,14 +7372,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7368,14 +7388,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7384,14 +7404,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7400,14 +7420,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7416,14 +7436,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 		
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('aard_secondary_sword_5');
 
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7432,14 +7452,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('aard_secondary_sword_6');
 
 					sword7 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7448,14 +7468,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword7.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword7.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword7.AddTag('aard_secondary_sword_7');
 
 					sword8 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7464,7 +7484,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.5;
 					
-					sword8.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword8.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword8.AddTag('aard_secondary_sword_8');
 				}
 				else
@@ -7473,7 +7493,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );	
+					, true), GetWitcherPlayer().GetWorldPosition() );	
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7482,14 +7502,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 		
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('aard_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7498,14 +7518,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('aard_secondary_sword_2');
 
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7514,14 +7534,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('aard_secondary_sword_3');
 
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7530,7 +7550,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 					
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('aard_secondary_sword_4');
 				}
 			}
@@ -7547,13 +7567,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		ACS_StartAerondightEffectInit();
 
 		
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );	
+			, true), GetWitcherPlayer().GetWorldPosition() );	
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -7562,16 +7582,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.2;
 	
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('aard_secondary_sword_1');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );	
+			, true), GetWitcherPlayer().GetWorldPosition() );	
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -7580,7 +7600,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.2;
 	
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('aard_secondary_sword_1');
 		}
 	}
@@ -7632,15 +7652,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7649,16 +7669,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7667,7 +7687,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -7675,7 +7695,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					//"items\weapons\unique\anchor__giant_weapon.w2ent"
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -7684,16 +7704,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7702,14 +7722,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -7718,14 +7738,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					"dlc\dlc_shadesofiron\data\items\weapons\beastcutter\beastcutter_nier.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7734,14 +7754,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('yrden_secondary_sword_3');
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\beastcutter\beastcutter_nier.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7750,14 +7770,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('yrden_secondary_sword_4');
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\beastcutter\beastcutter_nier.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7766,14 +7786,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('yrden_secondary_sword_5');
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\beastcutter\beastcutter_nier.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7782,7 +7802,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('yrden_secondary_sword_6');
 				}
 				else
@@ -7791,7 +7811,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7800,7 +7820,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -7808,7 +7828,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					//"items\weapons\unique\anchor__giant_weapon.w2ent"
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -7817,19 +7837,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7838,16 +7858,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7856,14 +7876,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -7872,16 +7892,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7890,14 +7910,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -7906,14 +7926,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					"dlc\dlc_shadesofiron\data\items\weapons\graveripper\graveripper.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7922,14 +7942,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('yrden_secondary_sword_3');
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\graveripper\graveripper.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7938,14 +7958,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('yrden_secondary_sword_4');
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\graveripper\graveripper.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7954,14 +7974,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('yrden_secondary_sword_5');
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\graveripper\graveripper.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -7970,7 +7990,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('yrden_secondary_sword_6');
 				}
 				else
@@ -7979,7 +7999,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -7988,14 +8008,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8004,22 +8024,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8028,16 +8048,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8046,7 +8066,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -8054,7 +8074,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					//"items\weapons\unique\anchor__giant_weapon.w2ent"
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8063,16 +8083,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8081,7 +8101,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -8089,7 +8109,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					//"items\weapons\unique\anchor__giant_weapon.w2ent"
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8098,14 +8118,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8114,14 +8134,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('yrden_secondary_sword_3');
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8130,14 +8150,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('yrden_secondary_sword_4');
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8146,14 +8166,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('yrden_secondary_sword_5');
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_hammer_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8162,7 +8182,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('yrden_secondary_sword_6');
 				}
 				else
@@ -8171,7 +8191,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8180,7 +8200,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -8188,7 +8208,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					//"items\weapons\unique\anchor__giant_weapon.w2ent"
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8197,19 +8217,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8218,16 +8238,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8236,14 +8256,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8252,16 +8272,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8270,14 +8290,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8286,14 +8306,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8302,14 +8322,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('yrden_secondary_sword_3');
 						
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8318,14 +8338,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('yrden_secondary_sword_4');
 						
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8334,14 +8354,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('yrden_secondary_sword_5');
 						
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\wildhunt_axe_01.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 45;
 					attach_rot.Pitch = 0;
@@ -8350,7 +8370,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 2.0;
 							
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('yrden_secondary_sword_6');
 				}
 				else
@@ -8359,7 +8379,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\stone_wheel__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8368,14 +8388,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.525;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('yrden_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8384,7 +8404,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 1.8;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('yrden_secondary_sword_2');
 				}
 			}
@@ -8400,13 +8420,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\cloud_giant__giant_weapon.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -8415,16 +8435,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.525;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('yrden_secondary_sword_1');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 			
 			"dlc\dlc_acs\data\entities\swords\anchor_01__giant_weapon.w2ent"
 			
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 180;
 			attach_rot.Pitch = 0;
@@ -8433,7 +8453,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 2.0;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('yrden_secondary_sword_1');
 		}
 	}
@@ -8483,15 +8503,15 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 		if ( ACS_SOI_Installed() && ACS_SOI_Enabled() )
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8500,16 +8520,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel( silverID ) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8518,14 +8538,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8534,16 +8554,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8552,14 +8572,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8568,7 +8588,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 						
 					////////////////////////////////////////////////////////////////////////////
@@ -8577,7 +8597,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8586,7 +8606,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.4;
 							
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 
 					////////////////////////////////////////////////////////////////////////////
@@ -8595,7 +8615,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 						
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 						
-					, true), thePlayer.GetWorldPosition() + Vector( 0, 0, -10 ) );
+					, true), GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -10 ) );
 						
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8604,7 +8624,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.2;
 							
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
 				}
 				else
@@ -8613,7 +8633,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8622,14 +8642,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\heavenspire\heavenspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8638,19 +8658,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8659,16 +8679,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel(steelID) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(steelID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8677,14 +8697,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8693,16 +8713,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8711,14 +8731,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8727,14 +8747,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8743,14 +8763,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.2;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8759,14 +8779,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.4;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8775,14 +8795,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.4;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8791,7 +8811,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.2;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
 				}
 				else
@@ -8800,7 +8820,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8809,14 +8829,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.2;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_shadesofiron\data\items\weapons\hellspire\hellspire.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8825,22 +8845,22 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
 			}
 		}
 		else
 		{
-			if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+			if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8849,16 +8869,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 11 && thePlayer.GetInventory().GetItemLevel( silverID ) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8867,14 +8887,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\guisarme_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8883,16 +8903,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.5;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8901,14 +8921,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8917,14 +8937,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.7;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8933,14 +8953,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8949,14 +8969,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.7;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
 
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -8965,14 +8985,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.7;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -8981,7 +9001,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
 				}
 				else
@@ -8992,7 +9012,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9001,7 +9021,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.8;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
@@ -9010,7 +9030,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 
 					//"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9019,19 +9039,19 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.5;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
 			}
-			else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+			else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 			{
-				if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+				if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9040,16 +9060,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel(steelID) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(steelID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9058,14 +9078,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.75;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9074,16 +9094,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
-				else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 ) 
+				else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 ) 
 				{
 					sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9092,14 +9112,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.75;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9108,14 +9128,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 					
 					sword3 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9124,14 +9144,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword3.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword3.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword3.AddTag('quen_secondary_sword_3');
 					
 					sword4 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9140,14 +9160,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.125;
 						
-					sword4.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword4.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword4.AddTag('quen_secondary_sword_4');
 					
 					sword5 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9156,14 +9176,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.125;
 						
-					sword5.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword5.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword5.AddTag('quen_secondary_sword_5');
 					
 					sword6 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\q308_iron_poker.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9172,7 +9192,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0;
 						
-					sword6.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword6.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword6.AddTag('quen_secondary_sword_6');
 				}
 				else
@@ -9181,7 +9201,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 				
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 180;
 					attach_rot.Pitch = 0;
@@ -9190,14 +9210,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = 0.75;
 						
-					sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword1.AddTag('quen_secondary_sword_1');
 					
 					sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 					
 					"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 					
-					, true), thePlayer.GetWorldPosition() );
+					, true), GetWitcherPlayer().GetWorldPosition() );
 					
 					attach_rot.Roll = 0;
 					attach_rot.Pitch = 0;
@@ -9206,7 +9226,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 					attach_vec.Y = 0;
 					attach_vec.Z = -0.6;
 						
-					sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+					sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 					sword2.AddTag('quen_secondary_sword_2');
 				}
 			}
@@ -9220,13 +9240,13 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -9235,14 +9255,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.6;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
 
 			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 			"dlc\dlc_acs\data\entities\swords\halberd_02.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 180;
 			attach_rot.Pitch = 0;
@@ -9251,16 +9271,16 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.8;
 					
-			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword2.AddTag('quen_secondary_sword_2');
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
 			sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 0;
 			attach_rot.Pitch = 0;
@@ -9269,14 +9289,14 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = -0.6;
 					
-			sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword1.AddTag('quen_secondary_sword_1');
 
 			sword2 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 				
 			"dlc\dlc_acs\data\entities\swords\hakland_spear_01.w2ent"
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 				
 			attach_rot.Roll = 180;
 			attach_rot.Pitch = 0;
@@ -9285,7 +9305,7 @@ state ACS_Weapon_Respawn_Engage in cACS_Weapon_Respawn
 			attach_vec.Y = 0;
 			attach_vec.Z = 0.75;
 					
-			sword2.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+			sword2.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 			sword2.AddTag('quen_secondary_sword_2');
 		}
 	}

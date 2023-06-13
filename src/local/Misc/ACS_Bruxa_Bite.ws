@@ -5,24 +5,24 @@ function ACS_BruxaBiteInit()
 	
 	if ( ACS_Enabled() )
 	{
-		if (!thePlayer.IsCiri()
-		&& !thePlayer.IsPerformingFinisher()
+		if (!GetWitcherPlayer().IsCiri()
+		&& !GetWitcherPlayer().IsPerformingFinisher()
 		)
 		{
-			if (!thePlayer.HasTag('in_wraith'))
+			if (!GetWitcherPlayer().HasTag('in_wraith'))
 			{
-				if (!thePlayer.HasTag('blood_sucking') 
+				if (!GetWitcherPlayer().HasTag('blood_sucking') 
 				&& ACS_BruxaBite_Enabled()
-				&& thePlayer.GetStat( BCS_Focus ) == thePlayer.GetStatMax( BCS_Focus ) 
+				&& GetWitcherPlayer().GetStat( BCS_Focus ) == GetWitcherPlayer().GetStatMax( BCS_Focus ) 
 				&& theInput.GetActionValue('Sprint') == 0
 				//&& (ACS_BruxaDash_Enabled() || ACS_BruxaLeapAttack_Enabled())
-				//&& thePlayer.GetStat( BCS_Stamina ) == thePlayer.GetStatMax( BCS_Stamina ) 
+				//&& GetWitcherPlayer().GetStat( BCS_Stamina ) == GetWitcherPlayer().GetStatMax( BCS_Stamina ) 
 				)
 				{
-					thePlayer.DrainFocus( thePlayer.GetStatMax( BCS_Focus ) );
+					GetWitcherPlayer().DrainFocus( GetWitcherPlayer().GetStatMax( BCS_Focus ) );
 					vBruxaBite.BruxaBite_Engage();
 				}
-				else if ( thePlayer.HasTag('blood_sucking') 
+				else if ( GetWitcherPlayer().HasTag('blood_sucking') 
 				//&& ACS_Hijack_Enabled() 
 				)
 				{
@@ -30,7 +30,7 @@ function ACS_BruxaBiteInit()
 				}
 				else
 				{
-					if (thePlayer.IsInCombat())
+					if (GetWitcherPlayer().IsInCombat())
 					{
 						if (ACS_BruxaLeapAttack_Enabled())
 						{
@@ -49,7 +49,7 @@ function ACS_BruxaBiteInit()
 			}
 			else
 			{
-				if (thePlayer.IsInCombat())
+				if (GetWitcherPlayer().IsInCombat())
 				{
 					if (ACS_BruxaLeapAttack_Enabled())
 					{
@@ -107,7 +107,7 @@ state BruxaBite_HijackForward in cBruxaBite
 	{
 		actors.Clear();
 
-		actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
+		actors = GetActorsInRange(GetWitcherPlayer(), 10, 10, 'bruxa_bite_victim', true);
 
 		for( i = 0; i < actors.Size(); i += 1 )
 		{
@@ -220,16 +220,16 @@ state BruxaBite_Engage in cBruxaBite
 	
 	entry function BruxaBite()
 	{
-		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		if (!GetWitcherPlayer().HasTag('ACS_Camo_Active'))
 		{
-			//thePlayer.PlayEffectSingle( 'special_attack_only_black_fx' );
-			//thePlayer.StopEffect( 'special_attack_only_black_fx' );
+			//GetWitcherPlayer().PlayEffectSingle( 'special_attack_only_black_fx' );
+			//GetWitcherPlayer().StopEffect( 'special_attack_only_black_fx' );
 
-			thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
-			thePlayer.StopEffect( 'bruxa_dash_trails' );
+			GetWitcherPlayer().PlayEffectSingle( 'bruxa_dash_trails' );
+			GetWitcherPlayer().StopEffect( 'bruxa_dash_trails' );
 						
-			thePlayer.PlayEffectSingle( 'shadowdash_short' );
-			thePlayer.StopEffect( 'shadowdash_short' );
+			GetWitcherPlayer().PlayEffectSingle( 'shadowdash_short' );
+			GetWitcherPlayer().StopEffect( 'shadowdash_short' );
 		}
 
 		ACS_ThingsThatShouldBeRemoved();
@@ -239,9 +239,9 @@ state BruxaBite_Engage in cBruxaBite
 	
 	latent function bruxa_bite_init ()
 	{		
-		actor = (CActor)( thePlayer.GetTarget() );
+		actor = (CActor)( GetWitcherPlayer().GetTarget() );
 		
-		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+		movementAdjustor = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 		
 		ticket = movementAdjustor.GetRequest( 'bruxa_bite_init');
 		
@@ -261,21 +261,21 @@ state BruxaBite_Engage in cBruxaBite
 
 		movementAdjustor.ScaleAnimationLocationVertically( ticket, true );
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
+		if( ACS_AttitudeCheck ( actor ) && GetWitcherPlayer().IsInCombat() && actor.IsAlive() )
 		{	
 			movementAdjustor.RotateTowards( ticket, actor );
 			
 			movementAdjustor.SlideTowards( ticket, actor, dist, dist );
 
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
 			GetACSWatcher().AddTimer('ACS_bruxa_bite_delay', 0.25 , false);
 		}
 		else
 		{
-			movementAdjustor.SlideTo( ticket, TraceFloor(thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 10) );
+			movementAdjustor.SlideTo( ticket, TraceFloor(GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * 10) );
 	
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync( 'bruxa_jump_up_stop_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 		}
 	}
 	event OnLeaveState( nextStateName : name ) 

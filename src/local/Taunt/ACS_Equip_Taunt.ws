@@ -10,6 +10,7 @@ function ACS_EquipTauntInit()
 	&& !thePlayer.HasTag('in_wraith') 
 	&& thePlayer.IsActionAllowed(EIAB_Movement)
 	&& ACS_BuffCheck()
+	&& !ACS_Transformation_Activated_Check()
 	)		
 	{		
 		vEquipTaunt.Engage();

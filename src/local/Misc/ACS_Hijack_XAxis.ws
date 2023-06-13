@@ -36,7 +36,7 @@ state HijackXAxis_Engage in cHijackXAxis
 		
 		if (theInput.GetActionValue('GI_AxisLeftX') > 0.5 )
 		{
-			actors = GetActorsInRange(thePlayer, 10, 10, ,true);
+			actors = GetActorsInRange(GetWitcherPlayer(), 10, 10, ,true);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
 				npc = (CNewNPC)actors[i];
@@ -92,7 +92,7 @@ state HijackXAxis_Engage in cHijackXAxis
 		}
 		else if (theInput.GetActionValue('GI_AxisLeftX') < -0.5 )
 		{
-			actors = GetActorsInRange(thePlayer, 1, 100, ,true);
+			actors = GetActorsInRange(GetWitcherPlayer(), 1, 100, ,true);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
 				npc = (CNewNPC)actors[i];
@@ -152,7 +152,7 @@ state HijackXAxis_Engage in cHijackXAxis
 		/*
 		else
 		{
-			actors = GetActorsInRange(thePlayer, 1, 100, ,true);
+			actors = GetActorsInRange(GetWitcherPlayer(), 1, 100, ,true);
 			for( i = 0; i < actors.Size(); i += 1 )
 			{
 				npc = (CNewNPC)actors[i];

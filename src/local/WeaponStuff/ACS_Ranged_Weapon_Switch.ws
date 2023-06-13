@@ -47,23 +47,23 @@ state Engage in cRangedWeaponSwitch
 	{
 		if
 		(
-			(thePlayer.GetEquippedSign() == ST_Igni)
-			&& (thePlayer.IsWeaponHeld( 'silversword' ) 
-			|| thePlayer.IsWeaponHeld( 'steelsword' ))
+			(GetWitcherPlayer().GetEquippedSign() == ST_Igni)
+			&& (GetWitcherPlayer().IsWeaponHeld( 'silversword' ) 
+			|| GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 		)
 		{
-			if (thePlayer.HasTag('acs_bow_active'))
+			if (GetWitcherPlayer().HasTag('acs_bow_active'))
 			{
-				if (!thePlayer.HasTag('igni_bow_equipped'))
+				if (!GetWitcherPlayer().HasTag('igni_bow_equipped'))
 				{
 					IgniBow();
 
 					BowSwitch();
 				}
 			}
-			else if (thePlayer.HasTag('acs_crossbow_active'))
+			else if (GetWitcherPlayer().HasTag('acs_crossbow_active'))
 			{
-				if (!thePlayer.HasTag('igni_crossbow_equipped'))
+				if (!GetWitcherPlayer().HasTag('igni_crossbow_equipped'))
 				{
 					IgniCrossbow();
 
@@ -73,23 +73,23 @@ state Engage in cRangedWeaponSwitch
 		}
 		else if
 		(
-			(thePlayer.GetEquippedSign() == ST_Quen)
-			&& (thePlayer.IsWeaponHeld( 'silversword' ) 
-			|| thePlayer.IsWeaponHeld( 'steelsword' ))
+			(GetWitcherPlayer().GetEquippedSign() == ST_Quen)
+			&& (GetWitcherPlayer().IsWeaponHeld( 'silversword' ) 
+			|| GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 		)
 		{
-			if (thePlayer.HasTag('acs_bow_active'))
+			if (GetWitcherPlayer().HasTag('acs_bow_active'))
 			{
-				if (!thePlayer.HasTag('quen_bow_equipped'))
+				if (!GetWitcherPlayer().HasTag('quen_bow_equipped'))
 				{
 					QuenBow();
 
 					BowSwitch();
 				}
 			}
-			else if (thePlayer.HasTag('acs_crossbow_active'))
+			else if (GetWitcherPlayer().HasTag('acs_crossbow_active'))
 			{
-				if (!thePlayer.HasTag('quen_crossbow_equipped'))
+				if (!GetWitcherPlayer().HasTag('quen_crossbow_equipped'))
 				{
 					QuenCrossbow();
 
@@ -99,23 +99,23 @@ state Engage in cRangedWeaponSwitch
 		}
 		else if
 		(
-			(thePlayer.GetEquippedSign() == ST_Aard)
-			&& (thePlayer.IsWeaponHeld( 'silversword' ) 
-			|| thePlayer.IsWeaponHeld( 'steelsword' ))
+			(GetWitcherPlayer().GetEquippedSign() == ST_Aard)
+			&& (GetWitcherPlayer().IsWeaponHeld( 'silversword' ) 
+			|| GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 		)
 		{
-			if (thePlayer.HasTag('acs_bow_active'))
+			if (GetWitcherPlayer().HasTag('acs_bow_active'))
 			{
-				if (!thePlayer.HasTag('aard_bow_equipped'))
+				if (!GetWitcherPlayer().HasTag('aard_bow_equipped'))
 				{
 					AardBow();
 
 					BowSwitch();
 				}
 			}
-			else if (thePlayer.HasTag('acs_crossbow_active'))
+			else if (GetWitcherPlayer().HasTag('acs_crossbow_active'))
 			{
-				if (!thePlayer.HasTag('aard_crossbow_equipped'))
+				if (!GetWitcherPlayer().HasTag('aard_crossbow_equipped'))
 				{
 					AardCrossbow();
 
@@ -125,23 +125,23 @@ state Engage in cRangedWeaponSwitch
 		}
 		else if
 		(
-			(thePlayer.GetEquippedSign() == ST_Axii)
-			&& (thePlayer.IsWeaponHeld( 'silversword' ) 
-			|| thePlayer.IsWeaponHeld( 'steelsword' ))
+			(GetWitcherPlayer().GetEquippedSign() == ST_Axii)
+			&& (GetWitcherPlayer().IsWeaponHeld( 'silversword' ) 
+			|| GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 		)
 		{
-			if (thePlayer.HasTag('acs_bow_active'))
+			if (GetWitcherPlayer().HasTag('acs_bow_active'))
 			{
-				if (!thePlayer.HasTag('axii_bow_equipped'))
+				if (!GetWitcherPlayer().HasTag('axii_bow_equipped'))
 				{
 					AxiiBow();
 
 					BowSwitch();
 				}
 			}
-			else if (thePlayer.HasTag('acs_crossbow_active'))
+			else if (GetWitcherPlayer().HasTag('acs_crossbow_active'))
 			{
-				if (!thePlayer.HasTag('axii_crossbow_equipped'))
+				if (!GetWitcherPlayer().HasTag('axii_crossbow_equipped'))
 				{
 					AxiiCrossbow();
 
@@ -151,23 +151,23 @@ state Engage in cRangedWeaponSwitch
 		}
 		else if
 		(
-			(thePlayer.GetEquippedSign() == ST_Yrden)
-			&& (thePlayer.IsWeaponHeld( 'silversword' ) 
-			|| thePlayer.IsWeaponHeld( 'steelsword' ))
+			(GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
+			&& (GetWitcherPlayer().IsWeaponHeld( 'silversword' ) 
+			|| GetWitcherPlayer().IsWeaponHeld( 'steelsword' ))
 		)
 		{
-			if (thePlayer.HasTag('acs_bow_active'))
+			if (GetWitcherPlayer().HasTag('acs_bow_active'))
 			{
-				if (!thePlayer.HasTag('yrden_bow_equipped'))
+				if (!GetWitcherPlayer().HasTag('yrden_bow_equipped'))
 				{
 					YrdenBow();
 
 					BowSwitch();
 				}
 			}
-			else if (thePlayer.HasTag('acs_crossbow_active'))
+			else if (GetWitcherPlayer().HasTag('acs_crossbow_active'))
 			{
-				if (!thePlayer.HasTag('yrden_crossbow_equipped'))
+				if (!GetWitcherPlayer().HasTag('yrden_crossbow_equipped'))
 				{
 					YrdenCrossbow();
 
@@ -184,144 +184,144 @@ state Engage in cRangedWeaponSwitch
 
 	latent function WeaponSummonEffect()
 	{
-		if (thePlayer.HasTag('igni_bow_equipped')
-		&& !thePlayer.HasTag('igni_bow_effect_played'))
+		if (GetWitcherPlayer().HasTag('igni_bow_equipped')
+		&& !GetWitcherPlayer().HasTag('igni_bow_effect_played'))
 		{
 			igni_bow_summon();
 
-			thePlayer.AddTag('igni_bow_effect_played');
+			GetWitcherPlayer().AddTag('igni_bow_effect_played');
 		}
-		else if (thePlayer.HasTag('axii_bow_equipped')
-		&& !thePlayer.HasTag('axii_bow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('axii_bow_equipped')
+		&& !GetWitcherPlayer().HasTag('axii_bow_effect_played'))
 		{
 			axii_bow_summon();
 
-			thePlayer.AddTag('axii_bow_effect_played');
+			GetWitcherPlayer().AddTag('axii_bow_effect_played');
 		}
-		else if (thePlayer.HasTag('aard_bow_equipped')
-		&& !thePlayer.HasTag('aard_bow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('aard_bow_equipped')
+		&& !GetWitcherPlayer().HasTag('aard_bow_effect_played'))
 		{
 			aard_bow_summon();
 
-			thePlayer.AddTag('aard_bow_effect_played');
+			GetWitcherPlayer().AddTag('aard_bow_effect_played');
 		}
-		else if (thePlayer.HasTag('yrden_bow_equipped')
-		&& !thePlayer.HasTag('yrden_bow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('yrden_bow_equipped')
+		&& !GetWitcherPlayer().HasTag('yrden_bow_effect_played'))
 		{
 			yrden_bow_summon();
 
-			thePlayer.AddTag('yrden_bow_effect_played');
+			GetWitcherPlayer().AddTag('yrden_bow_effect_played');
 		}
-		else if (thePlayer.HasTag('quen_bow_equipped')
-		&& !thePlayer.HasTag('quen_bow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('quen_bow_equipped')
+		&& !GetWitcherPlayer().HasTag('quen_bow_effect_played'))
 		{
 			quen_bow_summon();
 
-			thePlayer.AddTag('quen_bow_effect_played');
+			GetWitcherPlayer().AddTag('quen_bow_effect_played');
 		}
-		else if (thePlayer.HasTag('igni_crossbow_equipped')
-		&& !thePlayer.HasTag('igni_crossbow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('igni_crossbow_equipped')
+		&& !GetWitcherPlayer().HasTag('igni_crossbow_effect_played'))
 		{
 			igni_crossbow_summon();
 
-			thePlayer.AddTag('igni_crossbow_effect_played');
+			GetWitcherPlayer().AddTag('igni_crossbow_effect_played');
 		}
-		else if (thePlayer.HasTag('axii_crossbow_equipped')
-		&& !thePlayer.HasTag('axii_crossbow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('axii_crossbow_equipped')
+		&& !GetWitcherPlayer().HasTag('axii_crossbow_effect_played'))
 		{
 			axii_crossbow_summon();
 
-			thePlayer.AddTag('axii_crossbow_effect_played');
+			GetWitcherPlayer().AddTag('axii_crossbow_effect_played');
 		}
-		else if (thePlayer.HasTag('aard_crossbow_equipped')
-		&& !thePlayer.HasTag('aard_crossbow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('aard_crossbow_equipped')
+		&& !GetWitcherPlayer().HasTag('aard_crossbow_effect_played'))
 		{
 			aard_crossbow_summon();
 
-			thePlayer.AddTag('aard_crossbow_effect_played');
+			GetWitcherPlayer().AddTag('aard_crossbow_effect_played');
 		}
-		else if (thePlayer.HasTag('yrden_crossbow_equipped')
-		&& !thePlayer.HasTag('yrden_crossbow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('yrden_crossbow_equipped')
+		&& !GetWitcherPlayer().HasTag('yrden_crossbow_effect_played'))
 		{
 			yrden_crossbow_summon();
 
-			thePlayer.AddTag('yrden_crossbow_effect_played');
+			GetWitcherPlayer().AddTag('yrden_crossbow_effect_played');
 		}
-		else if (thePlayer.HasTag('quen_crossbow_equipped')
-		&& !thePlayer.HasTag('quen_crossbow_effect_played'))
+		else if (GetWitcherPlayer().HasTag('quen_crossbow_equipped')
+		&& !GetWitcherPlayer().HasTag('quen_crossbow_effect_played'))
 		{
 			quen_crossbow_summon();
 
-			thePlayer.AddTag('quen_crossbow_effect_played');
+			GetWitcherPlayer().AddTag('quen_crossbow_effect_played');
 		}
 	}
 
 	latent function BowSwitch()
 	{		
-		if (!thePlayer.HasAbility('ForceDismemberment'))
+		if (!GetWitcherPlayer().HasAbility('ForceDismemberment'))
 		{
-			thePlayer.AddAbility('ForceDismemberment');
+			GetWitcherPlayer().AddAbility('ForceDismemberment');
 		}
 
 		if (!theGame.IsDialogOrCutscenePlaying() 
-		&& !thePlayer.IsInNonGameplayCutscene() 
-		&& !thePlayer.IsInGameplayScene()
-		&& !thePlayer.IsSwimming()
-		&& !thePlayer.IsUsingHorse()
-		&& !thePlayer.IsUsingVehicle()
+		&& !GetWitcherPlayer().IsInNonGameplayCutscene() 
+		&& !GetWitcherPlayer().IsInGameplayScene()
+		&& !GetWitcherPlayer().IsSwimming()
+		&& !GetWitcherPlayer().IsUsingHorse()
+		&& !GetWitcherPlayer().IsUsingVehicle()
 		)
 		{
 			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh_SCAAR' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_bow_beh_SCAAR' );
 			}
 			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh_E3ARP' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_bow_beh_E3ARP' );
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_bow_beh' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_bow_beh' );
 			}
 					
-			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
+			if ( GetWitcherPlayer().IsInCombat() && GetWitcherPlayer().GetCurrentStateName() != 'Combat') 
 			{
-				//thePlayer.GotoState( 'Combat' );
+				//GetWitcherPlayer().GotoState( 'Combat' );
 			}
 		}
 	}
 
 	latent function CrossbowSwitch()
 	{		
-		if (!thePlayer.HasAbility('ForceDismemberment'))
+		if (!GetWitcherPlayer().HasAbility('ForceDismemberment'))
 		{
-			thePlayer.AddAbility('ForceDismemberment');
+			GetWitcherPlayer().AddAbility('ForceDismemberment');
 		}
 
 		if (!theGame.IsDialogOrCutscenePlaying() 
-		&& !thePlayer.IsInNonGameplayCutscene() 
-		&& !thePlayer.IsInGameplayScene()
-		&& !thePlayer.IsSwimming()
-		&& !thePlayer.IsUsingHorse()
-		&& !thePlayer.IsUsingVehicle()
+		&& !GetWitcherPlayer().IsInNonGameplayCutscene() 
+		&& !GetWitcherPlayer().IsInGameplayScene()
+		&& !GetWitcherPlayer().IsSwimming()
+		&& !GetWitcherPlayer().IsUsingHorse()
+		&& !GetWitcherPlayer().IsUsingVehicle()
 		)
 		{
 			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh_SCAAR' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_crossbow_beh_SCAAR' );
 			}
 			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh_E3ARP' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_crossbow_beh_E3ARP' );
 			}
 			else
 			{
-				thePlayer.ActivateAndSyncBehavior( 'acs_crossbow_beh' );
+				GetWitcherPlayer().ActivateAndSyncBehavior( 'acs_crossbow_beh' );
 			}
 					
-			if ( thePlayer.IsInCombat() && thePlayer.GetCurrentStateName() != 'Combat') 
+			if ( GetWitcherPlayer().IsInCombat() && GetWitcherPlayer().GetCurrentStateName() != 'Combat') 
 			{
-				//thePlayer.GotoState( 'Combat' );
+				//GetWitcherPlayer().GotoState( 'Combat' );
 			}
 		}
 	}
@@ -337,7 +337,7 @@ state Engage in cRangedWeaponSwitch
 			IgniBowStatic();
 		}
 		
-		thePlayer.AddTag('igni_bow_equipped');
+		GetWitcherPlayer().AddTag('igni_bow_equipped');
 	}
 
 	latent function IgniBowEvolving()
@@ -349,15 +349,15 @@ state Engage in cRangedWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -366,16 +366,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -384,16 +384,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -402,7 +402,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +411,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -420,7 +420,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('igni_bow_2');
 			}
 			else
@@ -429,7 +429,7 @@ state Engage in cRangedWeaponSwitch
 					
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -438,7 +438,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -447,7 +447,7 @@ state Engage in cRangedWeaponSwitch
 					
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -456,19 +456,19 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('igni_bow_2');
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -477,16 +477,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -495,16 +495,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -513,7 +513,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,7 +522,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -531,7 +531,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('igni_bow_2');
 			}
 			else
@@ -540,7 +540,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -549,7 +549,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('igni_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,7 +558,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -567,7 +567,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('igni_bow_2');
 			}
 		}
@@ -592,7 +592,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 
 		}
 		else
@@ -601,7 +601,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 		}
 			
 		attach_rot.Roll = 0;
@@ -611,7 +611,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = -0.025;
 		attach_vec.Z = -0.045;
 			
-		sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 		sword1.AddTag('igni_bow_1');
 	}
 
@@ -626,7 +626,7 @@ state Engage in cRangedWeaponSwitch
 			AxiiBowStatic();
 		}
 		
-		thePlayer.AddTag('axii_bow_equipped');
+		GetWitcherPlayer().AddTag('axii_bow_equipped');
 	}
 
 	latent function AxiiBowEvolving()
@@ -638,15 +638,15 @@ state Engage in cRangedWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -655,16 +655,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -673,16 +673,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -691,7 +691,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -700,7 +700,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -709,7 +709,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('axii_bow_2');
 			}
 			else
@@ -718,7 +718,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -727,7 +727,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -736,7 +736,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -745,19 +745,19 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('axii_bow_2');
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -766,16 +766,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -784,16 +784,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -802,7 +802,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -811,7 +811,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -820,7 +820,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('axii_bow_2');
 			}
 			else
@@ -829,7 +829,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -838,7 +838,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('axii_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -847,7 +847,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -856,7 +856,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('axii_bow_2');
 			}
 		}
@@ -881,7 +881,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 
 		}
 		else
@@ -890,7 +890,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 		}
 			
 		attach_rot.Roll = 0;
@@ -900,7 +900,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = -0.025;
 		attach_vec.Z = -0.045;
 			
-		sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 		sword1.AddTag('axii_bow_1');
 	}
 
@@ -915,7 +915,7 @@ state Engage in cRangedWeaponSwitch
 			AardBowStatic();
 		}
 
-		thePlayer.AddTag('aard_bow_equipped');
+		GetWitcherPlayer().AddTag('aard_bow_equipped');
 	}
 
 	latent function AardBowEvolving()
@@ -927,15 +927,15 @@ state Engage in cRangedWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -944,16 +944,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -962,16 +962,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -980,7 +980,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -989,7 +989,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -998,7 +998,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('aard_bow_2');
 			}
 			else
@@ -1007,7 +1007,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1016,7 +1016,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1025,7 +1025,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1034,19 +1034,19 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('aard_bow_2');
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1055,16 +1055,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1073,16 +1073,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1091,7 +1091,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1100,7 +1100,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1109,7 +1109,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('aard_bow_2');
 			}
 			else
@@ -1118,7 +1118,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1127,7 +1127,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('aard_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1136,7 +1136,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1145,7 +1145,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('aard_bow_2');
 			}
 		}
@@ -1171,7 +1171,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 
 		}
 		else
@@ -1180,7 +1180,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 		}
 			
 		attach_rot.Roll = 0;
@@ -1190,7 +1190,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = -0.025;
 		attach_vec.Z = -0.045;
 			
-		sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 		sword1.AddTag('aard_bow_1');
 	}
 	
@@ -1205,7 +1205,7 @@ state Engage in cRangedWeaponSwitch
 			YrdenBowStatic();
 		}
 
-		thePlayer.AddTag('yrden_bow_equipped'); 
+		GetWitcherPlayer().AddTag('yrden_bow_equipped'); 
 	}
 	
 	latent function YrdenBowEvolving()
@@ -1217,15 +1217,15 @@ state Engage in cRangedWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1234,16 +1234,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1252,16 +1252,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1270,7 +1270,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1279,7 +1279,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1288,7 +1288,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('yrden_bow_2');
 			}
 			else
@@ -1297,7 +1297,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1306,7 +1306,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1315,7 +1315,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1324,19 +1324,19 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('yrden_bow_2');
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1345,16 +1345,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1363,16 +1363,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1381,7 +1381,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1390,7 +1390,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1399,7 +1399,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('yrden_bow_2');
 			}
 			else
@@ -1408,7 +1408,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1417,7 +1417,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('yrden_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1426,7 +1426,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1435,7 +1435,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('yrden_bow_2');
 			}
 		}
@@ -1460,7 +1460,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 
 		}
 		else
@@ -1469,7 +1469,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 		}
 			
 		attach_rot.Roll = 0;
@@ -1479,7 +1479,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = -0.025;
 		attach_vec.Z = -0.045;
 			
-		sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 		sword1.AddTag('yrden_bow_1');
 	}
 
@@ -1494,7 +1494,7 @@ state Engage in cRangedWeaponSwitch
 			QuenBowStatic();
 		}
 
-		thePlayer.AddTag('quen_bow_equipped'); 
+		GetWitcherPlayer().AddTag('quen_bow_equipped'); 
 	}
 
 	latent function QuenBowEvolving()
@@ -1506,15 +1506,15 @@ state Engage in cRangedWeaponSwitch
 		
 		ACS_StartAerondightEffectInit();
 
-		if ( thePlayer.IsWeaponHeld( 'silversword' ) )
+		if ( GetWitcherPlayer().IsWeaponHeld( 'silversword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 10 || thePlayer.GetInventory().GetItemQuality( silverID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1523,16 +1523,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) <= 11 && thePlayer.GetInventory().GetItemLevel(silverID) <= 20 && thePlayer.GetInventory().GetItemQuality( silverID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) <= 11 && GetWitcherPlayer().GetInventory().GetItemLevel(silverID) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1541,16 +1541,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( silverID ) >= 21 && thePlayer.GetInventory().GetItemQuality( silverID ) >= 2 ) 
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( silverID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( silverID ) >= 2 ) 
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1559,7 +1559,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1568,7 +1568,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1577,7 +1577,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('quen_bow_2');
 			}
 			else
@@ -1586,7 +1586,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1595,7 +1595,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1604,7 +1604,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1613,19 +1613,19 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('quen_bow_2');
 			}
 		}
-		else if ( thePlayer.IsWeaponHeld( 'steelsword' ) )
+		else if ( GetWitcherPlayer().IsWeaponHeld( 'steelsword' ) )
 		{
-			if ( thePlayer.GetInventory().GetItemLevel( steelID ) <= 10 || thePlayer.GetInventory().GetItemQuality( steelID ) == 1 )
+			if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 10 || GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) == 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent" 
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1634,16 +1634,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 11 && thePlayer.GetInventory().GetItemLevel( steelID ) <= 20 && thePlayer.GetInventory().GetItemQuality( steelID ) > 1 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 11 && GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) <= 20 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) > 1 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1652,16 +1652,16 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 			}
-			else if ( thePlayer.GetInventory().GetItemLevel( steelID ) >= 21 && thePlayer.GetInventory().GetItemQuality( steelID ) >= 2 )
+			else if ( GetWitcherPlayer().GetInventory().GetItemLevel( steelID ) >= 21 && GetWitcherPlayer().GetInventory().GetItemQuality( steelID ) >= 2 )
 			{
 				sword1 = (CEntity)theGame.CreateEntity((CEntityTemplate)LoadResource( 
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1670,7 +1670,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1679,7 +1679,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1688,7 +1688,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('quen_bow_2');
 			}
 			else
@@ -1697,7 +1697,7 @@ state Engage in cRangedWeaponSwitch
 	
 				"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1706,7 +1706,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword1.AddTag('quen_bow_1');
 				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1715,7 +1715,7 @@ state Engage in cRangedWeaponSwitch
 
 				"dlc\dlc_ACS\data\entities\ranged\bow_01.w2ent"
 					
-				, true), thePlayer.GetWorldPosition() );
+				, true), GetWitcherPlayer().GetWorldPosition() );
 					
 				attach_rot.Roll = 0;
 				attach_rot.Pitch = 0;
@@ -1724,7 +1724,7 @@ state Engage in cRangedWeaponSwitch
 				attach_vec.Y = -0.025;
 				attach_vec.Z = -0.045;
 					
-				sword2.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+				sword2.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 				sword2.AddTag('quen_bow_2');
 			}
 		}
@@ -1749,7 +1749,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_02.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 
 		}
 		else
@@ -1758,7 +1758,7 @@ state Engage in cRangedWeaponSwitch
 
 			"dlc\dlc_ACS\data\entities\ranged\bow_elven_01.w2ent" 
 				
-			, true), thePlayer.GetWorldPosition() );
+			, true), GetWitcherPlayer().GetWorldPosition() );
 		}
 			
 		attach_rot.Roll = 0;
@@ -1768,7 +1768,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = -0.025;
 		attach_vec.Z = -0.045;
 			
-		sword1.CreateAttachment( thePlayer, 'l_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'l_weapon', attach_vec, attach_rot );
 		sword1.AddTag('quen_bow_1');
 	}
 
@@ -1788,7 +1788,7 @@ state Engage in cRangedWeaponSwitch
 			IgniCrossbowStatic();
 		}
 		
-		thePlayer.AddTag('igni_crossbow_equipped');
+		GetWitcherPlayer().AddTag('igni_crossbow_equipped');
 	}
 
 	latent function IgniCrossbowEvolving()
@@ -1810,7 +1810,7 @@ state Engage in cRangedWeaponSwitch
 		//"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 		"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 			
-		, true), thePlayer.GetWorldPosition() );
+		, true), GetWitcherPlayer().GetWorldPosition() );
 			
 		attach_rot.Roll = 0;
 		attach_rot.Pitch = 0;
@@ -1819,7 +1819,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = 0;
 		attach_vec.Z = 0;
 			
-		sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 		sword1.AddTag('igni_crossbow_1');
 	}
 
@@ -1835,7 +1835,7 @@ state Engage in cRangedWeaponSwitch
 			AxiiCrossbowStatic();
 		}
 		
-		thePlayer.AddTag('axii_crossbow_equipped');
+		GetWitcherPlayer().AddTag('axii_crossbow_equipped');
 	}
 
 	latent function AxiiCrossbowEvolving()
@@ -1857,7 +1857,7 @@ state Engage in cRangedWeaponSwitch
 		//"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 		"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent" 
 			
-		, true), thePlayer.GetWorldPosition() );
+		, true), GetWitcherPlayer().GetWorldPosition() );
 			
 		attach_rot.Roll = 0;
 		attach_rot.Pitch = 0;
@@ -1866,7 +1866,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = 0;
 		attach_vec.Z = 0;
 			
-		sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 		sword1.AddTag('axii_crossbow_1');
 	}
 
@@ -1882,7 +1882,7 @@ state Engage in cRangedWeaponSwitch
 			AardCrossbowStatic();
 		}
 
-		thePlayer.AddTag('aard_crossbow_equipped');
+		GetWitcherPlayer().AddTag('aard_crossbow_equipped');
 	}
 
 	latent function AardCrossbowEvolving()
@@ -1904,7 +1904,7 @@ state Engage in cRangedWeaponSwitch
 		//"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 		"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 			
-		, true), thePlayer.GetWorldPosition() );
+		, true), GetWitcherPlayer().GetWorldPosition() );
 			
 		attach_rot.Roll = 0;
 		attach_rot.Pitch = 0;
@@ -1913,7 +1913,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = 0;
 		attach_vec.Z = 0;
 			
-		sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 		sword1.AddTag('aard_crossbow_1');
 	}
 	
@@ -1929,7 +1929,7 @@ state Engage in cRangedWeaponSwitch
 			YrdenCrossbowStatic();
 		}
 
-		thePlayer.AddTag('yrden_crossbow_equipped'); 
+		GetWitcherPlayer().AddTag('yrden_crossbow_equipped'); 
 	}
 	
 	latent function YrdenCrossbowEvolving()
@@ -1951,7 +1951,7 @@ state Engage in cRangedWeaponSwitch
 		//"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 		"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent"
 			
-		, true), thePlayer.GetWorldPosition() );
+		, true), GetWitcherPlayer().GetWorldPosition() );
 			
 		attach_rot.Roll = 0;
 		attach_rot.Pitch = 0;
@@ -1960,7 +1960,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = 0;
 		attach_vec.Z = 0;
 			
-		sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 		sword1.AddTag('yrden_crossbow_1');
 	}
 
@@ -1976,7 +1976,7 @@ state Engage in cRangedWeaponSwitch
 			QuenCrossbowStatic();
 		}
 
-		thePlayer.AddTag('quen_crossbow_equipped'); 
+		GetWitcherPlayer().AddTag('quen_crossbow_equipped'); 
 	}
 
 	latent function QuenCrossbowEvolving()
@@ -1997,7 +1997,7 @@ state Engage in cRangedWeaponSwitch
 
 		"dlc\dlc_acs\data\entities\ranged\nilfgaardian_crossbow_01.w2ent" 
 			
-		, true), thePlayer.GetWorldPosition() );
+		, true), GetWitcherPlayer().GetWorldPosition() );
 			
 		attach_rot.Roll = 0;
 		attach_rot.Pitch = 0;
@@ -2006,7 +2006,7 @@ state Engage in cRangedWeaponSwitch
 		attach_vec.Y = 0;
 		attach_vec.Z = 0;
 			
-		sword1.CreateAttachment( thePlayer, 'r_weapon', attach_vec, attach_rot );
+		sword1.CreateAttachment( GetWitcherPlayer(), 'r_weapon', attach_vec, attach_rot );
 		sword1.AddTag('yrden_crossbow_1');
 	}
 	

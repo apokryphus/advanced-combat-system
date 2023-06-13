@@ -45,7 +45,7 @@ state ACS_TK_Engage in cACS_TK
 	
 	entry function TK()
 	{
-		if (thePlayer.IsHardLockEnabled())
+		if (GetWitcherPlayer().IsHardLockEnabled())
 		{
 			Pull_Single();
 		}
@@ -57,9 +57,7 @@ state ACS_TK_Engage in cACS_TK
 	
 	latent function Pull_Mult()
 	{
-		thePlayer.StopEffect('mind_control');	
-		thePlayer.StopEffect('mind_control');	
-		thePlayer.StopEffect('mind_control');	
+		GetWitcherPlayer().DestroyEffect('mind_control');	
 
 		ACS_pull_anchor1().Destroy();
 		ACS_pull_anchor2().Destroy();
@@ -70,20 +68,20 @@ state ACS_TK_Engage in cACS_TK
 		settings.blendIn = 0.175f;
 		settings.blendOut = 1.f;
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+		GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 		
-		victimsarray = GetActorsInRange(thePlayer, 25, 25);
+		victimsarray = GetActorsInRange(GetWitcherPlayer(), 25, 25);
 		
 		for( i = 0; i < victimsarray.Size(); i += 1 )
 		{		
 			npc = (CActor)victimsarray[i];
 			
-			dest = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1;
+			dest = GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * -1.1;
 			dest_adjusted = dest + Vector(0, 0, 1.25, 0);
 			initial_dist = VecDistance2D(npc.GetWorldPosition(), dest);
 			
 			dist = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-			+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 2.125;
+			+ ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetMovingAgentComponent()).GetCapsuleRadius()) * 2.125;
 			
 			prev_time = theGame.GetEngineTimeAsSeconds();
 			stuck_time = 0;
@@ -97,7 +95,7 @@ state ACS_TK_Engage in cACS_TK
 
 			prev_pos = npc.GetWorldPosition();
 			
-			movementAdjustor1 = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+			movementAdjustor1 = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 			movementAdjustor1.CancelByName( 'ACS_TK_turn' );
 			ticket1 = movementAdjustor1.CreateNewRequest( 'ACS_TK_turn' );
 			movementAdjustor1.AdjustmentDuration( ticket1, 0.5 );
@@ -116,9 +114,9 @@ state ACS_TK_Engage in cACS_TK
 			
 			if ( victimsarray.Size() >0 )
 			{
-				if (thePlayer.IsInCombat())
+				if (GetWitcherPlayer().IsInCombat())
 				{
-					if( npc.GetAttitude(thePlayer) == AIA_Hostile && npc.IsAlive() )
+					if( npc.GetAttitude(GetWitcherPlayer()) == AIA_Hostile && npc.IsAlive() )
 					{	
 						markerTemplate = (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\quest\q702\702_08_vampire_vision\q702_magical_decal.w2ent", true );
 						
@@ -147,21 +145,21 @@ state ACS_TK_Engage in cACS_TK
 						
 						SleepOneFrame();
 
-						thePlayer.StopEffect('mind_control');	
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
-						thePlayer.PlayEffect('mind_control', pull_anchor4);
-						thePlayer.PlayEffect('mind_control', pull_anchor5);
-						thePlayer.StopEffect('mind_control');	
+						GetWitcherPlayer().DestroyEffect('mind_control');	
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+						GetWitcherPlayer().StopEffect('mind_control');	
 						
 						
 						if (!theGame.IsDialogOrCutscenePlaying() 
-						|| !thePlayer.IsInNonGameplayCutscene() 
-						|| !thePlayer.IsInGameplayScene()
-						//&& !thePlayer.IsSwimming()
-						|| !thePlayer.IsUsingHorse()
-						|| !thePlayer.IsUsingVehicle()
+						|| !GetWitcherPlayer().IsInNonGameplayCutscene() 
+						|| !GetWitcherPlayer().IsInGameplayScene()
+						//&& !GetWitcherPlayer().IsSwimming()
+						|| !GetWitcherPlayer().IsUsingHorse()
+						|| !GetWitcherPlayer().IsUsingVehicle()
 						)
 						{
 							movementAdjustor1.RotateTowards( ticket1, npc );
@@ -254,17 +252,17 @@ state ACS_TK_Engage in cACS_TK
 
 							if (!slide && VecDistance2D(prev_pos, dest) <= 2.5 && dest_adjusted.Z - prev_pos.Z <= 2 ) 
 							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+								GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 								
-								thePlayer.StopEffect('mind_control');	
-								thePlayer.PlayEffect('mind_control', pull_anchor1);
-								thePlayer.PlayEffect('mind_control', pull_anchor2);
-								thePlayer.PlayEffect('mind_control', pull_anchor3);
-								thePlayer.PlayEffect('mind_control', pull_anchor4);
-								thePlayer.PlayEffect('mind_control', pull_anchor5);
-								thePlayer.StopEffect('mind_control');	
+								GetWitcherPlayer().DestroyEffect('mind_control');	
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+								GetWitcherPlayer().StopEffect('mind_control');	
 
-								movementAdjustor2.SlideTowards( ticket2, thePlayer, dist, dist );	
+								movementAdjustor2.SlideTowards( ticket2, GetWitcherPlayer(), dist, dist );	
 								teleport = false;
 								slide = true;
 								slide_time = new_time;
@@ -272,15 +270,15 @@ state ACS_TK_Engage in cACS_TK
 									
 							if (teleport) 
 							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+								GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 								
-								thePlayer.StopEffect('mind_control');	
-								thePlayer.PlayEffect('mind_control', pull_anchor1);
-								thePlayer.PlayEffect('mind_control', pull_anchor2);
-								thePlayer.PlayEffect('mind_control', pull_anchor3);
-								thePlayer.PlayEffect('mind_control', pull_anchor4);
-								thePlayer.PlayEffect('mind_control', pull_anchor5);
-								thePlayer.StopEffect('mind_control');	
+								GetWitcherPlayer().DestroyEffect('mind_control');	
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+								GetWitcherPlayer().StopEffect('mind_control');	
 								
 								progress += progress_inc*delta_time;
 										
@@ -290,17 +288,17 @@ state ACS_TK_Engage in cACS_TK
 							prev_pos = new_pos;
 							prev_time = new_time;
 							
-							//thePlayer.StopEffect('mind_control');		
+							//GetWitcherPlayer().DestroyEffect('mind_control');		
 							SleepOneFrame();
 						}
 						
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
-						//thePlayer.StopEffect('mind_control');
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
+						//GetWitcherPlayer().DestroyEffect('mind_control');
 					}
 				}
 				else 
 				{
-					if( npc.GetAttitude(thePlayer) == AIA_Hostile && npc.IsAlive() )
+					if( npc.GetAttitude(GetWitcherPlayer()) == AIA_Hostile && npc.IsAlive() )
 					{	
 						markerTemplate = (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\quest\q702\702_08_vampire_vision\q702_magical_decal.w2ent", true );
 						
@@ -329,21 +327,21 @@ state ACS_TK_Engage in cACS_TK
 						
 						SleepOneFrame();
 
-						thePlayer.StopEffect('mind_control');	
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
-						thePlayer.PlayEffect('mind_control', pull_anchor4);
-						thePlayer.PlayEffect('mind_control', pull_anchor5);
-						thePlayer.StopEffect('mind_control');	
+						GetWitcherPlayer().DestroyEffect('mind_control');	
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+						GetWitcherPlayer().StopEffect('mind_control');	
 						
 						
 						if (!theGame.IsDialogOrCutscenePlaying() 
-						|| !thePlayer.IsInNonGameplayCutscene() 
-						|| !thePlayer.IsInGameplayScene()
-						//&& !thePlayer.IsSwimming()
-						|| !thePlayer.IsUsingHorse()
-						|| !thePlayer.IsUsingVehicle()
+						|| !GetWitcherPlayer().IsInNonGameplayCutscene() 
+						|| !GetWitcherPlayer().IsInGameplayScene()
+						//&& !GetWitcherPlayer().IsSwimming()
+						|| !GetWitcherPlayer().IsUsingHorse()
+						|| !GetWitcherPlayer().IsUsingVehicle()
 						)
 						{
 							movementAdjustor1.RotateTowards( ticket1, npc );
@@ -438,19 +436,19 @@ state ACS_TK_Engage in cACS_TK
 
 							if (!slide && VecDistance2D(prev_pos, dest) <= 2.5 && dest_adjusted.Z - prev_pos.Z <= 2 ) 
 							{	
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+								GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 								
 								
-								thePlayer.StopEffect('mind_control');	
-								thePlayer.PlayEffect('mind_control', pull_anchor1);
-								thePlayer.PlayEffect('mind_control', pull_anchor2);
-								thePlayer.PlayEffect('mind_control', pull_anchor3);
-								thePlayer.PlayEffect('mind_control', pull_anchor4);
-								thePlayer.PlayEffect('mind_control', pull_anchor5);
-								thePlayer.StopEffect('mind_control');	
+								GetWitcherPlayer().DestroyEffect('mind_control');	
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+								GetWitcherPlayer().StopEffect('mind_control');	
 								
 								//movementAdjustor2.SlideTo( ticket2, dest );	
-								movementAdjustor2.SlideTowards( ticket2, thePlayer, dist, dist );	
+								movementAdjustor2.SlideTowards( ticket2, GetWitcherPlayer(), dist, dist );	
 								teleport = false;
 								slide = true;
 								slide_time = new_time;
@@ -458,16 +456,16 @@ state ACS_TK_Engage in cACS_TK
 									
 							if (teleport) 
 							{
-								thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+								GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 								
 								
-								thePlayer.StopEffect('mind_control');	
-								thePlayer.PlayEffect('mind_control', pull_anchor1);
-								thePlayer.PlayEffect('mind_control', pull_anchor2);
-								thePlayer.PlayEffect('mind_control', pull_anchor3);
-								thePlayer.PlayEffect('mind_control', pull_anchor4);
-								thePlayer.PlayEffect('mind_control', pull_anchor5);
-								thePlayer.StopEffect('mind_control');	
+								GetWitcherPlayer().DestroyEffect('mind_control');	
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor4);
+								GetWitcherPlayer().PlayEffect('mind_control', pull_anchor5);
+								GetWitcherPlayer().StopEffect('mind_control');	
 								
 								progress += progress_inc*delta_time;
 									
@@ -479,7 +477,7 @@ state ACS_TK_Engage in cACS_TK
 							
 							SleepOneFrame();
 						}					
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
 					}
 				}
 			}
@@ -489,7 +487,7 @@ state ACS_TK_Engage in cACS_TK
 
 	latent function Pull_Single()
 	{
-		thePlayer.StopEffect('mind_control');	
+		GetWitcherPlayer().DestroyEffect('mind_control');	
 
 		ACS_pull_anchor1().Destroy();
 		ACS_pull_anchor2().Destroy();
@@ -498,16 +496,16 @@ state ACS_TK_Engage in cACS_TK
 		settings.blendIn = 0.175f;
 		settings.blendOut = 1.f;
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+		GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 		
-		npc = (CActor)( thePlayer.GetDisplayTarget() );
+		npc = (CActor)( GetWitcherPlayer().GetDisplayTarget() );
 			
-		dest = thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.1;
+		dest = GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * -1.1;
 		dest_adjusted = dest + Vector(0, 0, 1.25, 0);
 		initial_dist = VecDistance2D(npc.GetWorldPosition(), dest);
 			
 		dist = (((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius()) * 2.125;
+		+ ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetMovingAgentComponent()).GetCapsuleRadius()) * 2.125;
 			
 		prev_time = theGame.GetEngineTimeAsSeconds();
 		stuck_time = 0;
@@ -521,7 +519,7 @@ state ACS_TK_Engage in cACS_TK
 
 		prev_pos = npc.GetWorldPosition();
 			
-		movementAdjustor1 = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+		movementAdjustor1 = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 		movementAdjustor1.CancelByName( 'ACS_TK_turn' );
 		ticket1 = movementAdjustor1.CreateNewRequest( 'ACS_TK_turn' );
 		movementAdjustor1.AdjustmentDuration( ticket1, 0.5 );
@@ -538,9 +536,9 @@ state ACS_TK_Engage in cACS_TK
 			
 		SleepOneFrame();
 
-		if (thePlayer.IsInCombat())
+		if (GetWitcherPlayer().IsInCombat())
 		{
-			if( npc.GetAttitude(thePlayer) == AIA_Hostile && npc.IsAlive() )
+			if( npc.GetAttitude(GetWitcherPlayer()) == AIA_Hostile && npc.IsAlive() )
 			{	
 				markerTemplate = (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\quest\q702\702_08_vampire_vision\q702_magical_decal.w2ent", true );
 						
@@ -564,11 +562,11 @@ state ACS_TK_Engage in cACS_TK
 				pull_anchor3.DestroyAfter(10);
 						
 				if (!theGame.IsDialogOrCutscenePlaying() 
-				|| !thePlayer.IsInNonGameplayCutscene() 
-				|| !thePlayer.IsInGameplayScene()
-				//&& !thePlayer.IsSwimming()
-				|| !thePlayer.IsUsingHorse()
-				|| !thePlayer.IsUsingVehicle()
+				|| !GetWitcherPlayer().IsInNonGameplayCutscene() 
+				|| !GetWitcherPlayer().IsInGameplayScene()
+				//&& !GetWitcherPlayer().IsSwimming()
+				|| !GetWitcherPlayer().IsUsingHorse()
+				|| !GetWitcherPlayer().IsUsingVehicle()
 				)
 				{
 					movementAdjustor1.RotateTowards( ticket1, npc );
@@ -660,14 +658,14 @@ state ACS_TK_Engage in cACS_TK
 
 					if (!slide && VecDistance2D(prev_pos, dest) <= 2.5 && dest_adjusted.Z - prev_pos.Z <= 2 ) 
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 								
 
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
 
-						movementAdjustor2.SlideTowards( ticket2, thePlayer, dist, dist );	
+						movementAdjustor2.SlideTowards( ticket2, GetWitcherPlayer(), dist, dist );	
 						teleport = false;
 						slide = true;
 						slide_time = new_time;
@@ -675,13 +673,13 @@ state ACS_TK_Engage in cACS_TK
 									
 					if (teleport) 
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 
 
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
-						thePlayer.StopEffect('mind_control');	
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().StopEffect('mind_control');	
 
 								
 						progress += progress_inc*delta_time;
@@ -692,17 +690,17 @@ state ACS_TK_Engage in cACS_TK
 					prev_pos = new_pos;
 					prev_time = new_time;
 							
-					//thePlayer.StopEffect('mind_control');		
+					//GetWitcherPlayer().DestroyEffect('mind_control');		
 					SleepOneFrame();
 				}
 						
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
-				//thePlayer.StopEffect('mind_control');
+				GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
+				//GetWitcherPlayer().DestroyEffect('mind_control');
 			}
 		}
 		else 
 		{
-			if( npc.GetAttitude(thePlayer) == AIA_Hostile && npc.IsAlive() )
+			if( npc.GetAttitude(GetWitcherPlayer()) == AIA_Hostile && npc.IsAlive() )
 			{	
 				markerTemplate = (CEntityTemplate)LoadResourceAsync( "dlc\bob\data\fx\quest\q702\702_08_vampire_vision\q702_magical_decal.w2ent", true );
 						
@@ -726,11 +724,11 @@ state ACS_TK_Engage in cACS_TK
 				pull_anchor3.DestroyAfter(10);
 
 				if (!theGame.IsDialogOrCutscenePlaying() 
-				|| !thePlayer.IsInNonGameplayCutscene() 
-				|| !thePlayer.IsInGameplayScene()
-				//&& !thePlayer.IsSwimming()
-				|| !thePlayer.IsUsingHorse()
-				|| !thePlayer.IsUsingVehicle()
+				|| !GetWitcherPlayer().IsInNonGameplayCutscene() 
+				|| !GetWitcherPlayer().IsInGameplayScene()
+				//&& !GetWitcherPlayer().IsSwimming()
+				|| !GetWitcherPlayer().IsUsingHorse()
+				|| !GetWitcherPlayer().IsUsingVehicle()
 				)
 				{
 					movementAdjustor1.RotateTowards( ticket1, npc );
@@ -825,18 +823,18 @@ state ACS_TK_Engage in cACS_TK
 
 					if (!slide && VecDistance2D(prev_pos, dest) <= 2.5 && dest_adjusted.Z - prev_pos.Z <= 2 ) 
 					{	
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 
 
-						thePlayer.StopEffect('mind_control');
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
-						thePlayer.StopEffect('mind_control');	
+						GetWitcherPlayer().DestroyEffect('mind_control');
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().StopEffect('mind_control');	
 
 								
 						//movementAdjustor2.SlideTo( ticket2, dest );	
-						movementAdjustor2.SlideTowards( ticket2, thePlayer, dist, dist );	
+						movementAdjustor2.SlideTowards( ticket2, GetWitcherPlayer(), dist, dist );	
 						teleport = false;
 						slide = true;
 						slide_time = new_time;
@@ -844,14 +842,14 @@ state ACS_TK_Engage in cACS_TK
 									
 					if (teleport) 
 					{
-						thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
+						GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'man_geralt_gabriel_aim_idle_lp', 'PLAYER_SLOT', settings);
 
 
-						thePlayer.StopEffect('mind_control');
-						thePlayer.PlayEffect('mind_control', pull_anchor1);
-						thePlayer.PlayEffect('mind_control', pull_anchor2);
-						thePlayer.PlayEffect('mind_control', pull_anchor3);
-						thePlayer.StopEffect('mind_control');	
+						GetWitcherPlayer().DestroyEffect('mind_control');
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor1);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor2);
+						GetWitcherPlayer().PlayEffect('mind_control', pull_anchor3);
+						GetWitcherPlayer().StopEffect('mind_control');	
 
 								
 						progress += progress_inc*delta_time;
@@ -864,11 +862,9 @@ state ACS_TK_Engage in cACS_TK
 							
 					SleepOneFrame();
 				}					
-				thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
+				GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( '', 'PLAYER_SLOT', settings);
 			}
 		}
-
-		thePlayer.StopEffect('mind_control');	
 	}
 }
 

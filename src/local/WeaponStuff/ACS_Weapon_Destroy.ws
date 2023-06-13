@@ -9,7 +9,7 @@ function ACS_WeaponDestroyInit()
 		ACS_HideSword();
 	}
 
-	if (thePlayer.HasTag('vampire_claws_equipped'))
+	if (GetWitcherPlayer().HasTag('vampire_claws_equipped'))
 	{
 		ClawDestroy();
 	}
@@ -51,6 +51,10 @@ function ACS_WeaponDestroyInit()
 	ACS_Sword_Trail_6().Destroy();
 	ACS_Sword_Trail_7().Destroy();
 	ACS_Sword_Trail_8().Destroy();
+
+	GetACSArmorEtherSword().Destroy();
+
+	thePlayer.SoundEvent("magic_sorceress_vfx_lightning_fx_loop_stop");
 }
 
 function ACS_WeaponDestroyIMMEDIATEInit()
@@ -64,7 +68,7 @@ function ACS_WeaponDestroyIMMEDIATEInit()
 		ACS_HideSword();
 	}
 
-	if (thePlayer.HasTag('vampire_claws_equipped'))
+	if (GetWitcherPlayer().HasTag('vampire_claws_equipped'))
 	{
 		ClawDestroy();
 	}
@@ -106,11 +110,15 @@ function ACS_WeaponDestroyIMMEDIATEInit()
 	ACS_Sword_Trail_6().Destroy();
 	ACS_Sword_Trail_7().Destroy();
 	ACS_Sword_Trail_8().Destroy();
+
+	GetACSArmorEtherSword().Destroy();
+
+	thePlayer.SoundEvent("magic_sorceress_vfx_lightning_fx_loop_stop");
 }
 
 function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
 {
-	if (thePlayer.HasTag('vampire_claws_equipped'))
+	if (GetWitcherPlayer().HasTag('vampire_claws_equipped'))
 	{
 		ClawDestroy();
 	}
@@ -150,11 +158,15 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD()
 	ACS_Sword_Trail_6().Destroy();
 	ACS_Sword_Trail_7().Destroy();
 	ACS_Sword_Trail_8().Destroy();
+
+	GetACSArmorEtherSword().Destroy();
+
+	thePlayer.SoundEvent("magic_sorceress_vfx_lightning_fx_loop_stop");
 }
 
 function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
 {
-	if (thePlayer.HasTag('vampire_claws_equipped'))
+	if (GetWitcherPlayer().HasTag('vampire_claws_equipped'))
 	{
 		ClawDestroy();
 	}
@@ -194,21 +206,25 @@ function ACS_WeaponDestroyInit_WITHOUT_HIDESWORD_IMMEDIATE()
 	ACS_Sword_Trail_6().Destroy();
 	ACS_Sword_Trail_7().Destroy();
 	ACS_Sword_Trail_8().Destroy();
+
+	GetACSArmorEtherSword().Destroy();
+
+	thePlayer.SoundEvent("magic_sorceress_vfx_lightning_fx_loop_stop");
 }
 
 function ACS_Weapon_Invisible()
 {
-	if (!thePlayer.HasTag('ACS_HideWeaponOnDodge_Claw_Effect'))
+	if (!GetWitcherPlayer().HasTag('ACS_HideWeaponOnDodge_Claw_Effect'))
 	{
 		/*
-		if (!thePlayer.HasTag('ACS_Camo_Active'))
+		if (!GetWitcherPlayer().HasTag('ACS_Camo_Active'))
 		{
 			if (!ACS_GetItem_VampClaw_Shades() 
-			&& !thePlayer.HasTag('vampire_claws_equipped') 
-			&& thePlayer.IsInCombat())
+			&& !GetWitcherPlayer().HasTag('vampire_claws_equipped') 
+			&& GetWitcherPlayer().IsInCombat())
 			{
-				thePlayer.PlayEffectSingle('claws_effect');
-				thePlayer.StopEffect('claws_effect');
+				GetWitcherPlayer().PlayEffectSingle('claws_effect');
+				GetWitcherPlayer().StopEffect('claws_effect');
 
 				ACS_ClawEquip_OnDodge();
 			}
@@ -219,60 +235,64 @@ function ACS_Weapon_Invisible()
 
 		if ( ACS_GetWeaponMode() == 3)
 		{
-			if (!thePlayer.HasTag('blood_sucking'))
+			if (!GetWitcherPlayer().HasTag('blood_sucking'))
 			{
-				if (!thePlayer.HasTag('aard_sword_equipped') )
+				if (!GetWitcherPlayer().HasTag('aard_sword_equipped') )
 				{
 					igni_sword_summon();
 				}
 			}
 		}
 
-		thePlayer.AddTag('ACS_HideWeaponOnDodge_Claw_Effect');
+		GetWitcherPlayer().AddTag('ACS_HideWeaponOnDodge_Claw_Effect');
 	}
 
 	//ACS_StopAerondightEffectInit();
 
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_summon();
 		QuenSwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('axii_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_summon();
 		AxiiSwordDestroy_NOTAG();	
 	}
-	else if (thePlayer.HasTag('aard_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_sword_summon();
 		AardSwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('yrden_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_summon();
 		YrdenSwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_summon();
 		QuenSecondarySwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{
 		axii_secondary_sword_summon();
 		AxiiSecondarySwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_summon();
 		AardSecondarySwordDestroy_NOTAG();
 	}
-	else if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_summon();
 		YrdenSecondarySwordDestroy_NOTAG();
 	}
+
+	GetACSArmorEtherSword().Destroy();
+
+	thePlayer.SoundEvent("magic_sorceress_vfx_lightning_fx_loop_stop");
 	
 	ACS_Sword_Trail_1().StopAllEffects();
 
@@ -302,27 +322,57 @@ function ACS_HideSwordWitoutScabbardStuff()
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 		
-	steelsword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
-	silversword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
+	steelsword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
+	silversword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
 	
-	if ( thePlayer.GetInventory().IsItemHeld(steelID) )
+	if ( GetWitcherPlayer().GetInventory().IsItemHeld(steelID) )
 	{
 		steelsword.SetVisible(false);
 
-		steelswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
+		steelswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
 		steelswordentity.SetHideInGame(true);
 	}
-	else if ( thePlayer.GetInventory().IsItemHeld(silverID) )
+	else if ( GetWitcherPlayer().GetInventory().IsItemHeld(silverID) )
 	{
 		silversword.SetVisible(false);
 
-		silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
+		silverswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
 		silverswordentity.SetHideInGame(true);
 	}
 
-	thePlayer.RemoveTag('igni_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_sword_effect_played');
 
-	thePlayer.RemoveTag('igni_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_secondary_sword_effect_played');
+}
+
+function ACS_ShowSwordWitoutScabbardStuff()
+{
+	var steelID, silverID 													: SItemUniqueId;
+	var steelsword, silversword, scabbard_steel, scabbard_silver			: CDrawableComponent;
+	var scabbards_steel, scabbards_silver 									: array<SItemUniqueId>;
+	var i 																	: int;
+	var steelswordentity, silverswordentity 								: CEntity;
+	
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+		
+	steelsword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
+	silversword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
+	
+	if ( GetWitcherPlayer().GetInventory().IsItemHeld(steelID) )
+	{
+		steelsword.SetVisible(true);
+
+		steelswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
+		steelswordentity.SetHideInGame(false);
+	}
+	else if ( GetWitcherPlayer().GetInventory().IsItemHeld(silverID) )
+	{
+		silversword.SetVisible(true);
+
+		silverswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
+		silverswordentity.SetHideInGame(false);
+	}
 }
 
 function ACS_HideSword()
@@ -337,23 +387,23 @@ function ACS_HideSword()
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_RangedWeapon, rangedID);
 		
-	steelsword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
-	silversword = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
+	steelsword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID)).GetMeshComponent());
+	silversword = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID)).GetMeshComponent());
 	
-	if ( thePlayer.GetInventory().IsItemHeld(steelID) )
+	if ( GetWitcherPlayer().GetInventory().IsItemHeld(steelID) )
 	{
 		steelsword.SetVisible(false);
 
-		steelswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
+		steelswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
 		steelswordentity.SetHideInGame(true); 
 
 		scabbards_steel.Clear();
 
-		scabbards_steel = thePlayer.GetInventory().GetItemsByCategory('steel_scabbards');
+		scabbards_steel = GetWitcherPlayer().GetInventory().GetItemsByCategory('steel_scabbards');
 
 		for ( i=0; i < scabbards_steel.Size() ; i+=1 )
 		{
-			scabbard_steel = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
+			scabbard_steel = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
 			scabbard_steel.SetVisible(false);
 		}
 
@@ -362,41 +412,41 @@ function ACS_HideSword()
 		{
 			silversword.SetVisible(false);
 
-			silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
+			silverswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
 			silverswordentity.SetHideInGame(true); 
 
 			scabbards_silver.Clear();
 
-			scabbards_silver = thePlayer.GetInventory().GetItemsByCategory('silver_scabbards');
+			scabbards_silver = GetWitcherPlayer().GetInventory().GetItemsByCategory('silver_scabbards');
 
 			for ( i=0; i < scabbards_silver.Size() ; i+=1 )
 			{
-				scabbard_silver = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
+				scabbard_silver = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
 				scabbard_silver.SetVisible(false);
 			}
 
-			crossbowentity = thePlayer.GetInventory().GetItemEntityUnsafe(rangedID);
+			crossbowentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(rangedID);
 
 			crossbowentity.SetHideInGame(true);
 			
-			thePlayer.rangedWeapon.ClearDeployedEntity(true);
+			GetWitcherPlayer().rangedWeapon.ClearDeployedEntity(true);
 		}
 		
 	}
-	else if ( thePlayer.GetInventory().IsItemHeld(silverID) )
+	else if ( GetWitcherPlayer().GetInventory().IsItemHeld(silverID) )
 	{
 		silversword.SetVisible(false);
 
-		silverswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
+		silverswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
 		silverswordentity.SetHideInGame(true); 
 
 		scabbards_silver.Clear();
 
-		scabbards_silver = thePlayer.GetInventory().GetItemsByCategory('silver_scabbards');
+		scabbards_silver = GetWitcherPlayer().GetInventory().GetItemsByCategory('silver_scabbards');
 
 		for ( i=0; i < scabbards_silver.Size() ; i+=1 )
 		{
-			scabbard_silver = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
+			scabbard_silver = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(scabbards_silver[i])).GetMeshComponent());
 			scabbard_silver.SetVisible(false);
 		}
 
@@ -405,31 +455,31 @@ function ACS_HideSword()
 		{
 			steelsword.SetVisible(false);
 
-			steelswordentity = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
+			steelswordentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
 			steelswordentity.SetHideInGame(true); 
 
 			scabbards_steel.Clear();
 
-			scabbards_steel = thePlayer.GetInventory().GetItemsByCategory('steel_scabbards');
+			scabbards_steel = GetWitcherPlayer().GetInventory().GetItemsByCategory('steel_scabbards');
 
 			for ( i=0; i < scabbards_steel.Size() ; i+=1 )
 			{
-				scabbard_steel = (CDrawableComponent)((thePlayer.GetInventory().GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
+				scabbard_steel = (CDrawableComponent)((GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(scabbards_steel[i])).GetMeshComponent());
 				scabbard_steel.SetVisible(false);
 			}
 
-			crossbowentity = thePlayer.GetInventory().GetItemEntityUnsafe(rangedID);
+			crossbowentity = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(rangedID);
 
 			crossbowentity.SetHideInGame(true);
 			
-			thePlayer.rangedWeapon.ClearDeployedEntity(true);
+			GetWitcherPlayer().rangedWeapon.ClearDeployedEntity(true);
 		}
 
 	}
 
-	thePlayer.RemoveTag('igni_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_sword_effect_played');
 
-	thePlayer.RemoveTag('igni_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_secondary_sword_effect_played');
 }
 
 function ACS_ClawEquip_OnDodge()
@@ -469,12 +519,29 @@ state ClawEquip_OnDodge_Engage in cACS_ClawEquip_OnDodge
 	{
 		if (!ACS_GetItem_VampClaw_Shades())
 		{
-			p_actor = thePlayer;
+			p_actor = GetWitcherPlayer();
 			p_comp = p_actor.GetComponentByClassName( 'CAppearanceComponent' );
 			
-			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws.w2ent", true);	
+			if (ACS_Armor_Equipped_Check())
+			{
+				claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
 
-			((CAppearanceComponent)p_comp).IncludeAppearanceTemplate(claw_temp);
+				((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+				claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
+
+				((CAppearanceComponent)p_comp).IncludeAppearanceTemplate(claw_temp);
+			}
+			else
+			{
+				claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
+
+				((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+				claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
+
+				((CAppearanceComponent)p_comp).IncludeAppearanceTemplate(claw_temp);
+			}
 		}
 	}
 }
@@ -525,22 +592,26 @@ state ClawDestroy_NOTAG_Engage in cClawDestroy_NOTAG
 	{
 		//ACS_Blood_Armor_Destroy();
 
-		if ( thePlayer.HasBuff(EET_BlackBlood) )
+		if ( GetWitcherPlayer().HasBuff(EET_BlackBlood) )
 		{
-			//thePlayer.PlayEffectSingle('dive_shape');
+			//GetWitcherPlayer().PlayEffectSingle('dive_shape');
 		}
 
 		if (!ACS_GetItem_VampClaw_Shades())
 		{
-			p_actor = thePlayer;
+			p_actor = GetWitcherPlayer();
 			p_comp = p_actor.GetComponentByClassName( 'CAppearanceComponent' );
 				
-			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws.w2ent", true);		
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
 
 			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
 
-			//thePlayer.PlayEffectSingle('claws_effect');
-			//thePlayer.StopEffect('claws_effect');
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
+
+			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+			//GetWitcherPlayer().PlayEffectSingle('claws_effect');
+			//GetWitcherPlayer().StopEffect('claws_effect');
 		}
 	}
 }
@@ -575,7 +646,6 @@ state ClawDestroy_Engage in cClawDestroy
 	private var claw_temp, head_temp					: CEntityTemplate;
 	private var p_actor 								: CActor;
 	private var p_comp 									: CComponent;
-	private var settings								: SAnimatedComponentSlotAnimationSettings;
 	private var components 								: array < CComponent >;
 	private var playerccomp 							: CComponent;
 	private var i										: int;
@@ -593,38 +663,35 @@ state ClawDestroy_Engage in cClawDestroy
 	
 	latent function ClawDestroy_Latent()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 1;
-
 		ACS_Blood_Armor_Destroy();
 
-		if ( thePlayer.HasBuff(EET_BlackBlood) )
+		if ( GetWitcherPlayer().HasBuff(EET_BlackBlood) )
 		{
-			thePlayer.StopEffect('dive_shape');	
-			thePlayer.PlayEffectSingle('dive_shape');
+			GetWitcherPlayer().StopEffect('dive_shape');	
+			GetWitcherPlayer().PlayEffectSingle('dive_shape');
 
-			thePlayer.StopEffect('blood_color_2');
-			thePlayer.PlayEffectSingle('blood_color_2');
+			GetWitcherPlayer().StopEffect('blood_color_2');
+			GetWitcherPlayer().PlayEffectSingle('blood_color_2');
 		}
 
 		if (!ACS_GetItem_VampClaw_Shades())
 		{
-			thePlayer.PlayEffectSingle('claws_effect');
-			thePlayer.StopEffect('claws_effect');
+			GetWitcherPlayer().PlayEffectSingle('claws_effect');
+			GetWitcherPlayer().StopEffect('claws_effect');
 
-			p_actor = thePlayer;
+			p_actor = GetWitcherPlayer();
 			p_comp = p_actor.GetComponentByClassName( 'CAppearanceComponent' );
 				
-			claw_temp = (CEntityTemplate)LoadResource(	
-				
-				"dlc\dlc_ACS\data\entities\swords\vamp_claws.w2ent"
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
 
-				, true);	
-				
+			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
+
 			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
 		}
 			
-		thePlayer.RemoveTag('vampire_claws_equipped');	
+		GetWitcherPlayer().RemoveTag('vampire_claws_equipped');	
 
 		if (ACS_Manual_Sword_Drawing_Check_Actual() == 0)
 		{
@@ -635,31 +702,140 @@ state ClawDestroy_Engage in cClawDestroy
 			theGame.GetInGameConfigWrapper().SetVarValue('Gameplay', 'DisableAutomaticSwordSheathe', true);
 		}
 			
-		thePlayer.RemoveTag('ACS_blood_armor');
+		GetWitcherPlayer().RemoveTag('ACS_blood_armor');
 
-		thePlayer.UnblockAction(EIAB_SpecialAttackLight,	'ACS_Vamp_Claws_Block_Action');
-		thePlayer.UnblockAction(EIAB_SpecialAttackHeavy,	'ACS_Vamp_Claws_Block_Action');
+		GetWitcherPlayer().UnblockAction(EIAB_SpecialAttackLight,	'ACS_Vamp_Claws_Block_Action');
+		GetWitcherPlayer().UnblockAction(EIAB_SpecialAttackHeavy,	'ACS_Vamp_Claws_Block_Action');
 
 		if (!theGame.IsDialogOrCutscenePlaying()
-		&& !thePlayer.IsThrowingItemWithAim()
-		&& !thePlayer.IsThrowingItem()
-		&& !thePlayer.IsThrowHold()
-		&& !thePlayer.IsUsingHorse()
-		&& !thePlayer.IsUsingVehicle()
-		&& thePlayer.IsAlive())
+		&& !GetWitcherPlayer().IsThrowingItemWithAim()
+		&& !GetWitcherPlayer().IsThrowingItem()
+		&& !GetWitcherPlayer().IsThrowHold()
+		&& !GetWitcherPlayer().IsUsingHorse()
+		&& !GetWitcherPlayer().IsUsingVehicle()
+		&& GetWitcherPlayer().IsAlive())
 		{
-			if ( thePlayer.GetBehaviorGraphInstanceName() != 'Gameplay' )
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'Gameplay' );
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR' );
+						}
+					}
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP' );
+						}
+					}
+				}
+			}
+			else
+			{
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh' );
+						}
+					}
+				}
 			}
 
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walk_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walk_forward_dettlaff_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.15f, 1.0f));
 		}
 	}
 }
 
 function ACS_Blood_Armor_Destroy()
 {
+	thePlayer.SoundEvent( "monster_dettlaff_monster_vein_beating_heart_LP_Stop" );
+
 	ACS_Vampire_Arms_1_Get().StopEffect('blood_color');
 
 	ACS_Vampire_Arms_2_Get().StopEffect('blood_color');
@@ -671,43 +847,43 @@ function ACS_Blood_Armor_Destroy()
 	ACS_Vampire_Head_Get().StopEffect('blood_color');
 
 	ACS_Vampire_Arms_1_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_1_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_1_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_1_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Arms_2_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_2_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_2_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_2_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Arms_3_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_3_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_3_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_3_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Arms_4_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_4_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_4_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_4_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Arms_Anchor_L_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_Anchor_L_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_Anchor_L_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_Anchor_L_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Arms_Anchor_R_Get().BreakAttachment(); 
-	ACS_Vampire_Arms_Anchor_R_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Arms_Anchor_R_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Arms_Anchor_R_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Head_Anchor_Get().BreakAttachment(); 
-	ACS_Vampire_Head_Anchor_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Head_Anchor_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Head_Anchor_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Head_Get().BreakAttachment(); 
-	ACS_Vampire_Head_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Head_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Head_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Back_Claw_Get().BreakAttachment(); 
-	ACS_Vampire_Back_Claw_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Back_Claw_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Back_Claw_Get().DestroyAfter(0.00125);
 
 	ACS_Vampire_Claw_Anchor_Get().BreakAttachment(); 
-	ACS_Vampire_Claw_Anchor_Get().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	ACS_Vampire_Claw_Anchor_Get().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	ACS_Vampire_Claw_Anchor_Get().DestroyAfter(0.00125);
 }
 
@@ -722,6 +898,10 @@ function ACS_Blood_Armor_Destroy_IMMEDIATE()
 
 function ACS_Blood_Armor_Destroy_Without_Back_Claw_IMMEDIATE()
 {
+	thePlayer.SoundEvent( "monster_dettlaff_monster_vein_beating_heart_LP_Stop" );
+
+	thePlayer.DestroyEffect('blood_color');
+
 	ACS_Vampire_Arms_1_Get().StopEffect('blood_color');
 
 	ACS_Vampire_Arms_2_Get().StopEffect('blood_color');
@@ -779,7 +959,6 @@ state ClawDestroy_WITH_EFFECT_Engage in cClawDestroy_WITH_EFFECT
 	private var claw_temp, head_temp					: CEntityTemplate;
 	private var p_actor 								: CActor;
 	private var p_comp 									: CComponent;
-	private var settings								: SAnimatedComponentSlotAnimationSettings;
 	private var components 								: array < CComponent >;
 	private var drawableComponent 						: CDrawableComponent;
 	private var i										: int;
@@ -797,51 +976,159 @@ state ClawDestroy_WITH_EFFECT_Engage in cClawDestroy_WITH_EFFECT
 	
 	latent function ClawDestroy_Latent()
 	{
-		settings.blendIn = 0;
-		settings.blendOut = 1;
-
 		if (!theGame.IsDialogOrCutscenePlaying()
-		&& !thePlayer.IsInCombat()
-		&& !thePlayer.IsThrowingItemWithAim()
-		&& !thePlayer.IsThrowingItem()
-		&& !thePlayer.IsThrowHold()
-		&& !thePlayer.IsUsingHorse()
-		&& !thePlayer.IsUsingVehicle()
-		&& thePlayer.IsAlive())
+		&& !GetWitcherPlayer().IsInCombat()
+		&& !GetWitcherPlayer().IsThrowingItemWithAim()
+		&& !GetWitcherPlayer().IsThrowingItem()
+		&& !GetWitcherPlayer().IsThrowHold()
+		&& !GetWitcherPlayer().IsUsingHorse()
+		&& !GetWitcherPlayer().IsUsingVehicle()
+		&& GetWitcherPlayer().IsAlive())
 		{
-			if ( thePlayer.GetBehaviorGraphInstanceName() != 'Gameplay' )
+			if (ACS_SCAAR_Installed() && ACS_SCAAR_Enabled() && !ACS_E3ARP_Enabled())
 			{
-				thePlayer.ActivateAndSyncBehavior( 'Gameplay' );
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_SCAAR' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_SCAAR' );
+						}
+					}
+				}
+			}
+			else if (ACS_E3ARP_Installed() && ACS_E3ARP_Enabled() && !ACS_SCAAR_Enabled())
+			{
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_E3ARP' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_E3ARP' );
+						}
+					}
+				}
+			}
+			else
+			{
+				if (ACS_SwordWalk_Enabled())
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_swordwalk_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_swordwalk_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_swordwalk' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_swordwalk' );
+						}
+					}
+				}
+				else
+				{
+					if (ACS_PassiveTaunt_Enabled())
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh_passive_taunt' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh_passive_taunt' );
+						}
+					}
+					else
+					{
+						if ( GetWitcherPlayer().GetBehaviorGraphInstanceName() != 'igni_primary_beh' )
+						{
+							GetWitcherPlayer().ActivateAndSyncBehavior( 'igni_primary_beh' );
+						}
+					}
+				}
 			}
 
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walk_forward_dettlaff_ACS', 'PLAYER_SLOT', settings);
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'locomotion_walk_forward_dettlaff_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 1.0f));
 		}
 
 		ACS_Blood_Armor_Destroy();
 
-		if ( thePlayer.HasBuff(EET_BlackBlood) )
+		if ( GetWitcherPlayer().HasBuff(EET_BlackBlood) )
 		{
-			thePlayer.StopEffect('dive_shape');	
-			thePlayer.PlayEffectSingle('dive_shape');
+			GetWitcherPlayer().StopEffect('dive_shape');	
+			GetWitcherPlayer().PlayEffectSingle('dive_shape');
 
-			thePlayer.StopEffect('blood_color_2');
-			thePlayer.PlayEffectSingle('blood_color_2');
+			GetWitcherPlayer().StopEffect('blood_color_2');
+			GetWitcherPlayer().PlayEffectSingle('blood_color_2');
 		}
 		
 		if (!ACS_GetItem_VampClaw_Shades())
 		{
-			p_actor = thePlayer;
+			p_actor = GetWitcherPlayer();
 			p_comp = p_actor.GetComponentByClassName( 'CAppearanceComponent' );
-				
-			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws.w2ent", true);		
 
-			thePlayer.PlayEffectSingle('claws_effect');
-			thePlayer.StopEffect('claws_effect');
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_ACS\data\entities\swords\vamp_claws_steel.w2ent", true);	
 
 			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+			claw_temp = (CEntityTemplate)LoadResource(	"dlc\dlc_acs\data\entities\swords\vamp_claws.w2ent", true);	
+
+			((CAppearanceComponent)p_comp).ExcludeAppearanceTemplate(claw_temp);
+
+			GetWitcherPlayer().PlayEffectSingle('claws_effect');
+			GetWitcherPlayer().StopEffect('claws_effect');
 		}
 			
-		thePlayer.RemoveTag('vampire_claws_equipped');	
+		GetWitcherPlayer().RemoveTag('vampire_claws_equipped');	
 
 		if (ACS_Manual_Sword_Drawing_Check_Actual() == 0)
 		{
@@ -854,7 +1141,7 @@ state ClawDestroy_WITH_EFFECT_Engage in cClawDestroy_WITH_EFFECT
 
 		components.Clear();
 
-		components =  thePlayer.GetComponentsByClassName ( 'CDrawableComponent' );
+		components =  GetWitcherPlayer().GetComponentsByClassName ( 'CDrawableComponent' );
 			
 		for ( i = 0; i < components.Size(); i+=1 )
 		{
@@ -862,10 +1149,10 @@ state ClawDestroy_WITH_EFFECT_Engage in cClawDestroy_WITH_EFFECT
 			drawableComponent.SetCastingShadows ( true );
 		}
 
-		thePlayer.RemoveTag('ACS_blood_armor');
+		GetWitcherPlayer().RemoveTag('ACS_blood_armor');
 
-		thePlayer.UnblockAction(EIAB_SpecialAttackLight,	'ACS_Vamp_Claws_Block_Action');
-		thePlayer.UnblockAction(EIAB_SpecialAttackHeavy,	'ACS_Vamp_Claws_Block_Action');
+		GetWitcherPlayer().UnblockAction(EIAB_SpecialAttackLight,	'ACS_Vamp_Claws_Block_Action');
+		GetWitcherPlayer().UnblockAction(EIAB_SpecialAttackHeavy,	'ACS_Vamp_Claws_Block_Action');
 	}
 }
 
@@ -875,41 +1162,41 @@ function IgniSwordDestroy()
 {
 	//ACS_HideSword();
 		
-	thePlayer.RemoveTag('igni_sword_equipped');
+	GetWitcherPlayer().RemoveTag('igni_sword_equipped');
 
-	thePlayer.RemoveTag('igni_sword_equipped_TAG');
+	GetWitcherPlayer().RemoveTag('igni_sword_equipped_TAG');
 
-	thePlayer.RemoveTag('igni_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_sword_effect_played');
 }
 	
 function IgniSecondarySwordDestroy()
 {
 	//ACS_HideSword();
 		
-	thePlayer.RemoveTag('igni_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('igni_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('igni_secondary_sword_equipped_TAG');
+	GetWitcherPlayer().RemoveTag('igni_secondary_sword_equipped_TAG');
 
-	thePlayer.RemoveTag('igni_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_secondary_sword_effect_played');
 }
 	
 function QuenSwordDestroy()
 {
 	quen_sword_1().BreakAttachment();
-	quen_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_1().DestroyAfter(0.00125);
 
 	quen_sword_2().BreakAttachment();
-	quen_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_2().DestroyAfter(0.00125);
 
 	quen_sword_3().BreakAttachment();
-	quen_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_3().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('quen_sword_equipped');
+	GetWitcherPlayer().RemoveTag('quen_sword_equipped');
 
-	thePlayer.RemoveTag('quen_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_sword_effect_played');
 }
 
 function QuenSwordDestroyIMMEDIATE()
@@ -920,57 +1207,57 @@ function QuenSwordDestroyIMMEDIATE()
 
 	quen_sword_3().Destroy();
 		
-	thePlayer.RemoveTag('quen_sword_equipped');
+	GetWitcherPlayer().RemoveTag('quen_sword_equipped');
 
-	thePlayer.RemoveTag('quen_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_sword_effect_played');
 }
 
 function QuenSwordDestroy_NOTAG()
 {
 	quen_sword_1().BreakAttachment();
-	quen_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_1().DestroyAfter(0.00125);
 
 	quen_sword_2().BreakAttachment();
-	quen_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_2().DestroyAfter(0.00125);
 
 	quen_sword_3().BreakAttachment();
-	quen_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_sword_3().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('quen_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_sword_effect_played');
 }
 	
 function QuenSecondarySwordDestroy()
 {	
 	quen_secondary_sword_1().BreakAttachment(); 
-	quen_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_1().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_2().BreakAttachment(); 
-	quen_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_2().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_3().BreakAttachment(); 
-	quen_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_3().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_4().BreakAttachment(); 
-	quen_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_4().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_5().BreakAttachment(); 
-	quen_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_5().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_6().BreakAttachment(); 
-	quen_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_6().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('quen_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('quen_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('quen_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_secondary_sword_effect_played');
 }
 
 function QuenSecondarySwordDestroyIMMEDIATE()
@@ -987,85 +1274,85 @@ function QuenSecondarySwordDestroyIMMEDIATE()
 
 	quen_secondary_sword_6().Destroy();
 		
-	thePlayer.RemoveTag('quen_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('quen_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('quen_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_secondary_sword_effect_played');
 }
 
 function QuenSecondarySwordDestroy_NOTAG()
 {	
 	quen_secondary_sword_1().BreakAttachment(); 
-	quen_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_1().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_2().BreakAttachment(); 
-	quen_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_2().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_3().BreakAttachment(); 
-	quen_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_3().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_4().BreakAttachment(); 
-	quen_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_4().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_5().BreakAttachment(); 
-	quen_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_5().DestroyAfter(0.00125);
 		
 	quen_secondary_sword_6().BreakAttachment(); 
-	quen_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_secondary_sword_6().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('quen_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_secondary_sword_effect_played');
 }
 	
 function AardSwordDestroy()
 {	
 	aard_l_anchor_1().BreakAttachment(); 
-	aard_l_anchor_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_l_anchor_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_l_anchor_1().DestroyAfter(0.00125);
 
 	aard_r_anchor_1().BreakAttachment(); 
-	aard_r_anchor_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_r_anchor_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_r_anchor_1().DestroyAfter(0.00125);
 
 	aard_blade_1().BreakAttachment(); 
-	aard_blade_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_1().DestroyAfter(0.00125);
 		
 	aard_blade_2().BreakAttachment(); 
-	aard_blade_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_2().DestroyAfter(0.00125);
 		
 	aard_blade_3().BreakAttachment(); 
-	aard_blade_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_3().DestroyAfter(0.00125);
 		
 	aard_blade_4().BreakAttachment(); 
-	aard_blade_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_4().DestroyAfter(0.00125);
 		
 	aard_blade_5().BreakAttachment(); 
-	aard_blade_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_5().DestroyAfter(0.00125);
 		
 	aard_blade_6().BreakAttachment(); 
-	aard_blade_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_6().DestroyAfter(0.00125);
 
 	aard_blade_7().BreakAttachment(); 
-	aard_blade_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_7().DestroyAfter(0.00125);
 
 	aard_blade_8().BreakAttachment(); 
-	aard_blade_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('aard_sword_equipped');
+	GetWitcherPlayer().RemoveTag('aard_sword_equipped');
 
-	thePlayer.RemoveTag('aard_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_sword_effect_played');
 }
 
 function AardSwordDestroyIMMEDIATE()
@@ -1090,93 +1377,93 @@ function AardSwordDestroyIMMEDIATE()
 
 	aard_blade_8().Destroy();
 		
-	thePlayer.RemoveTag('aard_sword_equipped');
+	GetWitcherPlayer().RemoveTag('aard_sword_equipped');
 
-	thePlayer.RemoveTag('aard_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_sword_effect_played');
 }
 
 function AardSwordDestroy_NOTAG()
 {	
 	aard_l_anchor_1().BreakAttachment(); 
-	aard_l_anchor_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_l_anchor_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_l_anchor_1().DestroyAfter(0.00125);
 
 	aard_r_anchor_1().BreakAttachment(); 
-	aard_r_anchor_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_r_anchor_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_r_anchor_1().DestroyAfter(0.00125);
 
 	aard_blade_1().BreakAttachment(); 
-	aard_blade_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_1().DestroyAfter(0.00125);
 		
 	aard_blade_2().BreakAttachment(); 
-	aard_blade_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_2().DestroyAfter(0.00125);
 		
 	aard_blade_3().BreakAttachment(); 
-	aard_blade_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_3().DestroyAfter(0.00125);
 		
 	aard_blade_4().BreakAttachment(); 
-	aard_blade_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_4().DestroyAfter(0.00125);
 		
 	aard_blade_5().BreakAttachment(); 
-	aard_blade_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_5().DestroyAfter(0.00125);
 		
 	aard_blade_6().BreakAttachment(); 
-	aard_blade_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_6().DestroyAfter(0.00125);
 
 	aard_blade_7().BreakAttachment(); 
-	aard_blade_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_7().DestroyAfter(0.00125);
 
 	aard_blade_8().BreakAttachment(); 
-	aard_blade_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_blade_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_blade_8().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('aard_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_sword_effect_played');
 }
 	
 function AardSecondarySwordDestroy()
 {
 	aard_secondary_sword_1().BreakAttachment(); 
-	aard_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_1().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_2().BreakAttachment(); 
-	aard_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_2().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_3().BreakAttachment(); 
-	aard_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_3().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_4().BreakAttachment(); 
-	aard_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_4().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_5().BreakAttachment(); 
-	aard_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_5().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_6().BreakAttachment(); 
-	aard_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_6().DestroyAfter(0.00125);
 
 	aard_secondary_sword_7().BreakAttachment(); 
-	aard_secondary_sword_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_7().DestroyAfter(0.00125);
 
 	aard_secondary_sword_8().BreakAttachment(); 
-	aard_secondary_sword_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('aard_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('aard_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('aard_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_secondary_sword_effect_played');
 }
 
 function AardSecondarySwordDestroyIMMEDIATE()
@@ -1197,85 +1484,85 @@ function AardSecondarySwordDestroyIMMEDIATE()
 
 	aard_secondary_sword_8().Destroy();
 		
-	thePlayer.RemoveTag('aard_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('aard_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('aard_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_secondary_sword_effect_played');
 }
 
 function AardSecondarySwordDestroy_NOTAG()
 {
 	aard_secondary_sword_1().BreakAttachment(); 
-	aard_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_1().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_2().BreakAttachment(); 
-	aard_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_2().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_3().BreakAttachment(); 
-	aard_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_3().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_4().BreakAttachment(); 
-	aard_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_4().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_5().BreakAttachment(); 
-	aard_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_5().DestroyAfter(0.00125);
 		
 	aard_secondary_sword_6().BreakAttachment(); 
-	aard_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_6().DestroyAfter(0.00125);
 
 	aard_secondary_sword_7().BreakAttachment(); 
-	aard_secondary_sword_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_7().DestroyAfter(0.00125);
 
 	aard_secondary_sword_8().BreakAttachment(); 
-	aard_secondary_sword_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_secondary_sword_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_secondary_sword_8().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('aard_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_secondary_sword_effect_played');
 }
 	
 function YrdenSwordDestroy()
 {
 	yrden_sword_1().BreakAttachment(); 
-	yrden_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_1().DestroyAfter(0.00125);
 		
 	yrden_sword_2().BreakAttachment(); 
-	yrden_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_2().DestroyAfter(0.00125);
 		
 	yrden_sword_3().BreakAttachment(); 
-	yrden_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_3().DestroyAfter(0.00125);
 		
 	yrden_sword_4().BreakAttachment(); 
-	yrden_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_4().DestroyAfter(0.00125);
 		
 	yrden_sword_5().BreakAttachment(); 
-	yrden_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_5().DestroyAfter(0.00125);
 		
 	yrden_sword_6().BreakAttachment(); 
-	yrden_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_6().DestroyAfter(0.00125);
 
 	yrden_sword_7().BreakAttachment(); 
-	yrden_sword_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_7().DestroyAfter(0.00125);
 
 	yrden_sword_8().BreakAttachment(); 
-	yrden_sword_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('yrden_sword_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_sword_equipped');
 
-	thePlayer.RemoveTag('yrden_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_sword_effect_played');
 }
 
 function YrdenSwordDestroyIMMEDIATE()
@@ -1296,77 +1583,77 @@ function YrdenSwordDestroyIMMEDIATE()
 
 	yrden_sword_8().Destroy();
 		
-	thePlayer.RemoveTag('yrden_sword_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_sword_equipped');
 
-	thePlayer.RemoveTag('yrden_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_sword_effect_played');
 }
 
 function YrdenSwordDestroy_NOTAG()
 {
 	yrden_sword_1().BreakAttachment(); 
-	yrden_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_1().DestroyAfter(0.00125);
 		
 	yrden_sword_2().BreakAttachment(); 
-	yrden_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_2().DestroyAfter(0.00125);
 		
 	yrden_sword_3().BreakAttachment(); 
-	yrden_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_3().DestroyAfter(0.00125);
 		
 	yrden_sword_4().BreakAttachment(); 
-	yrden_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_4().DestroyAfter(0.00125);
 		
 	yrden_sword_5().BreakAttachment(); 
-	yrden_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_5().DestroyAfter(0.00125);
 		
 	yrden_sword_6().BreakAttachment(); 
-	yrden_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_6().DestroyAfter(0.00125);
 
 	yrden_sword_7().BreakAttachment(); 
-	yrden_sword_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_7().DestroyAfter(0.00125);
 
 	yrden_sword_8().BreakAttachment(); 
-	yrden_sword_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_sword_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_sword_8().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('yrden_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_sword_effect_played');
 }
 	
 function YrdenSecondarySwordDestroy()
 {
 	yrden_secondary_sword_1().BreakAttachment(); 
-	yrden_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_1().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_2().BreakAttachment(); 
-	yrden_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_2().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_3().BreakAttachment(); 
-	yrden_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_3().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_4().BreakAttachment(); 
-	yrden_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_4().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_5().BreakAttachment(); 
-	yrden_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_5().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_6().BreakAttachment(); 
-	yrden_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_6().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('yrden_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('yrden_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_secondary_sword_effect_played');
 }
 
 function YrdenSecondarySwordDestroyIMMEDIATE()
@@ -1383,65 +1670,65 @@ function YrdenSecondarySwordDestroyIMMEDIATE()
 
 	yrden_secondary_sword_6().Destroy();
 		
-	thePlayer.RemoveTag('yrden_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('yrden_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_secondary_sword_effect_played');
 }
 
 function YrdenSecondarySwordDestroy_NOTAG()
 {
 	yrden_secondary_sword_1().BreakAttachment(); 
-	yrden_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_1().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_2().BreakAttachment(); 
-	yrden_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_2().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_3().BreakAttachment(); 
-	yrden_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_3().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_4().BreakAttachment(); 
-	yrden_secondary_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_4().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_5().BreakAttachment(); 
-	yrden_secondary_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_5().DestroyAfter(0.00125);
 		
 	yrden_secondary_sword_6().BreakAttachment(); 
-	yrden_secondary_sword_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_secondary_sword_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_secondary_sword_6().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('yrden_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_secondary_sword_effect_played');
 }
 	
 function AxiiSwordDestroy()
 {
 	axii_sword_1().BreakAttachment(); 
-	axii_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_1().DestroyAfter(0.00125);
 		
 	axii_sword_2().BreakAttachment(); 
-	axii_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_2().DestroyAfter(0.00125);
 		
 	axii_sword_3().BreakAttachment(); 
-	axii_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_3().DestroyAfter(0.00125);
 		
 	axii_sword_4().BreakAttachment(); 
-	axii_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_4().DestroyAfter(0.00125);
 		
 	axii_sword_5().BreakAttachment(); 
-	axii_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_5().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('axii_sword_equipped');
+	GetWitcherPlayer().RemoveTag('axii_sword_equipped');
 
-	thePlayer.RemoveTag('axii_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_sword_effect_played');
 }
 
 function AxiiSwordDestroyIMMEDIATE()
@@ -1456,53 +1743,53 @@ function AxiiSwordDestroyIMMEDIATE()
 
 	axii_sword_5().Destroy();
 		
-	thePlayer.RemoveTag('axii_sword_equipped');
+	GetWitcherPlayer().RemoveTag('axii_sword_equipped');
 
-	thePlayer.RemoveTag('axii_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_sword_effect_played');
 }
 
 function AxiiSwordDestroy_NOTAG()
 {
 	axii_sword_1().BreakAttachment(); 
-	axii_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_1().DestroyAfter(0.00125);
 		
 	axii_sword_2().BreakAttachment(); 
-	axii_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_2().DestroyAfter(0.00125);
 		
 	axii_sword_3().BreakAttachment(); 
-	axii_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_3().DestroyAfter(0.00125);
 		
 	axii_sword_4().BreakAttachment(); 
-	axii_sword_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_4().DestroyAfter(0.00125);
 		
 	axii_sword_5().BreakAttachment(); 
-	axii_sword_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_sword_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_sword_5().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('axii_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_sword_effect_played');
 }
 	
 function AxiiSecondarySwordDestroy()
 {
 	axii_secondary_sword_1().BreakAttachment(); 
-	axii_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_1().DestroyAfter(0.00125);
 		
 	axii_secondary_sword_2().BreakAttachment(); 
-	axii_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_2().DestroyAfter(0.00125);
 		
 	axii_secondary_sword_3().BreakAttachment(); 
-	axii_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_3().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('axii_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('axii_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('axii_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_secondary_sword_effect_played');
 }
 
 function AxiiSecondarySwordDestroyIMMEDIATE()
@@ -1513,26 +1800,26 @@ function AxiiSecondarySwordDestroyIMMEDIATE()
 
 	axii_secondary_sword_3().Destroy();
 		
-	thePlayer.RemoveTag('axii_secondary_sword_equipped');
+	GetWitcherPlayer().RemoveTag('axii_secondary_sword_equipped');
 
-	thePlayer.RemoveTag('axii_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_secondary_sword_effect_played');
 }
 
 function AxiiSecondarySwordDestroy_NOTAG()
 {
 	axii_secondary_sword_1().BreakAttachment(); 
-	axii_secondary_sword_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_1().DestroyAfter(0.00125);
 		
 	axii_secondary_sword_2().BreakAttachment(); 
-	axii_secondary_sword_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_2().DestroyAfter(0.00125);
 		
 	axii_secondary_sword_3().BreakAttachment(); 
-	axii_secondary_sword_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_secondary_sword_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_secondary_sword_3().DestroyAfter(0.00125);
 
-	thePlayer.RemoveTag('axii_secondary_sword_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_secondary_sword_effect_played');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1540,40 +1827,40 @@ function AxiiSecondarySwordDestroy_NOTAG()
 function IgniBowDestroy()
 {
 	igni_bow_1().BreakAttachment(); 
-	igni_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_1().DestroyAfter(0.00125);
 		
 	igni_bow_2().BreakAttachment(); 
-	igni_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_2().DestroyAfter(0.00125);
 		
 	igni_bow_3().BreakAttachment(); 
-	igni_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_3().DestroyAfter(0.00125);
 		
 	igni_bow_4().BreakAttachment(); 
-	igni_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_4().DestroyAfter(0.00125);
 		
 	igni_bow_5().BreakAttachment(); 
-	igni_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_5().DestroyAfter(0.00125);
 		
 	igni_bow_6().BreakAttachment(); 
-	igni_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_6().DestroyAfter(0.00125);
 
 	igni_bow_7().BreakAttachment(); 
-	igni_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_7().DestroyAfter(0.00125);
 
 	igni_bow_8().BreakAttachment(); 
-	igni_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('igni_bow_equipped');
+	GetWitcherPlayer().RemoveTag('igni_bow_equipped');
 
-	thePlayer.RemoveTag('igni_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_bow_effect_played');
 }
 
 function IgniBowDestroyIMMEDIATE()
@@ -1594,83 +1881,83 @@ function IgniBowDestroyIMMEDIATE()
 
 	igni_bow_8().Destroy();
 		
-	thePlayer.RemoveTag('igni_bow_equipped');
+	GetWitcherPlayer().RemoveTag('igni_bow_equipped');
 
-	thePlayer.RemoveTag('igni_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_bow_effect_played');
 }
 
 function IgniBowDestroy_NOTAG()
 {
 	igni_bow_1().BreakAttachment(); 
-	igni_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_1().DestroyAfter(0.00125);
 		
 	igni_bow_2().BreakAttachment(); 
-	igni_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_2().DestroyAfter(0.00125);
 		
 	igni_bow_3().BreakAttachment(); 
-	igni_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_3().DestroyAfter(0.00125);
 		
 	igni_bow_4().BreakAttachment(); 
-	igni_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_4().DestroyAfter(0.00125);
 		
 	igni_bow_5().BreakAttachment(); 
-	igni_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_5().DestroyAfter(0.00125);
 		
 	igni_bow_6().BreakAttachment(); 
-	igni_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_6().DestroyAfter(0.00125);
 
 	igni_bow_7().BreakAttachment(); 
-	igni_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_7().DestroyAfter(0.00125);
 
 	igni_bow_8().BreakAttachment(); 
-	igni_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_bow_8().DestroyAfter(0.00125);
 }
 
 function AxiiBowDestroy()
 {
 	axii_bow_1().BreakAttachment(); 
-	axii_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_1().DestroyAfter(0.00125);
 		
 	axii_bow_2().BreakAttachment(); 
-	axii_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_2().DestroyAfter(0.00125);
 		
 	axii_bow_3().BreakAttachment(); 
-	axii_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_3().DestroyAfter(0.00125);
 		
 	axii_bow_4().BreakAttachment(); 
-	axii_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_4().DestroyAfter(0.00125);
 		
 	axii_bow_5().BreakAttachment(); 
-	axii_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_5().DestroyAfter(0.00125);
 		
 	axii_bow_6().BreakAttachment(); 
-	axii_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_6().DestroyAfter(0.00125);
 
 	axii_bow_7().BreakAttachment(); 
-	axii_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_7().DestroyAfter(0.00125);
 
 	axii_bow_8().BreakAttachment(); 
-	axii_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('axii_bow_equipped');
+	GetWitcherPlayer().RemoveTag('axii_bow_equipped');
 
-	thePlayer.RemoveTag('axii_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_bow_effect_played');
 }
 
 function AxiiBowDestroyIMMEDIATE()
@@ -1691,83 +1978,83 @@ function AxiiBowDestroyIMMEDIATE()
 
 	axii_bow_8().Destroy();
 		
-	thePlayer.RemoveTag('axii_bow_equipped');
+	GetWitcherPlayer().RemoveTag('axii_bow_equipped');
 
-	thePlayer.RemoveTag('axii_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_bow_effect_played');
 }
 
 function AxiiBowDestroy_NOTAG()
 {
 	axii_bow_1().BreakAttachment(); 
-	axii_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_1().DestroyAfter(0.00125);
 		
 	axii_bow_2().BreakAttachment(); 
-	axii_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_2().DestroyAfter(0.00125);
 		
 	axii_bow_3().BreakAttachment(); 
-	axii_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_3().DestroyAfter(0.00125);
 		
 	axii_bow_4().BreakAttachment(); 
-	axii_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_4().DestroyAfter(0.00125);
 		
 	axii_bow_5().BreakAttachment(); 
-	axii_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_5().DestroyAfter(0.00125);
 		
 	axii_bow_6().BreakAttachment(); 
-	axii_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_6().DestroyAfter(0.00125);
 
 	axii_bow_7().BreakAttachment(); 
-	axii_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_7().DestroyAfter(0.00125);
 
 	axii_bow_8().BreakAttachment(); 
-	axii_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_bow_8().DestroyAfter(0.00125);
 }
 
 function AardBowDestroy()
 {
 	aard_bow_1().BreakAttachment(); 
-	aard_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_1().DestroyAfter(0.00125);
 		
 	aard_bow_2().BreakAttachment(); 
-	aard_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_2().DestroyAfter(0.00125);
 		
 	aard_bow_3().BreakAttachment(); 
-	aard_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_3().DestroyAfter(0.00125);
 		
 	aard_bow_4().BreakAttachment(); 
-	aard_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_4().DestroyAfter(0.00125);
 		
 	aard_bow_5().BreakAttachment(); 
-	aard_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_5().DestroyAfter(0.00125);
 		
 	aard_bow_6().BreakAttachment(); 
-	aard_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_6().DestroyAfter(0.00125);
 
 	aard_bow_7().BreakAttachment(); 
-	aard_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_7().DestroyAfter(0.00125);
 
 	aard_bow_8().BreakAttachment(); 
-	aard_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('aard_bow_equipped');
+	GetWitcherPlayer().RemoveTag('aard_bow_equipped');
 
-	thePlayer.RemoveTag('aard_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_bow_effect_played');
 }
 
 function AardBowDestroyIMMEDIATE()
@@ -1788,83 +2075,83 @@ function AardBowDestroyIMMEDIATE()
 
 	aard_bow_8().Destroy();
 		
-	thePlayer.RemoveTag('aard_bow_equipped');
+	GetWitcherPlayer().RemoveTag('aard_bow_equipped');
 
-	thePlayer.RemoveTag('aard_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_bow_effect_played');
 }
 
 function AardBowDestroy_NOTAG()
 {
 	aard_bow_1().BreakAttachment(); 
-	aard_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_1().DestroyAfter(0.00125);
 		
 	aard_bow_2().BreakAttachment(); 
-	aard_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_2().DestroyAfter(0.00125);
 		
 	aard_bow_3().BreakAttachment(); 
-	aard_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_3().DestroyAfter(0.00125);
 		
 	aard_bow_4().BreakAttachment(); 
-	aard_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_4().DestroyAfter(0.00125);
 		
 	aard_bow_5().BreakAttachment(); 
-	aard_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_5().DestroyAfter(0.00125);
 		
 	aard_bow_6().BreakAttachment(); 
-	aard_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_6().DestroyAfter(0.00125);
 
 	aard_bow_7().BreakAttachment(); 
-	aard_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_7().DestroyAfter(0.00125);
 
 	aard_bow_8().BreakAttachment(); 
-	aard_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_bow_8().DestroyAfter(0.00125);
 }
 
 function YrdenBowDestroy()
 {
 	yrden_bow_1().BreakAttachment(); 
-	yrden_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_1().DestroyAfter(0.00125);
 		
 	yrden_bow_2().BreakAttachment(); 
-	yrden_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_2().DestroyAfter(0.00125);
 		
 	yrden_bow_3().BreakAttachment(); 
-	yrden_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_3().DestroyAfter(0.00125);
 		
 	yrden_bow_4().BreakAttachment(); 
-	yrden_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_4().DestroyAfter(0.00125);
 		
 	yrden_bow_5().BreakAttachment(); 
-	yrden_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_5().DestroyAfter(0.00125);
 		
 	yrden_bow_6().BreakAttachment(); 
-	yrden_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_6().DestroyAfter(0.00125);
 
 	yrden_bow_7().BreakAttachment(); 
-	yrden_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_7().DestroyAfter(0.00125);
 
 	yrden_bow_8().BreakAttachment(); 
-	yrden_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('yrden_bow_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_bow_equipped');
 
-	thePlayer.RemoveTag('yrden_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_bow_effect_played');
 }
 
 function YrdenBowDestroyIMMEDIATE()
@@ -1885,83 +2172,83 @@ function YrdenBowDestroyIMMEDIATE()
 
 	yrden_bow_8().Destroy();
 		
-	thePlayer.RemoveTag('yrden_bow_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_bow_equipped');
 
-	thePlayer.RemoveTag('yrden_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_bow_effect_played');
 }
 
 function YrdenBowDestroy_NOTAG()
 {
 	yrden_bow_1().BreakAttachment(); 
-	yrden_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_1().DestroyAfter(0.00125);
 		
 	yrden_bow_2().BreakAttachment(); 
-	yrden_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_2().DestroyAfter(0.00125);
 		
 	yrden_bow_3().BreakAttachment(); 
-	yrden_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_3().DestroyAfter(0.00125);
 		
 	yrden_bow_4().BreakAttachment(); 
-	yrden_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_4().DestroyAfter(0.00125);
 		
 	yrden_bow_5().BreakAttachment(); 
-	yrden_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_5().DestroyAfter(0.00125);
 		
 	yrden_bow_6().BreakAttachment(); 
-	yrden_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_6().DestroyAfter(0.00125);
 
 	yrden_bow_7().BreakAttachment(); 
-	yrden_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_7().DestroyAfter(0.00125);
 
 	yrden_bow_8().BreakAttachment(); 
-	yrden_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_bow_8().DestroyAfter(0.00125);
 }
 
 function QuenBowDestroy()
 {
 	quen_bow_1().BreakAttachment(); 
-	quen_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_1().DestroyAfter(0.00125);
 		
 	quen_bow_2().BreakAttachment(); 
-	quen_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_2().DestroyAfter(0.00125);
 		
 	quen_bow_3().BreakAttachment(); 
-	quen_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_3().DestroyAfter(0.00125);
 		
 	quen_bow_4().BreakAttachment(); 
-	quen_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_4().DestroyAfter(0.00125);
 		
 	quen_bow_5().BreakAttachment(); 
-	quen_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_5().DestroyAfter(0.00125);
 		
 	quen_bow_6().BreakAttachment(); 
-	quen_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_6().DestroyAfter(0.00125);
 
 	quen_bow_7().BreakAttachment(); 
-	quen_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_7().DestroyAfter(0.00125);
 
 	quen_bow_8().BreakAttachment(); 
-	quen_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('quen_bow_equipped');
+	GetWitcherPlayer().RemoveTag('quen_bow_equipped');
 
-	thePlayer.RemoveTag('quen_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_bow_effect_played');
 }
 
 function QuenBowDestroyIMMEDIATE()
@@ -1982,43 +2269,43 @@ function QuenBowDestroyIMMEDIATE()
 
 	quen_bow_8().Destroy();
 		
-	thePlayer.RemoveTag('quen_bow_equipped');
+	GetWitcherPlayer().RemoveTag('quen_bow_equipped');
 
-	thePlayer.RemoveTag('quen_bow_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_bow_effect_played');
 }
 
 function QuenBowDestroy_NOTAG()
 {
 	quen_bow_1().BreakAttachment(); 
-	quen_bow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_1().DestroyAfter(0.00125);
 		
 	quen_bow_2().BreakAttachment(); 
-	quen_bow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_2().DestroyAfter(0.00125);
 		
 	quen_bow_3().BreakAttachment(); 
-	quen_bow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_3().DestroyAfter(0.00125);
 		
 	quen_bow_4().BreakAttachment(); 
-	quen_bow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_4().DestroyAfter(0.00125);
 		
 	quen_bow_5().BreakAttachment(); 
-	quen_bow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_5().DestroyAfter(0.00125);
 		
 	quen_bow_6().BreakAttachment(); 
-	quen_bow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_6().DestroyAfter(0.00125);
 
 	quen_bow_7().BreakAttachment(); 
-	quen_bow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_7().DestroyAfter(0.00125);
 
 	quen_bow_8().BreakAttachment(); 
-	quen_bow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_bow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_bow_8().DestroyAfter(0.00125);
 }
 
@@ -2029,40 +2316,40 @@ function QuenBowDestroy_NOTAG()
 function IgniCrossbowDestroy()
 {
 	igni_crossbow_1().BreakAttachment(); 
-	igni_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_1().DestroyAfter(0.00125);
 		
 	igni_crossbow_2().BreakAttachment(); 
-	igni_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_2().DestroyAfter(0.00125);
 		
 	igni_crossbow_3().BreakAttachment(); 
-	igni_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_3().DestroyAfter(0.00125);
 		
 	igni_crossbow_4().BreakAttachment(); 
-	igni_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_4().DestroyAfter(0.00125);
 		
 	igni_crossbow_5().BreakAttachment(); 
-	igni_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_5().DestroyAfter(0.00125);
 		
 	igni_crossbow_6().BreakAttachment(); 
-	igni_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_6().DestroyAfter(0.00125);
 
 	igni_crossbow_7().BreakAttachment(); 
-	igni_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_7().DestroyAfter(0.00125);
 
 	igni_crossbow_8().BreakAttachment(); 
-	igni_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('igni_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('igni_crossbow_equipped');
 
-	thePlayer.RemoveTag('igni_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_crossbow_effect_played');
 }
 
 function IgniCrossbowDestroyIMMEDIATE()
@@ -2083,83 +2370,83 @@ function IgniCrossbowDestroyIMMEDIATE()
 
 	igni_crossbow_8().Destroy();
 		
-	thePlayer.RemoveTag('igni_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('igni_crossbow_equipped');
 
-	thePlayer.RemoveTag('igni_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('igni_crossbow_effect_played');
 }
 
 function IgniCrossbowDestroy_NOTAG()
 {
 	igni_crossbow_1().BreakAttachment(); 
-	igni_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_1().DestroyAfter(0.00125);
 		
 	igni_crossbow_2().BreakAttachment(); 
-	igni_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_2().DestroyAfter(0.00125);
 		
 	igni_crossbow_3().BreakAttachment(); 
-	igni_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_3().DestroyAfter(0.00125);
 		
 	igni_crossbow_4().BreakAttachment(); 
-	igni_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_4().DestroyAfter(0.00125);
 		
 	igni_crossbow_5().BreakAttachment(); 
-	igni_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_5().DestroyAfter(0.00125);
 		
 	igni_crossbow_6().BreakAttachment(); 
-	igni_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_6().DestroyAfter(0.00125);
 
 	igni_crossbow_7().BreakAttachment(); 
-	igni_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_7().DestroyAfter(0.00125);
 
 	igni_crossbow_8().BreakAttachment(); 
-	igni_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	igni_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	igni_crossbow_8().DestroyAfter(0.00125);
 }
 
 function AxiiCrossbowDestroy()
 {
 	axii_crossbow_1().BreakAttachment(); 
-	axii_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_1().DestroyAfter(0.00125);
 		
 	axii_crossbow_2().BreakAttachment(); 
-	axii_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_2().DestroyAfter(0.00125);
 		
 	axii_crossbow_3().BreakAttachment(); 
-	axii_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_3().DestroyAfter(0.00125);
 		
 	axii_crossbow_4().BreakAttachment(); 
-	axii_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_4().DestroyAfter(0.00125);
 		
 	axii_crossbow_5().BreakAttachment(); 
-	axii_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_5().DestroyAfter(0.00125);
 		
 	axii_crossbow_6().BreakAttachment(); 
-	axii_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_6().DestroyAfter(0.00125);
 
 	axii_crossbow_7().BreakAttachment(); 
-	axii_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_7().DestroyAfter(0.00125);
 
 	axii_crossbow_8().BreakAttachment(); 
-	axii_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('axii_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('axii_crossbow_equipped');
 
-	thePlayer.RemoveTag('axii_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_crossbow_effect_played');
 }
 
 function AxiiCrossbowDestroyIMMEDIATE()
@@ -2180,83 +2467,83 @@ function AxiiCrossbowDestroyIMMEDIATE()
 
 	axii_crossbow_8().Destroy();
 		
-	thePlayer.RemoveTag('axii_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('axii_crossbow_equipped');
 
-	thePlayer.RemoveTag('axii_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('axii_crossbow_effect_played');
 }
 
 function AxiiCrossbowDestroy_NOTAG()
 {
 	axii_crossbow_1().BreakAttachment(); 
-	axii_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_1().DestroyAfter(0.00125);
 		
 	axii_crossbow_2().BreakAttachment(); 
-	axii_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_2().DestroyAfter(0.00125);
 		
 	axii_crossbow_3().BreakAttachment(); 
-	axii_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_3().DestroyAfter(0.00125);
 		
 	axii_crossbow_4().BreakAttachment(); 
-	axii_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_4().DestroyAfter(0.00125);
 		
 	axii_crossbow_5().BreakAttachment(); 
-	axii_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_5().DestroyAfter(0.00125);
 		
 	axii_crossbow_6().BreakAttachment(); 
-	axii_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_6().DestroyAfter(0.00125);
 
 	axii_crossbow_7().BreakAttachment(); 
-	axii_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_7().DestroyAfter(0.00125);
 
 	axii_crossbow_8().BreakAttachment(); 
-	axii_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	axii_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	axii_crossbow_8().DestroyAfter(0.00125);
 }
 
 function AardCrossbowDestroy()
 {
 	aard_crossbow_1().BreakAttachment(); 
-	aard_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_1().DestroyAfter(0.00125);
 		
 	aard_crossbow_2().BreakAttachment(); 
-	aard_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_2().DestroyAfter(0.00125);
 		
 	aard_crossbow_3().BreakAttachment(); 
-	aard_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_3().DestroyAfter(0.00125);
 		
 	aard_crossbow_4().BreakAttachment(); 
-	aard_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_4().DestroyAfter(0.00125);
 		
 	aard_crossbow_5().BreakAttachment(); 
-	aard_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_5().DestroyAfter(0.00125);
 		
 	aard_crossbow_6().BreakAttachment(); 
-	aard_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_6().DestroyAfter(0.00125);
 
 	aard_crossbow_7().BreakAttachment(); 
-	aard_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_7().DestroyAfter(0.00125);
 
 	aard_crossbow_8().BreakAttachment(); 
-	aard_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('aard_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('aard_crossbow_equipped');
 
-	thePlayer.RemoveTag('aard_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_crossbow_effect_played');
 }
 
 function AardCrossbowDestroyIMMEDIATE()
@@ -2277,83 +2564,83 @@ function AardCrossbowDestroyIMMEDIATE()
 
 	aard_crossbow_8().Destroy();
 		
-	thePlayer.RemoveTag('aard_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('aard_crossbow_equipped');
 
-	thePlayer.RemoveTag('aard_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('aard_crossbow_effect_played');
 }
 
 function AardCrossbowDestroy_NOTAG()
 {
 	aard_crossbow_1().BreakAttachment(); 
-	aard_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_1().DestroyAfter(0.00125);
 		
 	aard_crossbow_2().BreakAttachment(); 
-	aard_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_2().DestroyAfter(0.00125);
 		
 	aard_crossbow_3().BreakAttachment(); 
-	aard_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_3().DestroyAfter(0.00125);
 		
 	aard_crossbow_4().BreakAttachment(); 
-	aard_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_4().DestroyAfter(0.00125);
 		
 	aard_crossbow_5().BreakAttachment(); 
-	aard_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_5().DestroyAfter(0.00125);
 		
 	aard_crossbow_6().BreakAttachment(); 
-	aard_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_6().DestroyAfter(0.00125);
 
 	aard_crossbow_7().BreakAttachment(); 
-	aard_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_7().DestroyAfter(0.00125);
 
 	aard_crossbow_8().BreakAttachment(); 
-	aard_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	aard_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	aard_crossbow_8().DestroyAfter(0.00125);
 }
 
 function YrdenCrossbowDestroy()
 {
 	yrden_crossbow_1().BreakAttachment(); 
-	yrden_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_1().DestroyAfter(0.00125);
 		
 	yrden_crossbow_2().BreakAttachment(); 
-	yrden_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_2().DestroyAfter(0.00125);
 		
 	yrden_crossbow_3().BreakAttachment(); 
-	yrden_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_3().DestroyAfter(0.00125);
 		
 	yrden_crossbow_4().BreakAttachment(); 
-	yrden_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_4().DestroyAfter(0.00125);
 		
 	yrden_crossbow_5().BreakAttachment(); 
-	yrden_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_5().DestroyAfter(0.00125);
 		
 	yrden_crossbow_6().BreakAttachment(); 
-	yrden_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_6().DestroyAfter(0.00125);
 
 	yrden_crossbow_7().BreakAttachment(); 
-	yrden_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_7().DestroyAfter(0.00125);
 
 	yrden_crossbow_8().BreakAttachment(); 
-	yrden_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('yrden_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_crossbow_equipped');
 
-	thePlayer.RemoveTag('yrden_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_crossbow_effect_played');
 }
 
 function YrdenCrossbowDestroyIMMEDIATE()
@@ -2374,83 +2661,83 @@ function YrdenCrossbowDestroyIMMEDIATE()
 
 	yrden_crossbow_8().Destroy();
 		
-	thePlayer.RemoveTag('yrden_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('yrden_crossbow_equipped');
 
-	thePlayer.RemoveTag('yrden_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('yrden_crossbow_effect_played');
 }
 
 function YrdenCrossbowDestroy_NOTAG()
 {
 	yrden_crossbow_1().BreakAttachment(); 
-	yrden_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_1().DestroyAfter(0.00125);
 		
 	yrden_crossbow_2().BreakAttachment(); 
-	yrden_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_2().DestroyAfter(0.00125);
 		
 	yrden_crossbow_3().BreakAttachment(); 
-	yrden_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_3().DestroyAfter(0.00125);
 		
 	yrden_crossbow_4().BreakAttachment(); 
-	yrden_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_4().DestroyAfter(0.00125);
 		
 	yrden_crossbow_5().BreakAttachment(); 
-	yrden_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_5().DestroyAfter(0.00125);
 		
 	yrden_crossbow_6().BreakAttachment(); 
-	yrden_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_6().DestroyAfter(0.00125);
 
 	yrden_crossbow_7().BreakAttachment(); 
-	yrden_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_7().DestroyAfter(0.00125);
 
 	yrden_crossbow_8().BreakAttachment(); 
-	yrden_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	yrden_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	yrden_crossbow_8().DestroyAfter(0.00125);
 }
 
 function QuenCrossbowDestroy()
 {
 	quen_crossbow_1().BreakAttachment(); 
-	quen_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_1().DestroyAfter(0.00125);
 		
 	quen_crossbow_2().BreakAttachment(); 
-	quen_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_2().DestroyAfter(0.00125);
 		
 	quen_crossbow_3().BreakAttachment(); 
-	quen_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_3().DestroyAfter(0.00125);
 		
 	quen_crossbow_4().BreakAttachment(); 
-	quen_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_4().DestroyAfter(0.00125);
 		
 	quen_crossbow_5().BreakAttachment(); 
-	quen_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_5().DestroyAfter(0.00125);
 		
 	quen_crossbow_6().BreakAttachment(); 
-	quen_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_6().DestroyAfter(0.00125);
 
 	quen_crossbow_7().BreakAttachment(); 
-	quen_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_7().DestroyAfter(0.00125);
 
 	quen_crossbow_8().BreakAttachment(); 
-	quen_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_8().DestroyAfter(0.00125);
 		
-	thePlayer.RemoveTag('quen_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('quen_crossbow_equipped');
 
-	thePlayer.RemoveTag('quen_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_crossbow_effect_played');
 }
 
 function QuenCrossbowDestroyIMMEDIATE()
@@ -2471,43 +2758,43 @@ function QuenCrossbowDestroyIMMEDIATE()
 
 	quen_crossbow_8().Destroy();
 		
-	thePlayer.RemoveTag('quen_crossbow_equipped');
+	GetWitcherPlayer().RemoveTag('quen_crossbow_equipped');
 
-	thePlayer.RemoveTag('quen_crossbow_effect_played');
+	GetWitcherPlayer().RemoveTag('quen_crossbow_effect_played');
 }
 
 function QuenCrossbowDestroy_NOTAG()
 {
 	quen_crossbow_1().BreakAttachment(); 
-	quen_crossbow_1().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_1().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_1().DestroyAfter(0.00125);
 		
 	quen_crossbow_2().BreakAttachment(); 
-	quen_crossbow_2().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_2().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_2().DestroyAfter(0.00125);
 		
 	quen_crossbow_3().BreakAttachment(); 
-	quen_crossbow_3().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_3().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_3().DestroyAfter(0.00125);
 		
 	quen_crossbow_4().BreakAttachment(); 
-	quen_crossbow_4().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_4().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_4().DestroyAfter(0.00125);
 		
 	quen_crossbow_5().BreakAttachment(); 
-	quen_crossbow_5().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_5().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_5().DestroyAfter(0.00125);
 		
 	quen_crossbow_6().BreakAttachment(); 
-	quen_crossbow_6().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_6().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_6().DestroyAfter(0.00125);
 
 	quen_crossbow_7().BreakAttachment(); 
-	quen_crossbow_7().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_7().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_7().DestroyAfter(0.00125);
 
 	quen_crossbow_8().BreakAttachment(); 
-	quen_crossbow_8().Teleport( thePlayer.GetWorldPosition() + Vector( 0, 0, -200 ) );
+	quen_crossbow_8().Teleport( GetWitcherPlayer().GetWorldPosition() + Vector( 0, 0, -200 ) );
 	quen_crossbow_8().DestroyAfter(0.00125);
 }
 
@@ -2515,44 +2802,44 @@ function QuenCrossbowDestroy_NOTAG()
 
 function HybridTagRemoval()
 {
-	if (thePlayer.HasTag('HybridDefaultWeaponTicket'))
+	if (GetWitcherPlayer().HasTag('HybridDefaultWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridDefaultWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridDefaultWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridDefaultSecondaryWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridDefaultSecondaryWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridDefaultSecondaryWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridDefaultSecondaryWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridEredinWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridEredinWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridEredinWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridEredinWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridClawWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridClawWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridClawWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridClawWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridImlerithWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridImlerithWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridImlerithWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridImlerithWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridOlgierdWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridOlgierdWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridOlgierdWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridOlgierdWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridSpearWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridSpearWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridSpearWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridSpearWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridGregWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridGregWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridGregWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridGregWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridAxeWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridAxeWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridAxeWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridAxeWeaponTicket');
 	}
-	else if (thePlayer.HasTag('HybridGiantWeaponTicket'))
+	else if (GetWitcherPlayer().HasTag('HybridGiantWeaponTicket'))
 	{
-		thePlayer.RemoveTag('HybridGiantWeaponTicket');
+		GetWitcherPlayer().RemoveTag('HybridGiantWeaponTicket');
 	}
 }

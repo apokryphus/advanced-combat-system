@@ -6,9 +6,10 @@ function ACS_Jump_Extend_Init( type : EJumpType )
 	if ( 
 	ACS_Enabled() 
 	&& ACS_JumpExtend_Enabled() 
-	&& !thePlayer.HasTag('in_wraith') 
-	&& thePlayer.IsAlive()
-	&& !thePlayer.IsInAir()
+	&& !GetWitcherPlayer().HasTag('in_wraith') 
+	&& !ACS_Transformation_Activated_Check()
+	&& GetWitcherPlayer().IsAlive()
+	&& !GetWitcherPlayer().IsInAir()
 	&& (type == EJT_Idle 
 	|| type == EJT_IdleToWalk 
 	|| type == EJT_Walk 
@@ -39,7 +40,7 @@ function ACS_UpdateJumpCamera( out moveData : SCameraMovementData, dt : float ) 
 	moveData.pivotPositionController = camera.GetActivePivotPositionController();
 
 	moveData.pivotDistanceController.SetDesiredDistance(cameraPreset.distance + 1.0f);
-	moveData.pivotPositionController.SetDesiredPosition(thePlayer.GetWorldPosition());
+	moveData.pivotPositionController.SetDesiredPosition(GetWitcherPlayer().GetWorldPosition());
 	moveData.pivotPositionController.offsetZ = -0.25f;
 
 	return true;
@@ -78,43 +79,43 @@ state ACS_JumpExtendState in cACS_JumpExtend
 		settings_interrupt.blendIn = 0;
 		settings_interrupt.blendOut = 0;
 
-		mass = ((CMovingPhysicalAgentComponent)thePlayer.GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectMass();
-		velocity = VecLength( ((CMovingPhysicalAgentComponent)thePlayer.GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectLinearVelocity() );
+		mass = ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectMass();
+		velocity = VecLength( ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetComponentByClassName( 'CMovingPhysicalAgentComponent' ) ).GetPhysicalObjectLinearVelocity() );
 		momentum = mass * velocity;
 		
-		if (!thePlayer.HasTag('in_wraith')
+		if (!GetWitcherPlayer().HasTag('in_wraith')
 		&& ACS_JumpExtend_Effect_Enabled())
 		{
-			thePlayer.PlayEffect( 'bruxa_dash_trails_backup' );
-			thePlayer.StopEffect( 'bruxa_dash_trails_backup' );
+			GetWitcherPlayer().PlayEffect( 'bruxa_dash_trails_backup' );
+			GetWitcherPlayer().StopEffect( 'bruxa_dash_trails_backup' );
 
-			thePlayer.PlayEffect( 'magic_step_l' );
-			thePlayer.StopEffect( 'magic_step_l' );	
+			GetWitcherPlayer().PlayEffect( 'magic_step_l' );
+			GetWitcherPlayer().StopEffect( 'magic_step_l' );	
 
-			thePlayer.PlayEffect( 'magic_step_r' );
-			thePlayer.StopEffect( 'magic_step_r' );	
+			GetWitcherPlayer().PlayEffect( 'magic_step_r' );
+			GetWitcherPlayer().StopEffect( 'magic_step_r' );	
 
-			thePlayer.PlayEffect( 'claws_effect' );
-			thePlayer.StopEffect( 'claws_effect' );	
+			GetWitcherPlayer().PlayEffect( 'claws_effect' );
+			GetWitcherPlayer().StopEffect( 'claws_effect' );	
 		}
 
 		if (
-		!thePlayer.GetIsSprinting() 
-		&& !thePlayer.HasTag('in_wraith') 
-		&& !thePlayer.HasTag('igni_sword_equipped')
+		!GetWitcherPlayer().GetIsSprinting() 
+		&& !GetWitcherPlayer().HasTag('in_wraith') 
+		&& !GetWitcherPlayer().HasTag('igni_sword_equipped')
 		&& !ACS_SwordWalk_Enabled()
 		)
 		{
 			GetACSWatcher().dodge_timer_slideback_actual();
 		}	
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
+		GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', settings_interrupt );
 
 		//Sleep(0.025);
 
-		prev_pos = thePlayer.GetWorldPosition();
+		prev_pos = GetWitcherPlayer().GetWorldPosition();
 						
-		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+		movementAdjustor = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 		movementAdjustor.CancelByName( 'ACS_jumpextend' );
 		movementAdjustor.CancelAll();
 
@@ -125,9 +126,9 @@ state ACS_JumpExtendState in cACS_JumpExtend
 		//movementAdjustor.ShouldStartAt(ticket, prev_pos);
 		//movementAdjustor.UseBoneForAdjustment(ticket, 'pelvis', true);
 		
-		if (thePlayer.GetIsSprinting())
+		if (GetWitcherPlayer().GetIsSprinting())
 		{
-			dest = thePlayer.PredictWorldPosition(1.0) + (thePlayer.GetHeadingVector() * (ACS_Sprinting_JumpExtend_GetDistance()  ));
+			dest = GetWitcherPlayer().PredictWorldPosition(1.0) + (GetWitcherPlayer().GetHeadingVector() * (ACS_Sprinting_JumpExtend_GetDistance()  ));
 			
 			dest.Z += ACS_Sprinting_JumpExtend_GetHeight();
 			
@@ -136,20 +137,20 @@ state ACS_JumpExtendState in cACS_JumpExtend
 			if (
 			(ACS_Sprinting_JumpExtend_GetDistance() >= 15 
 			|| ACS_Sprinting_JumpExtend_GetHeight() >= 15)
-			&& !thePlayer.HasTag('in_wraith')
+			&& !GetWitcherPlayer().HasTag('in_wraith')
 			&& ACS_JumpExtend_Effect_Enabled()
 			)
 			{
-				thePlayer.StopEffect('smoke_explosion');
-				thePlayer.PlayEffect('smoke_explosion');
+				GetWitcherPlayer().StopEffect('smoke_explosion');
+				GetWitcherPlayer().PlayEffect('smoke_explosion');
 
-				thePlayer.StopEffect('suck_out');
-				thePlayer.PlayEffect('suck_out');
+				GetWitcherPlayer().StopEffect('suck_out');
+				GetWitcherPlayer().PlayEffect('suck_out');
 			}
 		}
 		else
 		{
-			dest = thePlayer.PredictWorldPosition(1.0) + (thePlayer.GetHeadingVector() * (ACS_Normal_JumpExtend_GetDistance() ));
+			dest = GetWitcherPlayer().PredictWorldPosition(1.0) + (GetWitcherPlayer().GetHeadingVector() * (ACS_Normal_JumpExtend_GetDistance() ));
 			
 			dest.Z += ACS_Normal_JumpExtend_GetHeight() ;
 			
@@ -158,15 +159,15 @@ state ACS_JumpExtendState in cACS_JumpExtend
 			if (
 			(ACS_Normal_JumpExtend_GetDistance() >= 15 
 			|| ACS_Normal_JumpExtend_GetHeight() >= 15)
-			&& !thePlayer.HasTag('in_wraith')
+			&& !GetWitcherPlayer().HasTag('in_wraith')
 			&& ACS_JumpExtend_Effect_Enabled()
 			)
 			{
-				thePlayer.StopEffect('smoke_explosion');
-				thePlayer.PlayEffect('smoke_explosion');
+				GetWitcherPlayer().StopEffect('smoke_explosion');
+				GetWitcherPlayer().PlayEffect('smoke_explosion');
 
-				thePlayer.StopEffect('suck_out');
-				thePlayer.PlayEffect('suck_out');
+				GetWitcherPlayer().StopEffect('suck_out');
+				GetWitcherPlayer().PlayEffect('suck_out');
 			}
 		}
 		

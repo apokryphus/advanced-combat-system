@@ -99,7 +99,7 @@ class W3ACSPetard extends CThrowable
 			}
 			else
 			{
-				orientationTarget = thePlayer.GetOrientationTarget();
+				orientationTarget = GetWitcherPlayer().GetOrientationTarget();
 				
 				if (!GetOwner().HasBuff(EET_Hypnotized) && (orientationTarget == OT_Camera || orientationTarget == OT_CameraOffset) )
 					throwPos = theCamera.GetCameraDirection() * 8 + GetOwner().GetWorldPosition();
@@ -108,7 +108,7 @@ class W3ACSPetard extends CThrowable
 			}
 			
 			
-			playerPos = thePlayer.GetWorldPosition();
+			playerPos = GetWitcherPlayer().GetWorldPosition();
 			dist = VecDistance(throwPos,playerPos);
 			maxThrowRange = theGame.params.MAX_THROW_RANGE;
 			if(dist > maxThrowRange)
@@ -265,7 +265,7 @@ class W3ACSPetard extends CThrowable
 		AddTimer( 'ReleaseProjectile', 0.01, false, , , true );
 		
 		
-		if ( GetOwner() != thePlayer )
+		if ( GetOwner() != GetWitcherPlayer() )
 		{
 			inv = GetOwner().GetInventory();
 			if(inv)
@@ -275,11 +275,11 @@ class W3ACSPetard extends CThrowable
 		{
 			
 			if(!FactsDoesExist("debug_fact_inf_bombs"))
-				thePlayer.inv.SingletonItemRemoveAmmo(itemId, 1);
+				GetWitcherPlayer().inv.SingletonItemRemoveAmmo(itemId, 1);
 				
 			
-			if( thePlayer.inv.GetItemQuantity(itemId) < 1 )		
-				thePlayer.ClearSelectedItemId();
+			if( GetWitcherPlayer().inv.GetItemQuantity(itemId) < 1 )		
+				GetWitcherPlayer().ClearSelectedItemId();
 			
 			
 			
@@ -298,7 +298,7 @@ class W3ACSPetard extends CThrowable
 	timer function ReleaseProjectile( time : float , id : int)
 	{
 		var distanceToTarget, projectileFlightTime : float;
-		var target : CActor = thePlayer.GetTarget();
+		var target : CActor = GetWitcherPlayer().GetTarget();
 		var actorsInAoE : array<CActor>;
 		var i : int;
 		var collisionGroups : array<name>;
@@ -323,7 +323,7 @@ class W3ACSPetard extends CThrowable
 			wasInTutorialTrigger = (FactsQuerySum("tut_aim_in_trigger") > 0);				
 		}
 		
-		actorsInAoE = thePlayer.playerAiming.GetSweptActors();
+		actorsInAoE = GetWitcherPlayer().playerAiming.GetSweptActors();
 		
 		if ( actorsInAoE.Size() > 0 )
 		{
@@ -340,7 +340,7 @@ class W3ACSPetard extends CThrowable
 		{	
 			if( dodgeable )
 			{
-				distanceToTarget = VecDistance( thePlayer.GetWorldPosition(), target.GetWorldPosition() );	
+				distanceToTarget = VecDistance( GetWitcherPlayer().GetWorldPosition(), target.GetWorldPosition() );	
 				
 				
 				projectileFlightTime = distanceToTarget / 15;
@@ -398,15 +398,15 @@ class W3ACSPetard extends CThrowable
 		}
 
 		if ( npc 
-		&& npc == thePlayer 
-		&& victim == thePlayer 
+		&& npc == GetWitcherPlayer() 
+		&& victim == GetWitcherPlayer() 
 		&& 
-		(thePlayer.IsCurrentlyDodging() 
-		|| thePlayer.HasTag('blood_sucking')
-		|| thePlayer.HasTag('ACS_IsPerformingFinisher')
-		|| thePlayer.IsCurrentlyDodging()
-		|| thePlayer.GetImmortalityMode() == AIM_Invulnerable
-		|| thePlayer.IsPerformingFinisher() 
+		(GetWitcherPlayer().IsCurrentlyDodging() 
+		|| GetWitcherPlayer().HasTag('blood_sucking')
+		|| GetWitcherPlayer().HasTag('ACS_IsPerformingFinisher')
+		|| GetWitcherPlayer().IsCurrentlyDodging()
+		|| GetWitcherPlayer().GetImmortalityMode() == AIM_Invulnerable
+		|| GetWitcherPlayer().IsPerformingFinisher() 
 		)
 		)
 		{
@@ -441,7 +441,7 @@ class W3ACSPetard extends CThrowable
 			return true;
 		}
 		*/
-		if ( npc && npc != thePlayer && victim != thePlayer )
+		if ( npc && npc != GetWitcherPlayer() && victim != GetWitcherPlayer() )
 		{
 			bounceOfVelocityPreserve = 0.5;
 			BounceOff( normal, pos );
@@ -455,7 +455,7 @@ class W3ACSPetard extends CThrowable
 		
 		if( itemName == 'Grapeshot 2' || itemName == 'Grapeshot 3' )
 		{
-			if( npc && npc.IsShielded( thePlayer ) )
+			if( npc && npc.IsShielded( GetWitcherPlayer() ) )
 			{
 				npc.ProcessShieldDestruction();
 			}
@@ -486,7 +486,7 @@ class W3ACSPetard extends CThrowable
 			if(isInWater && !waterFXPlayed)
 			{
 				template = (CEntityTemplate)LoadResource("water_splash_small");
-				waterEntity = theGame.CreateEntity(template, petardPos, thePlayer.GetWorldRotation());				
+				waterEntity = theGame.CreateEntity(template, petardPos, GetWitcherPlayer().GetWorldRotation());				
 				if(isInDeepWater)
 					waterEntity.PlayEffect('splash_big');
 				else
@@ -875,12 +875,12 @@ class W3ACSPetard extends CThrowable
 			{
 				
 				skill = S_SUndefined;
-				if(actor == thePlayer)
+				if(actor == GetWitcherPlayer())
 					skill = SkillNameToEnum(loopParams.disabledAbilities[j].abilityName);						 
 				
 				
 				if(skill != S_SUndefined)
-					successfullUnblock = thePlayer.BlockSkill(skill, false) || successfullUnblock;
+					successfullUnblock = GetWitcherPlayer().BlockSkill(skill, false) || successfullUnblock;
 				else
 					successfullUnblock = actor.BlockAbility(loopParams.disabledAbilities[j].abilityName, false) || successfullUnblock;
 			}
@@ -1068,7 +1068,7 @@ class W3ACSPetard extends CThrowable
 				actorTarget = (CActor)targets[i];
 				
 				
-				if(!actorTarget || (targets[i] == GetOwner() && GetOwner() == thePlayer))
+				if(!actorTarget || (targets[i] == GetOwner() && GetOwner() == GetWitcherPlayer()))
 					continue;
 				
 				
@@ -1121,12 +1121,12 @@ class W3ACSPetard extends CThrowable
 						
 						if(index != -1)
 						{
-							params.damages[index].dmgVal += CalculateAttributeValue(thePlayer.GetSkillAttributeValue(S_Alchemy_s10, atts[j], false, true)) * thePlayer.GetSkillLevel(S_Alchemy_s10);
+							params.damages[index].dmgVal += CalculateAttributeValue(GetWitcherPlayer().GetSkillAttributeValue(S_Alchemy_s10, atts[j], false, true)) * GetWitcherPlayer().GetSkillLevel(S_Alchemy_s10);
 						}
 						else
 						{
 							newDamage.dmgType = atts[j];
-							newDamage.dmgVal = CalculateAttributeValue(thePlayer.GetSkillAttributeValue(S_Alchemy_s10, atts[j], false, true)) * thePlayer.GetSkillLevel(S_Alchemy_s10);
+							newDamage.dmgVal = CalculateAttributeValue(GetWitcherPlayer().GetSkillAttributeValue(S_Alchemy_s10, atts[j], false, true)) * GetWitcherPlayer().GetSkillLevel(S_Alchemy_s10);
 							params.damages.PushBack(newDamage);
 						}
 					}
@@ -1199,7 +1199,7 @@ class W3ACSPetard extends CThrowable
 			action = new W3DamageAction in theGame.damageMgr;
 			action.Initialize(GetOwner(), actorTarget, this, 'petard', hitType, CPS_Undefined, false, true, false, false);
 
-			if (actorTarget == thePlayer)
+			if (actorTarget == GetWitcherPlayer())
 			{
 				action.SetHitAnimationPlayType(params.playHitAnimMode);
 				action.SetIgnoreArmor(params.ignoresArmor);
@@ -1221,50 +1221,53 @@ class W3ACSPetard extends CThrowable
 					
 					action.AddEffectInfo(params.buffs[j].effectType, params.buffs[j].effectDuration, params.buffs[j].effectCustomValue, params.buffs[j].effectAbilityName, params.buffs[j].effectCustomParam, params.buffs[j].applyChance);
 				}
-
-				if (thePlayer.HasTag('ACS_Size_Adjusted'))
-				{
-					GetACSWatcher().Grow_Geralt_Immediate_Fast();
-
-					thePlayer.RemoveTag('ACS_Size_Adjusted');
-				}
-
-				thePlayer.ClearAnimationSpeedMultipliers();	
-
-				thePlayer.GetMovingAgentComponent().GetMovementAdjustor().CancelAll();
-
-				thePlayer.RaiseEvent( 'AttackInterrupt' );
-
-				if (actorTarget.UsesVitality()) 
-				{ 
-					maxTargetVitality = actorTarget.GetStat( BCS_Vitality );
-
-					damageMax = maxTargetVitality * 0.05; 
-				} 
-				else if (actorTarget.UsesEssence()) 
-				{ 
-					maxTargetEssence = actorTarget.GetStat( BCS_Essence );
-					
-					damageMax = maxTargetEssence * 0.05; 
-				} 
-
-				action.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
 				
-				/*
-				if( !thePlayer.HasBuff( EET_Knockdown ) ) 
-				{ 	
-					if(thePlayer.IsAlive()){thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );}
+				if (!GetWitcherPlayer().IsAnyQuenActive())
+				{
+					if (GetWitcherPlayer().HasTag('ACS_Size_Adjusted'))
+					{
+						GetACSWatcher().Grow_Geralt_Immediate_Fast();
 
-					paramsKnockdown.effectType = EET_Knockdown;
-					paramsKnockdown.creator = GetOwner();
-					paramsKnockdown.sourceName = "ACS_Bomb_Effect_Custom";
-					paramsKnockdown.duration = 0.25;
+						GetWitcherPlayer().RemoveTag('ACS_Size_Adjusted');
+					}
 
-					thePlayer.AddEffectCustom( paramsKnockdown ); 							
+					GetWitcherPlayer().ClearAnimationSpeedMultipliers();	
+
+					GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor().CancelAll();
+
+					GetWitcherPlayer().RaiseEvent( 'AttackInterrupt' );
+
+					if (actorTarget.UsesVitality()) 
+					{ 
+						maxTargetVitality = actorTarget.GetStat( BCS_Vitality );
+
+						damageMax = maxTargetVitality * RandRangeF(0.075, 0.05); 
+					} 
+					else if (actorTarget.UsesEssence()) 
+					{ 
+						maxTargetEssence = actorTarget.GetStat( BCS_Essence );
+						
+						damageMax = maxTargetEssence * RandRangeF(0.075, 0.05); 
+					} 
+
+					action.AddDamage( theGame.params.DAMAGE_NAME_DIRECT, damageMax );
+					
+					/*
+					if( !GetWitcherPlayer().HasBuff( EET_Knockdown ) ) 
+					{ 	
+						if(GetWitcherPlayer().IsAlive()){GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync( '', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0, 0) );}
+
+						paramsKnockdown.effectType = EET_Knockdown;
+						paramsKnockdown.creator = GetOwner();
+						paramsKnockdown.sourceName = "ACS_Bomb_Effect_Custom";
+						paramsKnockdown.duration = 0.25;
+
+						GetWitcherPlayer().AddEffectCustom( paramsKnockdown ); 							
+					}
+					*/
+
+					ACS_Hit_Animations(action);
 				}
-				*/
-
-				ACS_Hit_Animations(action);
 			}
 			else
 			{
@@ -1331,12 +1334,12 @@ class W3ACSPetard extends CThrowable
 	
 		
 		skill = S_SUndefined;
-		if(target == thePlayer)					
+		if(target == GetWitcherPlayer())					
 			skill = SkillNameToEnum(abilityName);						 
 		
 		
 		if(skill != S_SUndefined)
-			return thePlayer.BlockSkill(skill, !unlock, blockDuration);
+			return GetWitcherPlayer().BlockSkill(skill, !unlock, blockDuration);
 		else
 			return target.BlockAbility(abilityName, true, blockDuration);
 	}
@@ -1349,7 +1352,7 @@ class W3ACSPetard extends CThrowable
 	
 	private function ProcessClusterBombs()
 	{
-		var target : CActor = thePlayer.GetTarget();
+		var target : CActor = GetWitcherPlayer().GetTarget();
 		var i, clusterNbr : int;
 		var cluster : W3ACSPetard;
 		var targetPosCluster, clusterInitPos : Vector;
@@ -1365,7 +1368,7 @@ class W3ACSPetard extends CThrowable
 		clusterInitPos = GetWorldPosition();
 		clusterInitPos.Z += radius + 0.15;
 		
-		clusterNbr = thePlayer.GetSkillLevel(S_Alchemy_s11) + 1;
+		clusterNbr = GetWitcherPlayer().GetSkillLevel(S_Alchemy_s11) + 1;
 		
 		for(i=0; i<clusterNbr; i+=1)
 		{			
@@ -1405,7 +1408,7 @@ class W3ACSPetard extends CThrowable
 			
 			if ( dodgeable )
 			{
-				distanceToTarget = VecDistance( thePlayer.GetWorldPosition(), target.GetWorldPosition() );		
+				distanceToTarget = VecDistance( GetWitcherPlayer().GetWorldPosition(), target.GetWorldPosition() );		
 				
 				
 				projectileFlightTime = distanceToTarget / velocity;
@@ -1541,38 +1544,38 @@ class W3ACSEnemyDimeritium extends W3ACSPetard
 		{
 			witcher.CastSignAbort();
 
-			thePlayer.BlockAction( EIAB_Signs, 				'ACS_Dimeritium');
+			GetWitcherPlayer().BlockAction( EIAB_Signs, 				'ACS_Dimeritium');
 
 			if (witcher.IsAnyQuenActive())
 			{
-				thePlayer.PlayEffectSingle('quen_lasting_shield_hit');
+				GetWitcherPlayer().PlayEffectSingle('quen_lasting_shield_hit');
 
-				thePlayer.StopEffect('quen_lasting_shield_hit');
+				GetWitcherPlayer().StopEffect('quen_lasting_shield_hit');
 
-				thePlayer.PlayEffectSingle('lasting_shield_discharge');
+				GetWitcherPlayer().PlayEffectSingle('lasting_shield_discharge');
 
-				thePlayer.StopEffect('lasting_shield_discharge');
+				GetWitcherPlayer().StopEffect('lasting_shield_discharge');
 
 				witcher.FinishQuen(false);
 			}
 
 			Bruxa_Camo_Decoy_Deactivate();
 
-			thePlayer.StopAllEffects();
+			//GetWitcherPlayer().StopAllEffects();
 
-			thePlayer.PlayEffectSingle('dimeritium_hit_electricity');
+			GetWitcherPlayer().StopEffect('dimeritium_hit_electricity');
 
-			thePlayer.PlayEffectSingle('dimeritium_hit');
+			GetWitcherPlayer().PlayEffectSingle('dimeritium_hit_electricity');
+
+			GetWitcherPlayer().StopEffect('dimeritium_hit');
+
+			GetWitcherPlayer().PlayEffectSingle('dimeritium_hit');
 
 			GetACSWatcher().RemoveTimer('Witch_Hunter_Dimeritium_Sign_Restore');
 
 			GetACSWatcher().AddTimer('Witch_Hunter_Dimeritium_Sign_Restore', 3, false);
 		}
 			
-			
-		
-		
-		
 		
 		for(i=0; i<targets.Size(); i+=1)
 		{
@@ -1610,7 +1613,7 @@ class W3ACSEnemyDimeritium extends W3ACSPetard
 			if(!actor)
 				continue;
 				
-			if(actor == thePlayer)
+			if(actor == GetWitcherPlayer())
 				isPlayer = true;
 			else
 				isPlayer = false;
@@ -1621,7 +1624,7 @@ class W3ACSEnemyDimeritium extends W3ACSPetard
 				if(isPlayer)
 				{
 					skill = SkillNameToEnum(loopParams.disabledAbilities[j].abilityName);
-					blocked = thePlayer.IsSkillBlocked(skill);
+					blocked = GetWitcherPlayer().IsSkillBlocked(skill);
 				}
 				else
 				{
@@ -1668,7 +1671,7 @@ class W3ACSEnemyDimeritium extends W3ACSPetard
 		var target : CActor;
 		var min, max : SAbilityAttributeValue;
 		
-		if(GetOwner() == thePlayer)
+		if(GetOwner() == GetWitcherPlayer())
 		{
 			target = (CActor)entity;
 			

@@ -12,6 +12,7 @@ function ACS_TauntInit()
 	&& thePlayer.IsActionAllowed(EIAB_Movement)
 	&& thePlayer.IsActionAllowed(EIAB_LightAttacks)
 	&& ACS_BuffCheck()
+	&& !ACS_Transformation_Activated_Check()
 	)		
 	{
 		ACS_ThingsThatShouldBeRemoved();

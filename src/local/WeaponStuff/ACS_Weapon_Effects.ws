@@ -410,13 +410,13 @@ function ACSGetEquippedSword() : CEntity
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
 	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		blade_temp_ent = thePlayer.GetInventory().GetItemEntityUnsafe(steelID);
+		blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		blade_temp_ent = thePlayer.GetInventory().GetItemEntityUnsafe(silverID);
+		blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
 	}
 
 	return blade_temp_ent;
@@ -424,7 +424,7 @@ function ACSGetEquippedSword() : CEntity
 
 	var blade_temp_ent			: CItemEntity;
 		
-	thePlayer.GetInventory().GetCurrentlyHeldSwordEntity( blade_temp_ent );
+	GetWitcherPlayer().GetInventory().GetCurrentlyHeldSwordEntity( blade_temp_ent );
 
 	return blade_temp_ent;
 }
@@ -440,17 +440,17 @@ function ACSGetEquippedSwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -461,7 +461,7 @@ function ACSGetEquippedSwordUpdateEnhancements()
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 
-		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
+		if ( GetWitcherPlayer().HasTag('igni_sword_equipped') && GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
 			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
 			{
@@ -477,7 +477,7 @@ function ACSGetEquippedSwordUpdateEnhancements()
 		ACSGetEquippedSword().PlayEffect( ACS_GetRuneLevel( runeCount ) );
 		ACSGetEquippedSword().PlayEffect( ACS_GetEnchantmentFxName( enhancements[ 0 ] ) );
 
-		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
+		if ( GetWitcherPlayer().HasTag('igni_sword_equipped') && GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
 			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
 			{
@@ -500,17 +500,17 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -525,7 +525,7 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 		}
 
-		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
+		if ( GetWitcherPlayer().HasTag('igni_sword_equipped') && GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
 			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
 			{
@@ -545,7 +545,7 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 			ACSGetEquippedSword().PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
 		}
 
-		if ( thePlayer.HasTag('igni_sword_equipped') && thePlayer.HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
+		if ( GetWitcherPlayer().HasTag('igni_sword_equipped') && GetWitcherPlayer().HasTag('igni_secondary_sword_equipped') && ACS_GetItem_Aerondight() )
 		{
 			if (!ACSGetEquippedSword().IsEffectActive('charge_10', false))
 			{
@@ -557,6 +557,136 @@ function ACSGetEquippedSwordUpdateEnhancements_Permaglow()
 	if (!ACSGetEquippedSword().IsEffectActive('rune_blast_loop', false))
 	{
 		ACSGetEquippedSword().PlayEffectSingle( 'rune_blast_loop' );
+	}
+}
+
+function ACSGetSilverSwordUpdateEnhancements_Permaglow()
+{
+	var silverID 								: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+	var blade_temp_ent							: CEntity;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SilverSword, silverID);
+
+	enhancements.Clear();
+	
+	GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
+
+	runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
+
+	blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(silverID);
+
+	if (GetWitcherPlayer().GetInventory().IsItemHeld( silverID ))
+	{
+		blade_temp_ent.DestroyEffect( 'cutscene_fx' );
+
+		return;
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+		
+		if (!blade_temp_ent.IsEffectActive('cutscene_fx', false))
+		{
+			blade_temp_ent.PlayEffectSingle( 'cutscene_fx' );
+		}
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive('cutscene_fx', false))
+		{
+			blade_temp_ent.PlayEffectSingle( 'cutscene_fx' );
+		}
+	}
+
+	if (!blade_temp_ent.IsEffectActive('rune_blast_loop', false))
+	{
+		blade_temp_ent.PlayEffectSingle( 'rune_blast_loop' );
+	}
+}
+
+function ACSGetSteelSwordUpdateEnhancements_Permaglow()
+{
+	var steelID			 						: SItemUniqueId;
+	var enhancements 							: array<name>;
+	var runeCount 								: int;
+	var blade_temp_ent							: CEntity;
+
+	GetWitcherPlayer().GetItemEquippedOnSlot(EES_SteelSword, steelID);
+
+	enhancements.Clear();
+
+	GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
+
+	runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
+
+	blade_temp_ent = GetWitcherPlayer().GetInventory().GetItemEntityUnsafe(steelID);
+
+	if (GetWitcherPlayer().GetInventory().IsItemHeld( steelID ))
+	{
+		blade_temp_ent.DestroyEffect( 'cutscene_fx' );
+
+		return;
+	}
+
+	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
+	{
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive('cutscene_fx', false))
+		{
+			blade_temp_ent.PlayEffectSingle( 'cutscene_fx' );
+		}
+	}
+	else if ( 3 == runeCount && 1 == enhancements.Size() )
+	{
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneLevel( runeCount ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneLevel( runeCount ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive(ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ), false))
+		{
+			blade_temp_ent.PlayEffectSingle( ACS_GetRuneFxName( enhancements[ runeCount - 1 ] ) );
+		}
+
+		if (!blade_temp_ent.IsEffectActive('cutscene_fx', false))
+		{
+			blade_temp_ent.PlayEffectSingle( 'cutscene_fx' );
+		}
+	}
+
+	if (!blade_temp_ent.IsEffectActive('rune_blast_loop', false))
+	{
+		blade_temp_ent.PlayEffectSingle( 'rune_blast_loop' );
 	}
 }
 
@@ -919,7 +1049,7 @@ function ACSGetEquippedSwordPlayEffects()
 {
 	ACSStopEquippedSwordEffects();
 	
-	if (thePlayer.GetEquippedSign() == ST_Igni)
+	if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 	{
 		ACSGetEquippedSword().PlayEffectSingle('fire_sparks_trail');
 
@@ -927,25 +1057,25 @@ function ACSGetEquippedSwordPlayEffects()
 
 		ACSGetEquippedSword().PlayEffectSingle('runeword_igni');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Axii)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 	{
 		ACSGetEquippedSword().PlayEffectSingle('ice_sparks_trail');
 
 		ACSGetEquippedSword().PlayEffectSingle('runeword_axii');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Aard)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 	{
 		ACSGetEquippedSword().PlayEffectSingle('aard_power');
 
 		ACSGetEquippedSword().PlayEffectSingle('runeword_aard');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Yrden)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 	{
 		ACSGetEquippedSword().PlayEffectSingle('yrden_power');
 
 		ACSGetEquippedSword().PlayEffectSingle('runeword_yrden');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Quen)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 	{
 		ACSGetEquippedSword().PlayEffectSingle('quen_power');
 
@@ -1008,17 +1138,17 @@ function ACSAxiiSwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -1116,7 +1246,7 @@ function axii_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			axii_sword_1().PlayEffectSingle('fire_sparks_trail');
 			axii_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -1136,7 +1266,7 @@ function axii_sword_trail()
 			axii_sword_4().PlayEffectSingle('runeword_igni');
 			axii_sword_5().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			axii_sword_1().PlayEffectSingle('ice_sparks_trail');
 			axii_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -1150,7 +1280,7 @@ function axii_sword_trail()
 			axii_sword_4().PlayEffectSingle('runeword_axii');
 			axii_sword_5().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			axii_sword_1().PlayEffectSingle('aard_power');
 			axii_sword_2().PlayEffectSingle('aard_power');
@@ -1164,7 +1294,7 @@ function axii_sword_trail()
 			axii_sword_4().PlayEffectSingle('runeword_aard');
 			axii_sword_5().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{
 			axii_sword_1().PlayEffectSingle('yrden_power');
 			axii_sword_2().PlayEffectSingle('yrden_power');
@@ -1178,7 +1308,7 @@ function axii_sword_trail()
 			axii_sword_4().PlayEffectSingle('runeword_yrden');
 			axii_sword_5().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			axii_sword_1().PlayEffectSingle('quen_power');
 			axii_sword_2().PlayEffectSingle('quen_power');
@@ -1229,17 +1359,17 @@ function ACSAxiiSecondarySwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -1307,7 +1437,7 @@ function axii_secondary_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			axii_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
 			axii_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -1321,7 +1451,7 @@ function axii_secondary_sword_trail()
 			axii_secondary_sword_2().PlayEffectSingle('runeword_igni');
 			axii_secondary_sword_3().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			axii_secondary_sword_1().PlayEffectSingle('ice_sparks_trail');
 			axii_secondary_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -1331,7 +1461,7 @@ function axii_secondary_sword_trail()
 			axii_secondary_sword_2().PlayEffectSingle('runeword_axii');
 			axii_secondary_sword_3().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			axii_secondary_sword_1().PlayEffectSingle('aard_power');
 			axii_secondary_sword_2().PlayEffectSingle('aard_power');
@@ -1341,7 +1471,7 @@ function axii_secondary_sword_trail()
 			axii_secondary_sword_2().PlayEffectSingle('runeword_aard');
 			axii_secondary_sword_3().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{
 			axii_secondary_sword_1().PlayEffectSingle('yrden_power');
 			axii_secondary_sword_2().PlayEffectSingle('yrden_power');
@@ -1351,7 +1481,7 @@ function axii_secondary_sword_trail()
 			axii_secondary_sword_2().PlayEffectSingle('runeword_yrden');
 			axii_secondary_sword_3().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			axii_secondary_sword_1().PlayEffectSingle('quen_power');
 			axii_secondary_sword_2().PlayEffectSingle('quen_power');
@@ -1394,17 +1524,17 @@ function ACSQuenSwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -1503,9 +1633,39 @@ function quen_sword_stop_effects()
 
 function quen_sword_glow()
 {	
-	//if (thePlayer.IsWeaponHeld( 'steelsword' ))
-	//{
-		//quen_sword_stop_effects();
+	if (ACS_GetWeaponMode() == 3)
+	{
+		if (ACS_GetItem_Iris())
+		{
+			GetWitcherPlayer().DestroyEffect('hand_special_fx');
+			GetWitcherPlayer().PlayEffectSingle('hand_special_fx');
+
+			GetWitcherPlayer().SoundEvent('qu_item_olgierd_sabre_pre_attack_fx');
+			
+			ACSGetEquippedSword().PlayEffectSingle('pre_special_attack_loop');
+			ACSGetEquippedSword().StopEffect('pre_special_attack_loop');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack_trail');
+			ACSGetEquippedSword().StopEffect('special_attack_trail');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack');
+			ACSGetEquippedSword().StopEffect('special_attack');
+
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().PlayEffect('special_attack_charged');
+			ACSGetEquippedSword().StopEffect('special_attack_charged');
+
+			ACSGetEquippedSword().PlayEffectSingle('special_attack_ready');
+			ACSGetEquippedSword().StopEffect('special_attack_ready');
+		}
+	}
+	else
+	{
+		GetWitcherPlayer().DestroyEffect('hand_special_fx');
+		GetWitcherPlayer().PlayEffectSingle('hand_special_fx');
 
 		quen_sword_1().StopEffect('pre_special_attack_loop');
 		quen_sword_2().StopEffect('pre_special_attack_loop');
@@ -1575,31 +1735,7 @@ function quen_sword_glow()
 			quen_sword_2().PlayEffect('special_attack_charged');
 			quen_sword_3().PlayEffect('special_attack_charged');
 		}
-		
-		if (ACS_GetWeaponMode() == 3)
-		{
-			thePlayer.SoundEvent('qu_item_olgierd_sabre_pre_attack_fx');
-			
-			ACSGetEquippedSword().PlayEffectSingle('pre_special_attack_loop');
-			ACSGetEquippedSword().StopEffect('pre_special_attack_loop');
-
-			ACSGetEquippedSword().PlayEffectSingle('special_attack_trail');
-			ACSGetEquippedSword().StopEffect('special_attack_trail');
-
-			ACSGetEquippedSword().PlayEffectSingle('special_attack');
-			ACSGetEquippedSword().StopEffect('special_attack');
-
-			ACSGetEquippedSword().PlayEffect('special_attack_charged');
-			ACSGetEquippedSword().PlayEffect('special_attack_charged');
-			ACSGetEquippedSword().PlayEffect('special_attack_charged');
-			ACSGetEquippedSword().PlayEffect('special_attack_charged');
-			ACSGetEquippedSword().PlayEffect('special_attack_charged');
-			ACSGetEquippedSword().StopEffect('special_attack_charged');
-
-			ACSGetEquippedSword().PlayEffectSingle('special_attack_ready');
-			ACSGetEquippedSword().StopEffect('special_attack_ready');
-		}
-	//}
+	}
 }
 
 function quen_sword_trail()
@@ -1610,7 +1746,7 @@ function quen_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			quen_sword_1().PlayEffectSingle('fire_sparks_trail');
 			quen_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -1624,7 +1760,7 @@ function quen_sword_trail()
 			quen_sword_2().PlayEffectSingle('runeword_igni');
 			quen_sword_3().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			quen_sword_1().PlayEffectSingle('ice_sparks_trail');
 			quen_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -1634,7 +1770,7 @@ function quen_sword_trail()
 			quen_sword_2().PlayEffectSingle('runeword_axii');
 			quen_sword_3().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			quen_sword_1().PlayEffectSingle('aard_power');
 			quen_sword_2().PlayEffectSingle('aard_power');
@@ -1644,7 +1780,7 @@ function quen_sword_trail()
 			quen_sword_2().PlayEffectSingle('runeword_aard');
 			quen_sword_3().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{
 			quen_sword_1().PlayEffectSingle('yrden_power');
 			quen_sword_2().PlayEffectSingle('yrden_power');
@@ -1654,7 +1790,7 @@ function quen_sword_trail()
 			quen_sword_2().PlayEffectSingle('runeword_yrden');
 			quen_sword_3().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			quen_sword_1().PlayEffectSingle('quen_power');
 			quen_sword_2().PlayEffectSingle('quen_power');
@@ -1734,17 +1870,17 @@ function ACSQuenSecondarySwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -1859,7 +1995,7 @@ function quen_secondary_sword_trail()
 		quen_secondary_sword_5().PlayEffectSingle('q308_hot_tip');
 		quen_secondary_sword_6().PlayEffectSingle('q308_hot_tip');
 
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			quen_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
 			quen_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -1882,7 +2018,7 @@ function quen_secondary_sword_trail()
 			quen_secondary_sword_5().PlayEffectSingle('runeword_igni');
 			quen_secondary_sword_6().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			quen_secondary_sword_1().PlayEffectSingle('ice_sparks_trail');
 			quen_secondary_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -1898,7 +2034,7 @@ function quen_secondary_sword_trail()
 			quen_secondary_sword_5().PlayEffectSingle('runeword_axii');
 			quen_secondary_sword_6().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			quen_secondary_sword_1().PlayEffectSingle('aard_power');
 			quen_secondary_sword_2().PlayEffectSingle('aard_power');
@@ -1914,7 +2050,7 @@ function quen_secondary_sword_trail()
 			quen_secondary_sword_5().PlayEffectSingle('runeword_aard');
 			quen_secondary_sword_6().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{	
 			quen_secondary_sword_1().PlayEffectSingle('yrden_power');
 			quen_secondary_sword_2().PlayEffectSingle('yrden_power');
@@ -1930,7 +2066,7 @@ function quen_secondary_sword_trail()
 			quen_secondary_sword_5().PlayEffectSingle('runeword_yrden');
 			quen_secondary_sword_6().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			quen_secondary_sword_1().PlayEffectSingle('quen_power');
 			quen_secondary_sword_2().PlayEffectSingle('quen_power');
@@ -1985,17 +2121,17 @@ function ACSAardSwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -2136,7 +2272,7 @@ function aard_blade_trail()
 	aard_blade_7().PlayEffectSingle('special_trail_fx');
 	aard_blade_8().PlayEffectSingle('special_trail_fx');
 
-	if (thePlayer.GetEquippedSign() == ST_Igni)
+	if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 	{
 		aard_blade_1().PlayEffectSingle('fire_sparks_trail');
 		aard_blade_2().PlayEffectSingle('fire_sparks_trail');
@@ -2165,7 +2301,7 @@ function aard_blade_trail()
 		aard_blade_7().PlayEffectSingle('runeword_igni');
 		aard_blade_8().PlayEffectSingle('runeword_igni');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Axii)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 	{
 		aard_blade_1().PlayEffectSingle('ice_sparks_trail');
 		aard_blade_2().PlayEffectSingle('ice_sparks_trail');
@@ -2185,7 +2321,7 @@ function aard_blade_trail()
 		aard_blade_7().PlayEffectSingle('runeword_axii');
 		aard_blade_8().PlayEffectSingle('runeword_axii');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Aard)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 	{
 		aard_blade_1().PlayEffectSingle('aard_power');
 		aard_blade_2().PlayEffectSingle('aard_power');
@@ -2205,7 +2341,7 @@ function aard_blade_trail()
 		aard_blade_7().PlayEffectSingle('runeword_aard');
 		aard_blade_8().PlayEffectSingle('runeword_aard');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Yrden)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 	{
 		aard_blade_1().PlayEffectSingle('yrden_power');
 		aard_blade_2().PlayEffectSingle('yrden_power');
@@ -2225,7 +2361,7 @@ function aard_blade_trail()
 		aard_blade_7().PlayEffectSingle('runeword_yrden');
 		aard_blade_8().PlayEffectSingle('runeword_yrden');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Quen)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 	{
 		aard_blade_1().PlayEffectSingle('quen_power');
 		aard_blade_2().PlayEffectSingle('quen_power');
@@ -2283,17 +2419,17 @@ function ACSAardSecondarySwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -2429,7 +2565,7 @@ function aard_secondary_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			aard_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
 			aard_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -2458,7 +2594,7 @@ function aard_secondary_sword_trail()
 			aard_secondary_sword_7().PlayEffectSingle('runeword_igni');
 			aard_secondary_sword_8().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			aard_secondary_sword_1().PlayEffectSingle('ice_sparks_trail');
 			aard_secondary_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -2478,7 +2614,7 @@ function aard_secondary_sword_trail()
 			aard_secondary_sword_7().PlayEffectSingle('runeword_axii');
 			aard_secondary_sword_8().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			aard_secondary_sword_1().PlayEffectSingle('aard_power');
 			aard_secondary_sword_2().PlayEffectSingle('aard_power');
@@ -2498,7 +2634,7 @@ function aard_secondary_sword_trail()
 			aard_secondary_sword_7().PlayEffectSingle('runeword_aard');
 			aard_secondary_sword_8().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{	
 			aard_secondary_sword_1().PlayEffectSingle('yrden_power');
 			aard_secondary_sword_2().PlayEffectSingle('yrden_power');
@@ -2518,7 +2654,7 @@ function aard_secondary_sword_trail()
 			aard_secondary_sword_7().PlayEffectSingle('runeword_yrden');
 			aard_secondary_sword_8().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			aard_secondary_sword_1().PlayEffectSingle('quen_power');
 			aard_secondary_sword_2().PlayEffectSingle('quen_power');
@@ -2581,17 +2717,17 @@ function ACSYrdenSwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -2721,7 +2857,7 @@ function yrden_sword_stop_effects()
 
 function yrden_sword_effect_small()
 {
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
 		if ( ACS_GetWeaponMode() == 0 
 		|| ACS_GetWeaponMode() == 1
@@ -2737,8 +2873,8 @@ function yrden_sword_effect_small()
 
 				yrden_sword_1().PlayEffectSingle('summon_shades');
 
-				thePlayer.PlayEffectSingle('heavy_attack_effect_narrow');
-				thePlayer.StopEffect('heavy_attack_effect_narrow');
+				GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect_narrow');
+				GetWitcherPlayer().StopEffect('heavy_attack_effect_narrow');
 			}
 		}
 		else if (ACS_GetWeaponMode() == 3)
@@ -2753,8 +2889,8 @@ function yrden_sword_effect_small()
 				ACSGetEquippedSword().StopEffect('absorb_life');
 				ACSGetEquippedSword().PlayEffectSingle('absorb_life');
 				
-				thePlayer.PlayEffectSingle('heavy_attack_effect_narrow');
-				thePlayer.StopEffect('heavy_attack_effect_narrow');
+				GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect_narrow');
+				GetWitcherPlayer().StopEffect('heavy_attack_effect_narrow');
 			}
 		}
 	}
@@ -2762,7 +2898,7 @@ function yrden_sword_effect_small()
 
 function yrden_sword_effect_big()
 {
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
 		if ( ACS_GetWeaponMode() == 0 
 		|| ACS_GetWeaponMode() == 1
@@ -2782,13 +2918,13 @@ function yrden_sword_effect_big()
 
 				if (RandF() < 0.5)
 				{
-					thePlayer.PlayEffectSingle('heavy_attack_effect');
-					thePlayer.StopEffect('heavy_attack_effect');
+					GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect');
+					GetWitcherPlayer().StopEffect('heavy_attack_effect');
 				}
 				else
 				{
-					thePlayer.PlayEffectSingle('heavy_attack_effect_bigger');
-					thePlayer.StopEffect('heavy_attack_effect_bigger');
+					GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect_bigger');
+					GetWitcherPlayer().StopEffect('heavy_attack_effect_bigger');
 				}
 			}
 		}
@@ -2809,13 +2945,13 @@ function yrden_sword_effect_big()
 				
 				if (RandF() < 0.5)
 				{
-					thePlayer.PlayEffectSingle('heavy_attack_effect');
-					thePlayer.StopEffect('heavy_attack_effect');
+					GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect');
+					GetWitcherPlayer().StopEffect('heavy_attack_effect');
 				}
 				else
 				{
-					thePlayer.PlayEffectSingle('heavy_attack_effect_bigger');
-					thePlayer.StopEffect('heavy_attack_effect_bigger');
+					GetWitcherPlayer().PlayEffectSingle('heavy_attack_effect_bigger');
+					GetWitcherPlayer().StopEffect('heavy_attack_effect_bigger');
 				}
 			}
 		}
@@ -2824,7 +2960,7 @@ function yrden_sword_effect_big()
 
 function yrden_sword_effect_around()
 {
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
 		if ( ACS_GetWeaponMode() == 0 
 		|| ACS_GetWeaponMode() == 1
@@ -2844,8 +2980,8 @@ function yrden_sword_effect_around()
 
 				if (RandF() < 0.5)
 				{
-					thePlayer.PlayEffectSingle('around_fx');
-					thePlayer.StopEffect('around_fx');
+					GetWitcherPlayer().PlayEffectSingle('around_fx');
+					GetWitcherPlayer().StopEffect('around_fx');
 				}
 			}
 		}
@@ -2866,8 +3002,8 @@ function yrden_sword_effect_around()
 
 				if (RandF() < 0.5)
 				{
-					thePlayer.PlayEffectSingle('around_fx');
-					thePlayer.StopEffect('around_fx');
+					GetWitcherPlayer().PlayEffectSingle('around_fx');
+					GetWitcherPlayer().StopEffect('around_fx');
 				}
 			}
 		}
@@ -2882,7 +3018,7 @@ function yrden_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			yrden_sword_1().PlayEffectSingle('fire_sparks_trail');
 			yrden_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -2911,7 +3047,7 @@ function yrden_sword_trail()
 			yrden_sword_7().PlayEffectSingle('runeword_igni');
 			yrden_sword_8().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			yrden_sword_1().PlayEffectSingle('ice_sparks_trail');
 			yrden_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -2931,7 +3067,7 @@ function yrden_sword_trail()
 			yrden_sword_7().PlayEffectSingle('runeword_axii');
 			yrden_sword_8().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			yrden_sword_1().PlayEffectSingle('aard_power');
 			yrden_sword_2().PlayEffectSingle('aard_power');
@@ -2951,7 +3087,7 @@ function yrden_sword_trail()
 			yrden_sword_7().PlayEffectSingle('runeword_aard');
 			yrden_sword_8().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{	
 			yrden_sword_1().PlayEffectSingle('yrden_power');
 			yrden_sword_2().PlayEffectSingle('yrden_power');
@@ -2971,7 +3107,7 @@ function yrden_sword_trail()
 			yrden_sword_7().PlayEffectSingle('runeword_yrden');
 			yrden_sword_8().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 			yrden_sword_1().PlayEffectSingle('quen_power');
 			yrden_sword_2().PlayEffectSingle('quen_power');
@@ -3034,17 +3170,17 @@ function ACSYrdenSecondarySwordUpdateEnhancements()
 
 	enhancements.Clear();
 
-	if (thePlayer.IsWeaponHeld('steelsword'))
+	if (GetWitcherPlayer().IsWeaponHeld('steelsword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( steelID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( steelID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( steelID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( steelID );
 	}
-	else if (thePlayer.IsWeaponHeld('silversword'))
+	else if (GetWitcherPlayer().IsWeaponHeld('silversword'))
 	{
-		thePlayer.GetInventory().GetItemEnhancementItems( silverID, enhancements );
+		GetWitcherPlayer().GetInventory().GetItemEnhancementItems( silverID, enhancements );
 
-		runeCount = thePlayer.GetInventory().GetItemEnhancementCount( silverID );
+		runeCount = GetWitcherPlayer().GetInventory().GetItemEnhancementCount( silverID );
 	}
 
 	if ( runeCount > 0 && ( ( runeCount - 1 ) < enhancements.Size() ) )
@@ -3152,7 +3288,7 @@ function yrden_secondary_sword_trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.GetEquippedSign() == ST_Igni)
+		if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 		{
 			yrden_secondary_sword_1().PlayEffectSingle('fire_sparks_trail');
 			yrden_secondary_sword_2().PlayEffectSingle('fire_sparks_trail');
@@ -3175,7 +3311,7 @@ function yrden_secondary_sword_trail()
 			yrden_secondary_sword_5().PlayEffectSingle('runeword_igni');
 			yrden_secondary_sword_6().PlayEffectSingle('runeword_igni');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Axii)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 		{
 			yrden_secondary_sword_1().PlayEffectSingle('ice_sparks_trail');
 			yrden_secondary_sword_2().PlayEffectSingle('ice_sparks_trail');
@@ -3191,7 +3327,7 @@ function yrden_secondary_sword_trail()
 			yrden_secondary_sword_5().PlayEffectSingle('runeword_axii');
 			yrden_secondary_sword_6().PlayEffectSingle('runeword_axii');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Aard)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 		{
 			yrden_secondary_sword_1().PlayEffectSingle('aard_power');
 			yrden_secondary_sword_2().PlayEffectSingle('aard_power');
@@ -3207,7 +3343,7 @@ function yrden_secondary_sword_trail()
 			yrden_secondary_sword_5().PlayEffectSingle('runeword_aard');
 			yrden_secondary_sword_6().PlayEffectSingle('runeword_aard');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Yrden)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 		{	
 			yrden_secondary_sword_1().PlayEffectSingle('yrden_power');
 			yrden_secondary_sword_2().PlayEffectSingle('yrden_power');
@@ -3223,7 +3359,7 @@ function yrden_secondary_sword_trail()
 			yrden_secondary_sword_5().PlayEffectSingle('runeword_yrden');
 			yrden_secondary_sword_6().PlayEffectSingle('runeword_yrden');
 		}
-		else if (thePlayer.GetEquippedSign() == ST_Quen)
+		else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 		{
 
 			yrden_secondary_sword_1().PlayEffectSingle('quen_power');
@@ -3272,7 +3408,7 @@ function ACS_Light_Attack_Extended_Trail()
 	|| ACS_GetWeaponMode() == 1
 	|| ACS_GetWeaponMode() == 2)
 	{
-		if (thePlayer.HasTag('axii_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 		{
 			axii_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			axii_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3287,7 +3423,7 @@ function ACS_Light_Attack_Extended_Trail()
 			axii_sword_5().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 		{ 
 			axii_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			axii_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3298,7 +3434,7 @@ function ACS_Light_Attack_Extended_Trail()
 			axii_secondary_sword_3().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('quen_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 		{
 			quen_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			quen_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3309,7 +3445,7 @@ function ACS_Light_Attack_Extended_Trail()
 			quen_sword_3().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 		{
 			quen_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			quen_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3326,7 +3462,7 @@ function ACS_Light_Attack_Extended_Trail()
 			quen_secondary_sword_6().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('aard_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 		{
 			aard_blade_1().PlayEffectSingle('light_trail_extended_fx');
 			aard_blade_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3347,7 +3483,7 @@ function ACS_Light_Attack_Extended_Trail()
 			aard_blade_8().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 		{
 			aard_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			aard_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3368,7 +3504,7 @@ function ACS_Light_Attack_Extended_Trail()
 			aard_secondary_sword_8().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('yrden_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 		{
 			yrden_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			yrden_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3389,7 +3525,7 @@ function ACS_Light_Attack_Extended_Trail()
 			yrden_sword_8().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 		{
 			yrden_secondary_sword_1().PlayEffectSingle('light_trail_extended_fx');
 			yrden_secondary_sword_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3408,35 +3544,35 @@ function ACS_Light_Attack_Extended_Trail()
 	}
 	else
 	{
-		if (thePlayer.HasTag('axii_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 		{ 
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('quen_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('aard_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 		{
 			aard_blade_1().PlayEffectSingle('light_trail_extended_fx');
 			aard_blade_2().PlayEffectSingle('light_trail_extended_fx');
@@ -3457,21 +3593,21 @@ function ACS_Light_Attack_Extended_Trail()
 			aard_blade_8().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('yrden_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
 			ACSGetEquippedSword().StopEffect('light_trail_extended_fx');
 		}
 		
-		if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+		if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 		{
 			ACSGetEquippedSword().PlayEffectSingle('light_trail_extended_fx');
 
@@ -3479,7 +3615,7 @@ function ACS_Light_Attack_Extended_Trail()
 		}
 	}
 
-	if (!thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped'))
+	if (!GetWitcherPlayer().HasTag('igni_sword_equipped') && !GetWitcherPlayer().HasTag('igni_secondary_sword_equipped'))
 	{
 		ACS_Dagger().PlayEffectSingle('light_trail_extended_fx');
 
@@ -3510,7 +3646,7 @@ function ACS_Light_Attack_Extended_Trail()
 	
 function ACS_Heavy_Attack_Extended_Trail()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		axii_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3525,7 +3661,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		axii_sword_5().StopEffect('heavy_trail_extended_fx');
 	}
 
-	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		axii_secondary_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3536,7 +3672,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		axii_secondary_sword_3().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		quen_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3547,7 +3683,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		quen_sword_3().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		quen_secondary_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3564,7 +3700,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		quen_secondary_sword_6().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('heavy_trail_extended_fx');
 		aard_blade_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3585,7 +3721,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		aard_blade_8().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		aard_secondary_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3606,7 +3742,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		aard_secondary_sword_8().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		yrden_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3627,7 +3763,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		yrden_sword_8().StopEffect('heavy_trail_extended_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('heavy_trail_extended_fx');
 		yrden_secondary_sword_2().PlayEffectSingle('heavy_trail_extended_fx');
@@ -3644,7 +3780,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 		yrden_secondary_sword_6().StopEffect('heavy_trail_extended_fx');
 	}
 
-	if (!thePlayer.HasTag('igni_sword_equipped') && !thePlayer.HasTag('igni_secondary_sword_equipped'))
+	if (!GetWitcherPlayer().HasTag('igni_sword_equipped') && !GetWitcherPlayer().HasTag('igni_secondary_sword_equipped'))
 	{
 		ACS_Dagger().PlayEffectSingle('heavy_trail_extended_fx');
 
@@ -3675,7 +3811,7 @@ function ACS_Heavy_Attack_Extended_Trail()
 
 function ACS_Light_Attack_Trail()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('light_trail_fx');
 		axii_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3689,7 +3825,7 @@ function ACS_Light_Attack_Trail()
 		axii_sword_4().StopEffect('light_trail_fx');
 		axii_sword_5().StopEffect('light_trail_fx');
 	}
-	else if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	else if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('light_trail_fx');
 		axii_secondary_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3700,7 +3836,7 @@ function ACS_Light_Attack_Trail()
 		axii_secondary_sword_3().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('light_trail_fx');
 		quen_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3711,7 +3847,7 @@ function ACS_Light_Attack_Trail()
 		quen_sword_3().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('light_trail_fx');
 		quen_secondary_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3728,7 +3864,7 @@ function ACS_Light_Attack_Trail()
 		quen_secondary_sword_6().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('light_trail_fx');
 		aard_blade_2().PlayEffectSingle('light_trail_fx');
@@ -3749,7 +3885,7 @@ function ACS_Light_Attack_Trail()
 		aard_blade_8().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('light_trail_fx');
 		aard_secondary_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3770,7 +3906,7 @@ function ACS_Light_Attack_Trail()
 		aard_secondary_sword_8().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('light_trail_fx');
 		yrden_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3791,7 +3927,7 @@ function ACS_Light_Attack_Trail()
 		yrden_sword_8().StopEffect('light_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('light_trail_fx');
 		yrden_secondary_sword_2().PlayEffectSingle('light_trail_fx');
@@ -3839,7 +3975,7 @@ function ACS_Light_Attack_Trail()
 
 function ACS_Heavy_Attack_Trail()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('heavy_trail_fx');
 		axii_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3854,7 +3990,7 @@ function ACS_Heavy_Attack_Trail()
 		axii_sword_5().StopEffect('heavy_trail_fx');
 	}
 
-	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('heavy_trail_fx');
 		axii_secondary_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3865,7 +4001,7 @@ function ACS_Heavy_Attack_Trail()
 		axii_secondary_sword_3().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('heavy_trail_fx');
 		quen_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3876,7 +4012,7 @@ function ACS_Heavy_Attack_Trail()
 		quen_sword_3().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('heavy_trail_fx');
 		quen_secondary_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3893,7 +4029,7 @@ function ACS_Heavy_Attack_Trail()
 		quen_secondary_sword_6().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('heavy_trail_fx');
 		aard_blade_2().PlayEffectSingle('heavy_trail_fx');
@@ -3914,7 +4050,7 @@ function ACS_Heavy_Attack_Trail()
 		aard_blade_8().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('heavy_trail_fx');
 		aard_secondary_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3935,7 +4071,7 @@ function ACS_Heavy_Attack_Trail()
 		aard_secondary_sword_8().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('heavy_trail_fx');
 		yrden_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -3956,7 +4092,7 @@ function ACS_Heavy_Attack_Trail()
 		yrden_sword_8().StopEffect('heavy_trail_fx');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('heavy_trail_fx');
 		yrden_secondary_sword_2().PlayEffectSingle('heavy_trail_fx');
@@ -4004,7 +4140,7 @@ function ACS_Heavy_Attack_Trail()
 
 function ACS_Wraith_Attack_Trail()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('wraith_trail');
 		axii_sword_2().PlayEffectSingle('wraith_trail');
@@ -4019,7 +4155,7 @@ function ACS_Wraith_Attack_Trail()
 		axii_sword_5().StopEffect('wraith_trail');
 	}
 
-	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('wraith_trail');
 		axii_secondary_sword_2().PlayEffectSingle('wraith_trail');
@@ -4030,7 +4166,7 @@ function ACS_Wraith_Attack_Trail()
 		axii_secondary_sword_3().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('wraith_trail');
 		quen_sword_2().PlayEffectSingle('wraith_trail');
@@ -4041,7 +4177,7 @@ function ACS_Wraith_Attack_Trail()
 		quen_sword_3().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('wraith_trail');
 		quen_secondary_sword_2().PlayEffectSingle('wraith_trail');
@@ -4058,7 +4194,7 @@ function ACS_Wraith_Attack_Trail()
 		quen_secondary_sword_6().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('wraith_trail');
 		aard_blade_2().PlayEffectSingle('wraith_trail');
@@ -4079,7 +4215,7 @@ function ACS_Wraith_Attack_Trail()
 		aard_blade_8().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('wraith_trail');
 		aard_secondary_sword_2().PlayEffectSingle('wraith_trail');
@@ -4100,7 +4236,7 @@ function ACS_Wraith_Attack_Trail()
 		aard_secondary_sword_8().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('wraith_trail');
 		yrden_sword_2().PlayEffectSingle('wraith_trail');
@@ -4121,7 +4257,7 @@ function ACS_Wraith_Attack_Trail()
 		yrden_sword_8().StopEffect('wraith_trail');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('wraith_trail');
 		yrden_secondary_sword_2().PlayEffectSingle('wraith_trail');
@@ -4169,7 +4305,7 @@ function ACS_Wraith_Attack_Trail()
 
 function ACS_Fast_Attack_Buff()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('fast_attack_buff');
 		axii_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4184,7 +4320,7 @@ function ACS_Fast_Attack_Buff()
 		axii_sword_5().StopEffect('fast_attack_buff');
 	}
 
-	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('fast_attack_buff');
 		axii_secondary_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4195,7 +4331,7 @@ function ACS_Fast_Attack_Buff()
 		axii_secondary_sword_3().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('fast_attack_buff');
 		quen_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4206,7 +4342,7 @@ function ACS_Fast_Attack_Buff()
 		quen_sword_3().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('fast_attack_buff');
 		quen_secondary_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4223,7 +4359,7 @@ function ACS_Fast_Attack_Buff()
 		quen_secondary_sword_6().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('fast_attack_buff');
 		aard_blade_2().PlayEffectSingle('fast_attack_buff');
@@ -4244,7 +4380,7 @@ function ACS_Fast_Attack_Buff()
 		aard_blade_8().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('fast_attack_buff');
 		aard_secondary_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4265,7 +4401,7 @@ function ACS_Fast_Attack_Buff()
 		aard_secondary_sword_8().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('fast_attack_buff');
 		yrden_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4286,7 +4422,7 @@ function ACS_Fast_Attack_Buff()
 		yrden_sword_8().StopEffect('fast_attack_buff');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('fast_attack_buff');
 		yrden_secondary_sword_2().PlayEffectSingle('fast_attack_buff');
@@ -4334,7 +4470,7 @@ function ACS_Fast_Attack_Buff()
 
 function ACS_Fast_Attack_Buff_Hit()
 {
-	if (thePlayer.HasTag('axii_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_sword_equipped'))
 	{
 		axii_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		axii_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4349,7 +4485,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		axii_sword_5().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('axii_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('axii_secondary_sword_equipped'))
 	{ 
 		axii_secondary_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		axii_secondary_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4360,7 +4496,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		axii_secondary_sword_3().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('quen_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_sword_equipped'))
 	{
 		quen_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		quen_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4371,7 +4507,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		quen_sword_3().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('quen_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('quen_secondary_sword_equipped'))
 	{
 		quen_secondary_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		quen_secondary_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4388,7 +4524,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		quen_secondary_sword_6().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('aard_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_sword_equipped'))
 	{
 		aard_blade_1().PlayEffectSingle('fast_attack_buff_hit');
 		aard_blade_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4409,7 +4545,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		aard_blade_8().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('aard_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('aard_secondary_sword_equipped'))
 	{
 		aard_secondary_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		aard_secondary_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4430,7 +4566,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		aard_secondary_sword_8().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('yrden_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_sword_equipped'))
 	{
 		yrden_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		yrden_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4451,7 +4587,7 @@ function ACS_Fast_Attack_Buff_Hit()
 		yrden_sword_8().StopEffect('fast_attack_buff_hit');
 	}
 	
-	if (thePlayer.HasTag('yrden_secondary_sword_equipped'))
+	if (GetWitcherPlayer().HasTag('yrden_secondary_sword_equipped'))
 	{
 		yrden_secondary_sword_1().PlayEffectSingle('fast_attack_buff_hit');
 		yrden_secondary_sword_2().PlayEffectSingle('fast_attack_buff_hit');
@@ -4499,7 +4635,7 @@ function ACS_Fast_Attack_Buff_Hit()
 
 function ACS_Griffin_Special_Attack_Effects()
 {
-	if (thePlayer.GetEquippedSign() == ST_Igni)
+	if (GetWitcherPlayer().GetEquippedSign() == ST_Igni)
 	{
 		ACS_Sword_Trail_1().PlayEffect('fire_sparks_trail');
 		ACS_Sword_Trail_1().PlayEffect('fire_sparks_trail');
@@ -4516,7 +4652,7 @@ function ACS_Griffin_Special_Attack_Effects()
 		ACS_Sword_Trail_1().PlayEffect('runeword_igni');
 		ACS_Sword_Trail_1().StopEffect('runeword_igni');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Axii)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Axii)
 	{
 		ACS_Sword_Trail_1().PlayEffect('ice_sparks_trail');
 		ACS_Sword_Trail_1().PlayEffect('ice_sparks_trail');
@@ -4528,7 +4664,7 @@ function ACS_Griffin_Special_Attack_Effects()
 		ACS_Sword_Trail_1().PlayEffect('runeword_axii');
 		ACS_Sword_Trail_1().StopEffect('runeword_axii');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Aard)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Aard)
 	{
 		ACS_Sword_Trail_1().PlayEffect('aard_power');
 		ACS_Sword_Trail_1().PlayEffect('aard_power');
@@ -4540,7 +4676,7 @@ function ACS_Griffin_Special_Attack_Effects()
 		ACS_Sword_Trail_1().PlayEffect('runeword_aard');
 		ACS_Sword_Trail_1().StopEffect('runeword_aard');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Yrden)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Yrden)
 	{	
 		ACS_Sword_Trail_1().PlayEffect('yrden_power');
 		ACS_Sword_Trail_1().PlayEffect('yrden_power');
@@ -4552,7 +4688,7 @@ function ACS_Griffin_Special_Attack_Effects()
 		ACS_Sword_Trail_1().PlayEffect('runeword_yrden');
 		ACS_Sword_Trail_1().StopEffect('runeword_yrden');
 	}
-	else if (thePlayer.GetEquippedSign() == ST_Quen)
+	else if (GetWitcherPlayer().GetEquippedSign() == ST_Quen)
 	{
 		ACS_Sword_Trail_1().PlayEffect('quen_power');
 		ACS_Sword_Trail_1().PlayEffect('quen_power');

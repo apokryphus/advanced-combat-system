@@ -5,21 +5,21 @@ function ACS_BruxaDodgeBackCenterInit()
 	
 	if ( ACS_Enabled() && ACS_BruxaDodgeCenter_Enabled() )
 	{
-		if (!thePlayer.IsCiri()
-		&& !thePlayer.IsPerformingFinisher()
-		&& !thePlayer.HasTag('in_wraith')
+		if (!GetWitcherPlayer().IsCiri()
+		&& !GetWitcherPlayer().IsPerformingFinisher()
+		&& !GetWitcherPlayer().HasTag('in_wraith')
 		&& ACS_BuffCheck()
 		)
 		{	
-			if (!thePlayer.HasTag('blood_sucking') && thePlayer.IsActionAllowed(EIAB_Dodge) )
+			if (!GetWitcherPlayer().HasTag('blood_sucking') && GetWitcherPlayer().IsActionAllowed(EIAB_Dodge) )
 			{
 				if (ACS_can_dodge())
 				{
 					if ( ACS_StaminaBlockAction_Enabled() 
-					&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+					&& GetWitcherPlayer().GetStat( BCS_Stamina ) <= GetWitcherPlayer().GetStatMax( BCS_Stamina ) * 0.15
 					)
 					{
-						thePlayer.SoundEvent("gui_no_stamina");
+						GetWitcherPlayer().SoundEvent("gui_no_stamina");
 					}
 					else
 					{
@@ -27,7 +27,7 @@ function ACS_BruxaDodgeBackCenterInit()
 
 						ACS_ThingsThatShouldBeRemoved();
 
-						thePlayer.ClearAnimationSpeedMultipliers();
+						GetWitcherPlayer().ClearAnimationSpeedMultipliers();
 
 						ACS_ExplorationDelayHack();
 
@@ -40,16 +40,16 @@ function ACS_BruxaDodgeBackCenterInit()
 				else
 				{
 					if ( ACS_StaminaBlockAction_Enabled() 
-					&& thePlayer.GetStat( BCS_Stamina ) <= thePlayer.GetStatMax( BCS_Stamina ) * 0.15
+					&& GetWitcherPlayer().GetStat( BCS_Stamina ) <= GetWitcherPlayer().GetStatMax( BCS_Stamina ) * 0.15
 					)
 					{
-						thePlayer.SoundEvent("gui_no_stamina");
+						GetWitcherPlayer().SoundEvent("gui_no_stamina");
 					}
 					else
 					{
 						ACS_ThingsThatShouldBeRemoved();
 
-						thePlayer.ClearAnimationSpeedMultipliers();
+						GetWitcherPlayer().ClearAnimationSpeedMultipliers();
 
 						ACS_ExplorationDelayHack();
 
@@ -60,7 +60,7 @@ function ACS_BruxaDodgeBackCenterInit()
 				}
 				*/
 			}
-			else if ( thePlayer.HasTag('blood_sucking') 
+			else if ( GetWitcherPlayer().HasTag('blood_sucking') 
 			//&& ACS_Hijack_Enabled() 
 			)
 			{
@@ -70,7 +70,7 @@ function ACS_BruxaDodgeBackCenterInit()
 	}
 	else
 	{
-		thePlayer.EvadePressed(EBAT_Dodge);
+		GetWitcherPlayer().EvadePressed(EBAT_Dodge);
 	}
 }
 
@@ -111,26 +111,26 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 	
 	entry function bruxa_regular_dodge_Entry()
 	{	
-		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
+		targetDistance = VecDistanceSquared2D( GetWitcherPlayer().GetWorldPosition(), actor.GetWorldPosition() ) ;
 				
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius();
+		+ ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetMovingAgentComponent()).GetCapsuleRadius();
 		
-		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
-			actor = (CActor)( thePlayer.GetTarget() );	
+		if ( GetWitcherPlayer().IsHardLockEnabled() && GetWitcherPlayer().GetTarget() )
+			actor = (CActor)( GetWitcherPlayer().GetTarget() );	
 		else
 		{
-			thePlayer.FindMoveTarget();
-			actor = (CActor)( thePlayer.moveTarget );		
+			GetWitcherPlayer().FindMoveTarget();
+			actor = (CActor)( GetWitcherPlayer().moveTarget );		
 		}
 
-		targetDistance = VecDistanceSquared2D( thePlayer.GetWorldPosition(), actor.GetWorldPosition() ) ;
+		targetDistance = VecDistanceSquared2D( GetWitcherPlayer().GetWorldPosition(), actor.GetWorldPosition() ) ;
 		
-		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+		movementAdjustor = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 		
-		thePlayer.StopEffect('dive_shape');
+		GetWitcherPlayer().StopEffect('dive_shape');
 
-		thePlayer.RemoveTag('ACS_Bruxa_Jump_End');
+		GetWitcherPlayer().RemoveTag('ACS_Bruxa_Jump_End');
 
 		bruxa_regular_dodge();	
 	}
@@ -143,13 +143,13 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 		
 		movementAdjustor.CancelAll();
 
-		thePlayer.ActionCancelAll();
+		GetWitcherPlayer().ActionCancelAll();
 
-		thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+		GetWitcherPlayer().GetMovingAgentComponent().ResetMoveRequests();
 
-		thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+		GetWitcherPlayer().GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
 
-		thePlayer.ResetRawPlayerHeading();
+		GetWitcherPlayer().ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'bruxa_regular_dodge' );
 		
@@ -159,17 +159,17 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 		
 		movementAdjustor.MaxLocationAdjustmentSpeed( ticket, 50000000 );
 		
-		if( ACS_AttitudeCheck ( actor ) && thePlayer.IsInCombat() && actor.IsAlive() )
+		if( ACS_AttitudeCheck ( actor ) && GetWitcherPlayer().IsInCombat() && actor.IsAlive() )
 		{	
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 					
 			GetACSWatcher().dodge_timer_actual();
 		
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
-			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
+			//movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
 
-			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.25 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.5 );
+			//movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldRight() * -1.25 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.5 );
 		}
 		else
 		{			
@@ -177,11 +177,11 @@ state BruxaRegularDodgeBack_Engage in cBruxaDodgeBackCenter
 
 			movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() ) );
 				
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'utility_dodge_attack_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
-			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
+			//movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * 1.25 ) + theCamera.GetCameraDirection() * 1.25 );		
 
-			//movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldRight() * -1.25 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.5 );
+			//movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldRight() * -1.25 ) + theCamera.GetCameraDirection() + theCamera.GetCameraRight() * -1.5 );
 		}
 	}
 }
@@ -205,7 +205,7 @@ state BruxaDodgeBackCenter_HijackBack in cBruxaDodgeBackCenter
 
 	latent function HijackBackLatent()
 	{
-		//actors = GetActorsInRange(thePlayer, 10, 10, 'bruxa_bite_victim', true);
+		//actors = GetActorsInRange(GetWitcherPlayer(), 10, 10, 'bruxa_bite_victim', true);
 
 		actors.Clear();
 		
@@ -351,14 +351,14 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 	
 	entry function BruxaDodgeBack()
 	{
-		if (!thePlayer.HasTag('ACS_Camo_Active')
+		if (!GetWitcherPlayer().HasTag('ACS_Camo_Active')
 		&& ACS_DodgeEffects_Enabled())
 		{
-			thePlayer.PlayEffectSingle( 'shadowdash_short' );
-			thePlayer.StopEffect( 'shadowdash_short' );
+			GetWitcherPlayer().PlayEffectSingle( 'shadowdash_short' );
+			GetWitcherPlayer().StopEffect( 'shadowdash_short' );
 
-			thePlayer.PlayEffectSingle( 'bruxa_dash_trails' );
-			thePlayer.StopEffect( 'bruxa_dash_trails' );
+			GetWitcherPlayer().PlayEffectSingle( 'bruxa_dash_trails' );
+			GetWitcherPlayer().StopEffect( 'bruxa_dash_trails' );
 		}
 					
 		GetACSWatcher().dodge_timer_actual();
@@ -369,17 +369,17 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 	latent function dodge_back_center ()
 	{		
 		dist = ((CMovingPhysicalAgentComponent)actor.GetMovingAgentComponent()).GetCapsuleRadius() 
-		+ ((CMovingPhysicalAgentComponent)thePlayer.GetMovingAgentComponent()).GetCapsuleRadius();
+		+ ((CMovingPhysicalAgentComponent)GetWitcherPlayer().GetMovingAgentComponent()).GetCapsuleRadius();
 		
-		if ( thePlayer.IsHardLockEnabled() && thePlayer.GetTarget() )
-			actor = (CActor)( thePlayer.GetTarget() );	
+		if ( GetWitcherPlayer().IsHardLockEnabled() && GetWitcherPlayer().GetTarget() )
+			actor = (CActor)( GetWitcherPlayer().GetTarget() );	
 		else
 		{
-			thePlayer.FindMoveTarget();
-			actor = (CActor)( thePlayer.moveTarget );		
+			GetWitcherPlayer().FindMoveTarget();
+			actor = (CActor)( GetWitcherPlayer().moveTarget );		
 		}
 		
-		movementAdjustor = thePlayer.GetMovingAgentComponent().GetMovementAdjustor();
+		movementAdjustor = GetWitcherPlayer().GetMovingAgentComponent().GetMovementAdjustor();
 		
 		ticket = movementAdjustor.GetRequest( 'dodge_back_center');
 		
@@ -387,13 +387,13 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 		
 		movementAdjustor.CancelAll();
 
-		thePlayer.ActionCancelAll();
+		GetWitcherPlayer().ActionCancelAll();
 
-		thePlayer.GetMovingAgentComponent().ResetMoveRequests();
+		GetWitcherPlayer().GetMovingAgentComponent().ResetMoveRequests();
 
-		thePlayer.GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
+		GetWitcherPlayer().GetMovingAgentComponent().SetGameplayMoveDirection(0.0f);
 
-		thePlayer.ResetRawPlayerHeading();
+		GetWitcherPlayer().ResetRawPlayerHeading();
 		
 		ticket = movementAdjustor.CreateNewRequest( 'dodge_back_center' );
 		
@@ -405,30 +405,30 @@ state BruxaDodgeBackCenter_Engage in cBruxaDodgeBackCenter
 
 		movementAdjustor.RotateTo( ticket, VecHeading( theCamera.GetCameraDirection() + theCamera.GetCameraForward() * 1.1 ) );
 
-		thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+		GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 
-		movementAdjustor.SlideTo( ticket, TraceFloor(( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -2 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -2) );
+		movementAdjustor.SlideTo( ticket, TraceFloor(( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * -2 ) + theCamera.GetCameraDirection() + theCamera.GetCameraForward() * -2) );
 
 		/*
 		
-		if( actor.GetAttitude(thePlayer) == AIA_Hostile && actor.IsAlive() )
+		if( actor.GetAttitude(GetWitcherPlayer()) == AIA_Hostile && actor.IsAlive() )
 		{	
 			movementAdjustor.RotateTo( ticket, theCamera.GetCameraHeading() );
 				
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
+			movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
 		}
 		else
 		{
-			thePlayer.GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
+			GetWitcherPlayer().GetRootAnimatedComponent().PlaySlotAnimationAsync ( 'bruxa_dodge_back_center_ACS', 'PLAYER_SLOT', SAnimatedComponentSlotAnimationSettings(0.25f, 0.875f));
 			
-			movementAdjustor.SlideTo( ticket, ( thePlayer.GetWorldPosition() + thePlayer.GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
+			movementAdjustor.SlideTo( ticket, ( GetWitcherPlayer().GetWorldPosition() + GetWitcherPlayer().GetWorldForward() * -1.25 ) + theCamera.GetCameraDirection() * -1.25 );
 		}
 		
 		Sleep(1);
 		
-		thePlayer.SetIsCurrentlyDodging(false);
+		GetWitcherPlayer().SetIsCurrentlyDodging(false);
 
 		*/
 	}
