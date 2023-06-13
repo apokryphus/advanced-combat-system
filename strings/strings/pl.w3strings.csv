@@ -1,0 +1,507 @@
+;meta[language=pl]
+; id      |key(hex)|key(str)| text
+;
+; comment lines use ; as first character
+; all comment lines (except the two line header) will be ignored
+;
+2117035001|        |panel_Mods|Mods
+2117035002|        |panel_acs_name|Advanced Combat System
+2117035003|        |panel_acs_main_settings|Main Settings
+2117035004|        |preset_Mods_acs_name_acs_main_settings|ACS: Main Settings
+2117035005|        |preset_Mods_combat_acs_name_acs_main_settings|ACS: Main Settings
+2117035006|        |preset_Mods_gameplay_acs_name_acs_main_settings|ACS: Main Settings
+2117035007|        |preset_Mods_miscellaneous_acs_name_acs_main_settings|ACS: Main Settings
+2117035008|        |preset_value_armiger_mode|Armiger Mode
+2117035009|        |preset_value_focus_mode|Focus Mode
+2117035010|        |preset_value_hybrid_mode|Hybrid Mode
+2117035011|        |preset_value_equip_mode|Equipment Mode
+2117035012|        |option_acs_mod_enabled|<font color="#00ff67">Mod Enabled</font>
+2117035013|        |option_acs_weapon_mode|ACS Weapon Mode
+2117035014|        |preset_value_acs_armiger_mode|Armiger Mode
+2117035015|        |preset_value_acs_focus_mode|Focus Mode
+2117035016|        |preset_value_acs_hybrid_mode|Hybrid Mode
+2117035017|        |preset_value_acs_equip_mode|Equipment Mode
+2117035018|        |option_acs_fist_mode|Fist Mode
+2117035019|        |preset_value_acs_fist|Normal Fists
+2117035020|        |preset_value_acs_vamp_claws|Vampire Claws
+2117035021|        |preset_value_acs_aard_fist|Shockwave Fists
+2117035022|        |option_acs_target_mode|Targeting Mode
+2117035023|        |preset_value_acs_auto_target|Auto-Targeting
+2117035024|        |preset_value_acs_auto_target_closest_target|Auto-Targeting: Closest Enemy
+2117035025|        |preset_value_acs_manual_target|Manual Targeting
+2117035026|        |option_acs_combo_mode|Combo Chain Mode
+2117035027|        |preset_value_acs_combo_mode_sequential|Sequential
+2117035028|        |preset_value_acs_combo_mode_random|Randomized/Distance-based
+2117035029|        |option_acs_stamina_block_action|Minimum Stamina Requirement Enabled
+2117035030|        |option_acs_on_hit_effects|Elemental Combo System Enabled
+2117035031|        |option_acs_elemental_rend|Elemental Rend Enabled
+2117035032|        |option_acs_hide_sword_sheathes|Hide All Weapons On Back For Armiger, Focus, and Hybrid Mode
+2117035033|        |option_acs_experimental_dismemberment_enabled|Experimental Dismemberment Enabled
+2117035034|        |option_acs_sword_walk_enabled|Alternate Sword-Walk Enabled
+2117035035|        |option_acs_passive_taunt_enabled|Passive Taunt Enabled
+2117035036|        |option_acs_auto_finisher_enabled|Auto-Finisher Enabled
+2117035037|        |option_acs_vampire_sound_effects|Vampire Voice SFX Enabled
+2117035038|        |option_acs_player_scale|Set Player Size (1 = Default)
+2117035039|        |option_acs_shadows_spawn_chances_normal|Forest God Shadows Spawning Chance ( 1 = 100% )
+2117035040|        |option_acs_init|Advanced Combat System Initialized
+2117035041|        |option_acs_size_init|Mod Initialized
+2117035042|        |panel_acs_armiger_mode_settings|Armiger Mode Settings
+2117035043|        |preset_Mods_acs_name_acs_weapon_mode_settings_acs_armiger_mode_settings|ACS: Armiger Mode Settings
+2117035044|        |preset_Mods_combat_acs_name_acs_weapon_mode_settings_acs_armiger_mode_settings|ACS: Armiger Mode Settings
+2117035045|        |preset_Mods_gameplay_acs_name_acs_weapon_mode_settings_acs_armiger_mode_settings|ACS: Armiger Mode Settings
+2117035046|        |preset_Mods_miscellaneous_acs_name_acs_weapon_mode_settings_acs_armiger_mode_settings|ACS: Armiger Mode Settings
+2117035047|        |preset_value_acs_armiger_mode_settings_default|Default
+2117035048|        |option_acs_armiger_mode_weapon_type|Armiger Mode Weapon Type
+2117035049|        |preset_value_acs_armiger_evolving_weapons|Evolving Weapons
+2117035050|        |preset_value_acs_armiger_static_weapons|Static Weapons
+2117035051|        |option_acs_armiger_igni_sign_weapon|<font color="#ff0000">Igni</font>
+2117035052|        |preset_value_acs_armiger_mode_default_weapon|Default Weapon
+2117035053|        |preset_value_acs_armiger_mode_olgierd_weapon|Olgierd/Spear
+2117035054|        |preset_value_acs_armiger_mode_eredin_weapon|Eredin/Gregoire
+2117035055|        |preset_value_acs_armiger_mode_claw_weapon|Sword Claws/Axe
+2117035056|        |preset_value_acs_armiger_mode_imlerith_weapon|Imlerith/Giant Weapon
+2117035057|        |option_acs_armiger_quen_sign_weapon|<font color="#ffae00">Quen</font>
+2117035058|        |option_acs_armiger_axii_sign_weapon|<font color="#4daf00">Axii</font>
+2117035059|        |option_acs_armiger_aard_sign_weapon|<font color="#58eef9">Aard</font>
+2117035060|        |option_acs_armiger_yrden_sign_weapon|<font color="#aa58f9">Yrden</font>
+2117035061|        |panel_acs_focus_mode_settings|Focus Mode Settings
+2117035062|        |preset_Mods_acs_name_acs_weapon_mode_settings_acs_focus_mode_settings|ACS: Focus Mode Settings
+2117035063|        |preset_Mods_combat_acs_name_acs_weapon_mode_settings_acs_focus_mode_settings|ACS: Focus Mode Settings
+2117035064|        |preset_Mods_gameplay_acs_name_acs_weapon_mode_settings_acs_focus_mode_settings|ACS: Focus Mode Settings
+2117035065|        |preset_Mods_miscellaneous_acs_name_acs_weapon_mode_settings_acs_focus_mode_settings|ACS: Focus Mode Settings
+2117035066|        |preset_value_acs_focus_mode_settings_default|Default
+2117035067|        |option_acs_focus_mode_weapon_type|Focus Mode Weapon Type
+2117035068|        |preset_value_acs_focus_evolving_weapons|Evolving Weapons
+2117035069|        |preset_value_acs_focus_static_weapons|Static Weapons
+2117035070|        |option_acs_focus_mode_steel_weapon|Focus Mode Steel Weapon
+2117035071|        |preset_value_acs_focus_mode_default_steel_weapon|Default Geralt Steel Sword
+2117035072|        |preset_value_acs_focus_mode_olgierd_steel_weapon|Iris (Olgierd)
+2117035073|        |preset_value_acs_focus_mode_spear_steel_weapon|Spear / Staff
+2117035074|        |preset_value_acs_focus_mode_eredin_steel_weapon|Sword (Eredin) / Shield
+2117035075|        |preset_value_acs_focus_mode_greg_steel_weapon|Colossal Sword (Gorgon)
+2117035076|        |preset_value_acs_focus_mode_imlerith_steel_weapon|Caretaker / Imlerith / Scythe
+2117035077|        |preset_value_acs_focus_mode_giant_steel_weapon|Giant's Weapon
+2117035078|        |preset_value_acs_focus_mode_dettlaff_steel_weapon|Sword Claws
+2117035079|        |preset_value_acs_focus_mode_axe_steel_weapon|Axe/Warhammer
+2117035080|        |option_acs_focus_mode_silver_weapon|Focus Mode Silver Weapon
+2117035081|        |preset_value_acs_focus_mode_default_silver_weapon|Default Geralt Silver Sword
+2117035082|        |preset_value_acs_focus_mode_olgierd_silver_weapon|Ofieri Sabre
+2117035083|        |preset_value_acs_focus_mode_spear_silver_weapon|Guisarme / Staff
+2117035084|        |preset_value_acs_focus_mode_eredin_silver_weapon|Sword (Eredin) / Shield
+2117035085|        |preset_value_acs_focus_mode_greg_silver_weapon|Colossal Sword (Gorgon)
+2117035086|        |preset_value_acs_focus_mode_imlerith_silver_weapon|Caretaker / Imlerith / Scythe
+2117035087|        |preset_value_acs_focus_mode_giant_silver_weapon|Giant's Weapon
+2117035088|        |preset_value_acs_focus_mode_dettlaff_silver_weapon|Sword Claws
+2117035089|        |preset_value_acs_focus_mode_axe_silver_weapon|Axe/Warhammer
+2117035090|        |panel_acs_hybrid_mode_settings|Hybrid Mode Settings
+2117035091|        |preset_Mods_acs_name_acs_weapon_mode_settings_acs_hybrid_mode_settings|ACS: Hybrid Mode Settings
+2117035092|        |preset_Mods_combat_acs_name_acs_weapon_mode_settings_acs_hybrid_mode_settings|ACS: Hybrid Mode Settings
+2117035093|        |preset_Mods_gameplay_acs_name_acs_weapon_mode_settings_acs_hybrid_mode_settings|ACS: Hybrid Mode Settings
+2117035094|        |preset_Mods_miscellaneous_acs_name_acs_weapon_mode_settings_acs_hybrid_mode_settings|ACS: Hybrid Mode Settings
+2117035095|        |preset_value_acs_hybrid_mode_settings_default|Default
+2117035096|        |option_acs_hybrid_mode_weapon_type|Hybrid Mode Weapon Type
+2117035097|        |preset_value_acs_hybrid_evolving_weapons|Evolving Weapons
+2117035098|        |preset_value_acs_hybrid_static_weapons|Static Weapons
+2117035099|        |option_acs_hybrid_light_attack|Light Attack
+2117035100|        |preset_value_acs_hybrid_mode_default_attack|Default Attack
+2117035101|        |preset_value_acs_hybrid_mode_olgierd_attack|Olgierd
+2117035102|        |preset_value_acs_hybrid_mode_eredin_attack|Eredin/Shield
+2117035103|        |preset_value_acs_hybrid_mode_claw_attack|Sword Claws
+2117035104|        |preset_value_acs_hybrid_mode_imlerith_attack|Imlerith/Caranthir/Caretaker
+2117035105|        |preset_value_acs_hybrid_mode_spear_attack|Spear
+2117035106|        |preset_value_acs_hybrid_mode_greg_attack|Gregoire
+2117035107|        |preset_value_acs_hybrid_mode_axe_attack|Axe/Warhammer
+2117035108|        |preset_value_acs_hybrid_mode_hammer_attack|Giant's Weapon
+2117035109|        |option_acs_hybrid_forward_light_attack|W (Forward) + Light Attack
+2117035110|        |option_acs_hybrid_heavy_attack|Heavy Attack
+2117035111|        |option_acs_hybrid_forward_heavy_attack|W (Forward) + Heavy Attack
+2117035112|        |option_acs_hybrid_special_attack|Special Attack (Whirl)
+2117035113|        |option_acs_hybrid_forward_special_attack|W (Forward) + Special Attack (Whirl)
+2117035114|        |option_acs_hybrid_counter_attack|Counterattack/Parry Skill
+2117035115|        |panel_acs_taunt_settings|Taunt System Settings
+2117035116|        |preset_Mods_acs_name_acs_additional_settings_acs_taunt_settings|ACS: Taunt System Settings
+2117035117|        |preset_Mods_combat_acs_name_acs_additional_settings_acs_taunt_settings|ACS: Taunt System Settings
+2117035118|        |preset_Mods_gameplay_acs_name_acs_additional_settings_acs_taunt_settings|ACS: Taunt System Settings
+2117035119|        |preset_Mods_miscellaneous_acs_name_acs_additional_settings_acs_taunt_settings|ACS: Taunt System Settings
+2117035120|        |preset_value_acs_taunt_settings_default|Default
+2117035121|        |preset_value_acs_taunt_settings_off|Off
+2117035122|        |option_acs_taunt_system_enabled|Taunt System Enabled
+2117035123|        |option_acs_i_wanna_play_gwent_enabled|I WANNA PLAY GWENT
+2117035124|        |option_acs_combat_taunt_enabled|Combat Taunt Enabled
+2117035125|        |panel_acs_movement_settings|Movement Settings
+2117035126|        |preset_Mods_acs_name_acs_movement_settings|ACS: Movement Settings
+2117035127|        |preset_Mods_combat_acs_name_acs_movement_settings|ACS: Movement Settings
+2117035128|        |preset_Mods_gameplay_acs_name_acs_movement_settings|ACS: Movement Settings
+2117035129|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings|ACS: Movement Settings
+2117035130|        |preset_value_acs_movement_settings_default|Default
+2117035131|        |preset_value_acs_movement_settings_off|Off
+2117035132|        |option_acs_jump_extend|Jump Extender Enabled
+2117035133|        |option_acs_jump_extend_effect|<font color="#ff0000">—————</font> Jump Extender Effects Enabled
+2117035134|        |option_acs_jump_extend_normal_height|<font color="#ff0000">—————</font> Normal Jump Height (Meters)
+2117035135|        |option_acs_jump_extend_normal_distance|<font color="#ff0000">—————</font> Normal Jump Distance (Meters)
+2117035136|        |option_acs_jump_extend_sprinting_height|<font color="#ff0000">—————</font> Sprinting Jump Height (Meters)
+2117035137|        |option_acs_jump_extend_sprinting_distance|<font color="#ff0000">—————</font> Sprinting Jump Distance (Meters)
+2117035138|        |option_acs_bruxa_dash|Bruxa Dash (Hold Sprint + Forward (W) OR Doubletap + Dodge)
+2117035139|        |option_acs_bruxa_dash_input|<font color="#ff0000">—————</font> Bruxa Dash Input
+2117035140|        |preset_value_acs_bruxa_dash_single_tap_sprint|Single Tap Forward (W)
+2117035141|        |preset_value_acs_bruxa_dash_double_tap_sprint|Double Tap Forward (W)
+2117035142|        |option_acs_bruxa_dash_normal_distance|<font color="#ff0000">—————</font> Exploration Distance (Meters)
+2117035143|        |option_acs_bruxa_dash_combat_distance|<font color="#ff0000">—————</font> Combat Distance (Meters)
+2117035144|        |option_acs_wraith_mode|Wraith Mode (Witcher Sense + Hold Sprint + Forward (W))
+2117035145|        |option_acs_wraith_mode_input|<font color="#ff0000">—————</font> Wraith Mode Input
+2117035146|        |preset_value_acs_wraith_mode_single_tap_sprint|Single Tap Forward (W)
+2117035147|        |preset_value_acs_wraith_mode_double_tap_sprint|Double Tap Forward (W)
+2117035148|        |option_acs_bruxa_leap_attack|Leap Attack (Doubletap + Dodge + Forward (W))
+2117035149|        |option_acs_bruxa_dodge_center|Bruxa Dodge Back Center (Doubletap + Back (S))
+2117035150|        |option_acs_bruxa_dodge_left|Bruxa Dodge Back Left (Doubletap + Left (A))
+2117035151|        |option_acs_bruxa_dodge_right|Bruxa Dodge Back Right (Doubletap + Right (D))
+2117035152|        |option_acs_bruxa_dodge_slide_back|Slide Back Dodge (Back (S) + Dodge)
+2117035153|        |option_acs_wild_hunt_blink|Teleport Dodge (Doubletap + Roll)
+2117035154|        |option_acs_dodge_effects|Additional Effects for Normal Dodge and Roll
+2117035155|        |panel_acs_special_abilities_settings|Special Abilities Settings
+2117035156|        |preset_Mods_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035157|        |preset_Mods_combat_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035158|        |preset_Mods_gameplay_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035159|        |preset_Mods_miscellaneous_acs_name_acs_special_abilities_settings|ACS: Special Abilities
+2117035160|        |preset_value_acs_special_abilities_settings_default|Default
+2117035161|        |preset_value_acs_special_abilities_settings_off|Off
+2117035162|        |option_acs_summoned_shades|Summoned Shades (Back (S) + Doubletap Parry)
+2117035163|        |option_acs_beam_attack|Aspect of the Djinn (Back (S) + Parry While Locked On)
+2117035164|        |option_acs_sword_array|Summoned Swords (Forward (W) + Doubletap Parry + Full Focus)
+2117035165|        |option_acs_shield_entity|Aspect of the Hym (Doubletap + Hold Parry + Shield)
+2117035166|        |option_acs_quen_monster_summon|Wolves/Centipede Summon (Doubletap + Hold Parry + Olgierd Weapon)
+2117035167|        |option_acs_yrden_skele_summon|Necromancy (Doubletap + Hold Parry + Imlerith Weapon)
+2117035168|        |option_acs_aard_pull|Bat Swarm (Doubletap + Hold Parry + Sword Claws)
+2117035169|        |option_acs_bruxa_camo_decoy|Bruxa Camouflage (Doubletap + Hold Parry + Vampire Claws)
+2117035170|        |option_acs_bruxa_bite|Bruxa Bite (Doubletap + Forward (W) + Full Adrenaline)
+2117035171|        |panel_acs_damage_settings|Damage Settings
+2117035172|        |preset_Mods_acs_name_acs_additional_settings_acs_damage_settings|ACS: Damage Settings
+2117035173|        |preset_Mods_combat_acs_name_acs_additional_settings_acs_damage_settings|ACS: Damage Settings
+2117035174|        |preset_Mods_gameplay_acs_name_acs_additional_settings_acs_damage_settings|ACS: Damage Settings
+2117035175|        |preset_Mods_miscellaneous_acs_name_acs_additional_settings_acs_damage_settings|ACS: Damage Settings
+2117035176|        |preset_value_acs_damage_settings_default|DEFAULT
+2117035177|        |preset_value_acs_damage_settings_default_max|<font color="#f73636">DEFAULT MAX</font>
+2117035178|        |preset_value_acs_damage_settings_max|<font color="#ff0000">GIVE ME DAMAGE</font>
+2117035179|        |option_acs_player_fall_damage|Player Fall Damage For Extreme Heights: (0 = No Damage)
+2117035180|        |option_acs_vampire_claws_human_max_damage|Vampire Claws  : <u>Human Maximum</u> Health Damage % <font color="#fadc32">( 1 = 100% )</font>
+2117035181|        |option_acs_vampire_claws_human_min_damage|<font color="#ff0000">—————</font>  : <u>Human Minimum</u> Health Damage %
+2117035182|        |option_acs_vampire_claws_monster_max_damage|<font color="#ff0000">—————</font>  : <u>Monster Maximum</u> Health Damage %
+2117035183|        |option_acs_vampire_claws_monster_min_damage|<font color="#ff0000">—————</font>  : <u>Monster Minimum</u> Health Damage %
+2117035184|        |item_name_acs_spear_1|Spear: Type A
+2117035185|        |item_desc_acs_spear_1|Never go hunting for buffalo with a dull spear. It's pointless.
+2117035186|        |item_name_acs_spear_2|Spear: Type B
+2117035187|        |item_desc_acs_spear_2|You should not disagree with my spear. It has a point.
+2117035188|        |item_name_acs_wild_hunt_spear|Wild Hunt Spear
+2117035189|        |item_desc_acs_wild_hunt_spear|A spear belonging to a warrior of the dreaded Wild Hunt.
+2117035190|        |item_name_acs_halberd_1|Halberd: Type A
+2117035191|        |item_desc_acs_halberd_1|A good mid-ranged weapon for when one is surrounded.
+2117035192|        |item_name_acs_halberd_2|Halberd: Type B
+2117035193|        |item_desc_acs_halberd_2|A good mid-ranged weapon for chopping vegetables at a distance.
+2117035194|        |item_name_acs_wild_hunt_halberd|Wild Hunt Halberd
+2117035195|        |item_desc_acs_wild_hunt_halberd|A halberd belonging to a warrior of the dreaded Wild Hunt.
+2117035196|        |item_name_acs_guisarme_1|Guisarme: Type A
+2117035197|        |item_desc_acs_guisarme_1|The barbed tips adds a nice extra flair.
+2117035198|        |item_name_acs_guisarme_2|Guisarme: Type B
+2117035199|        |item_desc_acs_guisarme_2|It's like a spear, but more stabby.
+2117035200|        |item_name_acs_long_metal_pole|Metal Pole
+2117035201|        |item_desc_acs_long_metal_pole|Perfect for bludgeoning your enemies with at mid-range distance.
+2117035202|        |item_name_acs_mace_1|Mace: Type A
+2117035203|        |item_desc_acs_mace_1|Smells a bit like pepper.
+2117035204|        |item_name_acs_mace_2|Mace: Type B
+2117035205|        |item_desc_acs_mace_2|Thieves will think twice robbing you with this in your hand.
+2117035206|        |item_name_acs_axe_1|Axe: Type A
+2117035207|        |item_desc_acs_axe_1|A sturdy axe.
+2117035208|        |item_name_acs_axe_2|Axe: Type B
+2117035209|        |item_desc_acs_axe_2|Not a body spray.
+2117035210|        |item_name_acs_great_axe_1|Greataxe: Type A
+2117035211|        |item_desc_acs_great_axe_1|Did you hear about the lumberjack who lost his job? They gave him the axe, he just couldn’t hack it.
+2117035212|        |item_name_acs_great_axe_2|Greataxe: Type B
+2117035213|        |item_desc_acs_great_axe_2|In the middle of the battle, the soldier pulled his comrade aside and said: “Just take a few minutes to rel-axe! I don’t want you to get a splitting headache!”
+2117035214|        |item_name_acs_wild_hunt_axe|Wild Hunt Axe
+2117035215|        |item_desc_acs_wild_hunt_axe|An axe belonging to a warrior of the dreaded Wild Hunt.
+2117035216|        |item_name_acs_dwarven_axe|Dwarven Axe
+2117035217|        |item_desc_acs_dwarven_axe|And my axe!
+2117035218|        |item_name_acs_dwarven_hammer|Dwarven Hammer
+2117035219|        |item_desc_acs_dwarven_hammer|And my hammer!
+2117035220|        |item_name_acs_twohanded_hammer_1|Two-Handed Hammer: Type A
+2117035221|        |item_desc_acs_twohanded_hammer_1|It's hammer time!
+2117035222|        |item_name_acs_twohanded_hammer_2|Two-Handed Hammer: Type B
+2117035223|        |item_desc_acs_twohanded_hammer_2|Hammers are the dumbest among all the tools. Probably because it isn't really the sharpest tool in the shed.
+2117035224|        |item_name_acs_wild_hunt_hammer|Wild Hunt Hammer
+2117035225|        |item_desc_acs_wild_hunt_hammer|A hammer belonging to a warrior of the dreaded Wild Hunt.
+2117035226|        |item_name_acs_hatchet|Hatchet
+2117035227|        |item_desc_acs_hatchet|My ex wife and I have decided to quit arguing and bury the hatchet. Now we just have to decide whether it should be in her chest or mine!
+2117035228|        |item_name_acs_small_blackjack|Small Blackjack
+2117035229|        |item_desc_acs_small_blackjack|I used to practice blackjack by using my bedroom wall as an opponent. I stopped when I realised the house always wins.
+2117035230|        |item_name_acs_club|Club
+2117035231|        |item_desc_acs_club|I don’t eat club sandwiches. I quit cold turkey.
+2117035232|        |item_name_acs_blackjack|Blackjack
+2117035233|        |item_desc_acs_blackjack|My dad is a blackjack dealer. He hit me until I was 21.
+2117035234|        |item_name_acs_poker|Poker
+2117035235|        |item_desc_acs_poker|Why was a vampire so nervous about the poker game he was playing? His adversary was raising the stake.
+2117035236|        |item_name_acs_staff|Staff
+2117035237|        |item_desc_acs_staff|Staff sergeant reporting for duty.
+2117035238|        |item_name_acs_lucerne_hammer|Lucerne Hammer
+2117035239|        |item_desc_acs_lucerne_hammer|I've always wondered how hammers fall down. Then one day it hit me.
+2117035240|        |item_name_acs_wand|Wand
+2117035241|        |item_desc_acs_wand|Make a wish.
+2117035242|        |item_name_acs_oar|Oar
+2117035243|        |item_desc_acs_oar|Row, row, row your boat.
+2117035244|        |item_name_acs_pickaxe|Pickaxe
+2117035245|        |item_desc_acs_pickaxe|What do you call a bent pickaxe? A miner problem.
+2117035246|        |item_name_acs_shovel|Shovel
+2117035247|        |item_desc_acs_shovel|What did the guy exclaim after inventing the shovel? "It's ground breaking!"
+2117035248|        |item_name_acs_broom|Broom
+2117035249|        |item_desc_acs_broom|Why was the broom late? It over swept.
+2117035250|        |item_name_acs_paling|Paling
+2117035251|        |item_desc_acs_paling|Why do cemeteries have paling around them? People are dying to get in.
+2117035252|        |item_name_acs_pitchfork|Pitchfork
+2117035253|        |item_desc_acs_pitchfork|Ah yes. My old enemy.
+2117035254|        |item_name_acs_rake|Rake
+2117035255|        |item_desc_acs_rake|Make it or rake it.
+2117035256|        |item_name_acs_scoop|Scoop
+2117035257|        |item_desc_acs_scoop|Where did I leave that ice cream?
+2117035258|        |item_name_acs_scythe|Scythe
+2117035259|        |item_desc_acs_scythe|What do you call a serious man with a scythe that sneaks around outside people’s windows? The grim peeper.
+2117035260|        |item_name_acs_shepherd_stick|Shepherd Stick
+2117035261|        |item_desc_acs_shepherd_stick|I used to be a shepherd, but I have no idea how many sheep I had. Kept falling asleep trying to count them.
+2117035262|        |item_name_acs_greg_sword|Colossal Sword
+2117035263|        |item_desc_acs_greg_sword|Definitely not compensating for anything.
+2117035264|        |item_name_acs_nazairi_mace|Nazairi Mace
+2117035265|        |item_desc_acs_nazairi_mace|Why is mace an assault when it's really a pepper?
+2117035266|        |item_name_acs_hakland_spear|Ofiri Spear
+2117035267|        |item_desc_acs_hakland_spear|Definitely did not steal this from that pile of weapons the Ofiri merchant has outside of his tent.
+2117035268|        |item_name_acs_imlerith_mace|Imlerith Mace
+2117035269|        |item_desc_acs_imlerith_mace|One of many replicas because Imlerith kept losing his mace.
+2117035270|        |item_name_acs_eredin_sword|Eredin Sword
+2117035271|        |item_desc_acs_eredin_sword|One of many replicas because Eredin kept losing his sword.
+2117035272|        |item_name_acs_caranthir_staff|Caranthir's Staff
+2117035273|        |item_desc_acs_caranthir_staff|One of many replicas because Caranthir kept losing his staff.
+2117035274|        |item_name_acs_wild_hunt_axe_2|Small Wild Hunt Axe
+2117035275|        |item_desc_acs_wild_hunt_axe_2|Smol axe.
+2117035276|        |item_name_acs_giant_weapon_1|Giant Anchor
+2117035277|        |item_desc_acs_giant_weapon_1|How did this get here?
+2117035278|        |item_name_acs_giant_weapon_2|Giant Stone Wheel
+2117035279|        |item_desc_acs_giant_weapon_2|How did this get here?
+2117035280|        |item_name_acs_giant_weapon_3|Cloud Giant Weapon
+2117035281|        |item_desc_acs_giant_weapon_3|How did this get here?
+2117035282|        |item_name_acs_knight_lance_1|Knight Lance: Type A
+2117035283|        |item_desc_acs_knight_lance_1|What do you call a man with a jousting pole on his head? Lance.
+2117035284|        |item_name_acs_knight_lance_2|Knight Lance: Type B
+2117035285|        |item_desc_acs_knight_lance_2|I bumped into my rival jousting opponent. We exchanged lances.
+2117035286|        |item_name_acs_zoltan_axe|Zoltan's Axe
+2117035287|        |item_desc_acs_zoltan_axe|Zoltan doesn't need to know you have this.
+2117035288|        |item_name_acs_spear_1_silver|Silver Spear: Type A 
+2117035289|        |item_name_acs_spear_2_silver|Silver Spear: Type B
+2117035290|        |item_name_acs_wild_hunt_spear_silver|Silver Wild Hunt Spear
+2117035291|        |item_name_acs_halberd_1_silver|Silver Halberd: Type A
+2117035292|        |item_name_acs_halberd_2_silver|Silver Halberd: Type B
+2117035293|        |item_name_acs_wild_hunt_halberd_silver|Silver Wild Hunt Halberd
+2117035294|        |item_name_acs_guisarme_1_silver|Silver Guisarme: Type A
+2117035295|        |item_name_acs_guisarme_2_silver|Silver Guisarme: Type B
+2117035296|        |item_name_acs_great_axe_1_silver|Silver Greataxe: Type A
+2117035297|        |item_name_acs_great_axe_2_silver|Silver Greataxe: Type B
+2117035298|        |item_name_acs_wild_hunt_axe_silver|Silver Wild Hunt Axe
+2117035299|        |item_name_acs_twohanded_hammer_1_silver|Silver Two-Handed Hammer: Type A
+2117035300|        |item_name_acs_twohanded_hammer_2_silver|Silver Two-Handed Hammer: Type B
+2117035301|        |item_name_acs_wild_hunt_hammer_silver|Silver Wild Hunt Hammer
+2117035302|        |item_name_acs_greg_sword_silver|Silver Colossal Sword
+2117035303|        |item_name_acs_hakland_spear_silver|Silver Ofiri Spear
+2117035304|        |item_name_acs_imlerith_mace_silver|Silver Imlerith Mace
+2117035305|        |item_name_acs_eredin_sword_silver|Silver Eredin Sword
+2117035306|        |item_name_acs_caranthir_staff_silver|Silver Caranthir's Staff
+2117035307|        |item_name_acs_giant_weapon_1_silver|Silver Giant Anchor
+2117035308|        |item_name_acs_giant_weapon_2_silver|Silver Giant Stone Wheel
+2117035309|        |item_name_acs_giant_weapon_3_silver|Silver Cloud Giant Weapon
+2117035310|        |item_name_acs_knight_lance_1_silver|Silver Knight Lance: Type A
+2117035311|        |item_name_acs_knight_lance_2_silver|Silver Knight Lance: Type B
+2117035312|        |item_name_acs_zoltan_axe_silver|Silver Zoltan's Axe
+2117035313|        |item_name_acs_long_metal_pole_silver|Silver Metal Pole
+2117035314|        |panel_acs_dodge_settings|Dodge Settings
+2117035315|        |option_dlc_acs_name|MOD: Advanced Combat System
+2117035316|        |option_acs_berstuk_bestiary|Berstuk, The Forgotten Forest God
+2117035317|        |option_acs_shadow_of_the_forest_god_bestiary|Shadow of the Forest God
+2117035318|        |option_acs_nekker_guardian_bestiary|Nekker Guardian
+2117035319|        |option_acs_blade_of_the_unseen_bestiary|Blade of the Unseen
+2117035320|        |option_acs_volos_bestiary|Volos, Bringer of Chaos
+2117035321|        |option_acs_rage_mechanic|Rage Mechanic Enabled
+2117035322|        |option_acs_combat_jump|Jump While Sprinting During Combat Enabled
+2117035323|        |option_acs_altar_of_the_chaos_flame_bestiary|Altar of the Chaos Flame
+2117035324|        |option_acs_knightmare_eternum_bestiary|Knightmare Eternum
+2117035325|        |option_acs_stamina_cost_action|Stamina Cost Enabled
+2117035326|        |option_acs_light_attack_stamina_cost|Light Attack Stamina Cost (% of Max Stamina)
+2117035327|        |option_acs_heavy_attack_stamina_cost|Heavy Attack Stamina Cost (% of Max Stamina)
+2117035328|        |option_acs_special_attack_stamina_cost|Special Attack Stamina Cost (% of Max Stamina)
+2117035329|        |option_acs_dodge_stamina_cost|Dodge Stamina Cost (% of Max Stamina)
+2117035330|        |option_acs_light_attack_stamina_regen_delay|Light Attack Stamina Regen Delay (In Seconds)
+2117035331|        |option_acs_heavy_attack_stamina_regen_delay|Heavy Attack Stamina Regen Delay (In Seconds)
+2117035332|        |option_acs_special_attack_stamina_regen_delay|Special Attack Stamina Regen Delay (In Seconds)
+2117035333|        |option_acs_dodge_stamina_regen_delay|Dodge Stamina Regen Delay (In Seconds)
+2117035334|        |option_acs_loviatar_bestiary|Loviatar, Matron of Decay
+2117035335|        |option_acs_khagmar_bestiary|Khagmar, Monster of the Unseen
+2117035336|        |option_acs_show_weapons_while_cloaked|Show Weapons On Back While Cloaked
+2117035337|        |option_acs_fire_wyrm_bestiary|Fire Wyrm
+2117035338|        |item_name_acs_wolven_fang|The Wolven Fang
+2117035339|        |item_desc_acs_wolven_fang|A dark and terrible curse.
+2117035340|        |option_acs_unequip_cloak_while_in_combat|Unequip Cloak While In Combat
+2117035341|        |option_acs_unlimited_durability_enabled|Item Durability Always Max
+2117035342|        |option_acs_alexander_bestiary|Alexander, Lord of the Plague
+2117035343|        |option_acs_rogue_mages_bestiary|Rogue Mage
+2117035344|        |option_acs_wild_hunt_spawn_chances_normal|Wild Hunt Riders Spawning Chance ( 1 = 100% )
+2117035345|        |item_name_acs_armor|Advanced Variable Combat Armor (Body)
+2117035346|        |item_desc_acs_armor|Body Armor of the Advanced Combat System
+2117035347|        |item_name_acs_gloves|Advanced Variable Combat Armor (Gauntlets)
+2117035348|        |item_desc_acs_gloves|Gauntlets of the Advanced Combat System
+2117035349|        |item_name_acs_boots|Advanced Variable Combat Armor (Boots)
+2117035350|        |item_desc_acs_boots|Boots of the Advanced Combat System
+2117035351|        |item_name_acs_pants|Advanced Variable Combat Armor (Leg Armor)
+2117035352|        |item_desc_acs_pants|Leg Armor of the Advanced Combat System
+2117035353|        |option_acs_night_hunter_bestiary|Night Hunter
+2117035354|        |option_acs_night_stalker_spawn_chances_normal|Night Hunter Spawning Chance ( 1 = 100% )
+2117035355|        |option_acs_guiding_light_enabled|Guiding Sword of Light Quest Tracking Enabled
+2117035356|        |option_acs_xeno_swarm_tyrant_bestiary|Xeno Swarm Tyrant
+2117035357|        |option_acs_xeno_swarm_soldier_bestiary|Xeno Swarm Soldier
+2117035358|        |option_acs_xeno_swarm_worker_bestiary|Xeno Swarm Worker
+2117035359|        |option_acs_rage_system_tutorial|Rage System
+2117035360|        ||Rapidly attacking, dodging consecutively, or holding down the parry button while in combat with at least one enemy will trigger the Rage mechanic in enemies every 14 seconds.<br/> <br/>When triggered, a red icon will appear above the player's head, accompanied by an audio cue.<br/>- After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.<br/>- Rage lasts for 2 seconds, or until the enemy lands a hit on the player.<br/>- Enraged enemies take 75% - 85% less damage, and are immune to hit reactions as well as negative buffs.<br/>- The attack from enraged enemies cannot be blocked except by the alternate Quen sign.<br/>- The attack will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as blurring the player's screen.<br/>- Small enemies will stagger the player, while larger enemies will knock the player back.<br/> <br/>Performing a perfect dodge (dodging the attack right as it is about to land) from an enraged attack will:<br/>- Drain the attacker's stamina by 50% of their current stamina.<br/>- Damage the attacker by 10% of their current health.<br/>- Stagger the attacker.
+2117035361|        |option_acs_dynamic_enemy_tutorial|Dynamic Enemy Behavior System
+2117035362|        ||Applies to all non-quest human type enemies carrying one-handed weapons. Bandits, cannibals, and thugs are excluded.<br/> <br/>Stage 1: If the enemy is at 87.5% - 62.5% health:<br/>- Swap to either witcher behavior or 2-handed behavior.<br/>- Gains immunity to knockdowns.<br/> <br/>Stage 2: If the enemy is at 50% - 25% health:<br/>Previously swapped to witcher behavior in Stage 1:<br/>- 75% chance swap to 2-handed behavior, 25% chance swap to shielded combat behavior.<br/>Previously swapped to 2-handed behavior in Stage 1:<br/>- 75% chance swap to witcher behavior, 25% chance swap to shielded combat behavior.<br/> <br/>If the player is holding down block or parrying during Stage 2:<br/>- 75% chance swap to shielded combat behavior, 25% chance swap to witcher or 2-handed.<br/> <br/>There is a small chance the enemy will drop their weapons and go berserk.
+2117035363|        |option_acs_guards_tutorial|Guards
+2117035364|        ||Guards cannot kill the player / knock the player unconscious.<br/> <br/>Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.<br/> <br/>If the player has no money, the guard will heal to full health instead.
+2117035365|        |option_acs_transformation_werewolf_tutorial|Werewolf Transformation
+2117035366|        ||- The player cannot save the game during transformation.<br/>- Gains 75% damage reduction against all damage types. Is completely immortal during days/nights with full moon and cloudless weather.<br/>- Holding down sprint enables the werewolf to run on all fours.<br/>- Dodges and rolls are both the same. Has small invulnerability window.<br/>- Light attacks are single handed claw swipes mixed with bite, which heal the player for a small portion of the player's maximum health. Bite heals more, dealing significantly more damage and inflicts poison + bleeding status upon enemies.<br/>- Heavy attacks are two handed claw swipes. Inflicts stagger + bleeding upon enemies. Does not heal the player.<br/>- Special light attack (hold down light attack) are long range leaps, which stagger enemies and deal a lot more damage. The werewolf will dash through enemies upon cast. Does not heal the player.<br/>- Pressing light attack + back (S) while in combat while the player/werewolf has full adrenaline will let out a roar that staggers nearby enemies. In addition, in exchange for 50% of the player's current health and all of the player's adrenaline, the size of the werewolf form is increased, granting increased attack range, immunity to hit reactions, as well as increased damage reduction for 15 seconds.
+2117035367|        |option_acs_glide_tutorial|Glide
+2117035368|        ||Holding down the jump button while in the air activates glide.<br/> <br/>Allows the player to glide a short distance, slowly descending towards the ground. 
+2117035369|        |option_acs_bruxa_dash_tutorial|Bruxa Dash
+2117035370|        ||Dashes a fixed distance forward, alternating a little bit left or right.<br/> <br/>Bruxa dash serves as a reset button to many things. Use it to dash out of wraith mode, bruxa bite, or generally anything you might encounter.<br/> <br/>Bruxa dash while in exploration will dash further than dashing in combat.<br/> <br/>Bruxa dash distance is reduced while the player is interior.
+2117035371|        |option_acs_wraith_mode_tutorial|Wraith Mode
+2117035372|        ||Can only be used out of combat.<br/> <br/>Enables the player to ignore collision, phase through walls, and fly through the air.<br/> <br/>Press jump, dodge/roll, the walk toggle button, or perform a bruxa dash to exit wraith mode.<br/> <br/>Wraith mode speed is decreased if the player is indoor or if witcher sense is active.<br/> <br/>Don't use this to fly out of locations during certain quests. May break a few quest triggers that will prevent you from progressing the game.
+2117035373|        |panel_acs_weapon_mode_settings|Weapon Mode Settings
+2117035374|        |preset_Mods_acs_name_acs_weapon_mode_settings|ACS: Weapon Mode Settings
+2117035375|        |preset_Mods_combat_acs_name_acs_weapon_mode_settings|ACS: Weapon Mode Settings
+2117035376|        |preset_Mods_gameplay_acs_name_acs_weapon_mode_settings|ACS: Weapon Mode Settings
+2117035377|        |preset_Mods_miscellaneous_acs_name_acs_weapon_mode_settings|ACS: Weapon Mode Settings
+2117035378|        |panel_acs_misc_settings|Miscellaneous Settings
+2117035379|        |preset_Mods_acs_name_acs_additional_settings_acs_misc_settings|ACS: Miscellaneous Settings
+2117035380|        |preset_Mods_combat_acs_name_acs_additional_settings_acs_misc_settings|ACS: Miscellaneous Settings
+2117035381|        |preset_Mods_gameplay_acs_name_acs_additional_settings_acs_misc_settings|ACS: Miscellaneous Settings
+2117035382|        |preset_Mods_miscellaneous_acs_name_acs_additional_settings_acs_misc_settings|ACS: Miscellaneous Settings
+2117035383|        |preset_value_acs_misc_settings_default|Default
+2117035384|        |panel_acs_additional_settings|Additional Settings
+2117035385|        |preset_Mods_acs_name_acs_additional_settings|ACS: Additional Settings
+2117035386|        |preset_Mods_combat_acs_name_acs_additional_settings|ACS: Additional Settings
+2117035387|        |preset_Mods_gameplay_acs_name_acs_additional_settings|ACS: Additional Settings
+2117035388|        |preset_Mods_miscellaneous_acs_name_acs_additional_settings|ACS: Additional Settings
+2117035389|        |panel_acs_stamina_settings|Stamina Settings
+2117035390|        |preset_Mods_acs_name_acs_stamina_settings|ACS: Stamina Settings
+2117035391|        |preset_Mods_combat_acs_name_acs_stamina_settings|ACS: Stamina Settings
+2117035392|        |preset_Mods_gameplay_acs_name_acs_stamina_settings|ACS: Stamina Settings
+2117035393|        |preset_Mods_miscellaneous_acs_name_acs_stamina_settings|ACS: Stamina Settings
+2117035394|        |preset_value_acs_stamina_settings_default|Default
+2117035395|        |panel_acs_encounters_settings|Encounters Settings
+2117035396|        |preset_Mods_acs_name_acs_encounters_settings|ACS: Encounters Settings
+2117035397|        |preset_Mods_combat_acs_name_acs_encounters_settings|ACS: Encounters Settings
+2117035398|        |preset_Mods_gameplay_acs_name_acs_encounters_settings|ACS: Encounters Settings
+2117035399|        |preset_Mods_miscellaneous_acs_name_acs_encounters_settings|ACS: Encounters Settings
+2117035400|        |preset_value_acs_encounters_settings_default|Default
+2117035401|        |panel_acs_glossary|Glossary
+2117035402|        |preset_Mods_acs_name_acs_glossary|ACS: Glossary
+2117035403|        |preset_Mods_combat_acs_name_acs_glossary|ACS: Glossary
+2117035404|        |preset_Mods_gameplay_acs_name_acs_glossary|ACS: Glossary
+2117035405|        |preset_Mods_miscellaneous_acs_name_acs_glossary|ACS: Glossary
+2117035406|        |panel_acs_tutorials|Tutorials
+2117035407|        |preset_Mods_acs_name_acs_glossary_acs_tutorials|ACS: Tutorials
+2117035408|        |preset_Mods_combat_acs_name_acs_glossary_acs_tutorials|ACS: Tutorials
+2117035409|        |preset_Mods_gameplay_acs_name_acs_glossary_acs_tutorials|ACS: Tutorials
+2117035410|        |preset_Mods_miscellaneous_acs_name_acs_glossary_acs_tutorials|ACS: Tutorials
+2117035411|        |panel_acs_bestiary|Bestiary
+2117035412|        |preset_Mods_acs_name_acs_glossary_acs_bestiary|ACS: Bestiary
+2117035413|        |preset_Mods_combat_acs_name_acs_glossary_acs_bestiary|ACS: Bestiary
+2117035414|        |preset_Mods_gameplay_acs_name_acs_glossary_acs_bestiary|ACS: Bestiary
+2117035415|        |preset_Mods_miscellaneous_acs_name_acs_glossary_acs_bestiary|ACS: Bestiary
+2117035416|        ||Alexander, the rat mage of Fyke Isle, can be found on the shores surrounding Fyke Isle.<br/> <br/>Years of solitude have driven this ghost insane and turned his soul black, leading him to attack any living creature on sight.<br/> <br/>Alexander is capable of summoning plague rats at a distance, as well as send out waves of red energy.<br/> <br/>Once within melee range, Alexander will switch to his staff and attempt to pummel his enemies to submission, or occasionally use a variety of arcane attacks.
+2117035417|        |option_acs_bruxae_bestiary|Bruxae, Alps
+2117035418|        |option_acs_drowners_bestiary|Drowners, Scurvers, Rotfiends
+2117035419|        |option_acs_ghouls_bestiary|Ghouls, Alghouls, Botchlings
+2117035420|        |option_acs_ice_titan_bestiary|Ice Titan
+2117035421|        |option_acs_novigrad_vampires_bestiary|Novigrad Vampires
+2117035422|        |option_acs_wild_hunt_hounds_bestiary|Wild Hunt Hounds
+2117035423|        |option_acs_wild_hunt_warriors_bestiary|Wild Hunt Warriors
+2117035424|        ||Berstuk the Forgotten Forest God has infested all known areas.<br/> <br/>It can be found in all areas except for White Orchard and Wyzima:<br/>- Velen: On a remote island, south of Oxenfurt.<br/>- Skellige: Where the Woodland Spirit is located.<br/>- Spiral: The portal of the Poison Forest.<br/>- Toussaint: Trastamara Estate.<br/>- Kaer Morhen: Ruined Keep.<br/>- Isle of the Mists: [REDACTED]<br/> <br/>Cloaked in a mist of poison and capable of summoning plant life to aid it in battle, while also able to heal with every melee strike, Berstuk should be approached with great caution.<br/> <br/>It is an extremely hostile entity, and will relentlessly chase its prey within his immediate surroundings.
+2117035425|        ||Killing a bruxa or an alp will trigger the summoning of the Blade of the Unseen, the vampire assassin.<br/> <br/>The Blade of the Unseen will hunt for his prey, showing himself 5 minutes after the death of the first bruxa was killed.<br/> <br/>Subsequent bruxa killed will decrease the timer by 150 seconds, with a minimum of a 5 second delay.<br/> <br/>Summoning and defeating the Blade of the Unseen for the 3rd time in a row without moving to another area will cause it to transform into Khagmar, Monster of the Unseen.
+2117035426|        ||Cloaked bruxae and alps hide amongst the people of Toussaint.<br/> <br/>They have a habit of tailing their prey before revealing themselves up close and personal for a vicious attack.
+2117035427|        ||Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks.<br/> <br/>Knocks their victims down upon contact.<br/> <br/>The tentacles can be blocked/parried.
+2117035428|        ||The Fire Wyrm may be spotted in Velen, Skellige, and Toussaint.<br/> <br/>It cloaks itself in flames, preventing it from being affected by neither heat nor frost, and its size prevents it from being knocked down.<br/> <br/>Hunters should be wary of its lighting fast talons, tail strikes, and flame breath. 
+2117035429|        ||As long as the Forest God is alive in any area, there is a chance his Shadow will appear after any fight every 7 minutes.<br/> <br/>This chance of Shadows appearing will increase to 30% if the player has any items to do with leshens in their inventory.<br/> <br/>Shadows heal for 5% of their max health on-hit against witchers and 25% of their max health against other beings.
+2117035430|        ||All ghoul subspecies are capable of launching projectile spit attacks from a distance.<br/> <br/>These are poisonous, and will explode if set fire to.
+2117035431|        ||Nine ice titans roam the Skellige Isles.<br/> <br/>Covered in a thick sheet of permanent ice, they are fast, strong, and agile.
+2117035432|        ||Be afraid. Be very afraid.
+2117035433|        ||The Knightmare Eternum sings its deadly siren song at the abandoned storehouse east of Tesha Mutna Ruins in Toussaint.<br/> <br/>It will only awaken if it detects any movement around it, otherwise it will remain dormant.
+2117035434|        ||Loviatar, the Matron of Decay, roams the Crookback Bog just east of the Ruined Tower.<br/> <br/>It is incredibly fast for its size, and will hurl balls of venom repeatedly if it is a moderate distance from its prety. 
+2117035435|        ||While in combat with 3 or more nekkers, the Nekker Guardian will be summoned into battle.<br/> <br/>Nekker Guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
+2117035436|        ||The Night Hunter stalks its prey, with a chance of striking after every fight in Velen, Skellige, Kaer Morhen, and Toussaint.<br/> <br/>Its greatest strength lies not in its venomous claws, leaping strikes, psychic scream, or long range pounces, but in its ability to camoflauge itself repeatedly in combat.<br/> <br/>However, while camoflauged, the Night Hunter's hide is less durable, and thus more susceptible to attacks.
+2117035437|        ||The vampire sleeping beneath Novigrad is now a true higher vampire with a katakan minion.<br/> <br/>The vampire at the end of the Carnal Sins quest is now a true higher vampire.
+2117035438|        ||Rogue mages hide out in the wilderness of Velen, starved out of their wits.<br/> <br/>They will strike at any person they can find.
+2117035439|        ||Volos, Bringer of Chaos has established a foothold upon the world.<br/> <br/>Three altars are placed in Velen, Skellige, and Toussaint:<br/>- Velen: South of Blackbough<br/>- Skellige: Ard Skellig, south of Redgill<br/>- Toussaint: North of Coronata Vineyard and south of Arthach Palace Ruins<br/> <br/>Destroying the altars will release the flames into the world and summon Volos, Bringer of Chaos.
+2117035440|        ||Wild Hunt hounds are capable of launching ice spikes from a distance.
+2117035441|        ||Wild Hunt riders are actively hunting Geralt while he is in Skellege or Velen.<br/> <br/>They have a chance to strike every 14 minutes.<br/> <br/>There is a 50% that Eredin arrives in an attempt to slay the famed White Wolf himself. 
+2117035442|        ||Xeno Swarm Soldiers are hatched from the outer eggs found in clusters in all parts of the world.<br/> <br/>They are capable of firing venom from a distance, burrowing underground, or leaping, and will swap abilities on being damaged.<br/> <br/>Very tough.
+2117035443|        ||The Xeno Swarm Tyrant is hatched from the largest center egg found in clusters in all parts of the world.<br/> <br/>Once hatched, it commands the other Xeno Swarm castes in coordinated attacks.<br/> <br/>It will issue commands to other Xeno Swarm castes periodically to swap abilities or swarm the player.<br/> <br/>Capable of firing venom from a distance, burrowing underground, or leaping.<br/> <br/>Will swap abilities upon attacking/being attacked.<br/> <br/>Other castes will heal the Xeno Swarm Tyrant upon damaging their victims.
+2117035444|        ||Xeno Swarm Workers are hatched from the outer eggs found in clusters in all parts of the world.<br/> <br/>Workers have various abilities, such as firing binding webs from a distance, firing venom, performing charge attacks, and spitting 360 degree spikes.
+2117035445|        |option_acs_werewolves_bestiary|Werewolves, Lycans
+2117035446|        ||Werewolves, lycans, and their subspecies are capable of summoning three wolves when they are below half health while exterior. If they are interior, they become enraged and ignore hit reactions.
+2117035447|        |option_acs_lights_tutorial|Firesources On/Off
+2117035448|        ||Pressing the cast sign button while Witcher Sense is active with either Igni or Aard selected will either light all fire sources around the player or extinguish them.<br/> <br/>Lighting all fire sources while fire sources are already lit will lock their interaction button.<br/> <br/>Pressing it again will unlock it.<br/> <br/>Same thing happens with extinguishing fire sources while fire sources are already extinguished.
+2117035449|        |option_acs_quick_meditation_tutorial|Quick Meditation
+2117035450|        ||Witcher Sense + Potion 3 button to activate and deactivate (default button is mapped as T on kb&m)<br/> <br/>Single tap button clears toxicity and potion effects, but does not refill them.<br/>- Passes the time at 45 minutes per second.<br/>- Menus are blocked.<br/> <br/>Double tap button spawns fire, clears toxicity, potion effects, restores potions, restores the player's health at a steady pace.<br/>- Passes the time at 30 minutes per second.<br/>- Menus are not blocked.
+2117035451|        |option_acs_perfect_dodges_counters_tutorial|Perfect Dodges and Counters
+2117035452|        ||Perfect dodges (dodges performed just as the enemy's attack is about to land) and counters will slow down time. 
+2117035453|        |option_acs_armor_system_tutorial|Armor Defensive System
+2117035454|        ||Enemies scoring a hit on the player will have a chance to have a small percentage of that damage reflected back at them.<br/> <br/>If the player is performing an ACS animation during which the armor system activates, the player's action will NOT be interrupted.<br/> <br/>The chances of this happening is based upon the type of armor the player is wearing:<br/>- Heavy armor: 55% chance<br/>- Medium armor: 35% chance<br/>- Light armor: 15% chance<br/> <br/>Each time this occurs, the damage is reduced by a certain amount, but will consume 15% of the player's max stamina.
+2117035455|        |preset_Mods_acs_name_acs_movement_settings_acs_dodge_settings|ACS: Dodge Settings
+2117035456|        |preset_Mods_combat_acs_name_acs_movement_settings_acs_dodge_settings|ACS: Dodge Settings
+2117035457|        |preset_Mods_gameplay_acs_name_acs_movement_settings_acs_dodge_settings|ACS: Dodge Settings
+2117035458|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings_acs_dodge_settings|ACS: Dodge Settings
+2117035459|        |panel_acs_jump_settings|Jump Settings
+2117035460|        |preset_Mods_acs_name_acs_movement_settings_acs_jump_settings|ACS: Jump Settings
+2117035461|        |preset_Mods_combat_acs_name_acs_movement_settings_acs_jump_settings|ACS: Jump Settings
+2117035462|        |preset_Mods_gameplay_acs_name_acs_movement_settings_acs_jump_settings|ACS: Jump Settings
+2117035463|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings_acs_jump_settings|ACS: Jump Settings
+2117035464|        |panel_acs_bruxa_dash_settings|Bruxa Dash Settings
+2117035465|        |preset_Mods_acs_name_acs_movement_settings_acs_bruxa_dash_settings|ACS: Bruxa Dash Settings
+2117035466|        |preset_Mods_combat_acs_name_acs_movement_settings_acs_bruxa_dash_settings|ACS: Bruxa Dash Settings
+2117035467|        |preset_Mods_gameplay_acs_name_acs_movement_settings_acs_bruxa_dash_settings|ACS: Bruxa Dash Settings
+2117035468|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings_acs_bruxa_dash_settings|ACS: Bruxa Dash Settings
+2117035469|        |panel_acs_wraith_mode_settings|Wraith Mode Settings
+2117035470|        |preset_Mods_acs_name_acs_movement_settings_acs_wraith_mode_settings|ACS: Wraith Mode Settings
+2117035471|        |preset_Mods_combat_acs_name_acs_movement_settings_acs_wraith_mode_settings|ACS: Wraith Mode Settings
+2117035472|        |preset_Mods_gameplay_acs_name_acs_movement_settings_acs_wraith_mode_settings|ACS: Wraith Mode Settings
+2117035473|        |preset_Mods_miscellaneous_acs_name_acs_movement_settings_acs_wraith_mode_settings|ACS: Wraith Mode Settings
+2117035474|        |option_acs_elemental_combo_system_tutorial|Elemental Combo System
+2117035475|        ||When this option is enabled in the Main Settings menu, it allows the player's weapon to produce additional effects.<br/> <br/>Armiger Mode:<br/> <br/>When successfully damaging an enemy while holding a primary (light attack) weapon in a specific stance, the player will prime the enemy for a detonation effect, which will be activated upon successfully damaging the enemy with an attack while holding the secondary (heavy attack) weapon.<br/> <br/>This works both ways for all signs except for Geralt's default weapon, meaning that attacks while holding the secondary weapon will also prime the enemy for a detonation effect, which will be detonated upon attacking while holding the primary weapon.<br/>- Enemies primed for detonation display a marker above them.<br/>- Detonation consumes all markers.<br/>- Markers disappear after combat if not consumed.<br/>- Detonation requires at least 1/3 of the adrenaline bar.<br/>- Every detonation consumes 1/3 of the adrenaline bar, meaning the player can hold 3 detonation charges at max adrenaline.<br/>- Detonation effects at max adrenaline have longer effects duration on enemies and wider range.<br/>- Weapons passive effect activation chance scales with adrenaline in intervals of 1/3, 2/3, and max, with the chances of activation being 12%, 25%, and 50% respectively.
+2117035476|        |option_acs_quest_tracking_swap_tutorial|Tracked Quest Switching
+2117035477|        ||Holding down Witcher Sense and pressing the Potion 1 or Potion 2 button (R or F by default on kb&m, d-pad up or down on controller) will track previous and next tracked quests.
+2117035478|        |option_acs_cloak_weapon_hide_tutorial|Cloak
+2117035479|        ||Wearing a cloak will automatically hide the weapons on the player's back.<br/> <br/>This option can be further customized in <br/> <br/><font color="#00ff67">Additional Settings ---> Miscellaneous Settings</font><br/> <br/>to show the weapons, or unequip the cloak itself while in combat and re-equip it again after combat.
+2117035480|        ||
+2117035481|        ||
+2117035482|        ||
+2117035483|        ||
+2117035484|        ||
+2117035485|        ||
+2117035486|        ||
+2117035487|        ||
+2117035488|        ||
+2117035489|        ||
+2117035490|        ||
+2117035491|        ||
+2117035492|        ||
+2117035493|        ||
+2117035494|        ||
+2117035495|        ||
+2117035496|        ||
+2117035497|        ||
+2117035498|        ||
+2117035499|        ||
+2117035500|        ||
+2117035501|        ||
