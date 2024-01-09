@@ -89,20 +89,11 @@ For those that prefer to install manually.
 ### [3. ARMED](#3-armed-1)
 ### [4. ELEMENTAL COMBO SYSTEM](#4-elemental-combo-system-1)
 ### [5. ELEMENTAL REND SYSTEM](#5-elemental-rend-system-1)
-### [6. PARRY SKILLS](#6-parry-skills-1)
-### [7. TAUNT SYSTEM](#7-taunt-system-1)
-### [8. ENEMIES](#8-enemies-1)
-### [9. MOVEMENT SYSTEM](#9-movement-system-1)
-### [10. ARMOR SYSTEM](#10-armor-system-1)
-### [11. SPECIAL ABILITIES](#11-special-abilities-1)
-### [12. WEAPON ARTS](#12-weapon-arts-1)
-### [13. SCHOOL SPECIFIC COMBAT STYLES](#13-school-specific-combat-styles-1)
-### [14. TRANSFORMATIONS](#14-transformations-1)
-### [15. COOLDOWN ADJUSTMENT](#15-cooldown-adjustment-1)
-### [16. STAMINA](#16-stamina-1)
-### [17. COMPATIBILITY](#17-compatibility-1)
-### [18. Q&A](#18-qa-1)
-### [19. CONTACT ME](#19-contact-me-1)
+### [6. TAUNT SYSTEM](#6-taunt-system-1)
+### [7. MOVEMENT SYSTEM](#7-movement-system-1)
+### [8. SPECIAL ABILITIES](#8-special-abilities-1)
+### [9. WEAPON ARTS](#9-weapon-arts-1)
+### [10. CONTACT ME](#10-contact-me-1)
 </div>
 
 
@@ -844,82 +835,7 @@ https://user-images.githubusercontent.com/98017171/160715122-cbd65c80-de43-4ddd-
   
   </div>
   
-# 6. PARRY SKILLS
-### General Use/Available at all times
-
-#### || Kick ||
-``` W key + Doubletap Parry/Counterattack``` 
-
-https://user-images.githubusercontent.com/98017171/160710004-34d677b9-b2b5-460e-9c2d-aa48ca54fad2.mp4
-
-#### || Dagger Strike ||
-```Hold down Light Attack + Parry/Counterattack``` 
-
-https://user-images.githubusercontent.com/98017171/194230815-c825dfca-2bbc-4f02-bbf0-d8db503f8701.mp4
-
-#### || Push ||
-``` A key or D key + Parry/Counterattack``` 
-
-https://user-images.githubusercontent.com/98017171/160710326-7fd55ee7-26e0-4b21-b3be-4193b6f239a5.mp4
-
-### Weapon Specific
-#### || Default Geralt Sword ||
-```W key + Parry/Counterattack``` = Counter-swing
-
-https://user-images.githubusercontent.com/98017171/160709655-d6d671b6-61b5-418a-a52a-ead5a15bc377.mp4
-
-#### || Sword Claws ||
-```W key + Parry/Counterattack``` = Bruxa biting attack
-
-https://user-images.githubusercontent.com/98017171/194232665-5954a800-f0dc-4c8f-9042-bf3405a680e4.mp4
-
-#### || Olgierd Weapon ||
-```W key + Parry/Counterattack``` = Olgierd's pocket sand + Elbow strike
-
-https://user-images.githubusercontent.com/98017171/160709715-7aff3242-81fb-4878-9c75-b09d6ef29877.mp4
-
-#### || Imlerith/Caretaker/Scythe Weapon ||
-```W key + Parry/Counterattack``` = Two-hand parry
-
-https://user-images.githubusercontent.com/98017171/194232880-ed0fa762-b7a1-4642-96e8-5b88b6b83337.mp4
-
-#### || Eredin Weapon ||
-```W key + Parry/Counterattack``` = Kick/Stab/Kick-swing
-
-https://user-images.githubusercontent.com/98017171/194233151-74c727a1-be35-40a3-bbef-e9ec27ad6541.mp4
-
-#### || Spear Weapon ||
-```W key + Parry/Counterattack``` = Spear Special
-
-https://user-images.githubusercontent.com/98017171/194233600-262900f1-0647-41c2-8a27-c07a28912dab.mp4
-
-#### || Gregoire Weapon ||
-```W key + Parry/Counterattack``` = Hilt Bash
-
-https://user-images.githubusercontent.com/98017171/194233815-f599b193-e645-4262-8b68-836b0cd0bcb6.mp4
-
-#### || Giant Weapon ||
-```W key + Parry/Counterattack``` = AOE Strike + Lightning
-
-https://user-images.githubusercontent.com/98017171/194234119-abae6703-783a-43ce-af66-2806302c90c8.mp4
-
-#### || Axe Weapon ||
-```W key + Parry/Counterattack``` = Axe Special
-
-https://user-images.githubusercontent.com/98017171/194234327-3ae84cdd-61d7-48ea-9540-5cb39dad355c.mp4
-
-#### || Vampire Claws ||
-```W key + Parry/Counterattack``` = Bruxa biting attack
-
-https://user-images.githubusercontent.com/98017171/160710417-9baeec91-c4a1-472b-b218-f0c1a90e755c.mp4
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-# 7. TAUNT SYSTEM
+# 6. TAUNT SYSTEM
 ```Switching weapons (signs, default button is mouse-wheel on PC)``` while ```standing still``` with no movement keys held ```(WASD)``` will perform a taunt. 
 
 Out of combat:
@@ -945,166 +861,7 @@ In combat:
   
   </div>
  
-# 8. ENEMIES
-
-## Rage
-- Rapidly attacking or dodging consecutively while in combat with at least one enemy will trigger the Rage mechanic in enemies every 14 seconds.
-- When triggered, a red icon will appear above the player's head, accompanied by an audio cue.
-- After 1 second, another identical red icon will appear above a random enemy, marking them as enraged.
-- Rage lasts for 2 seconds, or until the enemy lands a hit on the player.
-- Enraged enemies take 50% less damage, and are immune to hit reactions as well as negative buffs.
-- The attack from enraged enemies cannot be blocked except by the alternate Quen sign. The attack will deal 30% of the player's current health, drain 30% of the player's current stamina and adrenaline, as well as blurring the player's screen. Small enemies will stagger the player, while larger enemies will knock the player back. 
-- Performing a perfect dodge* from an enraged attack will:
-  - Drain the attacker's stamina by 50% of their current stamina.
-  - Damage the attacker by 10% of their max health.
-  - Stagger the attacker.
-  
-*Perfect dodge means dodging the attack right as it is about to land.
-
-
-## Dynamic Enemy Behavior System 
-
-https://user-images.githubusercontent.com/98017171/196608085-fd4a751c-e4dc-45ed-b67e-e35ad288053e.mp4
-
-The Dynamic Enemy Behavior System applies to all non-quest human type enemies carrying one-handed weapons.
-
-**Bandits, Cannibals, and Thugs are excluded.**
-
-  - Stage 1: If the enemy is hit by the player with an attack/repel leaving them with anywhere between 75% - 50% health, the enemy will swap their original 1-handed behavior to either witcher behavior or 2-handed behavior. 
-    - The enemy is now also immune to knockdowns after this point. 
-  - Stage 2: If the enemy is hit by the player with an attack/repel leaving them with anywhere lower than 50% health but between 50% - 25% health: 
-    - If the enemy had swapped to witcher behavior in Stage 1, they will now have a 75% chance to swap their behavior to 2-handed behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
-    - If the enemy had swapped to 2-handed behavior in Stage 1, they will now have a 75% chance to swap their behavior to witcher behavior, or a 25% chance to swap their behavior to shielded combat behavior. 
-    - If the player is in a state of parrying while the enemy is swapping behavior in Stage 2, then the enemy will have a 75% chance of swapping to shielded combat behavior instead, and 25% chance of swapping to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
-    - If the enemy was originally carrying a shield, and their shield was not destroyed or dropped by the time they reach Stage 2, then they will not have a chance to switch to shielded combat behavior at all, and instead will swap to either witcher behavior or 2-handed behavior, dependent upon which one was swapped to first in Stage 1.
- 
- ## Guards 
- 
- Guards cannot kill the player / knock the player unconscious.
-  - Instead, each hit that would kill the player will cause the player to start losing money, up to 10% of the player's total amount of money per hit on Death March.
-  - If the player has no money, the guard will heal to full health instead.
- 
-## Mages
-- Rogue mages hide out in the wilderness of Velen.
-
-## Wild Hunt Warriors
-- Wild Hunt riders are actively hunting Geralt while he is in Skellege or Velen. 
-- Has a chance to spawn after the player exits combat every 14 minutes. 
-- Chance to spawn can be adjusted in the Main Settings menu.
-
-## Ice Titans
-- Nine ice titans roam the Skellige Islands.
-
-## Bruxae/Alps
-- Cloaked bruxae and alps hide amongst the people of Toussaint. 
-
-## Drowners, Scurvers, Rotfiends
-- Drowners, Scurvers, Rotfiends, and their variants are capable of launching tentacle attacks. Knocks the player down upon contact.
-
-## Ghouls, Wild Hunt Hounds
-- All ghoul subspecies are capable of launching projectile attacks from a distance. These are poisonous to the player and will explode if set fire to.
-- Wild hunt hounds are capable of launching ice spikes from a distance. 
-
-## Nekker Guardian
-- While in combat with 3 or more nekkers, the nekker guardian will be summoned into battle.
-- Nekker guardians take reduced damage, and periodically drains its own health to heal nearby nekkers.
-
-## Novigrad Vampires
-- The vampire sleeping beneath Novigrad is now a true higher vampire with a katakan minion.
-- The vampire at the end of the Carnal Sins quest is now a true higher vampire.
-
-## Blade of the Unseen
-- Killing a bruxa will trigger the summoning of the Blade of the Unseen, the vampire assassin.
-- The Blade of the Unseen will hunt for the player, showing himself to the player 5 minutes after the death of the first bruxa killed by the player.
-- Subsequent bruxa killed will decrease the timer by 150 seconds, with a minimum of a 5 second delay.
-- If the player manages to run away, the Blade will continue its pursuit.
-- The hunt will only be over if the player defeats the Blade of the Unseen, or if the player is killed by him.
-- Summoning and defeating the Blade of the Unseen for the 3rd time in a row within the same game session will cause it to transform into Khagmar, Monster of the Unseen.
-
-## Khagmar, Monster of the Unseen
-- Be afraid. Be very afraid.
-
-## Knightmare Eternum
-- The Knightmare Eternum guards the abandoned storehouse east of Tesha Mutna Ruins in Toussaint.
-
-## Loviatar, Matron of Decay
-- Loviatar, the Matron of Decay, roams the Crookback Bog just east of the Ruined Tower.
-
-## Alexander, Lord of the Plague
-- Alexander, the rat mage of Fyke Isle, can be found on the shores surrounding Fyke Isle. 
-
-## Xeno Swarm
-The Xeno Swarm have infested every single area in the world of TW3 in the form of eggs.
-
-Eggs will spawn different Xeno swarm castes upon detecting any sort of movement within a small radius around it.
-
-Outer Xeno Swarm eggs house workers, armored workers, and soldiers:
-
-- Workers: Capable of firing binding webs from a distance. Very fragile.
-- Armored Workers: Capable of a number of abilities including venom, charge attacks, and 360 degree spikes. Will swap abilities randomly on being damaged. Moderately tough.
-- Soldier: Capable of firing venom from a distance, burrowing underground, or leaping. Will swap abilities on being damaged. Very tough.
-
-The center egg houses the Xeno Swarm Tyrant, which commands the other Xeno Swarm members in coordinated attacks. 
-
-It will issue commands to other Xeno Swarm castes at intervals of 15 seconds to swap abilities or swarm the player. 
-
-Capable of firing venom from a distance or burrowing underground. 
-
-Will swap abilities upon attacking/being attacked. 
-
-Other castes will heal the Xeno Swarm Tyrant upon damaging the player.
-
-## Forest God
- 
-**Berstuk the Forgotten Forest God** has infested the world of The Witcher 3.
-
-- He can be found in all maps except for the White Orchard maps and Wyzima.
-  - Velen: On a remote island, south of Oxenfurt.
-  - Skellige: Where the Woodland Spirit is located.
-  - Spiral: The portal of the Poison Forest.
-  - Toussaint: Trastamara Estate.
-  - Kaer Morhen: Ruined Keep.
-  - Isle of the Mists: [REDACTED]
-
-- Berstuk is extremely tough, and should be approached with caution. He is also very hostile, and will relentlessly chase the player or any other prey in his immediate surroundings. 
-- The Forest God has a number of mechanics involved, which will require skills, thinking, and some luck from the player to defeat him without cheating.
-- Upon death, Berstuk additionally drops a vast sum of crowns and assorted precious gems. 
-- If **Shades of Iron** is installed, instead of gems he will drop one random Radiant quality armor and one random Radiant quality weapon.
-- Berstuk will respawn each time the player changes maps (eg. Velen <---> Skellige).
- 
-## Forest God Shadows
-
-As long as the Forest God is alive on a map, there is a 10% chance his Shadow will appear after any fight. 
-
-- The chances of Shadows spawning can be modified in the Main Settings menu.
-- Shadows cannot spawn more than once every 7 minutes. 
-- This chance of Shadows appearing will ignore the value set in the Main Settings menu and increase to 30% **if the player has any items to do with leshens in their inventory**. 
-- Shadows additionally drop emeralds and leshen mutagen upon death. 
-- Shadows are immune to negative effects.
-- Shadows heal for 5% of their max health on-hit against the player if the player is using any moveset other than the original, and 25% of their max health against other NPCs.
-- The number of Shadows that spawn will change depending on how much health the player currently has:
-   - 2 if the player is at 100% health.
-   - 1 if the player is below 50% health.
- 
-## Volos, Bringer of Chaos
- 
-**Volos, Bringer of Chaos** has established a foothold upon the world of The Witcher 3.
-
-- Three altars are placed in Velen, Skellige, and Toussaint:
-  - Velen: South of Blackbough
-  - Skellige: Ard Skellig, south of Redgill
-  - Toussaint: North of Coronata Vineyard and south of Arthach Palace Ruins
-- Destroying the altars will release the flames into the world and summon Volos, Bringer of Chaos.
-- Altars will re-spawn after changing maps (eg. Skellige <---> Velen).
-
-
-<div align="right">
-  
-##### [Return to Index](#index)
-  
-</div>
-  
-# 9. MOVEMENT SYSTEM
+# 7. MOVEMENT SYSTEM
 ### || Bruxa Dash ||
 
 https://user-images.githubusercontent.com/98017171/160713938-ec49b801-a8d8-42ce-ba20-865e4ec08a61.mp4
@@ -1172,23 +929,7 @@ https://user-images.githubusercontent.com/98017171/160714536-2449dd4e-f198-4980-
   
   </div>
 
-# 10. ARMOR SYSTEM
-
- - While wielding an ACS weapon or using an ACS moveset, the player's armor is enhanced. Enemies scoring a hit on the player will have a chance to have a small percentage of that damage reflected back at them. 
- - If the player is performing an ACS animation during which the armor system activates, the player's action will NOT be interrupted.
- - The chances of this happening is based upon the type of armor the player is wearing:
-    - Heavy armor: 55% chance
-    - Medium armor: 35% chance
-    - Light armor: 15% chance
-- Each time this occurs, the damage is reduced by a certain amount, but will consume 15% of the player's max stamina.
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-# 11. SPECIAL ABILITIES
+# 8. SPECIAL ABILITIES
   
  <div align="center">
  
@@ -1384,32 +1125,13 @@ https://user-images.githubusercontent.com/98017171/171998778-2f4cc15e-842e-4922-
 - Surrounding enemies will be `pulled` towards the player, be continuously damaged for a tiny percentage of their health, have a large chance to be affected by `bleeding`, and a very small chance to be affected by `blindness`. 
 - Swarm executes when the enemy health drops below 5%. 
 
-### || Bow ||
-Bows are attached to heavy attack weapons in Armiger Mode. While in armiger mode and in combat with the heavy attack weapon equipped, double tap and hold down parry, then perform heavy attacks to use bow. 
-
-#### Stationary Shot
-https://user-images.githubusercontent.com/98017171/185868442-1f3cdaae-f00c-4c22-99c4-65d14f9870f6.mp4
-
-- Firing arrows while stationary takes longer to wind-up, but will deal the full damage of your equipped weapon. Additionally, if the player is outdoors, it will unleash a rain of arrows at the enemy location if the arrow hits an enemy. Drains 3x the amount of stamina for a heavy attack for each arrow.
-
-#### Movement Shot
-
-https://user-images.githubusercontent.com/98017171/185868682-f909c877-5d4d-476b-bea1-a7b6ac684e58.mp4
-
-- Firing arrows while any movement key is held down will quick fire arrows that deal only a small percentage of the enemy's max health. Every third arrow fired this way is twice the speed of the first two arrows, deals true damage, and applies a debuff for 1 second specific to the sign the player currently has selected. Drains the amount of stamina for a light attack for each arrow.
-- Igni: Burns
-- Axii: Freezes
-- Aard: Knockdown
-- Quen: Paralyze
-- Yrden: Slowdown
-
 <div align="right">
  
 ##### [Return to Index](#index)
   
   </div>
  
-# 12. WEAPON ARTS
+# 9. WEAPON ARTS
 `Back (S key) + light attack` activates Weapon Arts for all movesets.
 
 #### Vampire claws: Sonic Scream
@@ -1492,136 +1214,8 @@ https://user-images.githubusercontent.com/98017171/190558043-ffcaa934-5abc-48f4-
   
 </div>
 
-# 13. SCHOOL SPECIFIC COMBAT STYLES
-- Each Witcher school has their own custom moveset when using the default Witcher moveset.
-- Only applies when wearing **boots, armor, gloves, and pants** belonging to the same school, regardless of tier.
 
-## Wolf School:
-- Holding forward (W key) will modify attack style to include far attacks.
-- Massively reduced attack animations from regular Geralt moveset, making it more controllable and predictable.
-- Medium range dodges replacing both dodges and rolls.
-
-## Bear School:
-- All attacks are heavy attacks.
-- Slow attack wind up, but slightly larger attack range and angle.
-- Short dodges replacing both dodge and roll.
-- Attacks can't be interrupted by enemies.
-- Whirl replaced by a quick rend.
-
-## Cat School:
-- All attacks are light attacks.
-- Attacks are a mixture of one-handed sword and Witcher two-hand, with a decaying speed boost upon activation.
-- Both dodges are rolls are replaced with a custom set of pirouette dodges with a decaying speed boost upon activation.
-- Whirl is replaced with a spinning charge attack and one-handed charge attacks.
-
-## Viper School:
-- Attacks are a combination of 1-handed mace attacks and witcher two-hand attacks.
-- Rolls and dodges are replaced with pirouettes and short dodges respectively.
-- Whirl is replaced with a long range spinning strike that inflicts poison on targets.
-
-## Griffin School:
-- Dodges and rolls are replaced with medium range dodges.
-- Attacks are a mix of witcher and two-handed longsword knight attacks.
-- Whirl is replaced with a long range longsword special attack that inflicts the status effect of the selected sign upon damaging enemies.
-
-## Manticore School:
-- Attacks are a mixture of regular witcher attacks, long sweeping witcher attacks, and stab attacks.
-- Rolls are replaced with medium range dodges, while dodges are replaced with short range dodges.
-- Whirl is replaced with the Manticore's Sting, which are a series of long range stab attacks that inflicts poison upon damaging enemies.
-
-## Forgotten Wolf Set (Netflix Armor):
-- Essentially the same as Wolf School, but slower with everything, with dodges traveling for shorter distances compared to Wolf School.
-- Combat animations cannot be interrupted by enemy attacks to account for the armor being heavier than Wolf School.
-
-<div align="right">
-  
-##### [Return to Index](#index)
-  
-</div>
-
-# 14. TRANSFORMATIONS
-
-## The Wolven Curse:
-- Killing Morkvarg's human form will drop The Wolven Fang. (item code: acs_wolven_fang)
-- Equipping and using The Wolven Fang will transform the player into a werewolf. Cannot be used indoors or while a weapon is equipped in hand. 
-- Press the cast sign button to transform back into human form.
-
-Werewolf form:
-- Gains 75% damage reduction against all damage types. Is completely immortal during days/nights with full moon and cloudless weather. 
-- Holding down sprint enables the werewolf to run on all fours. Does not work on controllers for now. 
-- Dodges and rolls are both the same. Has small invulnerability window. 
-- Light attacks are single handed claw swipes mixed with bite, which heals the player for a small portion of the player's maximum health. Bite heals more, dealing significantly more damage and inflicts poison + bleeding status upon enemies. 
-- Heavy attacks are two handed claw swipes. Inflicts stagger + bleeding upon enemies. Does not heal the player. 
-- Special light attack (hold down light attack) are long range leaps, which stagger enemies and deal a lot more damage. The werewolf will dash through enemies upon cast. Does not heal the player. 
-- Pressing light attack + back (S) while in combat while the player/werewolf has full adrenaline will let out a roar that staggers nearby enemies. In addition, in exchange for 50% of the player's current health and all of the player's adrenaline, the size of the werewolf form is increased, granting increased attack range, immunity to hit reactions, as well as increased damage reduction for 15 seconds.
-
-
-<div align="right">
-  
-##### [Return to Index](#index)
-  
-</div>
- 
-# 15. COOLDOWN ADJUSTMENT
-- Open ```mod_ACS/content/scripts/local/ACS_Cooldown_Settings.ws```and follow instructions to further customize cooldowns to your liking. 
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-# 16. STAMINA
-- The Main Settings menu allows the player to tweak various stamina settings for performing attacks and dodges.
-- Only applies to ACS animations.
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-# 17. COMPATIBILITY
-- Most likely completely conflict free in terms of scripts.
-
- <div align="right">
-  
-##### [Return to Index](#index)
-  
-  </div>
-  
-# 18. Q&A
-### || Is this mod considered lore friendly and immersive?
-- Very.
-
-### || Are you lying?
-- Yes.
-
- ### || Can I install or uninstall this mod mid game?
-- Yes.
-
-### || How easy is this to merge with other mods?
-- In my experience, and the experience of others who have installed this mod, very easy. It's designed to do so due to my own modlist. 
-
-### || I heard/experienced some animation mods cause long loading screens. Does this mod do that?
-- No. The reason that some animation mods cause long loading screens is because they edit a file called ```pc_gameplay.w2beh```. This mod uses the DLC method, which mounts the extra animations onto the player without directly editing that file. 
-
-### || Will this mod affect Ciri's animations?
-- No. The extra animations are mounted onto Geralt only. Ciri's animations are untouched. I'd consider adding more animations to her, but the player doesn't get to play as her very often anyways, so what's the point?
-
-### || Can you make a version without the magic stuff?
-- Maybe. Depends on my mood.
-
-### || Can you make The Witcher 3 E3/VGX 2013 Lore-Friendly Immersive Reworked Animations Redux?
-- I will kill you.
-  
- <div align="right">
-  
- ##### [Return to Index](#index)
-  
-  </div>
-  
-# 19. CONTACT ME
+# 10. CONTACT ME
 - If you really have to, find me in the Wolven Workshop discord server. I may or may not reply.
 
  <div align="center">
